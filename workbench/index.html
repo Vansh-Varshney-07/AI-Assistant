@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI assistant · Memory Workbench</title><link rel="stylesheet" href="/style.css"><script src="/app.js" defer></script></head>
+<body>
+<header><div><span class="eyebrow">AI ASSISTANT / LOCAL VALIDATION</span><h1>AI assistant</h1><p>Memory Testing Workbench</p></div><div><button id="refresh">Refresh records</button> <button id="stop">Stop workbench</button></div></header>
+<p class="notice" id="provider-notice">Evidence-only mode makes no hosted calls. When a Nemotron model is selected, prompt text and this memory space's relevant evidence are sent to NVIDIA. Storage and embeddings remain local.</p>
+<section aria-labelledby="spaces-heading"><h2 id="spaces-heading">Memory spaces</h2><div class="row"><label>Active memory space<select id="space-select" aria-describedby="active-space"></select></label><label>Name for a new test<input id="space-name" maxlength="100" placeholder="e.g. Research experiment"></label></div><button id="new-space" type="button">New isolated space</button><p id="active-space" class="muted" role="status">Loading spaces…</p><p class="muted">The same ID returns to the same memories across conversations and restarts. A new ID starts empty. Switching spaces preserves the others. IDs are case-sensitive and are not passwords.</p><p id="space-error" class="error" role="alert"></p></section>
+<details><summary>Storage &amp; execution configuration</summary><pre id="status">Loading…</pre></details>
+<main>
+<section aria-labelledby="manual-heading"><div class="section-title"><h2 id="manual-heading">Manual prompts</h2><button id="fresh">Fresh conversation</button></div>
+<p class="muted">Fresh conversations clear this space's conversation in this tab. Stored memories and space ID stay intact. History is never supplied to retrieval.</p>
+<form id="prompt-form">
+<label>Response / extraction model<select id="model"><option value="">Evidence only · no hosted calls</option></select></label>
+<label>Operation<select id="mode"><option value="retrieve">Retrieve only</option><option value="store">Store prompt + retrieve first</option><option value="claim">Store explicit claims + retrieve first</option><option value="recall">Recall a declared field</option></select></label>
+<label for="prompt">Prompt</label><textarea id="prompt" rows="5" required placeholder="Enter a manual prompt. Retrieval-only requests never write memories."></textarea>
+<div class="row"><label>Subject<input id="subject" value="manual-user" maxlength="200"></label><label>Predicate for recall<input id="predicate" placeholder="e.g. project_label" maxlength="128"></label></div>
+<div class="row"><label>Top K<input id="top-k" type="number" min="1" max="50" value="5"></label><label>Temporal mode<select id="temporal"><option value="now">Current</option><option value="auto">All times</option><option value="historical">Historical</option></select></label></div>
+<div id="claim-controls" hidden><label for="claims">Explicit claims · JSON array</label><textarea id="claims" rows="7" spellcheck="false" placeholder='[{"subject":"manual-user","predicate":"project_label","value":"your value","kind":"fact","action":"assert"}]'></textarea><p class="muted">Space scope is added automatically. Changes require target claim IDs and a reason. Select Store prompt with a Nemotron model to extract claims automatically.</p></div>
+<label class="check"><input id="confirmed" type="checkbox"> I confirm these manually submitted assertions or changes as a user source.</label>
+<button id="send" class="primary" type="submit">Send</button><span id="activity" role="status" aria-live="polite"></span><p id="request-error" class="error" role="alert"></p>
+</form>
+<h3>Current conversation</h3><div id="history"><p class="muted">No prompts submitted in this session.</p></div>
+<h3>Retrieved for selected request</h3><p class="muted">Query results and inventory belong to the active memory space. For store operations, retrieval runs before the write.</p><div id="retrieved">Unavailable — send a prompt.</div>
+</section>
+<section aria-labelledby="inventory-heading"><h2 id="inventory-heading">Stored records</h2><p id="inventory-count" class="muted">Loading actual backend records…</p>
+<label>Search stored content, IDs &amp; metadata<input id="search" type="search" placeholder="Text search over stored records"></label>
+<label>Sort<select id="sort"><option value="created-desc">Creation · newest</option><option value="created-asc">Creation · oldest</option><option value="updated-desc">Update · newest (if available)</option><option value="updated-asc">Update · oldest (if available)</option></select></label>
+<div class="row"><label>Claim status<select id="status-filter"><option value="">All statuses</option></select></label><label>Stored type / claim kind<select id="type-filter"><option value="">All types</option></select></label></div>
+<p id="inventory-error" class="error" role="alert"></p><div id="records"></div>
+<h3>Memory detail</h3><p class="muted">Claim states come from the engine's existing lifecycle view. Source records have no independent active/superseded status column. Update timestamps are unavailable in this schema.</p><pre id="detail">Select a stored record.</pre>
+</section>
+</main><footer>Loopback only · manual testing tool · not production-secure · no sample memories are inserted at startup</footer>
+</body></html>

@@ -1,0 +1,4 @@
+-r cpu.txt
+-r nim.txt
+pytest==8.3.2
+ruff==0.6.2

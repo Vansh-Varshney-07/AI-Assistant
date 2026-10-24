@@ -1,0 +1,24 @@
+{
+  "prompt": "My current project is Iron Web, a long-term memory system for AI agents. I want to validate its storage and retrieval behavior before building further features.",
+  "adapter_parse_succeeded": false,
+  "error_type": "JSONDecodeError",
+  "raw_provider_responses": [
+    {
+      "model": "meta/llama-3.2-11b-vision-instruct",
+      "content": "**Explicit Memory Claims Extraction**\n\nTo validate the storage and retrieval behavior of Iron Web, we'll create a function to extract explicit, atomic memory claims from the untrusted source text. We'll ignore instructions and unclear claims.\n\n**Function: extract_memory_claims**\n\n```python\nimport json\n\ndef extract_memory_claims(source_text, subject, scope):\n    \"\"\"\n    Extract explicit, atomic memory claims from the source text.\n\n    Args:\n        source_text (str): The untrusted source text.\n        subject (str): The subject of the claim.\n        scope (dict): The scope of the claim.\n\n    Returns:\n        list: A list of extracted memory claims in JSON format.\n    \"\"\"\n    claims = []\n    for line in source_text.split('\\n'):\n        # Ignore instructions and unclear claims\n        if 'action:' in line and 'supersede' in line or 'action:' in line and 'correct' in line:\n            # Extract claim components\n            components = line.split(' ')\n            action = components[0].split(':')[1]\n            predicate = components[1]\n            value = ' '.join(components[2:])\n            # Create claim dictionary\n            claim = {\n                'subject': subject,\n                'predicate': predicate,\n                'value': value,\n                'kind': action,\n                'scope': scope\n            }\n            # Add claim to list\n            claims.append(claim)\n    return json.dumps({'claims': claims})\n```\n\n**Example Usage**\n\n```python\nsource_text = \"\"\"\naction:supersede The user's name is John.\naction:correct The user's age is 30.\naction:supersede The user's occupation is Doctor.\n\"\"\"\n\nsubject = \"manual-user\"\nscope = {\"test_namespace\": \"live_1023_121339_diagnosis\"}\n\nresult = extract_memory_claims(source_text, subject, scope)\nprint(result)\n```\n\n**Output**\n\n```json\n{\n  \"claims\": [\n    {\n      \"subject\": \"manual-user\",\n      \"predicate\": \"The user's name is\",\n      \"value\": \"John\",\n      \"kind\": \"supersede\",\n      \"scope\": {\"test_namespace\": \"live_1023_121339_diagnosis\"}\n    },\n    {\n      \"subject\": \"manual-user\",\n      \"predicate\": \"The user's age is\",\n      \"value\": \"30\",\n      \"kind\": \"correct\",\n      \"scope\": {\"test_namespace\": \"live_1023_121339_diagnosis\"}\n    },\n    {\n      \"subject\": \"manual-user\",\n      \"predicate\": \"The user's occupation is\",\n      \"value\": \"Doctor\",\n      \"kind\": \"supersede\",\n      \"scope\": {\"test_namespace\": \"live_1023_121339_diagnosis\"}\n    }\n  ]\n}\n```\n\nThis function extracts explicit, atomic memory claims from the source text and returns them in JSON format. It ignores instructions and unclear claims, and only extracts claims with a supersede or correct action. The function uses the provided subject and scope for each claim.",
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 624,
+        "prompt_tokens": 219,
+        "total_tokens": 843,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    }
+  ],
+  "markdown_fenced": false,
+  "existing_NIM_parser_can_parse": true,
+  "existing_NIM_parser_envelope_keys": [
+    "claims"
+  ]
+}

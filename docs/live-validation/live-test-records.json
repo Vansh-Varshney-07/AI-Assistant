@@ -1,0 +1,5439 @@
+[
+  {
+    "memory_id": "wb_07bb4dcd6ea74ec8bb0c6b789024a3c9",
+    "content": "My test workspace is named Workspace South.",
+    "metadata": {
+      "memory_type": "semantic",
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_nvidia",
+      "session_id": "86c3867a63ba4a00abcdf8ae61bc1912",
+      "memory_claim_ids": [
+        "claim_8d9c913be892f43c14f19c584f277c92"
+      ],
+      "memory_source_id": "source_2cb5e1e116ca4b961a01838ae16b8970",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "entity_ids": [
+      "subject_c8e9df547a7d6dff7895d6f60d393ec2"
+    ],
+    "valid_from": 0,
+    "valid_until": 9223372036854775807,
+    "importance": 1.0,
+    "timestamp": 1792757714,
+    "created_at": null,
+    "vector_stored": true,
+    "graph_stored": true,
+    "payload": {
+      "memory_id": "wb_07bb4dcd6ea74ec8bb0c6b789024a3c9",
+      "text": "My test workspace is named Workspace South.",
+      "entity_ids": [
+        "subject_c8e9df547a7d6dff7895d6f60d393ec2"
+      ],
+      "valid_from": 0,
+      "valid_until": 9223372036854775807,
+      "importance": 1.0,
+      "memory_type": "semantic",
+      "timestamp": 1792757714,
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_nvidia",
+      "session_id": "86c3867a63ba4a00abcdf8ae61bc1912",
+      "memory_claim_ids": [
+        "claim_8d9c913be892f43c14f19c584f277c92"
+      ],
+      "memory_source_id": "source_2cb5e1e116ca4b961a01838ae16b8970",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "claims": [
+      {
+        "claim_id": "claim_8d9c913be892f43c14f19c584f277c92",
+        "memory_id": "wb_07bb4dcd6ea74ec8bb0c6b789024a3c9",
+        "subject": "manual-user",
+        "subject_id": "subject_c8e9df547a7d6dff7895d6f60d393ec2",
+        "predicate": "has_workspace",
+        "value": "Workspace South",
+        "kind": "fact",
+        "scope": {
+          "test_namespace": "live_1023_121339_nvidia"
+        },
+        "status": "accepted",
+        "accepted": true,
+        "current_eligible": true,
+        "protected": false,
+        "accepted_for_current_use": true,
+        "correction_known": false,
+        "protected_at_creation": false,
+        "fuzzy_score": 0.8652174988649616,
+        "fuzzy_explanation": {
+          "score": 0.8652174988649616,
+          "inputs": {
+            "freshness": 0.9999624730597325,
+            "quality": 0.9,
+            "support": 0.3333333333333333,
+            "agreement": 1.0
+          },
+          "memberships": {
+            "freshness": {
+              "low": 0.0,
+              "medium": 7.505388053496986e-05,
+              "high": 0.999924946119465
+            },
+            "quality": {
+              "low": 0.0,
+              "medium": 0.19999999999999996,
+              "high": 0.8
+            },
+            "support": {
+              "low": 0.33333333333333337,
+              "medium": 0.6666666666666666,
+              "high": 0.0
+            },
+            "agreement": {
+              "low": 0.0,
+              "medium": 0.0,
+              "high": 1.0
+            }
+          },
+          "fired_rules": [
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "medium",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 5.003592035664657e-06,
+              "output": 0.55
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "medium",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 1.0007184071329313e-05,
+              "output": 0.6175
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "high",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 2.0014368142658633e-05,
+              "output": 0.7300000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "high",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 4.002873628531726e-05,
+              "output": 0.7975000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "medium",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 0.06666166307463099,
+              "output": 0.685
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "medium",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 0.13332332614926196,
+              "output": 0.7525000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "high",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 0.2666466522985241,
+              "output": 0.865
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "high",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 0.533293304597048,
+              "output": 0.9325
+            }
+          ],
+          "method": "Sugeno v2; product conjunction; monotone rule outputs; freshness scaling",
+          "calibrated_probability": false
+        },
+        "previous_score": null,
+        "changed_by": null,
+        "change_reason": null,
+        "conflicting_claim_ids": [],
+        "sources": [
+          {
+            "id": "source_2cb5e1e116ca4b961a01838ae16b8970",
+            "memory_id": "wb_07bb4dcd6ea74ec8bb0c6b789024a3c9",
+            "event_id": "07bb4dcd6ea74ec8bb0c6b789024a3c9",
+            "text": "My test workspace is named Workspace South.",
+            "origin": "user",
+            "actor_id": "workbench:live_1023_121339_nvidia",
+            "user_confirmed": true,
+            "quality": 0.9,
+            "evidence_group": "user:workbench:live_1023_121339_nvidia",
+            "recorded_at": 1792757714,
+            "received_at": 1792757714,
+            "digest": "receipt_821c0d7f703f7f556e9ee74ca2a9ae3e",
+            "metadata_json": "{\"session_id\":\"86c3867a63ba4a00abcdf8ae61bc1912\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_nvidia\"}"
+          }
+        ],
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "accepted_at": 1792757714,
+        "ended_at": null,
+        "reason": "",
+        "historical_meaning": "source assertion; effective dates unspecified",
+        "references": [],
+        "identity_evidence": [],
+        "evidence_path": [
+          "claim_8d9c913be892f43c14f19c584f277c92",
+          "SUPPORTED_BY",
+          "source_2cb5e1e116ca4b961a01838ae16b8970"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "source_2cb5e1e116ca4b961a01838ae16b8970",
+        "memory_id": "wb_07bb4dcd6ea74ec8bb0c6b789024a3c9",
+        "event_id": "07bb4dcd6ea74ec8bb0c6b789024a3c9",
+        "text": "My test workspace is named Workspace South.",
+        "origin": "user",
+        "actor_id": "workbench:live_1023_121339_nvidia",
+        "user_confirmed": true,
+        "quality": 0.9,
+        "evidence_group": "user:workbench:live_1023_121339_nvidia",
+        "recorded_at": 1792757714,
+        "received_at": 1792757714,
+        "digest": "receipt_821c0d7f703f7f556e9ee74ca2a9ae3e",
+        "metadata_json": "{\"session_id\":\"86c3867a63ba4a00abcdf8ae61bc1912\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_nvidia\"}"
+      }
+    ],
+    "observations": [
+      {
+        "id": "obs_wb_07bb4dcd6ea74ec8bb0c6b789024a3c9_subject_c8e9df547a7d6dff7895d6f60d393ec2",
+        "entity_id": "subject_c8e9df547a7d6dff7895d6f60d393ec2",
+        "content": "My test workspace is named Workspace South.",
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "importance": 1.0,
+        "source": "manual_workbench",
+        "created_at": 1792757714,
+        "source_memory_id": "wb_07bb4dcd6ea74ec8bb0c6b789024a3c9"
+      }
+    ],
+    "relations": [],
+    "namespace": "live_1023_121339_nvidia",
+    "types": [
+      "fact",
+      "semantic"
+    ],
+    "statuses": [
+      "accepted"
+    ],
+    "status_basis": "Existing lifecycle view of stored claims",
+    "created_timestamp": 1792757714,
+    "updated_timestamp": null,
+    "backend": {
+      "qdrant_point_id": "681bede6-6a01-5c33-8880-eda19439728e",
+      "collection": "semantic_memory",
+      "graph": "memory_core"
+    }
+  },
+  {
+    "memory_id": "wb_121c372d83b642789dc5a98038407e9a",
+    "content": "The interface test uses a green notebook.",
+    "metadata": {
+      "memory_type": "episodic",
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_precision",
+      "session_id": "7e0d60011d944faba47149b4a39807e3",
+      "memory_claim_ids": [
+        "claim_886787f3d7bf8784ff33578125f4d299"
+      ],
+      "memory_source_id": "source_83eb666c9bb72c44682148e0dec35fce",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "entity_ids": [
+      "subject_9bd944320c436915ca67f398a6288a0e"
+    ],
+    "valid_from": 0,
+    "valid_until": 9223372036854775807,
+    "importance": 1.0,
+    "timestamp": 1792757636,
+    "created_at": null,
+    "vector_stored": true,
+    "graph_stored": true,
+    "payload": {
+      "memory_id": "wb_121c372d83b642789dc5a98038407e9a",
+      "text": "The interface test uses a green notebook.",
+      "entity_ids": [
+        "subject_9bd944320c436915ca67f398a6288a0e"
+      ],
+      "valid_from": 0,
+      "valid_until": 9223372036854775807,
+      "importance": 1.0,
+      "memory_type": "episodic",
+      "timestamp": 1792757636,
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_precision",
+      "session_id": "7e0d60011d944faba47149b4a39807e3",
+      "memory_claim_ids": [
+        "claim_886787f3d7bf8784ff33578125f4d299"
+      ],
+      "memory_source_id": "source_83eb666c9bb72c44682148e0dec35fce",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "claims": [
+      {
+        "claim_id": "claim_886787f3d7bf8784ff33578125f4d299",
+        "memory_id": "wb_121c372d83b642789dc5a98038407e9a",
+        "subject": "workbench:live_1023_121339_precision",
+        "subject_id": "subject_9bd944320c436915ca67f398a6288a0e",
+        "predicate": "conversation_episode",
+        "value": "The interface test uses a green notebook.",
+        "kind": "episode",
+        "scope": {
+          "session_id": "7e0d60011d944faba47149b4a39807e3"
+        },
+        "status": "accepted",
+        "accepted": true,
+        "current_eligible": true,
+        "protected": false,
+        "accepted_for_current_use": true,
+        "correction_known": false,
+        "protected_at_creation": false,
+        "fuzzy_score": 0.865209624803193,
+        "fuzzy_explanation": {
+          "score": 0.865209624803193,
+          "inputs": {
+            "freshness": 0.9999555204795854,
+            "quality": 0.9,
+            "support": 0.3333333333333333,
+            "agreement": 1.0
+          },
+          "memberships": {
+            "freshness": {
+              "low": 0.0,
+              "medium": 8.895904082928396e-05,
+              "high": 0.9999110409591707
+            },
+            "quality": {
+              "low": 0.0,
+              "medium": 0.19999999999999996,
+              "high": 0.8
+            },
+            "support": {
+              "low": 0.33333333333333337,
+              "medium": 0.6666666666666666,
+              "high": 0.0
+            },
+            "agreement": {
+              "low": 0.0,
+              "medium": 0.0,
+              "high": 1.0
+            }
+          },
+          "fired_rules": [
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "medium",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 5.930602721952264e-06,
+              "output": 0.55
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "medium",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 1.1861205443904526e-05,
+              "output": 0.6175
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "high",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 2.3722410887809058e-05,
+              "output": 0.7300000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "high",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 4.744482177561811e-05,
+              "output": 0.7975000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "medium",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 0.06666073606394471,
+              "output": 0.685
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "medium",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 0.1333214721278894,
+              "output": 0.7525000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "high",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 0.2666429442557789,
+              "output": 0.865
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "high",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 0.5332858885115577,
+              "output": 0.9325
+            }
+          ],
+          "method": "Sugeno v2; product conjunction; monotone rule outputs; freshness scaling",
+          "calibrated_probability": false
+        },
+        "previous_score": null,
+        "changed_by": null,
+        "change_reason": null,
+        "conflicting_claim_ids": [],
+        "sources": [
+          {
+            "id": "source_83eb666c9bb72c44682148e0dec35fce",
+            "memory_id": "wb_121c372d83b642789dc5a98038407e9a",
+            "event_id": "121c372d83b642789dc5a98038407e9a",
+            "text": "The interface test uses a green notebook.",
+            "origin": "user",
+            "actor_id": "workbench:live_1023_121339_precision",
+            "user_confirmed": false,
+            "quality": 0.9,
+            "evidence_group": "user:workbench:live_1023_121339_precision",
+            "recorded_at": 1792757636,
+            "received_at": 1792757636,
+            "digest": "receipt_0b656d43230413c513622880ed643670",
+            "metadata_json": "{\"memory_type\":\"episodic\",\"session_id\":\"7e0d60011d944faba47149b4a39807e3\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_precision\"}"
+          }
+        ],
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "accepted_at": 1792757636,
+        "ended_at": null,
+        "reason": "",
+        "historical_meaning": "source assertion; effective dates unspecified",
+        "references": [],
+        "identity_evidence": [],
+        "evidence_path": [
+          "claim_886787f3d7bf8784ff33578125f4d299",
+          "SUPPORTED_BY",
+          "source_83eb666c9bb72c44682148e0dec35fce"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "source_83eb666c9bb72c44682148e0dec35fce",
+        "memory_id": "wb_121c372d83b642789dc5a98038407e9a",
+        "event_id": "121c372d83b642789dc5a98038407e9a",
+        "text": "The interface test uses a green notebook.",
+        "origin": "user",
+        "actor_id": "workbench:live_1023_121339_precision",
+        "user_confirmed": false,
+        "quality": 0.9,
+        "evidence_group": "user:workbench:live_1023_121339_precision",
+        "recorded_at": 1792757636,
+        "received_at": 1792757636,
+        "digest": "receipt_0b656d43230413c513622880ed643670",
+        "metadata_json": "{\"memory_type\":\"episodic\",\"session_id\":\"7e0d60011d944faba47149b4a39807e3\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_precision\"}"
+      }
+    ],
+    "observations": [
+      {
+        "id": "obs_wb_121c372d83b642789dc5a98038407e9a_subject_9bd944320c436915ca67f398a6288a0e",
+        "entity_id": "subject_9bd944320c436915ca67f398a6288a0e",
+        "content": "The interface test uses a green notebook.",
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "importance": 1.0,
+        "source": "manual_workbench",
+        "created_at": 1792757636,
+        "source_memory_id": "wb_121c372d83b642789dc5a98038407e9a"
+      }
+    ],
+    "relations": [],
+    "namespace": "live_1023_121339_precision",
+    "types": [
+      "episode",
+      "episodic"
+    ],
+    "statuses": [
+      "accepted"
+    ],
+    "status_basis": "Existing lifecycle view of stored claims",
+    "created_timestamp": 1792757636,
+    "updated_timestamp": null,
+    "backend": {
+      "qdrant_point_id": "9de05318-5395-5f3e-9dc4-7b07a39de8ed",
+      "collection": "semantic_memory",
+      "graph": "memory_core"
+    }
+  },
+  {
+    "memory_id": "wb_1d463a25ab834be9917cf1936488e20b",
+    "content": "When working on Iron Web, I prefer to test one component at a time and inspect actual stored records before moving to the next phase.",
+    "metadata": {
+      "memory_type": "episodic",
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_raw",
+      "session_id": "9f60923923d94c5eaf0b29475907b0e5",
+      "memory_claim_ids": [
+        "claim_de17f341d337a680691b701bb0b308c7"
+      ],
+      "memory_source_id": "source_8d113d4a5ee9fb5f1cadf84f002a5c61",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "entity_ids": [
+      "subject_bf6d0b766cdcffbd56390c833b497cf1"
+    ],
+    "valid_from": 0,
+    "valid_until": 9223372036854775807,
+    "importance": 1.0,
+    "timestamp": 1792757621,
+    "created_at": null,
+    "vector_stored": true,
+    "graph_stored": true,
+    "payload": {
+      "memory_id": "wb_1d463a25ab834be9917cf1936488e20b",
+      "text": "When working on Iron Web, I prefer to test one component at a time and inspect actual stored records before moving to the next phase.",
+      "entity_ids": [
+        "subject_bf6d0b766cdcffbd56390c833b497cf1"
+      ],
+      "valid_from": 0,
+      "valid_until": 9223372036854775807,
+      "importance": 1.0,
+      "memory_type": "episodic",
+      "timestamp": 1792757621,
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_raw",
+      "session_id": "9f60923923d94c5eaf0b29475907b0e5",
+      "memory_claim_ids": [
+        "claim_de17f341d337a680691b701bb0b308c7"
+      ],
+      "memory_source_id": "source_8d113d4a5ee9fb5f1cadf84f002a5c61",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "claims": [
+      {
+        "claim_id": "claim_de17f341d337a680691b701bb0b308c7",
+        "memory_id": "wb_1d463a25ab834be9917cf1936488e20b",
+        "subject": "workbench:live_1023_121339_raw",
+        "subject_id": "subject_bf6d0b766cdcffbd56390c833b497cf1",
+        "predicate": "conversation_episode",
+        "value": "When working on Iron Web, I prefer to test one component at a time and inspect actual stored records before moving to the next phase.",
+        "kind": "episode",
+        "scope": {
+          "session_id": "9f60923923d94c5eaf0b29475907b0e5"
+        },
+        "status": "accepted",
+        "accepted": true,
+        "current_eligible": true,
+        "protected": false,
+        "accepted_for_current_use": true,
+        "correction_known": false,
+        "protected_at_creation": false,
+        "fuzzy_score": 0.8652081105697842,
+        "fuzzy_explanation": {
+          "score": 0.8652081105697842,
+          "inputs": {
+            "freshness": 0.9999541834504836,
+            "quality": 0.9,
+            "support": 0.3333333333333333,
+            "agreement": 1.0
+          },
+          "memberships": {
+            "freshness": {
+              "low": 0.0,
+              "medium": 9.163309903281736e-05,
+              "high": 0.9999083669009672
+            },
+            "quality": {
+              "low": 0.0,
+              "medium": 0.19999999999999996,
+              "high": 0.8
+            },
+            "support": {
+              "low": 0.33333333333333337,
+              "medium": 0.6666666666666666,
+              "high": 0.0
+            },
+            "agreement": {
+              "low": 0.0,
+              "medium": 0.0,
+              "high": 1.0
+            }
+          },
+          "fired_rules": [
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "medium",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 6.10887326885449e-06,
+              "output": 0.55
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "medium",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 1.2217746537708979e-05,
+              "output": 0.6175
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "high",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 2.4435493075417965e-05,
+              "output": 0.7300000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "high",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 4.887098615083592e-05,
+              "output": 0.7975000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "medium",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 0.06666055779339781,
+              "output": 0.685
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "medium",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 0.1333211155867956,
+              "output": 0.7525000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "high",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 0.2666422311735913,
+              "output": 0.865
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "high",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 0.5332844623471825,
+              "output": 0.9325
+            }
+          ],
+          "method": "Sugeno v2; product conjunction; monotone rule outputs; freshness scaling",
+          "calibrated_probability": false
+        },
+        "previous_score": null,
+        "changed_by": null,
+        "change_reason": null,
+        "conflicting_claim_ids": [],
+        "sources": [
+          {
+            "id": "source_8d113d4a5ee9fb5f1cadf84f002a5c61",
+            "memory_id": "wb_1d463a25ab834be9917cf1936488e20b",
+            "event_id": "1d463a25ab834be9917cf1936488e20b",
+            "text": "When working on Iron Web, I prefer to test one component at a time and inspect actual stored records before moving to the next phase.",
+            "origin": "user",
+            "actor_id": "workbench:live_1023_121339_raw",
+            "user_confirmed": false,
+            "quality": 0.9,
+            "evidence_group": "user:workbench:live_1023_121339_raw",
+            "recorded_at": 1792757621,
+            "received_at": 1792757621,
+            "digest": "receipt_88836af4ea4fdab363b3c4da67e8c1c5",
+            "metadata_json": "{\"memory_type\":\"episodic\",\"session_id\":\"9f60923923d94c5eaf0b29475907b0e5\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_raw\"}"
+          }
+        ],
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "accepted_at": 1792757621,
+        "ended_at": null,
+        "reason": "",
+        "historical_meaning": "source assertion; effective dates unspecified",
+        "references": [],
+        "identity_evidence": [],
+        "evidence_path": [
+          "claim_de17f341d337a680691b701bb0b308c7",
+          "SUPPORTED_BY",
+          "source_8d113d4a5ee9fb5f1cadf84f002a5c61"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "source_8d113d4a5ee9fb5f1cadf84f002a5c61",
+        "memory_id": "wb_1d463a25ab834be9917cf1936488e20b",
+        "event_id": "1d463a25ab834be9917cf1936488e20b",
+        "text": "When working on Iron Web, I prefer to test one component at a time and inspect actual stored records before moving to the next phase.",
+        "origin": "user",
+        "actor_id": "workbench:live_1023_121339_raw",
+        "user_confirmed": false,
+        "quality": 0.9,
+        "evidence_group": "user:workbench:live_1023_121339_raw",
+        "recorded_at": 1792757621,
+        "received_at": 1792757621,
+        "digest": "receipt_88836af4ea4fdab363b3c4da67e8c1c5",
+        "metadata_json": "{\"memory_type\":\"episodic\",\"session_id\":\"9f60923923d94c5eaf0b29475907b0e5\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_raw\"}"
+      }
+    ],
+    "observations": [
+      {
+        "id": "obs_wb_1d463a25ab834be9917cf1936488e20b_subject_bf6d0b766cdcffbd56390c833b497cf1",
+        "entity_id": "subject_bf6d0b766cdcffbd56390c833b497cf1",
+        "content": "When working on Iron Web, I prefer to test one component at a time and inspect actual stored records before moving to the next phase.",
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "importance": 1.0,
+        "source": "manual_workbench",
+        "created_at": 1792757621,
+        "source_memory_id": "wb_1d463a25ab834be9917cf1936488e20b"
+      }
+    ],
+    "relations": [],
+    "namespace": "live_1023_121339_raw",
+    "types": [
+      "episode",
+      "episodic"
+    ],
+    "statuses": [
+      "accepted"
+    ],
+    "status_basis": "Existing lifecycle view of stored claims",
+    "created_timestamp": 1792757621,
+    "updated_timestamp": null,
+    "backend": {
+      "qdrant_point_id": "01ff6820-e052-59fe-b8c5-9b340e75eb9a",
+      "collection": "semantic_memory",
+      "graph": "memory_core"
+    }
+  },
+  {
+    "memory_id": "wb_256c96801de54bf5bd8420c9c7151324",
+    "content": "The retrieval test uses an orange notebook.",
+    "metadata": {
+      "memory_type": "episodic",
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_precision",
+      "session_id": "3c3bf5b7e908452f9a84176815b93598",
+      "memory_claim_ids": [
+        "claim_694ca7490505f658f0633a5adf1fe224"
+      ],
+      "memory_source_id": "source_99228427fb7a9408473f4baa8a8c8fad",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "entity_ids": [
+      "subject_9bd944320c436915ca67f398a6288a0e"
+    ],
+    "valid_from": 0,
+    "valid_until": 9223372036854775807,
+    "importance": 1.0,
+    "timestamp": 1792757637,
+    "created_at": null,
+    "vector_stored": true,
+    "graph_stored": true,
+    "payload": {
+      "memory_id": "wb_256c96801de54bf5bd8420c9c7151324",
+      "text": "The retrieval test uses an orange notebook.",
+      "entity_ids": [
+        "subject_9bd944320c436915ca67f398a6288a0e"
+      ],
+      "valid_from": 0,
+      "valid_until": 9223372036854775807,
+      "importance": 1.0,
+      "memory_type": "episodic",
+      "timestamp": 1792757637,
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_precision",
+      "session_id": "3c3bf5b7e908452f9a84176815b93598",
+      "memory_claim_ids": [
+        "claim_694ca7490505f658f0633a5adf1fe224"
+      ],
+      "memory_source_id": "source_99228427fb7a9408473f4baa8a8c8fad",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "claims": [
+      {
+        "claim_id": "claim_694ca7490505f658f0633a5adf1fe224",
+        "memory_id": "wb_256c96801de54bf5bd8420c9c7151324",
+        "subject": "workbench:live_1023_121339_precision",
+        "subject_id": "subject_9bd944320c436915ca67f398a6288a0e",
+        "predicate": "conversation_episode",
+        "value": "The retrieval test uses an orange notebook.",
+        "kind": "episode",
+        "scope": {
+          "session_id": "3c3bf5b7e908452f9a84176815b93598"
+        },
+        "status": "accepted",
+        "accepted": true,
+        "current_eligible": true,
+        "protected": false,
+        "accepted_for_current_use": true,
+        "correction_known": false,
+        "protected_at_creation": false,
+        "fuzzy_score": 0.8652097257521928,
+        "fuzzy_explanation": {
+          "score": 0.8652097257521928,
+          "inputs": {
+            "freshness": 0.9999556096149224,
+            "quality": 0.9,
+            "support": 0.3333333333333333,
+            "agreement": 1.0
+          },
+          "memberships": {
+            "freshness": {
+              "low": 0.0,
+              "medium": 8.87807701552834e-05,
+              "high": 0.9999112192298447
+            },
+            "quality": {
+              "low": 0.0,
+              "medium": 0.19999999999999996,
+              "high": 0.8
+            },
+            "support": {
+              "low": 0.33333333333333337,
+              "medium": 0.6666666666666666,
+              "high": 0.0
+            },
+            "agreement": {
+              "low": 0.0,
+              "medium": 0.0,
+              "high": 1.0
+            }
+          },
+          "fired_rules": [
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "medium",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 5.9187180103522265e-06,
+              "output": 0.55
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "medium",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 1.1837436020704451e-05,
+              "output": 0.6175
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "high",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 2.3674872041408913e-05,
+              "output": 0.7300000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "high",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 4.734974408281782e-05,
+              "output": 0.7975000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "medium",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 0.06666074794865631,
+              "output": 0.685
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "medium",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 0.1333214958973126,
+              "output": 0.7525000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "high",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 0.2666429917946253,
+              "output": 0.865
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "high",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 0.5332859835892505,
+              "output": 0.9325
+            }
+          ],
+          "method": "Sugeno v2; product conjunction; monotone rule outputs; freshness scaling",
+          "calibrated_probability": false
+        },
+        "previous_score": null,
+        "changed_by": null,
+        "change_reason": null,
+        "conflicting_claim_ids": [],
+        "sources": [
+          {
+            "id": "source_99228427fb7a9408473f4baa8a8c8fad",
+            "memory_id": "wb_256c96801de54bf5bd8420c9c7151324",
+            "event_id": "256c96801de54bf5bd8420c9c7151324",
+            "text": "The retrieval test uses an orange notebook.",
+            "origin": "user",
+            "actor_id": "workbench:live_1023_121339_precision",
+            "user_confirmed": false,
+            "quality": 0.9,
+            "evidence_group": "user:workbench:live_1023_121339_precision",
+            "recorded_at": 1792757637,
+            "received_at": 1792757637,
+            "digest": "receipt_bf893fc6ab6e063c1e8f94ab5db31b57",
+            "metadata_json": "{\"memory_type\":\"episodic\",\"session_id\":\"3c3bf5b7e908452f9a84176815b93598\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_precision\"}"
+          }
+        ],
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "accepted_at": 1792757637,
+        "ended_at": null,
+        "reason": "",
+        "historical_meaning": "source assertion; effective dates unspecified",
+        "references": [],
+        "identity_evidence": [],
+        "evidence_path": [
+          "claim_694ca7490505f658f0633a5adf1fe224",
+          "SUPPORTED_BY",
+          "source_99228427fb7a9408473f4baa8a8c8fad"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "source_99228427fb7a9408473f4baa8a8c8fad",
+        "memory_id": "wb_256c96801de54bf5bd8420c9c7151324",
+        "event_id": "256c96801de54bf5bd8420c9c7151324",
+        "text": "The retrieval test uses an orange notebook.",
+        "origin": "user",
+        "actor_id": "workbench:live_1023_121339_precision",
+        "user_confirmed": false,
+        "quality": 0.9,
+        "evidence_group": "user:workbench:live_1023_121339_precision",
+        "recorded_at": 1792757637,
+        "received_at": 1792757637,
+        "digest": "receipt_bf893fc6ab6e063c1e8f94ab5db31b57",
+        "metadata_json": "{\"memory_type\":\"episodic\",\"session_id\":\"3c3bf5b7e908452f9a84176815b93598\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_precision\"}"
+      }
+    ],
+    "observations": [
+      {
+        "id": "obs_wb_256c96801de54bf5bd8420c9c7151324_subject_9bd944320c436915ca67f398a6288a0e",
+        "entity_id": "subject_9bd944320c436915ca67f398a6288a0e",
+        "content": "The retrieval test uses an orange notebook.",
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "importance": 1.0,
+        "source": "manual_workbench",
+        "created_at": 1792757637,
+        "source_memory_id": "wb_256c96801de54bf5bd8420c9c7151324"
+      }
+    ],
+    "relations": [],
+    "namespace": "live_1023_121339_precision",
+    "types": [
+      "episode",
+      "episodic"
+    ],
+    "statuses": [
+      "accepted"
+    ],
+    "status_basis": "Existing lifecycle view of stored claims",
+    "created_timestamp": 1792757637,
+    "updated_timestamp": null,
+    "backend": {
+      "qdrant_point_id": "9d83d071-0eb9-54e4-a381-41a41d51c708",
+      "collection": "semantic_memory",
+      "graph": "memory_core"
+    }
+  },
+  {
+    "memory_id": "wb_27f85909f65148a5a00fb5ac1d15d871",
+    "content": "For this test, the active project label is Memory Alpha.",
+    "metadata": {
+      "memory_type": "semantic",
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_typed",
+      "session_id": "e739f9a360a24d98a3346dfa8fc66a1e",
+      "memory_claim_ids": [
+        "claim_1ef6050cedaaa270629478b49e1e564e"
+      ],
+      "memory_source_id": "source_69c924c1abd3b0707b592aba1ba5011d",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "entity_ids": [
+      "subject_c8e9df547a7d6dff7895d6f60d393ec2"
+    ],
+    "valid_from": 0,
+    "valid_until": 9223372036854775807,
+    "importance": 1.0,
+    "timestamp": 1792757639,
+    "created_at": null,
+    "vector_stored": true,
+    "graph_stored": true,
+    "payload": {
+      "memory_id": "wb_27f85909f65148a5a00fb5ac1d15d871",
+      "text": "For this test, the active project label is Memory Alpha.",
+      "entity_ids": [
+        "subject_c8e9df547a7d6dff7895d6f60d393ec2"
+      ],
+      "valid_from": 0,
+      "valid_until": 9223372036854775807,
+      "importance": 1.0,
+      "memory_type": "semantic",
+      "timestamp": 1792757639,
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_typed",
+      "session_id": "e739f9a360a24d98a3346dfa8fc66a1e",
+      "memory_claim_ids": [
+        "claim_1ef6050cedaaa270629478b49e1e564e"
+      ],
+      "memory_source_id": "source_69c924c1abd3b0707b592aba1ba5011d",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "claims": [
+      {
+        "claim_id": "claim_1ef6050cedaaa270629478b49e1e564e",
+        "memory_id": "wb_27f85909f65148a5a00fb5ac1d15d871",
+        "subject": "manual-user",
+        "subject_id": "subject_c8e9df547a7d6dff7895d6f60d393ec2",
+        "predicate": "project_label",
+        "value": "Memory Alpha",
+        "kind": "fact",
+        "scope": {
+          "test_namespace": "live_1023_121339_typed"
+        },
+        "status": "corrected",
+        "accepted": true,
+        "current_eligible": false,
+        "protected": false,
+        "accepted_for_current_use": false,
+        "correction_known": true,
+        "protected_at_creation": false,
+        "fuzzy_score": 0.0,
+        "fuzzy_explanation": {
+          "score": 0.0,
+          "hard_rule": "not_current",
+          "fired_rules": []
+        },
+        "previous_score": 0.865259899044403,
+        "changed_by": "claim_ade9a6843b1f8f266a975c61f42a4bfa",
+        "change_reason": "Explicit user test correction or reschedule.",
+        "conflicting_claim_ids": [
+          "claim_ade9a6843b1f8f266a975c61f42a4bfa"
+        ],
+        "sources": [
+          {
+            "id": "source_69c924c1abd3b0707b592aba1ba5011d",
+            "memory_id": "wb_27f85909f65148a5a00fb5ac1d15d871",
+            "event_id": "27f85909f65148a5a00fb5ac1d15d871",
+            "text": "For this test, the active project label is Memory Alpha.",
+            "origin": "user",
+            "actor_id": "workbench:live_1023_121339_typed",
+            "user_confirmed": true,
+            "quality": 0.9,
+            "evidence_group": "user:workbench:live_1023_121339_typed",
+            "recorded_at": 1792757639,
+            "received_at": 1792757639,
+            "digest": "receipt_7fb90ea62c451a17f4abd009b4dadd7e",
+            "metadata_json": "{\"session_id\":\"e739f9a360a24d98a3346dfa8fc66a1e\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_typed\"}"
+          }
+        ],
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "accepted_at": 1792757639,
+        "ended_at": 1792757640,
+        "reason": "",
+        "historical_meaning": "earlier assertion; correction does not establish historical truth",
+        "references": [],
+        "identity_evidence": [],
+        "evidence_path": [
+          "claim_1ef6050cedaaa270629478b49e1e564e",
+          "SUPPORTED_BY",
+          "source_69c924c1abd3b0707b592aba1ba5011d"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "source_69c924c1abd3b0707b592aba1ba5011d",
+        "memory_id": "wb_27f85909f65148a5a00fb5ac1d15d871",
+        "event_id": "27f85909f65148a5a00fb5ac1d15d871",
+        "text": "For this test, the active project label is Memory Alpha.",
+        "origin": "user",
+        "actor_id": "workbench:live_1023_121339_typed",
+        "user_confirmed": true,
+        "quality": 0.9,
+        "evidence_group": "user:workbench:live_1023_121339_typed",
+        "recorded_at": 1792757639,
+        "received_at": 1792757639,
+        "digest": "receipt_7fb90ea62c451a17f4abd009b4dadd7e",
+        "metadata_json": "{\"session_id\":\"e739f9a360a24d98a3346dfa8fc66a1e\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_typed\"}"
+      }
+    ],
+    "observations": [
+      {
+        "id": "obs_wb_27f85909f65148a5a00fb5ac1d15d871_subject_c8e9df547a7d6dff7895d6f60d393ec2",
+        "entity_id": "subject_c8e9df547a7d6dff7895d6f60d393ec2",
+        "content": "For this test, the active project label is Memory Alpha.",
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "importance": 1.0,
+        "source": "manual_workbench",
+        "created_at": 1792757639,
+        "source_memory_id": "wb_27f85909f65148a5a00fb5ac1d15d871"
+      }
+    ],
+    "relations": [],
+    "namespace": "live_1023_121339_typed",
+    "types": [
+      "fact",
+      "semantic"
+    ],
+    "statuses": [
+      "corrected"
+    ],
+    "status_basis": "Existing lifecycle view of stored claims",
+    "created_timestamp": 1792757639,
+    "updated_timestamp": null,
+    "backend": {
+      "qdrant_point_id": "281b470b-0a8c-5e95-996d-d7720f213e83",
+      "collection": "semantic_memory",
+      "graph": "memory_core"
+    }
+  },
+  {
+    "memory_id": "wb_35c22fb82b0449e9a707d4dc8642aaa3",
+    "content": "My test workspace is named Workspace North.",
+    "metadata": {
+      "memory_type": "episodic",
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_raw",
+      "session_id": "4c947c5276c145b095933f119df42b7c",
+      "memory_claim_ids": [
+        "claim_b1ae52b39e0c85dd40c981f37c81b8f0"
+      ],
+      "memory_source_id": "source_780bd6ac15d321e84ced775f2d8efe0c",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "entity_ids": [
+      "subject_bf6d0b766cdcffbd56390c833b497cf1"
+    ],
+    "valid_from": 0,
+    "valid_until": 9223372036854775807,
+    "importance": 1.0,
+    "timestamp": 1792757623,
+    "created_at": null,
+    "vector_stored": true,
+    "graph_stored": true,
+    "payload": {
+      "memory_id": "wb_35c22fb82b0449e9a707d4dc8642aaa3",
+      "text": "My test workspace is named Workspace North.",
+      "entity_ids": [
+        "subject_bf6d0b766cdcffbd56390c833b497cf1"
+      ],
+      "valid_from": 0,
+      "valid_until": 9223372036854775807,
+      "importance": 1.0,
+      "memory_type": "episodic",
+      "timestamp": 1792757623,
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_raw",
+      "session_id": "4c947c5276c145b095933f119df42b7c",
+      "memory_claim_ids": [
+        "claim_b1ae52b39e0c85dd40c981f37c81b8f0"
+      ],
+      "memory_source_id": "source_780bd6ac15d321e84ced775f2d8efe0c",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "claims": [
+      {
+        "claim_id": "claim_b1ae52b39e0c85dd40c981f37c81b8f0",
+        "memory_id": "wb_35c22fb82b0449e9a707d4dc8642aaa3",
+        "subject": "workbench:live_1023_121339_raw",
+        "subject_id": "subject_bf6d0b766cdcffbd56390c833b497cf1",
+        "predicate": "conversation_episode",
+        "value": "My test workspace is named Workspace North.",
+        "kind": "episode",
+        "scope": {
+          "session_id": "4c947c5276c145b095933f119df42b7c"
+        },
+        "status": "accepted",
+        "accepted": true,
+        "current_eligible": true,
+        "protected": false,
+        "accepted_for_current_use": true,
+        "correction_known": false,
+        "protected_at_creation": false,
+        "fuzzy_score": 0.8652083124673997,
+        "fuzzy_explanation": {
+          "score": 0.8652083124673997,
+          "inputs": {
+            "freshness": 0.9999543617209272,
+            "quality": 0.9,
+            "support": 0.3333333333333333,
+            "agreement": 1.0
+          },
+          "memberships": {
+            "freshness": {
+              "low": 0.0,
+              "medium": 9.12765581455588e-05,
+              "high": 0.9999087234418544
+            },
+            "quality": {
+              "low": 0.0,
+              "medium": 0.19999999999999996,
+              "high": 0.8
+            },
+            "support": {
+              "low": 0.33333333333333337,
+              "medium": 0.6666666666666666,
+              "high": 0.0
+            },
+            "agreement": {
+              "low": 0.0,
+              "medium": 0.0,
+              "high": 1.0
+            }
+          },
+          "fired_rules": [
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "medium",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 6.085103876370585e-06,
+              "output": 0.55
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "medium",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 1.2170207752741168e-05,
+              "output": 0.6175
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "high",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 2.434041550548235e-05,
+              "output": 0.7300000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "high",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 4.8680831010964694e-05,
+              "output": 0.7975000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "medium",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 0.0666605815627903,
+              "output": 0.685
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "medium",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 0.13332116312558057,
+              "output": 0.7525000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "high",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 0.26664232625116124,
+              "output": 0.865
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "high",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 0.5332846525023224,
+              "output": 0.9325
+            }
+          ],
+          "method": "Sugeno v2; product conjunction; monotone rule outputs; freshness scaling",
+          "calibrated_probability": false
+        },
+        "previous_score": null,
+        "changed_by": null,
+        "change_reason": null,
+        "conflicting_claim_ids": [],
+        "sources": [
+          {
+            "id": "source_780bd6ac15d321e84ced775f2d8efe0c",
+            "memory_id": "wb_35c22fb82b0449e9a707d4dc8642aaa3",
+            "event_id": "35c22fb82b0449e9a707d4dc8642aaa3",
+            "text": "My test workspace is named Workspace North.",
+            "origin": "user",
+            "actor_id": "workbench:live_1023_121339_raw",
+            "user_confirmed": false,
+            "quality": 0.9,
+            "evidence_group": "user:workbench:live_1023_121339_raw",
+            "recorded_at": 1792757623,
+            "received_at": 1792757623,
+            "digest": "receipt_6f9658859c1363f99c8158d90336aaf7",
+            "metadata_json": "{\"memory_type\":\"episodic\",\"session_id\":\"4c947c5276c145b095933f119df42b7c\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_raw\"}"
+          }
+        ],
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "accepted_at": 1792757623,
+        "ended_at": null,
+        "reason": "",
+        "historical_meaning": "source assertion; effective dates unspecified",
+        "references": [],
+        "identity_evidence": [],
+        "evidence_path": [
+          "claim_b1ae52b39e0c85dd40c981f37c81b8f0",
+          "SUPPORTED_BY",
+          "source_780bd6ac15d321e84ced775f2d8efe0c"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "source_780bd6ac15d321e84ced775f2d8efe0c",
+        "memory_id": "wb_35c22fb82b0449e9a707d4dc8642aaa3",
+        "event_id": "35c22fb82b0449e9a707d4dc8642aaa3",
+        "text": "My test workspace is named Workspace North.",
+        "origin": "user",
+        "actor_id": "workbench:live_1023_121339_raw",
+        "user_confirmed": false,
+        "quality": 0.9,
+        "evidence_group": "user:workbench:live_1023_121339_raw",
+        "recorded_at": 1792757623,
+        "received_at": 1792757623,
+        "digest": "receipt_6f9658859c1363f99c8158d90336aaf7",
+        "metadata_json": "{\"memory_type\":\"episodic\",\"session_id\":\"4c947c5276c145b095933f119df42b7c\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_raw\"}"
+      }
+    ],
+    "observations": [
+      {
+        "id": "obs_wb_35c22fb82b0449e9a707d4dc8642aaa3_subject_bf6d0b766cdcffbd56390c833b497cf1",
+        "entity_id": "subject_bf6d0b766cdcffbd56390c833b497cf1",
+        "content": "My test workspace is named Workspace North.",
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "importance": 1.0,
+        "source": "manual_workbench",
+        "created_at": 1792757623,
+        "source_memory_id": "wb_35c22fb82b0449e9a707d4dc8642aaa3"
+      }
+    ],
+    "relations": [],
+    "namespace": "live_1023_121339_raw",
+    "types": [
+      "episode",
+      "episodic"
+    ],
+    "statuses": [
+      "accepted"
+    ],
+    "status_basis": "Existing lifecycle view of stored claims",
+    "created_timestamp": 1792757623,
+    "updated_timestamp": null,
+    "backend": {
+      "qdrant_point_id": "9f4bb58e-73b9-5c05-862e-b659ce50baa7",
+      "collection": "semantic_memory",
+      "graph": "memory_core"
+    }
+  },
+  {
+    "memory_id": "wb_4d83edc9dc634ec9b2c8de9936f2b232",
+    "content": "For this test, the active project label is Memory Alpha.",
+    "metadata": {
+      "memory_type": "episodic",
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_raw",
+      "session_id": "78b94742ecdc4bebabaf8d8cdcac7e45",
+      "memory_claim_ids": [
+        "claim_1ea5b833654691ab9d1180efcc204d71"
+      ],
+      "memory_source_id": "source_a1a3084ad914569eec370354127a475a",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "entity_ids": [
+      "subject_bf6d0b766cdcffbd56390c833b497cf1"
+    ],
+    "valid_from": 0,
+    "valid_until": 9223372036854775807,
+    "importance": 1.0,
+    "timestamp": 1792757622,
+    "created_at": null,
+    "vector_stored": true,
+    "graph_stored": true,
+    "payload": {
+      "memory_id": "wb_4d83edc9dc634ec9b2c8de9936f2b232",
+      "text": "For this test, the active project label is Memory Alpha.",
+      "entity_ids": [
+        "subject_bf6d0b766cdcffbd56390c833b497cf1"
+      ],
+      "valid_from": 0,
+      "valid_until": 9223372036854775807,
+      "importance": 1.0,
+      "memory_type": "episodic",
+      "timestamp": 1792757622,
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_raw",
+      "session_id": "78b94742ecdc4bebabaf8d8cdcac7e45",
+      "memory_claim_ids": [
+        "claim_1ea5b833654691ab9d1180efcc204d71"
+      ],
+      "memory_source_id": "source_a1a3084ad914569eec370354127a475a",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "claims": [
+      {
+        "claim_id": "claim_1ea5b833654691ab9d1180efcc204d71",
+        "memory_id": "wb_4d83edc9dc634ec9b2c8de9936f2b232",
+        "subject": "workbench:live_1023_121339_raw",
+        "subject_id": "subject_bf6d0b766cdcffbd56390c833b497cf1",
+        "predicate": "conversation_episode",
+        "value": "For this test, the active project label is Memory Alpha.",
+        "kind": "episode",
+        "scope": {
+          "session_id": "78b94742ecdc4bebabaf8d8cdcac7e45"
+        },
+        "status": "accepted",
+        "accepted": true,
+        "current_eligible": true,
+        "protected": false,
+        "accepted_for_current_use": true,
+        "correction_known": false,
+        "protected_at_creation": false,
+        "fuzzy_score": 0.8652082115185853,
+        "fuzzy_explanation": {
+          "score": 0.8652082115185853,
+          "inputs": {
+            "freshness": 0.9999542725857015,
+            "quality": 0.9,
+            "support": 0.3333333333333333,
+            "agreement": 1.0
+          },
+          "memberships": {
+            "freshness": {
+              "low": 0.0,
+              "medium": 9.145482859707066e-05,
+              "high": 0.9999085451714029
+            },
+            "quality": {
+              "low": 0.0,
+              "medium": 0.19999999999999996,
+              "high": 0.8
+            },
+            "support": {
+              "low": 0.33333333333333337,
+              "medium": 0.6666666666666666,
+              "high": 0.0
+            },
+            "agreement": {
+              "low": 0.0,
+              "medium": 0.0,
+              "high": 1.0
+            }
+          },
+          "fired_rules": [
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "medium",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 6.096988573138043e-06,
+              "output": 0.55
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "medium",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 1.2193977146276084e-05,
+              "output": 0.6175
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "high",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 2.4387954292552178e-05,
+              "output": 0.7300000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "high",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 4.877590858510435e-05,
+              "output": 0.7975000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "medium",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 0.06666056967809351,
+              "output": 0.685
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "medium",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 0.133321139356187,
+              "output": 0.7525000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "high",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 0.26664227871237417,
+              "output": 0.865
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "high",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 0.5332845574247482,
+              "output": 0.9325
+            }
+          ],
+          "method": "Sugeno v2; product conjunction; monotone rule outputs; freshness scaling",
+          "calibrated_probability": false
+        },
+        "previous_score": null,
+        "changed_by": null,
+        "change_reason": null,
+        "conflicting_claim_ids": [],
+        "sources": [
+          {
+            "id": "source_a1a3084ad914569eec370354127a475a",
+            "memory_id": "wb_4d83edc9dc634ec9b2c8de9936f2b232",
+            "event_id": "4d83edc9dc634ec9b2c8de9936f2b232",
+            "text": "For this test, the active project label is Memory Alpha.",
+            "origin": "user",
+            "actor_id": "workbench:live_1023_121339_raw",
+            "user_confirmed": false,
+            "quality": 0.9,
+            "evidence_group": "user:workbench:live_1023_121339_raw",
+            "recorded_at": 1792757622,
+            "received_at": 1792757622,
+            "digest": "receipt_070ea9c46df176ca9828f149cfbbac13",
+            "metadata_json": "{\"memory_type\":\"episodic\",\"session_id\":\"78b94742ecdc4bebabaf8d8cdcac7e45\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_raw\"}"
+          }
+        ],
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "accepted_at": 1792757622,
+        "ended_at": null,
+        "reason": "",
+        "historical_meaning": "source assertion; effective dates unspecified",
+        "references": [],
+        "identity_evidence": [],
+        "evidence_path": [
+          "claim_1ea5b833654691ab9d1180efcc204d71",
+          "SUPPORTED_BY",
+          "source_a1a3084ad914569eec370354127a475a"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "source_a1a3084ad914569eec370354127a475a",
+        "memory_id": "wb_4d83edc9dc634ec9b2c8de9936f2b232",
+        "event_id": "4d83edc9dc634ec9b2c8de9936f2b232",
+        "text": "For this test, the active project label is Memory Alpha.",
+        "origin": "user",
+        "actor_id": "workbench:live_1023_121339_raw",
+        "user_confirmed": false,
+        "quality": 0.9,
+        "evidence_group": "user:workbench:live_1023_121339_raw",
+        "recorded_at": 1792757622,
+        "received_at": 1792757622,
+        "digest": "receipt_070ea9c46df176ca9828f149cfbbac13",
+        "metadata_json": "{\"memory_type\":\"episodic\",\"session_id\":\"78b94742ecdc4bebabaf8d8cdcac7e45\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_raw\"}"
+      }
+    ],
+    "observations": [
+      {
+        "id": "obs_wb_4d83edc9dc634ec9b2c8de9936f2b232_subject_bf6d0b766cdcffbd56390c833b497cf1",
+        "entity_id": "subject_bf6d0b766cdcffbd56390c833b497cf1",
+        "content": "For this test, the active project label is Memory Alpha.",
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "importance": 1.0,
+        "source": "manual_workbench",
+        "created_at": 1792757622,
+        "source_memory_id": "wb_4d83edc9dc634ec9b2c8de9936f2b232"
+      }
+    ],
+    "relations": [],
+    "namespace": "live_1023_121339_raw",
+    "types": [
+      "episode",
+      "episodic"
+    ],
+    "statuses": [
+      "accepted"
+    ],
+    "status_basis": "Existing lifecycle view of stored claims",
+    "created_timestamp": 1792757622,
+    "updated_timestamp": null,
+    "backend": {
+      "qdrant_point_id": "04de4b6d-ff31-54fe-8283-3ac94d7bc039",
+      "collection": "semantic_memory",
+      "graph": "memory_core"
+    }
+  },
+  {
+    "memory_id": "wb_52cb6861d008445d8a791b9f5a711d42",
+    "content": "My test workspace is named Workspace North.",
+    "metadata": {
+      "memory_type": "semantic",
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_typed",
+      "session_id": "2cb30d2c892742c09ff9ed066494d9fc",
+      "memory_claim_ids": [
+        "claim_ab735ee2f93d902f24f38ce32417358d"
+      ],
+      "memory_source_id": "source_3b2c08b2fe5a4acf6df29957edb3a33d",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "entity_ids": [
+      "subject_c8e9df547a7d6dff7895d6f60d393ec2"
+    ],
+    "valid_from": 0,
+    "valid_until": 9223372036854775807,
+    "importance": 1.0,
+    "timestamp": 1792757644,
+    "created_at": null,
+    "vector_stored": true,
+    "graph_stored": true,
+    "payload": {
+      "memory_id": "wb_52cb6861d008445d8a791b9f5a711d42",
+      "text": "My test workspace is named Workspace North.",
+      "entity_ids": [
+        "subject_c8e9df547a7d6dff7895d6f60d393ec2"
+      ],
+      "valid_from": 0,
+      "valid_until": 9223372036854775807,
+      "importance": 1.0,
+      "memory_type": "semantic",
+      "timestamp": 1792757644,
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_typed",
+      "session_id": "2cb30d2c892742c09ff9ed066494d9fc",
+      "memory_claim_ids": [
+        "claim_ab735ee2f93d902f24f38ce32417358d"
+      ],
+      "memory_source_id": "source_3b2c08b2fe5a4acf6df29957edb3a33d",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "claims": [
+      {
+        "claim_id": "claim_ab735ee2f93d902f24f38ce32417358d",
+        "memory_id": "wb_52cb6861d008445d8a791b9f5a711d42",
+        "subject": "manual-user",
+        "subject_id": "subject_c8e9df547a7d6dff7895d6f60d393ec2",
+        "predicate": "workspace_name",
+        "value": "Workspace North",
+        "kind": "fact",
+        "scope": {
+          "test_namespace": "live_1023_121339_typed"
+        },
+        "status": "disputed",
+        "accepted": true,
+        "current_eligible": true,
+        "protected": false,
+        "accepted_for_current_use": false,
+        "correction_known": false,
+        "protected_at_creation": false,
+        "fuzzy_score": 0.7983883570877486,
+        "fuzzy_explanation": {
+          "score": 0.7983883570877486,
+          "inputs": {
+            "freshness": 0.999956233562504,
+            "quality": 0.9,
+            "support": 0.3333333333333333,
+            "agreement": 0.5
+          },
+          "memberships": {
+            "freshness": {
+              "low": 0.0,
+              "medium": 8.753287499208007e-05,
+              "high": 0.9999124671250079
+            },
+            "quality": {
+              "low": 0.0,
+              "medium": 0.19999999999999996,
+              "high": 0.8
+            },
+            "support": {
+              "low": 0.33333333333333337,
+              "medium": 0.6666666666666666,
+              "high": 0.0
+            },
+            "agreement": {
+              "low": 0.0,
+              "medium": 1.0,
+              "high": 0.0
+            }
+          },
+          "fired_rules": [
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "medium",
+                "support": "low",
+                "agreement": "medium"
+              },
+              "firing_strength": 5.835524999472003e-06,
+              "output": 0.48250000000000004
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "medium",
+                "support": "medium",
+                "agreement": "medium"
+              },
+              "firing_strength": 1.1671049998944005e-05,
+              "output": 0.55
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "high",
+                "support": "low",
+                "agreement": "medium"
+              },
+              "firing_strength": 2.3342099997888023e-05,
+              "output": 0.6625000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "high",
+                "support": "medium",
+                "agreement": "medium"
+              },
+              "firing_strength": 4.668419999577604e-05,
+              "output": 0.7300000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "medium",
+                "support": "low",
+                "agreement": "medium"
+              },
+              "firing_strength": 0.0666608311416672,
+              "output": 0.6175
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "medium",
+                "support": "medium",
+                "agreement": "medium"
+              },
+              "firing_strength": 0.13332166228333436,
+              "output": 0.685
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "high",
+                "support": "low",
+                "agreement": "medium"
+              },
+              "firing_strength": 0.26664332456666884,
+              "output": 0.7975
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "high",
+                "support": "medium",
+                "agreement": "medium"
+              },
+              "firing_strength": 0.5332866491333376,
+              "output": 0.865
+            }
+          ],
+          "method": "Sugeno v2; product conjunction; monotone rule outputs; freshness scaling",
+          "calibrated_probability": false
+        },
+        "previous_score": null,
+        "changed_by": null,
+        "change_reason": null,
+        "conflicting_claim_ids": [
+          "claim_ff50f76e1df445b0b105d311dcd00a09"
+        ],
+        "sources": [
+          {
+            "id": "source_3b2c08b2fe5a4acf6df29957edb3a33d",
+            "memory_id": "wb_52cb6861d008445d8a791b9f5a711d42",
+            "event_id": "52cb6861d008445d8a791b9f5a711d42",
+            "text": "My test workspace is named Workspace North.",
+            "origin": "user",
+            "actor_id": "workbench:live_1023_121339_typed",
+            "user_confirmed": true,
+            "quality": 0.9,
+            "evidence_group": "user:workbench:live_1023_121339_typed",
+            "recorded_at": 1792757644,
+            "received_at": 1792757644,
+            "digest": "receipt_e3ebf002c91008401ec1420d5a841cda",
+            "metadata_json": "{\"session_id\":\"2cb30d2c892742c09ff9ed066494d9fc\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_typed\"}"
+          }
+        ],
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "accepted_at": 1792757644,
+        "ended_at": null,
+        "reason": "",
+        "historical_meaning": "source assertion; effective dates unspecified",
+        "references": [],
+        "identity_evidence": [],
+        "evidence_path": [
+          "claim_ab735ee2f93d902f24f38ce32417358d",
+          "SUPPORTED_BY",
+          "source_3b2c08b2fe5a4acf6df29957edb3a33d"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "source_3b2c08b2fe5a4acf6df29957edb3a33d",
+        "memory_id": "wb_52cb6861d008445d8a791b9f5a711d42",
+        "event_id": "52cb6861d008445d8a791b9f5a711d42",
+        "text": "My test workspace is named Workspace North.",
+        "origin": "user",
+        "actor_id": "workbench:live_1023_121339_typed",
+        "user_confirmed": true,
+        "quality": 0.9,
+        "evidence_group": "user:workbench:live_1023_121339_typed",
+        "recorded_at": 1792757644,
+        "received_at": 1792757644,
+        "digest": "receipt_e3ebf002c91008401ec1420d5a841cda",
+        "metadata_json": "{\"session_id\":\"2cb30d2c892742c09ff9ed066494d9fc\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_typed\"}"
+      }
+    ],
+    "observations": [
+      {
+        "id": "obs_wb_52cb6861d008445d8a791b9f5a711d42_subject_c8e9df547a7d6dff7895d6f60d393ec2",
+        "entity_id": "subject_c8e9df547a7d6dff7895d6f60d393ec2",
+        "content": "My test workspace is named Workspace North.",
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "importance": 1.0,
+        "source": "manual_workbench",
+        "created_at": 1792757644,
+        "source_memory_id": "wb_52cb6861d008445d8a791b9f5a711d42"
+      }
+    ],
+    "relations": [],
+    "namespace": "live_1023_121339_typed",
+    "types": [
+      "fact",
+      "semantic"
+    ],
+    "statuses": [
+      "disputed"
+    ],
+    "status_basis": "Existing lifecycle view of stored claims",
+    "created_timestamp": 1792757644,
+    "updated_timestamp": null,
+    "backend": {
+      "qdrant_point_id": "2e9dc86f-4d8b-5a76-86c1-f0eb1bd6bd00",
+      "collection": "semantic_memory",
+      "graph": "memory_core"
+    }
+  },
+  {
+    "memory_id": "wb_58e33934e60f4127a8ba6c0ccfe96eba",
+    "content": "The next test review is scheduled for 15 November 2026.",
+    "metadata": {
+      "memory_type": "episodic",
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_raw",
+      "session_id": "f24f1dd27aaf4440a11826143019cfb4",
+      "memory_claim_ids": [
+        "claim_ee06ac6837e78197bf02aaabc8b9f2fe"
+      ],
+      "memory_source_id": "source_09fa23587951321775a259ddec20c4d1",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "entity_ids": [
+      "subject_bf6d0b766cdcffbd56390c833b497cf1"
+    ],
+    "valid_from": 0,
+    "valid_until": 9223372036854775807,
+    "importance": 1.0,
+    "timestamp": 1792757631,
+    "created_at": null,
+    "vector_stored": true,
+    "graph_stored": true,
+    "payload": {
+      "memory_id": "wb_58e33934e60f4127a8ba6c0ccfe96eba",
+      "text": "The next test review is scheduled for 15 November 2026.",
+      "entity_ids": [
+        "subject_bf6d0b766cdcffbd56390c833b497cf1"
+      ],
+      "valid_from": 0,
+      "valid_until": 9223372036854775807,
+      "importance": 1.0,
+      "memory_type": "episodic",
+      "timestamp": 1792757631,
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_raw",
+      "session_id": "f24f1dd27aaf4440a11826143019cfb4",
+      "memory_claim_ids": [
+        "claim_ee06ac6837e78197bf02aaabc8b9f2fe"
+      ],
+      "memory_source_id": "source_09fa23587951321775a259ddec20c4d1",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "claims": [
+      {
+        "claim_id": "claim_ee06ac6837e78197bf02aaabc8b9f2fe",
+        "memory_id": "wb_58e33934e60f4127a8ba6c0ccfe96eba",
+        "subject": "workbench:live_1023_121339_raw",
+        "subject_id": "subject_bf6d0b766cdcffbd56390c833b497cf1",
+        "predicate": "conversation_episode",
+        "value": "The next test review is scheduled for 15 November 2026.",
+        "kind": "episode",
+        "scope": {
+          "session_id": "f24f1dd27aaf4440a11826143019cfb4"
+        },
+        "status": "accepted",
+        "accepted": true,
+        "current_eligible": true,
+        "protected": false,
+        "accepted_for_current_use": true,
+        "correction_known": false,
+        "protected_at_creation": false,
+        "fuzzy_score": 0.8652091200583922,
+        "fuzzy_explanation": {
+          "score": 0.8652091200583922,
+          "inputs": {
+            "freshness": 0.9999550748030195,
+            "quality": 0.9,
+            "support": 0.3333333333333333,
+            "agreement": 1.0
+          },
+          "memberships": {
+            "freshness": {
+              "low": 0.0,
+              "medium": 8.985039396103289e-05,
+              "high": 0.999910149606039
+            },
+            "quality": {
+              "low": 0.0,
+              "medium": 0.19999999999999996,
+              "high": 0.8
+            },
+            "support": {
+              "low": 0.33333333333333337,
+              "medium": 0.6666666666666666,
+              "high": 0.0
+            },
+            "agreement": {
+              "low": 0.0,
+              "medium": 0.0,
+              "high": 1.0
+            }
+          },
+          "fired_rules": [
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "medium",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 5.9900262640688585e-06,
+              "output": 0.55
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "medium",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 1.1980052528137715e-05,
+              "output": 0.6175
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "high",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 2.3960105056275444e-05,
+              "output": 0.7300000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "high",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 4.792021011255088e-05,
+              "output": 0.7975000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "medium",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 0.0666606766404026,
+              "output": 0.685
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "medium",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 0.13332135328080516,
+              "output": 0.7525000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "high",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 0.26664270656161043,
+              "output": 0.865
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "high",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 0.5332854131232208,
+              "output": 0.9325
+            }
+          ],
+          "method": "Sugeno v2; product conjunction; monotone rule outputs; freshness scaling",
+          "calibrated_probability": false
+        },
+        "previous_score": null,
+        "changed_by": null,
+        "change_reason": null,
+        "conflicting_claim_ids": [],
+        "sources": [
+          {
+            "id": "source_09fa23587951321775a259ddec20c4d1",
+            "memory_id": "wb_58e33934e60f4127a8ba6c0ccfe96eba",
+            "event_id": "58e33934e60f4127a8ba6c0ccfe96eba",
+            "text": "The next test review is scheduled for 15 November 2026.",
+            "origin": "user",
+            "actor_id": "workbench:live_1023_121339_raw",
+            "user_confirmed": false,
+            "quality": 0.9,
+            "evidence_group": "user:workbench:live_1023_121339_raw",
+            "recorded_at": 1792757631,
+            "received_at": 1792757631,
+            "digest": "receipt_b28424ad1c52d511fd36619b9a48b31f",
+            "metadata_json": "{\"memory_type\":\"episodic\",\"session_id\":\"f24f1dd27aaf4440a11826143019cfb4\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_raw\"}"
+          }
+        ],
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "accepted_at": 1792757631,
+        "ended_at": null,
+        "reason": "",
+        "historical_meaning": "source assertion; effective dates unspecified",
+        "references": [],
+        "identity_evidence": [],
+        "evidence_path": [
+          "claim_ee06ac6837e78197bf02aaabc8b9f2fe",
+          "SUPPORTED_BY",
+          "source_09fa23587951321775a259ddec20c4d1"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "source_09fa23587951321775a259ddec20c4d1",
+        "memory_id": "wb_58e33934e60f4127a8ba6c0ccfe96eba",
+        "event_id": "58e33934e60f4127a8ba6c0ccfe96eba",
+        "text": "The next test review is scheduled for 15 November 2026.",
+        "origin": "user",
+        "actor_id": "workbench:live_1023_121339_raw",
+        "user_confirmed": false,
+        "quality": 0.9,
+        "evidence_group": "user:workbench:live_1023_121339_raw",
+        "recorded_at": 1792757631,
+        "received_at": 1792757631,
+        "digest": "receipt_b28424ad1c52d511fd36619b9a48b31f",
+        "metadata_json": "{\"memory_type\":\"episodic\",\"session_id\":\"f24f1dd27aaf4440a11826143019cfb4\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_raw\"}"
+      }
+    ],
+    "observations": [
+      {
+        "id": "obs_wb_58e33934e60f4127a8ba6c0ccfe96eba_subject_bf6d0b766cdcffbd56390c833b497cf1",
+        "entity_id": "subject_bf6d0b766cdcffbd56390c833b497cf1",
+        "content": "The next test review is scheduled for 15 November 2026.",
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "importance": 1.0,
+        "source": "manual_workbench",
+        "created_at": 1792757631,
+        "source_memory_id": "wb_58e33934e60f4127a8ba6c0ccfe96eba"
+      }
+    ],
+    "relations": [],
+    "namespace": "live_1023_121339_raw",
+    "types": [
+      "episode",
+      "episodic"
+    ],
+    "statuses": [
+      "accepted"
+    ],
+    "status_basis": "Existing lifecycle view of stored claims",
+    "created_timestamp": 1792757631,
+    "updated_timestamp": null,
+    "backend": {
+      "qdrant_point_id": "d0b09aff-4d3b-50c6-bebf-b4a84a006447",
+      "collection": "semantic_memory",
+      "graph": "memory_core"
+    }
+  },
+  {
+    "memory_id": "wb_67ec52456ba947f5990a50f4de0cbef3",
+    "content": "The memory backend test uses a blue notebook.",
+    "metadata": {
+      "memory_type": "episodic",
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_precision",
+      "session_id": "56b0b84c5a6649d1a8f4c0b903193731",
+      "memory_claim_ids": [
+        "claim_f2a36d1bab4320c9c30fa58a264365d5"
+      ],
+      "memory_source_id": "source_59c6864ac9097dd835addeb5c2da90c3",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "entity_ids": [
+      "subject_9bd944320c436915ca67f398a6288a0e"
+    ],
+    "valid_from": 0,
+    "valid_until": 9223372036854775807,
+    "importance": 1.0,
+    "timestamp": 1792757634,
+    "created_at": null,
+    "vector_stored": true,
+    "graph_stored": true,
+    "payload": {
+      "memory_id": "wb_67ec52456ba947f5990a50f4de0cbef3",
+      "text": "The memory backend test uses a blue notebook.",
+      "entity_ids": [
+        "subject_9bd944320c436915ca67f398a6288a0e"
+      ],
+      "valid_from": 0,
+      "valid_until": 9223372036854775807,
+      "importance": 1.0,
+      "memory_type": "episodic",
+      "timestamp": 1792757634,
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_precision",
+      "session_id": "56b0b84c5a6649d1a8f4c0b903193731",
+      "memory_claim_ids": [
+        "claim_f2a36d1bab4320c9c30fa58a264365d5"
+      ],
+      "memory_source_id": "source_59c6864ac9097dd835addeb5c2da90c3",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "claims": [
+      {
+        "claim_id": "claim_f2a36d1bab4320c9c30fa58a264365d5",
+        "memory_id": "wb_67ec52456ba947f5990a50f4de0cbef3",
+        "subject": "workbench:live_1023_121339_precision",
+        "subject_id": "subject_9bd944320c436915ca67f398a6288a0e",
+        "predicate": "conversation_episode",
+        "value": "The memory backend test uses a blue notebook.",
+        "kind": "episode",
+        "scope": {
+          "session_id": "56b0b84c5a6649d1a8f4c0b903193731"
+        },
+        "status": "accepted",
+        "accepted": true,
+        "current_eligible": true,
+        "protected": false,
+        "accepted_for_current_use": true,
+        "correction_known": false,
+        "protected_at_creation": false,
+        "fuzzy_score": 0.8652094229052327,
+        "fuzzy_explanation": {
+          "score": 0.8652094229052327,
+          "inputs": {
+            "freshness": 0.9999553422089351,
+            "quality": 0.9,
+            "support": 0.3333333333333333,
+            "agreement": 1.0
+          },
+          "memberships": {
+            "freshness": {
+              "low": 0.0,
+              "medium": 8.931558212976753e-05,
+              "high": 0.9999106844178702
+            },
+            "quality": {
+              "low": 0.0,
+              "medium": 0.19999999999999996,
+              "high": 0.8
+            },
+            "support": {
+              "low": 0.33333333333333337,
+              "medium": 0.6666666666666666,
+              "high": 0.0
+            },
+            "agreement": {
+              "low": 0.0,
+              "medium": 0.0,
+              "high": 1.0
+            }
+          },
+          "fired_rules": [
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "medium",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 5.954372141984501e-06,
+              "output": 0.55
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "medium",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 1.1908744283969e-05,
+              "output": 0.6175
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "high",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 2.3817488567938014e-05,
+              "output": 0.7300000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "high",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 4.763497713587602e-05,
+              "output": 0.7975000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "medium",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 0.06666071229452468,
+              "output": 0.685
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "medium",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 0.13332142458904933,
+              "output": 0.7525000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "high",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 0.2666428491780988,
+              "output": 0.865
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "high",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 0.5332856983561974,
+              "output": 0.9325
+            }
+          ],
+          "method": "Sugeno v2; product conjunction; monotone rule outputs; freshness scaling",
+          "calibrated_probability": false
+        },
+        "previous_score": null,
+        "changed_by": null,
+        "change_reason": null,
+        "conflicting_claim_ids": [],
+        "sources": [
+          {
+            "id": "source_59c6864ac9097dd835addeb5c2da90c3",
+            "memory_id": "wb_67ec52456ba947f5990a50f4de0cbef3",
+            "event_id": "67ec52456ba947f5990a50f4de0cbef3",
+            "text": "The memory backend test uses a blue notebook.",
+            "origin": "user",
+            "actor_id": "workbench:live_1023_121339_precision",
+            "user_confirmed": false,
+            "quality": 0.9,
+            "evidence_group": "user:workbench:live_1023_121339_precision",
+            "recorded_at": 1792757634,
+            "received_at": 1792757634,
+            "digest": "receipt_6dc8d06a97f225a0c1f4e89f7ff81bc7",
+            "metadata_json": "{\"memory_type\":\"episodic\",\"session_id\":\"56b0b84c5a6649d1a8f4c0b903193731\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_precision\"}"
+          }
+        ],
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "accepted_at": 1792757634,
+        "ended_at": null,
+        "reason": "",
+        "historical_meaning": "source assertion; effective dates unspecified",
+        "references": [],
+        "identity_evidence": [],
+        "evidence_path": [
+          "claim_f2a36d1bab4320c9c30fa58a264365d5",
+          "SUPPORTED_BY",
+          "source_59c6864ac9097dd835addeb5c2da90c3"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "source_59c6864ac9097dd835addeb5c2da90c3",
+        "memory_id": "wb_67ec52456ba947f5990a50f4de0cbef3",
+        "event_id": "67ec52456ba947f5990a50f4de0cbef3",
+        "text": "The memory backend test uses a blue notebook.",
+        "origin": "user",
+        "actor_id": "workbench:live_1023_121339_precision",
+        "user_confirmed": false,
+        "quality": 0.9,
+        "evidence_group": "user:workbench:live_1023_121339_precision",
+        "recorded_at": 1792757634,
+        "received_at": 1792757634,
+        "digest": "receipt_6dc8d06a97f225a0c1f4e89f7ff81bc7",
+        "metadata_json": "{\"memory_type\":\"episodic\",\"session_id\":\"56b0b84c5a6649d1a8f4c0b903193731\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_precision\"}"
+      }
+    ],
+    "observations": [
+      {
+        "id": "obs_wb_67ec52456ba947f5990a50f4de0cbef3_subject_9bd944320c436915ca67f398a6288a0e",
+        "entity_id": "subject_9bd944320c436915ca67f398a6288a0e",
+        "content": "The memory backend test uses a blue notebook.",
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "importance": 1.0,
+        "source": "manual_workbench",
+        "created_at": 1792757634,
+        "source_memory_id": "wb_67ec52456ba947f5990a50f4de0cbef3"
+      }
+    ],
+    "relations": [],
+    "namespace": "live_1023_121339_precision",
+    "types": [
+      "episode",
+      "episodic"
+    ],
+    "statuses": [
+      "accepted"
+    ],
+    "status_basis": "Existing lifecycle view of stored claims",
+    "created_timestamp": 1792757634,
+    "updated_timestamp": null,
+    "backend": {
+      "qdrant_point_id": "900937a9-e857-5eb0-a809-a3123200254d",
+      "collection": "semantic_memory",
+      "graph": "memory_core"
+    }
+  },
+  {
+    "memory_id": "wb_8dd2240d92e242eb92db16860e698ef6",
+    "content": "Correction: the active project label is Memory Beta. Memory Alpha is no longer the correct label.",
+    "metadata": {
+      "memory_type": "semantic",
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_typed",
+      "session_id": "6c110ee7464d41edad586b8f6975c5a9",
+      "memory_claim_ids": [
+        "claim_ade9a6843b1f8f266a975c61f42a4bfa"
+      ],
+      "memory_source_id": "source_a8ae23e3fb8c89fd76538c254b33dc53",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "entity_ids": [
+      "subject_c8e9df547a7d6dff7895d6f60d393ec2"
+    ],
+    "valid_from": 0,
+    "valid_until": 9223372036854775807,
+    "importance": 1.0,
+    "timestamp": 1792757640,
+    "created_at": null,
+    "vector_stored": true,
+    "graph_stored": true,
+    "payload": {
+      "memory_id": "wb_8dd2240d92e242eb92db16860e698ef6",
+      "text": "Correction: the active project label is Memory Beta. Memory Alpha is no longer the correct label.",
+      "entity_ids": [
+        "subject_c8e9df547a7d6dff7895d6f60d393ec2"
+      ],
+      "valid_from": 0,
+      "valid_until": 9223372036854775807,
+      "importance": 1.0,
+      "memory_type": "semantic",
+      "timestamp": 1792757640,
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_typed",
+      "session_id": "6c110ee7464d41edad586b8f6975c5a9",
+      "memory_claim_ids": [
+        "claim_ade9a6843b1f8f266a975c61f42a4bfa"
+      ],
+      "memory_source_id": "source_a8ae23e3fb8c89fd76538c254b33dc53",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "claims": [
+      {
+        "claim_id": "claim_ade9a6843b1f8f266a975c61f42a4bfa",
+        "memory_id": "wb_8dd2240d92e242eb92db16860e698ef6",
+        "subject": "manual-user",
+        "subject_id": "subject_c8e9df547a7d6dff7895d6f60d393ec2",
+        "predicate": "project_label",
+        "value": "Memory Beta",
+        "kind": "fact",
+        "scope": {
+          "test_namespace": "live_1023_121339_typed"
+        },
+        "status": "accepted",
+        "accepted": true,
+        "current_eligible": true,
+        "protected": false,
+        "accepted_for_current_use": true,
+        "correction_known": false,
+        "protected_at_creation": false,
+        "fuzzy_score": 0.8652099276502324,
+        "fuzzy_explanation": {
+          "score": 0.8652099276502324,
+          "inputs": {
+            "freshness": 0.9999557878856202,
+            "quality": 0.9,
+            "support": 0.3333333333333333,
+            "agreement": 1.0
+          },
+          "memberships": {
+            "freshness": {
+              "low": 0.0,
+              "medium": 8.84242287595427e-05,
+              "high": 0.9999115757712405
+            },
+            "quality": {
+              "low": 0.0,
+              "medium": 0.19999999999999996,
+              "high": 0.8
+            },
+            "support": {
+              "low": 0.33333333333333337,
+              "medium": 0.6666666666666666,
+              "high": 0.0
+            },
+            "agreement": {
+              "low": 0.0,
+              "medium": 0.0,
+              "high": 1.0
+            }
+          },
+          "fired_rules": [
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "medium",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 5.894948583969512e-06,
+              "output": 0.55
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "medium",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 1.1789897167939022e-05,
+              "output": 0.6175
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "high",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 2.357979433587806e-05,
+              "output": 0.7300000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "high",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 4.715958867175611e-05,
+              "output": 0.7975000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "medium",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 0.0666607717180827,
+              "output": 0.685
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "medium",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 0.13332154343616537,
+              "output": 0.7525000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "high",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 0.26664308687233085,
+              "output": 0.865
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "high",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 0.5332861737446616,
+              "output": 0.9325
+            }
+          ],
+          "method": "Sugeno v2; product conjunction; monotone rule outputs; freshness scaling",
+          "calibrated_probability": false
+        },
+        "previous_score": null,
+        "changed_by": null,
+        "change_reason": null,
+        "conflicting_claim_ids": [],
+        "sources": [
+          {
+            "id": "source_a8ae23e3fb8c89fd76538c254b33dc53",
+            "memory_id": "wb_8dd2240d92e242eb92db16860e698ef6",
+            "event_id": "8dd2240d92e242eb92db16860e698ef6",
+            "text": "Correction: the active project label is Memory Beta. Memory Alpha is no longer the correct label.",
+            "origin": "user",
+            "actor_id": "workbench:live_1023_121339_typed",
+            "user_confirmed": true,
+            "quality": 0.9,
+            "evidence_group": "user:workbench:live_1023_121339_typed",
+            "recorded_at": 1792757640,
+            "received_at": 1792757640,
+            "digest": "receipt_a98d637d244033daaab96c1dad97ce04",
+            "metadata_json": "{\"session_id\":\"6c110ee7464d41edad586b8f6975c5a9\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_typed\"}"
+          }
+        ],
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "accepted_at": 1792757640,
+        "ended_at": null,
+        "reason": "Explicit user test correction or reschedule.",
+        "historical_meaning": "source assertion; effective dates unspecified",
+        "references": [],
+        "identity_evidence": [],
+        "evidence_path": [
+          "claim_ade9a6843b1f8f266a975c61f42a4bfa",
+          "SUPPORTED_BY",
+          "source_a8ae23e3fb8c89fd76538c254b33dc53"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "source_a8ae23e3fb8c89fd76538c254b33dc53",
+        "memory_id": "wb_8dd2240d92e242eb92db16860e698ef6",
+        "event_id": "8dd2240d92e242eb92db16860e698ef6",
+        "text": "Correction: the active project label is Memory Beta. Memory Alpha is no longer the correct label.",
+        "origin": "user",
+        "actor_id": "workbench:live_1023_121339_typed",
+        "user_confirmed": true,
+        "quality": 0.9,
+        "evidence_group": "user:workbench:live_1023_121339_typed",
+        "recorded_at": 1792757640,
+        "received_at": 1792757640,
+        "digest": "receipt_a98d637d244033daaab96c1dad97ce04",
+        "metadata_json": "{\"session_id\":\"6c110ee7464d41edad586b8f6975c5a9\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_typed\"}"
+      }
+    ],
+    "observations": [
+      {
+        "id": "obs_wb_8dd2240d92e242eb92db16860e698ef6_subject_c8e9df547a7d6dff7895d6f60d393ec2",
+        "entity_id": "subject_c8e9df547a7d6dff7895d6f60d393ec2",
+        "content": "Correction: the active project label is Memory Beta. Memory Alpha is no longer the correct label.",
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "importance": 1.0,
+        "source": "manual_workbench",
+        "created_at": 1792757640,
+        "source_memory_id": "wb_8dd2240d92e242eb92db16860e698ef6"
+      }
+    ],
+    "relations": [],
+    "namespace": "live_1023_121339_typed",
+    "types": [
+      "fact",
+      "semantic"
+    ],
+    "statuses": [
+      "accepted"
+    ],
+    "status_basis": "Existing lifecycle view of stored claims",
+    "created_timestamp": 1792757640,
+    "updated_timestamp": null,
+    "backend": {
+      "qdrant_point_id": "2e5cda8b-8e56-5d6a-90ec-86359ec85e5b",
+      "collection": "semantic_memory",
+      "graph": "memory_core"
+    }
+  },
+  {
+    "memory_id": "wb_98771ceaa98c4865ab47148f47556d60",
+    "content": "My test workspace is named Workspace South.",
+    "metadata": {
+      "memory_type": "semantic",
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_typed",
+      "session_id": "dc5dfe1fe4fa49a5a03def36c82cb5b0",
+      "memory_claim_ids": [
+        "claim_ff50f76e1df445b0b105d311dcd00a09"
+      ],
+      "memory_source_id": "source_6d528b023d0eba74e9f4fa5b3e41a2aa",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "entity_ids": [
+      "subject_c8e9df547a7d6dff7895d6f60d393ec2"
+    ],
+    "valid_from": 0,
+    "valid_until": 9223372036854775807,
+    "importance": 1.0,
+    "timestamp": 1792757645,
+    "created_at": null,
+    "vector_stored": true,
+    "graph_stored": true,
+    "payload": {
+      "memory_id": "wb_98771ceaa98c4865ab47148f47556d60",
+      "text": "My test workspace is named Workspace South.",
+      "entity_ids": [
+        "subject_c8e9df547a7d6dff7895d6f60d393ec2"
+      ],
+      "valid_from": 0,
+      "valid_until": 9223372036854775807,
+      "importance": 1.0,
+      "memory_type": "semantic",
+      "timestamp": 1792757645,
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_typed",
+      "session_id": "dc5dfe1fe4fa49a5a03def36c82cb5b0",
+      "memory_claim_ids": [
+        "claim_ff50f76e1df445b0b105d311dcd00a09"
+      ],
+      "memory_source_id": "source_6d528b023d0eba74e9f4fa5b3e41a2aa",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "claims": [
+      {
+        "claim_id": "claim_ff50f76e1df445b0b105d311dcd00a09",
+        "memory_id": "wb_98771ceaa98c4865ab47148f47556d60",
+        "subject": "manual-user",
+        "subject_id": "subject_c8e9df547a7d6dff7895d6f60d393ec2",
+        "predicate": "workspace_name",
+        "value": "Workspace South",
+        "kind": "fact",
+        "scope": {
+          "test_namespace": "live_1023_121339_typed"
+        },
+        "status": "disputed",
+        "accepted": true,
+        "current_eligible": true,
+        "protected": false,
+        "accepted_for_current_use": false,
+        "correction_known": false,
+        "protected_at_creation": false,
+        "fuzzy_score": 0.7983883570877486,
+        "fuzzy_explanation": {
+          "score": 0.7983883570877486,
+          "inputs": {
+            "freshness": 0.999956233562504,
+            "quality": 0.9,
+            "support": 0.3333333333333333,
+            "agreement": 0.5
+          },
+          "memberships": {
+            "freshness": {
+              "low": 0.0,
+              "medium": 8.753287499208007e-05,
+              "high": 0.9999124671250079
+            },
+            "quality": {
+              "low": 0.0,
+              "medium": 0.19999999999999996,
+              "high": 0.8
+            },
+            "support": {
+              "low": 0.33333333333333337,
+              "medium": 0.6666666666666666,
+              "high": 0.0
+            },
+            "agreement": {
+              "low": 0.0,
+              "medium": 1.0,
+              "high": 0.0
+            }
+          },
+          "fired_rules": [
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "medium",
+                "support": "low",
+                "agreement": "medium"
+              },
+              "firing_strength": 5.835524999472003e-06,
+              "output": 0.48250000000000004
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "medium",
+                "support": "medium",
+                "agreement": "medium"
+              },
+              "firing_strength": 1.1671049998944005e-05,
+              "output": 0.55
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "high",
+                "support": "low",
+                "agreement": "medium"
+              },
+              "firing_strength": 2.3342099997888023e-05,
+              "output": 0.6625000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "high",
+                "support": "medium",
+                "agreement": "medium"
+              },
+              "firing_strength": 4.668419999577604e-05,
+              "output": 0.7300000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "medium",
+                "support": "low",
+                "agreement": "medium"
+              },
+              "firing_strength": 0.0666608311416672,
+              "output": 0.6175
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "medium",
+                "support": "medium",
+                "agreement": "medium"
+              },
+              "firing_strength": 0.13332166228333436,
+              "output": 0.685
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "high",
+                "support": "low",
+                "agreement": "medium"
+              },
+              "firing_strength": 0.26664332456666884,
+              "output": 0.7975
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "high",
+                "support": "medium",
+                "agreement": "medium"
+              },
+              "firing_strength": 0.5332866491333376,
+              "output": 0.865
+            }
+          ],
+          "method": "Sugeno v2; product conjunction; monotone rule outputs; freshness scaling",
+          "calibrated_probability": false
+        },
+        "previous_score": null,
+        "changed_by": null,
+        "change_reason": null,
+        "conflicting_claim_ids": [
+          "claim_ab735ee2f93d902f24f38ce32417358d"
+        ],
+        "sources": [
+          {
+            "id": "source_6d528b023d0eba74e9f4fa5b3e41a2aa",
+            "memory_id": "wb_98771ceaa98c4865ab47148f47556d60",
+            "event_id": "98771ceaa98c4865ab47148f47556d60",
+            "text": "My test workspace is named Workspace South.",
+            "origin": "user",
+            "actor_id": "workbench:live_1023_121339_typed",
+            "user_confirmed": true,
+            "quality": 0.9,
+            "evidence_group": "user:workbench:live_1023_121339_typed",
+            "recorded_at": 1792757645,
+            "received_at": 1792757645,
+            "digest": "receipt_e62d69272443464c23db430484361bb5",
+            "metadata_json": "{\"session_id\":\"dc5dfe1fe4fa49a5a03def36c82cb5b0\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_typed\"}"
+          }
+        ],
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "accepted_at": 1792757645,
+        "ended_at": null,
+        "reason": "",
+        "historical_meaning": "source assertion; effective dates unspecified",
+        "references": [],
+        "identity_evidence": [],
+        "evidence_path": [
+          "claim_ff50f76e1df445b0b105d311dcd00a09",
+          "SUPPORTED_BY",
+          "source_6d528b023d0eba74e9f4fa5b3e41a2aa"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "source_6d528b023d0eba74e9f4fa5b3e41a2aa",
+        "memory_id": "wb_98771ceaa98c4865ab47148f47556d60",
+        "event_id": "98771ceaa98c4865ab47148f47556d60",
+        "text": "My test workspace is named Workspace South.",
+        "origin": "user",
+        "actor_id": "workbench:live_1023_121339_typed",
+        "user_confirmed": true,
+        "quality": 0.9,
+        "evidence_group": "user:workbench:live_1023_121339_typed",
+        "recorded_at": 1792757645,
+        "received_at": 1792757645,
+        "digest": "receipt_e62d69272443464c23db430484361bb5",
+        "metadata_json": "{\"session_id\":\"dc5dfe1fe4fa49a5a03def36c82cb5b0\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_typed\"}"
+      }
+    ],
+    "observations": [
+      {
+        "id": "obs_wb_98771ceaa98c4865ab47148f47556d60_subject_c8e9df547a7d6dff7895d6f60d393ec2",
+        "entity_id": "subject_c8e9df547a7d6dff7895d6f60d393ec2",
+        "content": "My test workspace is named Workspace South.",
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "importance": 1.0,
+        "source": "manual_workbench",
+        "created_at": 1792757645,
+        "source_memory_id": "wb_98771ceaa98c4865ab47148f47556d60"
+      }
+    ],
+    "relations": [],
+    "namespace": "live_1023_121339_typed",
+    "types": [
+      "fact",
+      "semantic"
+    ],
+    "statuses": [
+      "disputed"
+    ],
+    "status_basis": "Existing lifecycle view of stored claims",
+    "created_timestamp": 1792757645,
+    "updated_timestamp": null,
+    "backend": {
+      "qdrant_point_id": "ddf44dc5-e80e-5dde-bde7-9f4bf284a685",
+      "collection": "semantic_memory",
+      "graph": "memory_core"
+    }
+  },
+  {
+    "memory_id": "wb_9a74b9de8b1748a9b17f0ccb327a38ca",
+    "content": "Correction: the active project label is Memory Beta. Memory Alpha is no longer the correct label.",
+    "metadata": {
+      "memory_type": "episodic",
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_raw",
+      "session_id": "b70187ebfa274f47bfa9a4ee82c9435e",
+      "memory_claim_ids": [
+        "claim_e8df04b73dd032366553ba59dda704b4"
+      ],
+      "memory_source_id": "source_34565b4dd9bf0250dc09c3fcc7163b6b",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "entity_ids": [
+      "subject_bf6d0b766cdcffbd56390c833b497cf1"
+    ],
+    "valid_from": 0,
+    "valid_until": 9223372036854775807,
+    "importance": 1.0,
+    "timestamp": 1792757622,
+    "created_at": null,
+    "vector_stored": true,
+    "graph_stored": true,
+    "payload": {
+      "memory_id": "wb_9a74b9de8b1748a9b17f0ccb327a38ca",
+      "text": "Correction: the active project label is Memory Beta. Memory Alpha is no longer the correct label.",
+      "entity_ids": [
+        "subject_bf6d0b766cdcffbd56390c833b497cf1"
+      ],
+      "valid_from": 0,
+      "valid_until": 9223372036854775807,
+      "importance": 1.0,
+      "memory_type": "episodic",
+      "timestamp": 1792757622,
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_raw",
+      "session_id": "b70187ebfa274f47bfa9a4ee82c9435e",
+      "memory_claim_ids": [
+        "claim_e8df04b73dd032366553ba59dda704b4"
+      ],
+      "memory_source_id": "source_34565b4dd9bf0250dc09c3fcc7163b6b",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "claims": [
+      {
+        "claim_id": "claim_e8df04b73dd032366553ba59dda704b4",
+        "memory_id": "wb_9a74b9de8b1748a9b17f0ccb327a38ca",
+        "subject": "workbench:live_1023_121339_raw",
+        "subject_id": "subject_bf6d0b766cdcffbd56390c833b497cf1",
+        "predicate": "conversation_episode",
+        "value": "Correction: the active project label is Memory Beta. Memory Alpha is no longer the correct label.",
+        "kind": "episode",
+        "scope": {
+          "session_id": "b70187ebfa274f47bfa9a4ee82c9435e"
+        },
+        "status": "accepted",
+        "accepted": true,
+        "current_eligible": true,
+        "protected": false,
+        "accepted_for_current_use": true,
+        "correction_known": false,
+        "protected_at_creation": false,
+        "fuzzy_score": 0.8652081105697842,
+        "fuzzy_explanation": {
+          "score": 0.8652081105697842,
+          "inputs": {
+            "freshness": 0.9999541834504836,
+            "quality": 0.9,
+            "support": 0.3333333333333333,
+            "agreement": 1.0
+          },
+          "memberships": {
+            "freshness": {
+              "low": 0.0,
+              "medium": 9.163309903281736e-05,
+              "high": 0.9999083669009672
+            },
+            "quality": {
+              "low": 0.0,
+              "medium": 0.19999999999999996,
+              "high": 0.8
+            },
+            "support": {
+              "low": 0.33333333333333337,
+              "medium": 0.6666666666666666,
+              "high": 0.0
+            },
+            "agreement": {
+              "low": 0.0,
+              "medium": 0.0,
+              "high": 1.0
+            }
+          },
+          "fired_rules": [
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "medium",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 6.10887326885449e-06,
+              "output": 0.55
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "medium",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 1.2217746537708979e-05,
+              "output": 0.6175
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "high",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 2.4435493075417965e-05,
+              "output": 0.7300000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "high",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 4.887098615083592e-05,
+              "output": 0.7975000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "medium",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 0.06666055779339781,
+              "output": 0.685
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "medium",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 0.1333211155867956,
+              "output": 0.7525000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "high",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 0.2666422311735913,
+              "output": 0.865
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "high",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 0.5332844623471825,
+              "output": 0.9325
+            }
+          ],
+          "method": "Sugeno v2; product conjunction; monotone rule outputs; freshness scaling",
+          "calibrated_probability": false
+        },
+        "previous_score": null,
+        "changed_by": null,
+        "change_reason": null,
+        "conflicting_claim_ids": [],
+        "sources": [
+          {
+            "id": "source_34565b4dd9bf0250dc09c3fcc7163b6b",
+            "memory_id": "wb_9a74b9de8b1748a9b17f0ccb327a38ca",
+            "event_id": "9a74b9de8b1748a9b17f0ccb327a38ca",
+            "text": "Correction: the active project label is Memory Beta. Memory Alpha is no longer the correct label.",
+            "origin": "user",
+            "actor_id": "workbench:live_1023_121339_raw",
+            "user_confirmed": false,
+            "quality": 0.9,
+            "evidence_group": "user:workbench:live_1023_121339_raw",
+            "recorded_at": 1792757622,
+            "received_at": 1792757622,
+            "digest": "receipt_0fbadd9a2e159490449576d4906df734",
+            "metadata_json": "{\"memory_type\":\"episodic\",\"session_id\":\"b70187ebfa274f47bfa9a4ee82c9435e\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_raw\"}"
+          }
+        ],
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "accepted_at": 1792757622,
+        "ended_at": null,
+        "reason": "",
+        "historical_meaning": "source assertion; effective dates unspecified",
+        "references": [],
+        "identity_evidence": [],
+        "evidence_path": [
+          "claim_e8df04b73dd032366553ba59dda704b4",
+          "SUPPORTED_BY",
+          "source_34565b4dd9bf0250dc09c3fcc7163b6b"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "source_34565b4dd9bf0250dc09c3fcc7163b6b",
+        "memory_id": "wb_9a74b9de8b1748a9b17f0ccb327a38ca",
+        "event_id": "9a74b9de8b1748a9b17f0ccb327a38ca",
+        "text": "Correction: the active project label is Memory Beta. Memory Alpha is no longer the correct label.",
+        "origin": "user",
+        "actor_id": "workbench:live_1023_121339_raw",
+        "user_confirmed": false,
+        "quality": 0.9,
+        "evidence_group": "user:workbench:live_1023_121339_raw",
+        "recorded_at": 1792757622,
+        "received_at": 1792757622,
+        "digest": "receipt_0fbadd9a2e159490449576d4906df734",
+        "metadata_json": "{\"memory_type\":\"episodic\",\"session_id\":\"b70187ebfa274f47bfa9a4ee82c9435e\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_raw\"}"
+      }
+    ],
+    "observations": [
+      {
+        "id": "obs_wb_9a74b9de8b1748a9b17f0ccb327a38ca_subject_bf6d0b766cdcffbd56390c833b497cf1",
+        "entity_id": "subject_bf6d0b766cdcffbd56390c833b497cf1",
+        "content": "Correction: the active project label is Memory Beta. Memory Alpha is no longer the correct label.",
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "importance": 1.0,
+        "source": "manual_workbench",
+        "created_at": 1792757622,
+        "source_memory_id": "wb_9a74b9de8b1748a9b17f0ccb327a38ca"
+      }
+    ],
+    "relations": [],
+    "namespace": "live_1023_121339_raw",
+    "types": [
+      "episode",
+      "episodic"
+    ],
+    "statuses": [
+      "accepted"
+    ],
+    "status_basis": "Existing lifecycle view of stored claims",
+    "created_timestamp": 1792757622,
+    "updated_timestamp": null,
+    "backend": {
+      "qdrant_point_id": "c008da8c-1dee-5074-8d1a-da6db93d3e86",
+      "collection": "semantic_memory",
+      "graph": "memory_core"
+    }
+  },
+  {
+    "memory_id": "wb_a243e09313354dddb562339ad0c3578a",
+    "content": "The test review has been rescheduled to 22 November 2026. Use the new date instead.",
+    "metadata": {
+      "memory_type": "semantic",
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_typed",
+      "session_id": "0b4c29dcaaf64d59ac504d3467338259",
+      "memory_claim_ids": [
+        "claim_312f58b53c9082cd98e89487055f2a4a"
+      ],
+      "memory_source_id": "source_5de5f12ed2e4f7b51d4dd4e998ff95c8",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "entity_ids": [
+      "subject_c8e9df547a7d6dff7895d6f60d393ec2"
+    ],
+    "valid_from": 0,
+    "valid_until": 9223372036854775807,
+    "importance": 1.0,
+    "timestamp": 1792757650,
+    "created_at": null,
+    "vector_stored": true,
+    "graph_stored": true,
+    "payload": {
+      "memory_id": "wb_a243e09313354dddb562339ad0c3578a",
+      "text": "The test review has been rescheduled to 22 November 2026. Use the new date instead.",
+      "entity_ids": [
+        "subject_c8e9df547a7d6dff7895d6f60d393ec2"
+      ],
+      "valid_from": 0,
+      "valid_until": 9223372036854775807,
+      "importance": 1.0,
+      "memory_type": "semantic",
+      "timestamp": 1792757650,
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_typed",
+      "session_id": "0b4c29dcaaf64d59ac504d3467338259",
+      "memory_claim_ids": [
+        "claim_312f58b53c9082cd98e89487055f2a4a"
+      ],
+      "memory_source_id": "source_5de5f12ed2e4f7b51d4dd4e998ff95c8",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "claims": [
+      {
+        "claim_id": "claim_312f58b53c9082cd98e89487055f2a4a",
+        "memory_id": "wb_a243e09313354dddb562339ad0c3578a",
+        "subject": "manual-user",
+        "subject_id": "subject_c8e9df547a7d6dff7895d6f60d393ec2",
+        "predicate": "next_review",
+        "value": "2026-11-22",
+        "kind": "fact",
+        "scope": {
+          "test_namespace": "live_1023_121339_typed"
+        },
+        "status": "accepted",
+        "accepted": true,
+        "current_eligible": true,
+        "protected": false,
+        "accepted_for_current_use": true,
+        "correction_known": false,
+        "protected_at_creation": false,
+        "fuzzy_score": 0.8652109371412244,
+        "fuzzy_explanation": {
+          "score": 0.8652109371412244,
+          "inputs": {
+            "freshness": 0.9999566792395862,
+            "quality": 0.9,
+            "support": 0.3333333333333333,
+            "agreement": 1.0
+          },
+          "memberships": {
+            "freshness": {
+              "low": 0.0,
+              "medium": 8.664152082760168e-05,
+              "high": 0.9999133584791724
+            },
+            "quality": {
+              "low": 0.0,
+              "medium": 0.19999999999999996,
+              "high": 0.8
+            },
+            "support": {
+              "low": 0.33333333333333337,
+              "medium": 0.6666666666666666,
+              "high": 0.0
+            },
+            "agreement": {
+              "low": 0.0,
+              "medium": 0.0,
+              "high": 1.0
+            }
+          },
+          "fired_rules": [
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "medium",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 5.776101388506778e-06,
+              "output": 0.55
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "medium",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 1.1552202777013555e-05,
+              "output": 0.6175
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "high",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 2.310440555402712e-05,
+              "output": 0.7300000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "high",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 4.620881110805423e-05,
+              "output": 0.7975000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "medium",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 0.06666089056527816,
+              "output": 0.685
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "medium",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 0.1333217811305563,
+              "output": 0.7525000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "high",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 0.2666435622611127,
+              "output": 0.865
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "high",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 0.5332871245222253,
+              "output": 0.9325
+            }
+          ],
+          "method": "Sugeno v2; product conjunction; monotone rule outputs; freshness scaling",
+          "calibrated_probability": false
+        },
+        "previous_score": null,
+        "changed_by": null,
+        "change_reason": null,
+        "conflicting_claim_ids": [],
+        "sources": [
+          {
+            "id": "source_5de5f12ed2e4f7b51d4dd4e998ff95c8",
+            "memory_id": "wb_a243e09313354dddb562339ad0c3578a",
+            "event_id": "a243e09313354dddb562339ad0c3578a",
+            "text": "The test review has been rescheduled to 22 November 2026. Use the new date instead.",
+            "origin": "user",
+            "actor_id": "workbench:live_1023_121339_typed",
+            "user_confirmed": true,
+            "quality": 0.9,
+            "evidence_group": "user:workbench:live_1023_121339_typed",
+            "recorded_at": 1792757650,
+            "received_at": 1792757650,
+            "digest": "receipt_475fba1beeaa74ca3c01dcb769a418f3",
+            "metadata_json": "{\"session_id\":\"0b4c29dcaaf64d59ac504d3467338259\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_typed\"}"
+          }
+        ],
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "accepted_at": 1792757650,
+        "ended_at": null,
+        "reason": "Explicit user test correction or reschedule.",
+        "historical_meaning": "source assertion; effective dates unspecified",
+        "references": [],
+        "identity_evidence": [],
+        "evidence_path": [
+          "claim_312f58b53c9082cd98e89487055f2a4a",
+          "SUPPORTED_BY",
+          "source_5de5f12ed2e4f7b51d4dd4e998ff95c8"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "source_5de5f12ed2e4f7b51d4dd4e998ff95c8",
+        "memory_id": "wb_a243e09313354dddb562339ad0c3578a",
+        "event_id": "a243e09313354dddb562339ad0c3578a",
+        "text": "The test review has been rescheduled to 22 November 2026. Use the new date instead.",
+        "origin": "user",
+        "actor_id": "workbench:live_1023_121339_typed",
+        "user_confirmed": true,
+        "quality": 0.9,
+        "evidence_group": "user:workbench:live_1023_121339_typed",
+        "recorded_at": 1792757650,
+        "received_at": 1792757650,
+        "digest": "receipt_475fba1beeaa74ca3c01dcb769a418f3",
+        "metadata_json": "{\"session_id\":\"0b4c29dcaaf64d59ac504d3467338259\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_typed\"}"
+      }
+    ],
+    "observations": [
+      {
+        "id": "obs_wb_a243e09313354dddb562339ad0c3578a_subject_c8e9df547a7d6dff7895d6f60d393ec2",
+        "entity_id": "subject_c8e9df547a7d6dff7895d6f60d393ec2",
+        "content": "The test review has been rescheduled to 22 November 2026. Use the new date instead.",
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "importance": 1.0,
+        "source": "manual_workbench",
+        "created_at": 1792757650,
+        "source_memory_id": "wb_a243e09313354dddb562339ad0c3578a"
+      }
+    ],
+    "relations": [],
+    "namespace": "live_1023_121339_typed",
+    "types": [
+      "fact",
+      "semantic"
+    ],
+    "statuses": [
+      "accepted"
+    ],
+    "status_basis": "Existing lifecycle view of stored claims",
+    "created_timestamp": 1792757650,
+    "updated_timestamp": null,
+    "backend": {
+      "qdrant_point_id": "495424c4-1cd3-5b75-8ab2-6c01a106e83f",
+      "collection": "semantic_memory",
+      "graph": "memory_core"
+    }
+  },
+  {
+    "memory_id": "wb_aae81d2e99af4900870cee4fd74cb29d",
+    "content": "My test workspace is named Workspace South.",
+    "metadata": {
+      "memory_type": "episodic",
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_raw",
+      "session_id": "3202fd39ccce4f6cb0e56bc57731fad2",
+      "memory_claim_ids": [
+        "claim_8b9e6ee8dc5fd0119d134e54c0295059"
+      ],
+      "memory_source_id": "source_506b2e090005568227656d9cf9a0db31",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "entity_ids": [
+      "subject_bf6d0b766cdcffbd56390c833b497cf1"
+    ],
+    "valid_from": 0,
+    "valid_until": 9223372036854775807,
+    "importance": 1.0,
+    "timestamp": 1792757624,
+    "created_at": null,
+    "vector_stored": true,
+    "graph_stored": true,
+    "payload": {
+      "memory_id": "wb_aae81d2e99af4900870cee4fd74cb29d",
+      "text": "My test workspace is named Workspace South.",
+      "entity_ids": [
+        "subject_bf6d0b766cdcffbd56390c833b497cf1"
+      ],
+      "valid_from": 0,
+      "valid_until": 9223372036854775807,
+      "importance": 1.0,
+      "memory_type": "episodic",
+      "timestamp": 1792757624,
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_raw",
+      "session_id": "3202fd39ccce4f6cb0e56bc57731fad2",
+      "memory_claim_ids": [
+        "claim_8b9e6ee8dc5fd0119d134e54c0295059"
+      ],
+      "memory_source_id": "source_506b2e090005568227656d9cf9a0db31",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "claims": [
+      {
+        "claim_id": "claim_8b9e6ee8dc5fd0119d134e54c0295059",
+        "memory_id": "wb_aae81d2e99af4900870cee4fd74cb29d",
+        "subject": "workbench:live_1023_121339_raw",
+        "subject_id": "subject_bf6d0b766cdcffbd56390c833b497cf1",
+        "predicate": "conversation_episode",
+        "value": "My test workspace is named Workspace South.",
+        "kind": "episode",
+        "scope": {
+          "session_id": "3202fd39ccce4f6cb0e56bc57731fad2"
+        },
+        "status": "accepted",
+        "accepted": true,
+        "current_eligible": true,
+        "protected": false,
+        "accepted_for_current_use": true,
+        "correction_known": false,
+        "protected_at_creation": false,
+        "fuzzy_score": 0.8652083124673997,
+        "fuzzy_explanation": {
+          "score": 0.8652083124673997,
+          "inputs": {
+            "freshness": 0.9999543617209272,
+            "quality": 0.9,
+            "support": 0.3333333333333333,
+            "agreement": 1.0
+          },
+          "memberships": {
+            "freshness": {
+              "low": 0.0,
+              "medium": 9.12765581455588e-05,
+              "high": 0.9999087234418544
+            },
+            "quality": {
+              "low": 0.0,
+              "medium": 0.19999999999999996,
+              "high": 0.8
+            },
+            "support": {
+              "low": 0.33333333333333337,
+              "medium": 0.6666666666666666,
+              "high": 0.0
+            },
+            "agreement": {
+              "low": 0.0,
+              "medium": 0.0,
+              "high": 1.0
+            }
+          },
+          "fired_rules": [
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "medium",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 6.085103876370585e-06,
+              "output": 0.55
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "medium",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 1.2170207752741168e-05,
+              "output": 0.6175
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "high",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 2.434041550548235e-05,
+              "output": 0.7300000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "high",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 4.8680831010964694e-05,
+              "output": 0.7975000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "medium",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 0.0666605815627903,
+              "output": 0.685
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "medium",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 0.13332116312558057,
+              "output": 0.7525000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "high",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 0.26664232625116124,
+              "output": 0.865
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "high",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 0.5332846525023224,
+              "output": 0.9325
+            }
+          ],
+          "method": "Sugeno v2; product conjunction; monotone rule outputs; freshness scaling",
+          "calibrated_probability": false
+        },
+        "previous_score": null,
+        "changed_by": null,
+        "change_reason": null,
+        "conflicting_claim_ids": [],
+        "sources": [
+          {
+            "id": "source_506b2e090005568227656d9cf9a0db31",
+            "memory_id": "wb_aae81d2e99af4900870cee4fd74cb29d",
+            "event_id": "aae81d2e99af4900870cee4fd74cb29d",
+            "text": "My test workspace is named Workspace South.",
+            "origin": "user",
+            "actor_id": "workbench:live_1023_121339_raw",
+            "user_confirmed": false,
+            "quality": 0.9,
+            "evidence_group": "user:workbench:live_1023_121339_raw",
+            "recorded_at": 1792757624,
+            "received_at": 1792757624,
+            "digest": "receipt_815f8e0c01fd5cbb002606420748c44e",
+            "metadata_json": "{\"memory_type\":\"episodic\",\"session_id\":\"3202fd39ccce4f6cb0e56bc57731fad2\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_raw\"}"
+          }
+        ],
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "accepted_at": 1792757624,
+        "ended_at": null,
+        "reason": "",
+        "historical_meaning": "source assertion; effective dates unspecified",
+        "references": [],
+        "identity_evidence": [],
+        "evidence_path": [
+          "claim_8b9e6ee8dc5fd0119d134e54c0295059",
+          "SUPPORTED_BY",
+          "source_506b2e090005568227656d9cf9a0db31"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "source_506b2e090005568227656d9cf9a0db31",
+        "memory_id": "wb_aae81d2e99af4900870cee4fd74cb29d",
+        "event_id": "aae81d2e99af4900870cee4fd74cb29d",
+        "text": "My test workspace is named Workspace South.",
+        "origin": "user",
+        "actor_id": "workbench:live_1023_121339_raw",
+        "user_confirmed": false,
+        "quality": 0.9,
+        "evidence_group": "user:workbench:live_1023_121339_raw",
+        "recorded_at": 1792757624,
+        "received_at": 1792757624,
+        "digest": "receipt_815f8e0c01fd5cbb002606420748c44e",
+        "metadata_json": "{\"memory_type\":\"episodic\",\"session_id\":\"3202fd39ccce4f6cb0e56bc57731fad2\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_raw\"}"
+      }
+    ],
+    "observations": [
+      {
+        "id": "obs_wb_aae81d2e99af4900870cee4fd74cb29d_subject_bf6d0b766cdcffbd56390c833b497cf1",
+        "entity_id": "subject_bf6d0b766cdcffbd56390c833b497cf1",
+        "content": "My test workspace is named Workspace South.",
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "importance": 1.0,
+        "source": "manual_workbench",
+        "created_at": 1792757624,
+        "source_memory_id": "wb_aae81d2e99af4900870cee4fd74cb29d"
+      }
+    ],
+    "relations": [],
+    "namespace": "live_1023_121339_raw",
+    "types": [
+      "episode",
+      "episodic"
+    ],
+    "statuses": [
+      "accepted"
+    ],
+    "status_basis": "Existing lifecycle view of stored claims",
+    "created_timestamp": 1792757624,
+    "updated_timestamp": null,
+    "backend": {
+      "qdrant_point_id": "37a93416-b1bb-5ed8-9477-4b51701c1786",
+      "collection": "semantic_memory",
+      "graph": "memory_core"
+    }
+  },
+  {
+    "memory_id": "wb_abe14246e7564d30951bb15585d6fc62",
+    "content": "My test workspace is named Workspace North.",
+    "metadata": {
+      "memory_type": "semantic",
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_nvidia",
+      "session_id": "5f5e4f54add44322b2851b51bcc0d08d",
+      "memory_claim_ids": [
+        "claim_3441df41fd240f4c70f2e103cbb48b4e"
+      ],
+      "memory_source_id": "source_b791043b385d45735d03a627c73676f9",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "entity_ids": [
+      "subject_c8e9df547a7d6dff7895d6f60d393ec2"
+    ],
+    "valid_from": 0,
+    "valid_until": 9223372036854775807,
+    "importance": 1.0,
+    "timestamp": 1792757708,
+    "created_at": null,
+    "vector_stored": true,
+    "graph_stored": true,
+    "payload": {
+      "memory_id": "wb_abe14246e7564d30951bb15585d6fc62",
+      "text": "My test workspace is named Workspace North.",
+      "entity_ids": [
+        "subject_c8e9df547a7d6dff7895d6f60d393ec2"
+      ],
+      "valid_from": 0,
+      "valid_until": 9223372036854775807,
+      "importance": 1.0,
+      "memory_type": "semantic",
+      "timestamp": 1792757708,
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_nvidia",
+      "session_id": "5f5e4f54add44322b2851b51bcc0d08d",
+      "memory_claim_ids": [
+        "claim_3441df41fd240f4c70f2e103cbb48b4e"
+      ],
+      "memory_source_id": "source_b791043b385d45735d03a627c73676f9",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "claims": [
+      {
+        "claim_id": "claim_3441df41fd240f4c70f2e103cbb48b4e",
+        "memory_id": "wb_abe14246e7564d30951bb15585d6fc62",
+        "subject": "manual-user",
+        "subject_id": "subject_c8e9df547a7d6dff7895d6f60d393ec2",
+        "predicate": "test_workspace_name",
+        "value": "Workspace North",
+        "kind": "fact",
+        "scope": {
+          "test_namespace": "live_1023_121339_nvidia"
+        },
+        "status": "accepted",
+        "accepted": true,
+        "current_eligible": true,
+        "protected": false,
+        "accepted_for_current_use": true,
+        "correction_known": false,
+        "protected_at_creation": false,
+        "fuzzy_score": 0.8652168931650414,
+        "fuzzy_explanation": {
+          "score": 0.8652168931650414,
+          "inputs": {
+            "freshness": 0.9999619382441588,
+            "quality": 0.9,
+            "support": 0.3333333333333333,
+            "agreement": 1.0
+          },
+          "memberships": {
+            "freshness": {
+              "low": 0.0,
+              "medium": 7.612351168240217e-05,
+              "high": 0.9999238764883176
+            },
+            "quality": {
+              "low": 0.0,
+              "medium": 0.19999999999999996,
+              "high": 0.8
+            },
+            "support": {
+              "low": 0.33333333333333337,
+              "medium": 0.6666666666666666,
+              "high": 0.0
+            },
+            "agreement": {
+              "low": 0.0,
+              "medium": 0.0,
+              "high": 1.0
+            }
+          },
+          "fired_rules": [
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "medium",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 5.0749007788268104e-06,
+              "output": 0.55
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "medium",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 1.014980155765362e-05,
+              "output": 0.6175
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "high",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 2.029960311530725e-05,
+              "output": 0.7300000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "high",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 4.059920623061449e-05,
+              "output": 0.7975000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "medium",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 0.06666159176588783,
+              "output": 0.685
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "medium",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 0.13332318353177564,
+              "output": 0.7525000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "high",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 0.26664636706355144,
+              "output": 0.865
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "high",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 0.5332927341271028,
+              "output": 0.9325
+            }
+          ],
+          "method": "Sugeno v2; product conjunction; monotone rule outputs; freshness scaling",
+          "calibrated_probability": false
+        },
+        "previous_score": null,
+        "changed_by": null,
+        "change_reason": null,
+        "conflicting_claim_ids": [],
+        "sources": [
+          {
+            "id": "source_b791043b385d45735d03a627c73676f9",
+            "memory_id": "wb_abe14246e7564d30951bb15585d6fc62",
+            "event_id": "abe14246e7564d30951bb15585d6fc62",
+            "text": "My test workspace is named Workspace North.",
+            "origin": "user",
+            "actor_id": "workbench:live_1023_121339_nvidia",
+            "user_confirmed": true,
+            "quality": 0.9,
+            "evidence_group": "user:workbench:live_1023_121339_nvidia",
+            "recorded_at": 1792757709,
+            "received_at": 1792757709,
+            "digest": "receipt_706a3d479746c55d40d17005627e5e40",
+            "metadata_json": "{\"session_id\":\"5f5e4f54add44322b2851b51bcc0d08d\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_nvidia\"}"
+          }
+        ],
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "accepted_at": 1792757709,
+        "ended_at": null,
+        "reason": "",
+        "historical_meaning": "source assertion; effective dates unspecified",
+        "references": [],
+        "identity_evidence": [],
+        "evidence_path": [
+          "claim_3441df41fd240f4c70f2e103cbb48b4e",
+          "SUPPORTED_BY",
+          "source_b791043b385d45735d03a627c73676f9"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "source_b791043b385d45735d03a627c73676f9",
+        "memory_id": "wb_abe14246e7564d30951bb15585d6fc62",
+        "event_id": "abe14246e7564d30951bb15585d6fc62",
+        "text": "My test workspace is named Workspace North.",
+        "origin": "user",
+        "actor_id": "workbench:live_1023_121339_nvidia",
+        "user_confirmed": true,
+        "quality": 0.9,
+        "evidence_group": "user:workbench:live_1023_121339_nvidia",
+        "recorded_at": 1792757709,
+        "received_at": 1792757709,
+        "digest": "receipt_706a3d479746c55d40d17005627e5e40",
+        "metadata_json": "{\"session_id\":\"5f5e4f54add44322b2851b51bcc0d08d\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_nvidia\"}"
+      }
+    ],
+    "observations": [
+      {
+        "id": "obs_wb_abe14246e7564d30951bb15585d6fc62_subject_c8e9df547a7d6dff7895d6f60d393ec2",
+        "entity_id": "subject_c8e9df547a7d6dff7895d6f60d393ec2",
+        "content": "My test workspace is named Workspace North.",
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "importance": 1.0,
+        "source": "manual_workbench",
+        "created_at": 1792757708,
+        "source_memory_id": "wb_abe14246e7564d30951bb15585d6fc62"
+      }
+    ],
+    "relations": [],
+    "namespace": "live_1023_121339_nvidia",
+    "types": [
+      "fact",
+      "semantic"
+    ],
+    "statuses": [
+      "accepted"
+    ],
+    "status_basis": "Existing lifecycle view of stored claims",
+    "created_timestamp": 1792757708,
+    "updated_timestamp": null,
+    "backend": {
+      "qdrant_point_id": "67edfd87-1bf0-5745-9c4d-d1abd7335905",
+      "collection": "semantic_memory",
+      "graph": "memory_core"
+    }
+  },
+  {
+    "memory_id": "wb_b527371032cb401bb1963a90fe1f14bd",
+    "content": "For persistence testing, the verification phrase is copper-orchid-731.",
+    "metadata": {
+      "memory_type": "episodic",
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_raw",
+      "session_id": "69276a80d81f4c60a4a05d16eaa5327c",
+      "memory_claim_ids": [
+        "claim_721837aeb0425f213226f25f2261071c"
+      ],
+      "memory_source_id": "source_7b38b5742b407db335f9e7d683f69960",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "entity_ids": [
+      "subject_bf6d0b766cdcffbd56390c833b497cf1"
+    ],
+    "valid_from": 0,
+    "valid_until": 9223372036854775807,
+    "importance": 1.0,
+    "timestamp": 1792757626,
+    "created_at": null,
+    "vector_stored": true,
+    "graph_stored": true,
+    "payload": {
+      "memory_id": "wb_b527371032cb401bb1963a90fe1f14bd",
+      "text": "For persistence testing, the verification phrase is copper-orchid-731.",
+      "entity_ids": [
+        "subject_bf6d0b766cdcffbd56390c833b497cf1"
+      ],
+      "valid_from": 0,
+      "valid_until": 9223372036854775807,
+      "importance": 1.0,
+      "memory_type": "episodic",
+      "timestamp": 1792757626,
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_raw",
+      "session_id": "69276a80d81f4c60a4a05d16eaa5327c",
+      "memory_claim_ids": [
+        "claim_721837aeb0425f213226f25f2261071c"
+      ],
+      "memory_source_id": "source_7b38b5742b407db335f9e7d683f69960",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "claims": [
+      {
+        "claim_id": "claim_721837aeb0425f213226f25f2261071c",
+        "memory_id": "wb_b527371032cb401bb1963a90fe1f14bd",
+        "subject": "workbench:live_1023_121339_raw",
+        "subject_id": "subject_bf6d0b766cdcffbd56390c833b497cf1",
+        "predicate": "conversation_episode",
+        "value": "For persistence testing, the verification phrase is copper-orchid-731.",
+        "kind": "episode",
+        "scope": {
+          "session_id": "69276a80d81f4c60a4a05d16eaa5327c"
+        },
+        "status": "accepted",
+        "accepted": true,
+        "current_eligible": true,
+        "protected": false,
+        "accepted_for_current_use": true,
+        "correction_known": false,
+        "protected_at_creation": false,
+        "fuzzy_score": 0.8652085143650684,
+        "fuzzy_explanation": {
+          "score": 0.8652085143650684,
+          "inputs": {
+            "freshness": 0.9999545399914026,
+            "quality": 0.9,
+            "support": 0.3333333333333333,
+            "agreement": 1.0
+          },
+          "memberships": {
+            "freshness": {
+              "low": 0.0,
+              "medium": 9.092001719479548e-05,
+              "high": 0.9999090799828052
+            },
+            "quality": {
+              "low": 0.0,
+              "medium": 0.19999999999999996,
+              "high": 0.8
+            },
+            "support": {
+              "low": 0.33333333333333337,
+              "medium": 0.6666666666666666,
+              "high": 0.0
+            },
+            "agreement": {
+              "low": 0.0,
+              "medium": 0.0,
+              "high": 1.0
+            }
+          },
+          "fired_rules": [
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "medium",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 6.061334479653031e-06,
+              "output": 0.55
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "medium",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 1.212266895930606e-05,
+              "output": 0.6175
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "high",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 2.424533791861213e-05,
+              "output": 0.7300000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "high",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 4.8490675837224256e-05,
+              "output": 0.7975000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "medium",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 0.06666060533218701,
+              "output": 0.685
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "medium",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 0.133321210664374,
+              "output": 0.7525000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "high",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 0.2666424213287481,
+              "output": 0.865
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "high",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 0.5332848426574961,
+              "output": 0.9325
+            }
+          ],
+          "method": "Sugeno v2; product conjunction; monotone rule outputs; freshness scaling",
+          "calibrated_probability": false
+        },
+        "previous_score": null,
+        "changed_by": null,
+        "change_reason": null,
+        "conflicting_claim_ids": [],
+        "sources": [
+          {
+            "id": "source_7b38b5742b407db335f9e7d683f69960",
+            "memory_id": "wb_b527371032cb401bb1963a90fe1f14bd",
+            "event_id": "b527371032cb401bb1963a90fe1f14bd",
+            "text": "For persistence testing, the verification phrase is copper-orchid-731.",
+            "origin": "user",
+            "actor_id": "workbench:live_1023_121339_raw",
+            "user_confirmed": false,
+            "quality": 0.9,
+            "evidence_group": "user:workbench:live_1023_121339_raw",
+            "recorded_at": 1792757626,
+            "received_at": 1792757626,
+            "digest": "receipt_f840283b5d0ebaa05463eea6bf2e84a4",
+            "metadata_json": "{\"memory_type\":\"episodic\",\"session_id\":\"69276a80d81f4c60a4a05d16eaa5327c\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_raw\"}"
+          }
+        ],
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "accepted_at": 1792757626,
+        "ended_at": null,
+        "reason": "",
+        "historical_meaning": "source assertion; effective dates unspecified",
+        "references": [],
+        "identity_evidence": [],
+        "evidence_path": [
+          "claim_721837aeb0425f213226f25f2261071c",
+          "SUPPORTED_BY",
+          "source_7b38b5742b407db335f9e7d683f69960"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "source_7b38b5742b407db335f9e7d683f69960",
+        "memory_id": "wb_b527371032cb401bb1963a90fe1f14bd",
+        "event_id": "b527371032cb401bb1963a90fe1f14bd",
+        "text": "For persistence testing, the verification phrase is copper-orchid-731.",
+        "origin": "user",
+        "actor_id": "workbench:live_1023_121339_raw",
+        "user_confirmed": false,
+        "quality": 0.9,
+        "evidence_group": "user:workbench:live_1023_121339_raw",
+        "recorded_at": 1792757626,
+        "received_at": 1792757626,
+        "digest": "receipt_f840283b5d0ebaa05463eea6bf2e84a4",
+        "metadata_json": "{\"memory_type\":\"episodic\",\"session_id\":\"69276a80d81f4c60a4a05d16eaa5327c\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_raw\"}"
+      }
+    ],
+    "observations": [
+      {
+        "id": "obs_wb_b527371032cb401bb1963a90fe1f14bd_subject_bf6d0b766cdcffbd56390c833b497cf1",
+        "entity_id": "subject_bf6d0b766cdcffbd56390c833b497cf1",
+        "content": "For persistence testing, the verification phrase is copper-orchid-731.",
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "importance": 1.0,
+        "source": "manual_workbench",
+        "created_at": 1792757626,
+        "source_memory_id": "wb_b527371032cb401bb1963a90fe1f14bd"
+      }
+    ],
+    "relations": [],
+    "namespace": "live_1023_121339_raw",
+    "types": [
+      "episode",
+      "episodic"
+    ],
+    "statuses": [
+      "accepted"
+    ],
+    "status_basis": "Existing lifecycle view of stored claims",
+    "created_timestamp": 1792757626,
+    "updated_timestamp": null,
+    "backend": {
+      "qdrant_point_id": "39faf919-93d3-5b6b-af4a-2673bac78bbb",
+      "collection": "semantic_memory",
+      "graph": "memory_core"
+    }
+  },
+  {
+    "memory_id": "wb_cbe68c7e18be437e9bcea3f428544f19",
+    "content": "The next test review is scheduled for 15 November 2026.",
+    "metadata": {
+      "memory_type": "semantic",
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_typed",
+      "session_id": "ed1aa89031754840aa316b56e07b941d",
+      "memory_claim_ids": [
+        "claim_bd1a98dec5436a02c6ee63df50bf59ae"
+      ],
+      "memory_source_id": "source_5086c5e9c3bbefc7c2f6bf03d940a4b7",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "entity_ids": [
+      "subject_c8e9df547a7d6dff7895d6f60d393ec2"
+    ],
+    "valid_from": 0,
+    "valid_until": 9223372036854775807,
+    "importance": 1.0,
+    "timestamp": 1792757648,
+    "created_at": null,
+    "vector_stored": true,
+    "graph_stored": true,
+    "payload": {
+      "memory_id": "wb_cbe68c7e18be437e9bcea3f428544f19",
+      "text": "The next test review is scheduled for 15 November 2026.",
+      "entity_ids": [
+        "subject_c8e9df547a7d6dff7895d6f60d393ec2"
+      ],
+      "valid_from": 0,
+      "valid_until": 9223372036854775807,
+      "importance": 1.0,
+      "memory_type": "semantic",
+      "timestamp": 1792757648,
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_typed",
+      "session_id": "ed1aa89031754840aa316b56e07b941d",
+      "memory_claim_ids": [
+        "claim_bd1a98dec5436a02c6ee63df50bf59ae"
+      ],
+      "memory_source_id": "source_5086c5e9c3bbefc7c2f6bf03d940a4b7",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "claims": [
+      {
+        "claim_id": "claim_bd1a98dec5436a02c6ee63df50bf59ae",
+        "memory_id": "wb_cbe68c7e18be437e9bcea3f428544f19",
+        "subject": "manual-user",
+        "subject_id": "subject_c8e9df547a7d6dff7895d6f60d393ec2",
+        "predicate": "next_review",
+        "value": "2026-11-15",
+        "kind": "fact",
+        "scope": {
+          "test_namespace": "live_1023_121339_typed"
+        },
+        "status": "superseded",
+        "accepted": true,
+        "current_eligible": false,
+        "protected": false,
+        "accepted_for_current_use": false,
+        "correction_known": false,
+        "protected_at_creation": false,
+        "fuzzy_score": 0.0,
+        "fuzzy_explanation": {
+          "score": 0.0,
+          "hard_rule": "not_current",
+          "fired_rules": []
+        },
+        "previous_score": 0.86525979808882,
+        "changed_by": "claim_312f58b53c9082cd98e89487055f2a4a",
+        "change_reason": "Explicit user test correction or reschedule.",
+        "conflicting_claim_ids": [
+          "claim_312f58b53c9082cd98e89487055f2a4a"
+        ],
+        "sources": [
+          {
+            "id": "source_5086c5e9c3bbefc7c2f6bf03d940a4b7",
+            "memory_id": "wb_cbe68c7e18be437e9bcea3f428544f19",
+            "event_id": "cbe68c7e18be437e9bcea3f428544f19",
+            "text": "The next test review is scheduled for 15 November 2026.",
+            "origin": "user",
+            "actor_id": "workbench:live_1023_121339_typed",
+            "user_confirmed": true,
+            "quality": 0.9,
+            "evidence_group": "user:workbench:live_1023_121339_typed",
+            "recorded_at": 1792757648,
+            "received_at": 1792757648,
+            "digest": "receipt_e0077f468d6989e176b2792c5c0b9ce0",
+            "metadata_json": "{\"session_id\":\"ed1aa89031754840aa316b56e07b941d\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_typed\"}"
+          }
+        ],
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "accepted_at": 1792757648,
+        "ended_at": 1792757650,
+        "reason": "",
+        "historical_meaning": "source assertion; effective dates unspecified",
+        "references": [],
+        "identity_evidence": [],
+        "evidence_path": [
+          "claim_bd1a98dec5436a02c6ee63df50bf59ae",
+          "SUPPORTED_BY",
+          "source_5086c5e9c3bbefc7c2f6bf03d940a4b7"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "source_5086c5e9c3bbefc7c2f6bf03d940a4b7",
+        "memory_id": "wb_cbe68c7e18be437e9bcea3f428544f19",
+        "event_id": "cbe68c7e18be437e9bcea3f428544f19",
+        "text": "The next test review is scheduled for 15 November 2026.",
+        "origin": "user",
+        "actor_id": "workbench:live_1023_121339_typed",
+        "user_confirmed": true,
+        "quality": 0.9,
+        "evidence_group": "user:workbench:live_1023_121339_typed",
+        "recorded_at": 1792757648,
+        "received_at": 1792757648,
+        "digest": "receipt_e0077f468d6989e176b2792c5c0b9ce0",
+        "metadata_json": "{\"session_id\":\"ed1aa89031754840aa316b56e07b941d\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_typed\"}"
+      }
+    ],
+    "observations": [
+      {
+        "id": "obs_wb_cbe68c7e18be437e9bcea3f428544f19_subject_c8e9df547a7d6dff7895d6f60d393ec2",
+        "entity_id": "subject_c8e9df547a7d6dff7895d6f60d393ec2",
+        "content": "The next test review is scheduled for 15 November 2026.",
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "importance": 1.0,
+        "source": "manual_workbench",
+        "created_at": 1792757648,
+        "source_memory_id": "wb_cbe68c7e18be437e9bcea3f428544f19"
+      }
+    ],
+    "relations": [],
+    "namespace": "live_1023_121339_typed",
+    "types": [
+      "fact",
+      "semantic"
+    ],
+    "statuses": [
+      "superseded"
+    ],
+    "status_basis": "Existing lifecycle view of stored claims",
+    "created_timestamp": 1792757648,
+    "updated_timestamp": null,
+    "backend": {
+      "qdrant_point_id": "5477c8d9-0b9b-5943-9319-ffbb0ecf7248",
+      "collection": "semantic_memory",
+      "graph": "memory_core"
+    }
+  },
+  {
+    "memory_id": "wb_d03adabfbef145549bdc4fbbcdf92590",
+    "content": "I am testing whether Iron Web can remember project information across separate interactions.",
+    "metadata": {
+      "memory_type": "episodic",
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_raw",
+      "session_id": "0adefafa714e4be095bcf31cbce3cef9",
+      "memory_claim_ids": [
+        "claim_63c5af42c55f99f3271d5a1ba67a03f9"
+      ],
+      "memory_source_id": "source_8698ed378d20b84604826c2107c5211d",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "entity_ids": [
+      "subject_bf6d0b766cdcffbd56390c833b497cf1"
+    ],
+    "valid_from": 0,
+    "valid_until": 9223372036854775807,
+    "importance": 1.0,
+    "timestamp": 1792757620,
+    "created_at": null,
+    "vector_stored": true,
+    "graph_stored": true,
+    "payload": {
+      "memory_id": "wb_d03adabfbef145549bdc4fbbcdf92590",
+      "text": "I am testing whether Iron Web can remember project information across separate interactions.",
+      "entity_ids": [
+        "subject_bf6d0b766cdcffbd56390c833b497cf1"
+      ],
+      "valid_from": 0,
+      "valid_until": 9223372036854775807,
+      "importance": 1.0,
+      "memory_type": "episodic",
+      "timestamp": 1792757620,
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_raw",
+      "session_id": "0adefafa714e4be095bcf31cbce3cef9",
+      "memory_claim_ids": [
+        "claim_63c5af42c55f99f3271d5a1ba67a03f9"
+      ],
+      "memory_source_id": "source_8698ed378d20b84604826c2107c5211d",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "claims": [
+      {
+        "claim_id": "claim_63c5af42c55f99f3271d5a1ba67a03f9",
+        "memory_id": "wb_d03adabfbef145549bdc4fbbcdf92590",
+        "subject": "workbench:live_1023_121339_raw",
+        "subject_id": "subject_bf6d0b766cdcffbd56390c833b497cf1",
+        "predicate": "conversation_episode",
+        "value": "I am testing whether Iron Web can remember project information across separate interactions.",
+        "kind": "episode",
+        "scope": {
+          "session_id": "0adefafa714e4be095bcf31cbce3cef9"
+        },
+        "status": "accepted",
+        "accepted": true,
+        "current_eligible": true,
+        "protected": false,
+        "accepted_for_current_use": true,
+        "correction_known": false,
+        "protected_at_creation": false,
+        "fuzzy_score": 0.8652079086722216,
+        "fuzzy_explanation": {
+          "score": 0.8652079086722216,
+          "inputs": {
+            "freshness": 0.9999540051800718,
+            "quality": 0.9,
+            "support": 0.3333333333333333,
+            "agreement": 1.0
+          },
+          "memberships": {
+            "freshness": {
+              "low": 0.0,
+              "medium": 9.198963985634911e-05,
+              "high": 0.9999080103601437
+            },
+            "quality": {
+              "low": 0.0,
+              "medium": 0.19999999999999996,
+              "high": 0.8
+            },
+            "support": {
+              "low": 0.33333333333333337,
+              "medium": 0.6666666666666666,
+              "high": 0.0
+            },
+            "agreement": {
+              "low": 0.0,
+              "medium": 0.0,
+              "high": 1.0
+            }
+          },
+          "fired_rules": [
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "medium",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 6.132642657089941e-06,
+              "output": 0.55
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "medium",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 1.226528531417988e-05,
+              "output": 0.6175
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "high",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 2.4530570628359767e-05,
+              "output": 0.7300000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "high",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 4.906114125671953e-05,
+              "output": 0.7975000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "medium",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 0.06666053402400958,
+              "output": 0.685
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "medium",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 0.13332106804801913,
+              "output": 0.7525000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "high",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 0.2666421360960384,
+              "output": 0.865
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "high",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 0.5332842721920766,
+              "output": 0.9325
+            }
+          ],
+          "method": "Sugeno v2; product conjunction; monotone rule outputs; freshness scaling",
+          "calibrated_probability": false
+        },
+        "previous_score": null,
+        "changed_by": null,
+        "change_reason": null,
+        "conflicting_claim_ids": [],
+        "sources": [
+          {
+            "id": "source_8698ed378d20b84604826c2107c5211d",
+            "memory_id": "wb_d03adabfbef145549bdc4fbbcdf92590",
+            "event_id": "d03adabfbef145549bdc4fbbcdf92590",
+            "text": "I am testing whether Iron Web can remember project information across separate interactions.",
+            "origin": "user",
+            "actor_id": "workbench:live_1023_121339_raw",
+            "user_confirmed": false,
+            "quality": 0.9,
+            "evidence_group": "user:workbench:live_1023_121339_raw",
+            "recorded_at": 1792757620,
+            "received_at": 1792757620,
+            "digest": "receipt_4fdb1affc9207ebb6a26365b376d4ed5",
+            "metadata_json": "{\"memory_type\":\"episodic\",\"session_id\":\"0adefafa714e4be095bcf31cbce3cef9\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_raw\"}"
+          }
+        ],
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "accepted_at": 1792757620,
+        "ended_at": null,
+        "reason": "",
+        "historical_meaning": "source assertion; effective dates unspecified",
+        "references": [],
+        "identity_evidence": [],
+        "evidence_path": [
+          "claim_63c5af42c55f99f3271d5a1ba67a03f9",
+          "SUPPORTED_BY",
+          "source_8698ed378d20b84604826c2107c5211d"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "source_8698ed378d20b84604826c2107c5211d",
+        "memory_id": "wb_d03adabfbef145549bdc4fbbcdf92590",
+        "event_id": "d03adabfbef145549bdc4fbbcdf92590",
+        "text": "I am testing whether Iron Web can remember project information across separate interactions.",
+        "origin": "user",
+        "actor_id": "workbench:live_1023_121339_raw",
+        "user_confirmed": false,
+        "quality": 0.9,
+        "evidence_group": "user:workbench:live_1023_121339_raw",
+        "recorded_at": 1792757620,
+        "received_at": 1792757620,
+        "digest": "receipt_4fdb1affc9207ebb6a26365b376d4ed5",
+        "metadata_json": "{\"memory_type\":\"episodic\",\"session_id\":\"0adefafa714e4be095bcf31cbce3cef9\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_raw\"}"
+      }
+    ],
+    "observations": [
+      {
+        "id": "obs_wb_d03adabfbef145549bdc4fbbcdf92590_subject_bf6d0b766cdcffbd56390c833b497cf1",
+        "entity_id": "subject_bf6d0b766cdcffbd56390c833b497cf1",
+        "content": "I am testing whether Iron Web can remember project information across separate interactions.",
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "importance": 1.0,
+        "source": "manual_workbench",
+        "created_at": 1792757620,
+        "source_memory_id": "wb_d03adabfbef145549bdc4fbbcdf92590"
+      }
+    ],
+    "relations": [],
+    "namespace": "live_1023_121339_raw",
+    "types": [
+      "episode",
+      "episodic"
+    ],
+    "statuses": [
+      "accepted"
+    ],
+    "status_basis": "Existing lifecycle view of stored claims",
+    "created_timestamp": 1792757620,
+    "updated_timestamp": null,
+    "backend": {
+      "qdrant_point_id": "eafa9625-59c8-55b9-a6d4-c1ee82c69a79",
+      "collection": "semantic_memory",
+      "graph": "memory_core"
+    }
+  },
+  {
+    "memory_id": "wb_d689a33d714b483b8de244f7fc9a8030",
+    "content": "The test review has been rescheduled to 22 November 2026. Use the new date instead.",
+    "metadata": {
+      "memory_type": "episodic",
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_raw",
+      "session_id": "d27c05ec27e3464fb969dbaff323ee7a",
+      "memory_claim_ids": [
+        "claim_c5dfbde73e3ea4ce75600cd0bc6ca9f2"
+      ],
+      "memory_source_id": "source_d1df813d030677c4b71526c42f0a5711",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "entity_ids": [
+      "subject_bf6d0b766cdcffbd56390c833b497cf1"
+    ],
+    "valid_from": 0,
+    "valid_until": 9223372036854775807,
+    "importance": 1.0,
+    "timestamp": 1792757632,
+    "created_at": null,
+    "vector_stored": true,
+    "graph_stored": true,
+    "payload": {
+      "memory_id": "wb_d689a33d714b483b8de244f7fc9a8030",
+      "text": "The test review has been rescheduled to 22 November 2026. Use the new date instead.",
+      "entity_ids": [
+        "subject_bf6d0b766cdcffbd56390c833b497cf1"
+      ],
+      "valid_from": 0,
+      "valid_until": 9223372036854775807,
+      "importance": 1.0,
+      "memory_type": "episodic",
+      "timestamp": 1792757632,
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_raw",
+      "session_id": "d27c05ec27e3464fb969dbaff323ee7a",
+      "memory_claim_ids": [
+        "claim_c5dfbde73e3ea4ce75600cd0bc6ca9f2"
+      ],
+      "memory_source_id": "source_d1df813d030677c4b71526c42f0a5711",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "claims": [
+      {
+        "claim_id": "claim_c5dfbde73e3ea4ce75600cd0bc6ca9f2",
+        "memory_id": "wb_d689a33d714b483b8de244f7fc9a8030",
+        "subject": "workbench:live_1023_121339_raw",
+        "subject_id": "subject_bf6d0b766cdcffbd56390c833b497cf1",
+        "predicate": "conversation_episode",
+        "value": "The test review has been rescheduled to 22 November 2026. Use the new date instead.",
+        "kind": "episode",
+        "scope": {
+          "session_id": "d27c05ec27e3464fb969dbaff323ee7a"
+        },
+        "status": "accepted",
+        "accepted": true,
+        "current_eligible": true,
+        "protected": false,
+        "accepted_for_current_use": true,
+        "correction_known": false,
+        "protected_at_creation": false,
+        "fuzzy_score": 0.8652091200583922,
+        "fuzzy_explanation": {
+          "score": 0.8652091200583922,
+          "inputs": {
+            "freshness": 0.9999550748030195,
+            "quality": 0.9,
+            "support": 0.3333333333333333,
+            "agreement": 1.0
+          },
+          "memberships": {
+            "freshness": {
+              "low": 0.0,
+              "medium": 8.985039396103289e-05,
+              "high": 0.999910149606039
+            },
+            "quality": {
+              "low": 0.0,
+              "medium": 0.19999999999999996,
+              "high": 0.8
+            },
+            "support": {
+              "low": 0.33333333333333337,
+              "medium": 0.6666666666666666,
+              "high": 0.0
+            },
+            "agreement": {
+              "low": 0.0,
+              "medium": 0.0,
+              "high": 1.0
+            }
+          },
+          "fired_rules": [
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "medium",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 5.9900262640688585e-06,
+              "output": 0.55
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "medium",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 1.1980052528137715e-05,
+              "output": 0.6175
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "high",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 2.3960105056275444e-05,
+              "output": 0.7300000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "high",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 4.792021011255088e-05,
+              "output": 0.7975000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "medium",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 0.0666606766404026,
+              "output": 0.685
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "medium",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 0.13332135328080516,
+              "output": 0.7525000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "high",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 0.26664270656161043,
+              "output": 0.865
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "high",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 0.5332854131232208,
+              "output": 0.9325
+            }
+          ],
+          "method": "Sugeno v2; product conjunction; monotone rule outputs; freshness scaling",
+          "calibrated_probability": false
+        },
+        "previous_score": null,
+        "changed_by": null,
+        "change_reason": null,
+        "conflicting_claim_ids": [],
+        "sources": [
+          {
+            "id": "source_d1df813d030677c4b71526c42f0a5711",
+            "memory_id": "wb_d689a33d714b483b8de244f7fc9a8030",
+            "event_id": "d689a33d714b483b8de244f7fc9a8030",
+            "text": "The test review has been rescheduled to 22 November 2026. Use the new date instead.",
+            "origin": "user",
+            "actor_id": "workbench:live_1023_121339_raw",
+            "user_confirmed": false,
+            "quality": 0.9,
+            "evidence_group": "user:workbench:live_1023_121339_raw",
+            "recorded_at": 1792757632,
+            "received_at": 1792757632,
+            "digest": "receipt_4d3dc8e938e1f659ca2efd4e7629009b",
+            "metadata_json": "{\"memory_type\":\"episodic\",\"session_id\":\"d27c05ec27e3464fb969dbaff323ee7a\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_raw\"}"
+          }
+        ],
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "accepted_at": 1792757632,
+        "ended_at": null,
+        "reason": "",
+        "historical_meaning": "source assertion; effective dates unspecified",
+        "references": [],
+        "identity_evidence": [],
+        "evidence_path": [
+          "claim_c5dfbde73e3ea4ce75600cd0bc6ca9f2",
+          "SUPPORTED_BY",
+          "source_d1df813d030677c4b71526c42f0a5711"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "source_d1df813d030677c4b71526c42f0a5711",
+        "memory_id": "wb_d689a33d714b483b8de244f7fc9a8030",
+        "event_id": "d689a33d714b483b8de244f7fc9a8030",
+        "text": "The test review has been rescheduled to 22 November 2026. Use the new date instead.",
+        "origin": "user",
+        "actor_id": "workbench:live_1023_121339_raw",
+        "user_confirmed": false,
+        "quality": 0.9,
+        "evidence_group": "user:workbench:live_1023_121339_raw",
+        "recorded_at": 1792757632,
+        "received_at": 1792757632,
+        "digest": "receipt_4d3dc8e938e1f659ca2efd4e7629009b",
+        "metadata_json": "{\"memory_type\":\"episodic\",\"session_id\":\"d27c05ec27e3464fb969dbaff323ee7a\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_raw\"}"
+      }
+    ],
+    "observations": [
+      {
+        "id": "obs_wb_d689a33d714b483b8de244f7fc9a8030_subject_bf6d0b766cdcffbd56390c833b497cf1",
+        "entity_id": "subject_bf6d0b766cdcffbd56390c833b497cf1",
+        "content": "The test review has been rescheduled to 22 November 2026. Use the new date instead.",
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "importance": 1.0,
+        "source": "manual_workbench",
+        "created_at": 1792757632,
+        "source_memory_id": "wb_d689a33d714b483b8de244f7fc9a8030"
+      }
+    ],
+    "relations": [],
+    "namespace": "live_1023_121339_raw",
+    "types": [
+      "episode",
+      "episodic"
+    ],
+    "statuses": [
+      "accepted"
+    ],
+    "status_basis": "Existing lifecycle view of stored claims",
+    "created_timestamp": 1792757632,
+    "updated_timestamp": null,
+    "backend": {
+      "qdrant_point_id": "2dc1159e-4e37-59b1-80ed-0e541b697f5f",
+      "collection": "semantic_memory",
+      "graph": "memory_core"
+    }
+  },
+  {
+    "memory_id": "wb_f818580682a848c380317f3e36a174ed",
+    "content": "My current project is Iron Web, a long-term memory system for AI agents. I want to validate its storage and retrieval behavior before building further features.",
+    "metadata": {
+      "memory_type": "episodic",
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_raw",
+      "session_id": "c0cd5ec6db914c15b10073bb81441072",
+      "memory_claim_ids": [
+        "claim_d8826fc9e67dc198ff14c74e55e482d3"
+      ],
+      "memory_source_id": "source_94f97a7c8c782931f3ffe6f1e57d01a6",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "entity_ids": [
+      "subject_bf6d0b766cdcffbd56390c833b497cf1"
+    ],
+    "valid_from": 0,
+    "valid_until": 9223372036854775807,
+    "importance": 1.0,
+    "timestamp": 1792757619,
+    "created_at": null,
+    "vector_stored": true,
+    "graph_stored": true,
+    "payload": {
+      "memory_id": "wb_f818580682a848c380317f3e36a174ed",
+      "text": "My current project is Iron Web, a long-term memory system for AI agents. I want to validate its storage and retrieval behavior before building further features.",
+      "entity_ids": [
+        "subject_bf6d0b766cdcffbd56390c833b497cf1"
+      ],
+      "valid_from": 0,
+      "valid_until": 9223372036854775807,
+      "importance": 1.0,
+      "memory_type": "episodic",
+      "timestamp": 1792757619,
+      "source": "manual_workbench",
+      "test_namespace": "live_1023_121339_raw",
+      "session_id": "c0cd5ec6db914c15b10073bb81441072",
+      "memory_claim_ids": [
+        "claim_d8826fc9e67dc198ff14c74e55e482d3"
+      ],
+      "memory_source_id": "source_94f97a7c8c782931f3ffe6f1e57d01a6",
+      "memory_versioned": true,
+      "extraction_status": "typed_claims",
+      "extraction_is_mock": false,
+      "extractor_name": "explicit_claim_contract"
+    },
+    "claims": [
+      {
+        "claim_id": "claim_d8826fc9e67dc198ff14c74e55e482d3",
+        "memory_id": "wb_f818580682a848c380317f3e36a174ed",
+        "subject": "workbench:live_1023_121339_raw",
+        "subject_id": "subject_bf6d0b766cdcffbd56390c833b497cf1",
+        "predicate": "conversation_episode",
+        "value": "My current project is Iron Web, a long-term memory system for AI agents. I want to validate its storage and retrieval behavior before building further features.",
+        "kind": "episode",
+        "scope": {
+          "session_id": "c0cd5ec6db914c15b10073bb81441072"
+        },
+        "status": "accepted",
+        "accepted": true,
+        "current_eligible": true,
+        "protected": false,
+        "accepted_for_current_use": true,
+        "correction_known": false,
+        "protected_at_creation": false,
+        "fuzzy_score": 0.8652078077234601,
+        "fuzzy_explanation": {
+          "score": 0.8652078077234601,
+          "inputs": {
+            "freshness": 0.9999539160448778,
+            "quality": 0.9,
+            "support": 0.3333333333333333,
+            "agreement": 1.0
+          },
+          "memberships": {
+            "freshness": {
+              "low": 0.0,
+              "medium": 9.216791024435622e-05,
+              "high": 0.9999078320897556
+            },
+            "quality": {
+              "low": 0.0,
+              "medium": 0.19999999999999996,
+              "high": 0.8
+            },
+            "support": {
+              "low": 0.33333333333333337,
+              "medium": 0.6666666666666666,
+              "high": 0.0
+            },
+            "agreement": {
+              "low": 0.0,
+              "medium": 0.0,
+              "high": 1.0
+            }
+          },
+          "fired_rules": [
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "medium",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 6.144527349623747e-06,
+              "output": 0.55
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "medium",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 1.2289054699247492e-05,
+              "output": 0.6175
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "high",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 2.4578109398494997e-05,
+              "output": 0.7300000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "medium",
+                "quality": "high",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 4.915621879698999e-05,
+              "output": 0.7975000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "medium",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 0.06666052213931704,
+              "output": 0.685
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "medium",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 0.13332104427863406,
+              "output": 0.7525000000000001
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "high",
+                "support": "low",
+                "agreement": "high"
+              },
+              "firing_strength": 0.26664208855726823,
+              "output": 0.865
+            },
+            {
+              "conditions": {
+                "freshness": "high",
+                "quality": "high",
+                "support": "medium",
+                "agreement": "high"
+              },
+              "firing_strength": 0.5332841771145364,
+              "output": 0.9325
+            }
+          ],
+          "method": "Sugeno v2; product conjunction; monotone rule outputs; freshness scaling",
+          "calibrated_probability": false
+        },
+        "previous_score": null,
+        "changed_by": null,
+        "change_reason": null,
+        "conflicting_claim_ids": [],
+        "sources": [
+          {
+            "id": "source_94f97a7c8c782931f3ffe6f1e57d01a6",
+            "memory_id": "wb_f818580682a848c380317f3e36a174ed",
+            "event_id": "f818580682a848c380317f3e36a174ed",
+            "text": "My current project is Iron Web, a long-term memory system for AI agents. I want to validate its storage and retrieval behavior before building further features.",
+            "origin": "user",
+            "actor_id": "workbench:live_1023_121339_raw",
+            "user_confirmed": false,
+            "quality": 0.9,
+            "evidence_group": "user:workbench:live_1023_121339_raw",
+            "recorded_at": 1792757619,
+            "received_at": 1792757619,
+            "digest": "receipt_df3c9c367b94a27f28746d91afb2dd09",
+            "metadata_json": "{\"memory_type\":\"episodic\",\"session_id\":\"c0cd5ec6db914c15b10073bb81441072\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_raw\"}"
+          }
+        ],
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "accepted_at": 1792757619,
+        "ended_at": null,
+        "reason": "",
+        "historical_meaning": "source assertion; effective dates unspecified",
+        "references": [],
+        "identity_evidence": [],
+        "evidence_path": [
+          "claim_d8826fc9e67dc198ff14c74e55e482d3",
+          "SUPPORTED_BY",
+          "source_94f97a7c8c782931f3ffe6f1e57d01a6"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "source_94f97a7c8c782931f3ffe6f1e57d01a6",
+        "memory_id": "wb_f818580682a848c380317f3e36a174ed",
+        "event_id": "f818580682a848c380317f3e36a174ed",
+        "text": "My current project is Iron Web, a long-term memory system for AI agents. I want to validate its storage and retrieval behavior before building further features.",
+        "origin": "user",
+        "actor_id": "workbench:live_1023_121339_raw",
+        "user_confirmed": false,
+        "quality": 0.9,
+        "evidence_group": "user:workbench:live_1023_121339_raw",
+        "recorded_at": 1792757619,
+        "received_at": 1792757619,
+        "digest": "receipt_df3c9c367b94a27f28746d91afb2dd09",
+        "metadata_json": "{\"memory_type\":\"episodic\",\"session_id\":\"c0cd5ec6db914c15b10073bb81441072\",\"source\":\"manual_workbench\",\"test_namespace\":\"live_1023_121339_raw\"}"
+      }
+    ],
+    "observations": [
+      {
+        "id": "obs_wb_f818580682a848c380317f3e36a174ed_subject_bf6d0b766cdcffbd56390c833b497cf1",
+        "entity_id": "subject_bf6d0b766cdcffbd56390c833b497cf1",
+        "content": "My current project is Iron Web, a long-term memory system for AI agents. I want to validate its storage and retrieval behavior before building further features.",
+        "valid_from": 0,
+        "valid_until": 9223372036854775807,
+        "importance": 1.0,
+        "source": "manual_workbench",
+        "created_at": 1792757619,
+        "source_memory_id": "wb_f818580682a848c380317f3e36a174ed"
+      }
+    ],
+    "relations": [],
+    "namespace": "live_1023_121339_raw",
+    "types": [
+      "episode",
+      "episodic"
+    ],
+    "statuses": [
+      "accepted"
+    ],
+    "status_basis": "Existing lifecycle view of stored claims",
+    "created_timestamp": 1792757619,
+    "updated_timestamp": null,
+    "backend": {
+      "qdrant_point_id": "e9642310-a2bd-5f22-850f-ee13c4db77c8",
+      "collection": "semantic_memory",
+      "graph": "memory_core"
+    }
+  }
+]

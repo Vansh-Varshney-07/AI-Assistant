@@ -1,0 +1,28 @@
+test_name,prompt_sequence,expected_result,actual_result,relevant_memory_ids,storage_confirmed,retrieval_confirmed,retrieval_latency_ms,total_latency_ms,outcome,notes
+Basic memory creation,"1. My current project is Iron Web, a long-term memory system for AI agents. I want to validate its storage and retrieval behavior before building further features.
+2. I am testing whether Iron Web can remember project information across separate interactions.",Source records exist; inspect duplicate or redundant records.,Not run,,Unavailable,Unavailable,Unavailable,Unavailable,Inconclusive,No scenario prompts submitted.
+Retrieval across interactions,"1. FRESH CONVERSATION
+2. Which project am I working on, and what am I currently trying to validate?",Actual Test 1 source IDs support the project and validation goal.,Not run,,Unavailable,Unavailable,Unavailable,Unavailable,Inconclusive,Conversational generation Unsupported; inspect engine evidence separately.
+Preference memory,"1. When working on Iron Web, I prefer to test one component at a time and inspect actual stored records before moving to the next phase.
+2. FRESH CONVERSATION
+3. What is my preferred approach for testing Iron Web?",Preference source can be retrieved independently; inspect duplication.,Not run,,Unavailable,Unavailable,Unavailable,Unavailable,Inconclusive,Automatic preference classification Unsupported; explicit/manual claims can be tested separately.
+Correction and supersession,"1. For this test, the active project label is Memory Alpha.
+2. Correction: the active project label is Memory Beta. Memory Alpha is no longer the correct label.
+3. FRESH CONVERSATION
+4. What is the current project label?",Beta current; inspect old claim state and evidence links.,Not run,,Unavailable,Unavailable,Unavailable,Unavailable,Inconclusive,Automatic correction extraction Unsupported; guide gives explicit ClaimInput variant.
+Conflicting information,"1. My test workspace is named Workspace North.
+2. My test workspace is named Workspace South.
+3. FRESH CONVERSATION
+4. What is the current test workspace name?",Inspect both claims and temporal ordering; unresolved conflict must remain visible.,Not run,,Unavailable,Unavailable,Unavailable,Unavailable,Inconclusive,Explicit/manual variant checks the existing disputed state.
+Persistence after restart,"1. For persistence testing, the verification phrase is copper-orchid-731.
+2. INSPECT; SAVE EVIDENCE; STOP CLEANLY; RESTART; SAME NAMESPACE; FRESH CONVERSATION
+3. What is the verification phrase for the persistence test?",Same durable source ID and exact copper-orchid-731 phrase recovered.,Not run,,Unavailable,Unavailable,Unavailable,Unavailable,Inconclusive,Record whether FalkorDB was also stopped.
+Stale-memory behavior,"1. The next test review is scheduled for 15 November 2026.
+2. The test review has been rescheduled to 22 November 2026. Use the new date instead.
+3. FRESH CONVERSATION
+4. When is the next test review?",22 November 2026 current; inspect both records and prior claim exclusion.,Not run,,Unavailable,Unavailable,Unavailable,Unavailable,Inconclusive,Automatic reschedule extraction Unsupported; explicit supersession variant available.
+Retrieval precision,"1. The memory backend test uses a blue notebook.
+2. The interface test uses a green notebook.
+3. The retrieval test uses an orange notebook.
+4. FRESH CONVERSATION
+5. Which notebook is used for the retrieval test?",Orange notebook source ranks first; inspect irrelevant IDs.,Not run,,Unavailable,Unavailable,Unavailable,Unavailable,Inconclusive,Compare Top K 1 and 5; expected prose alone is not a pass.
