@@ -5,7 +5,7 @@ This folder is self-contained source for the FalkorDB + embedded Qdrant memory s
 
 ## Assistant stack setup
 
-The canonical project folder is `D:\Opencode_\AI assistant`. See [ops/SETUP.md](ops/SETUP.md) for the dedicated Ubuntu environment, Hermes/NemoClaw/OpenShell installation steps, verified migration checks and remaining setup work. The foundation research reports are in `research/`.
+The canonical project folder is `D:\Opencode_\AI assistant`. See [ops/SETUP.md](ops/SETUP.md) for the dedicated Ubuntu environment, Hermes/NemoClaw/OpenShell installation steps, verified migration checks and remaining setup work.
 
 ## Architecture
 

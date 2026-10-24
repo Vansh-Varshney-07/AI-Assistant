@@ -2,7 +2,7 @@
 
 Target project: `D:\Opencode_\AI assistant`.
 
-Consolidation scope: the standalone memory project and copies of the assistant research reports. The larger research-paper repositories are separate projects. Existing memory data stays private and ignored by Git. The existing database volume remains `memory_system_falkordb_data` to preserve its data.
+Consolidation scope: only the files formerly inside `D:\Opencode_\memory_system`, plus the new setup files requested for this assistant. The larger research-paper repositories are separate projects. Extra research report copies were removed after verifying their originals remain in the research chat's output folder. Existing memory data stays private and ignored by Git. The existing database volume remains `memory_system_falkordb_data` to preserve its data.
 
 The old `D:\Opencode_\memory_system` path is a compatibility junction to this folder. Existing report files retain historical names and observations. The Python package remains `memory` so imports continue to work.
 
@@ -10,7 +10,9 @@ The old `D:\Opencode_\memory_system` path is a compatibility junction to this fo
 
 `Ubuntu-24.04` is the newly downloaded distribution for this project. The original `Ubuntu` distribution is Ubuntu 26.04 and remains separate.
 
-After explicit installation approval, execute `ubuntu-prerequisites.sh` as root only in the new distribution. It installs prerequisite packages and creates the unprivileged, password-locked `assistant` user. It does not change sudo privileges.
+The user explicitly approved installation in `Ubuntu-24.04` on 2026-10-24. `ubuntu-prerequisites.sh` has completed as root only in the new distribution. It installed prerequisite packages and created the unprivileged, password-locked `assistant` user without sudo membership. This account is the default only for the new distribution; the global default WSL distribution was not changed.
+
+`prepare-user.sh` completed as `assistant`. It verified the pinned NVM installer checksum, installed Linux Node.js **22.23.4** and npm **10.9.9**, and created the shortcut `/home/assistant/ai-assistant` to the canonical project on D:. Python **3.12.3** and Git **2.43.0** are available. Linux Git can access the same project repository.
 
 Docker Desktop integration must be enabled for this distribution. Applying Docker settings may restart Docker and interrupt running containers, so coordinate that step first.
 
@@ -35,7 +37,7 @@ Git setup is local only. No remote repository will be created or code published 
 Verified on 2026-10-24:
 
 - The standalone project was moved to `D:\Opencode_\AI assistant`; the old path redirects here.
-- The research HTML and PDF reports are in `research/`. Larger research repositories remain in their original locations.
+- Only the former standalone project's files were consolidated. Extra report copies were removed to follow the user's clarified scope. Larger research repositories remain in their original locations.
 - Local Git was initialized on `main`. Private data, credentials, logs and runtime disks are ignored.
 - The existing workbench was restarted and its health endpoint returned online at `http://127.0.0.1:3352/health`.
 - The database still uses the existing `memory_system_falkordb_data` Docker volume.
@@ -44,7 +46,17 @@ Verified on 2026-10-24:
 
 The workbench currently uses the existing Windows Python environment at `D:\Opencode_\reserchpaper\.venv` and its existing private NVIDIA credential file. Creating a dedicated Ubuntu runtime and connecting the assistant to this memory service are still pending.
 
-The new `Ubuntu-24.04` distribution is downloaded and registered (Ubuntu 24.04.5 LTS, WSL 2). The original Ubuntu 26.04 distribution is separate. Automatic approval review blocked prerequisite installation and account creation; explicit confirmation is pending. Neither setup script has been executed. Hermes, NemoClaw and OpenShell are **not installed or running in the new distribution** yet. Docker Desktop integration must also be enabled there before the managed installation.
+The new `Ubuntu-24.04` distribution is registered (Ubuntu 24.04.5 LTS, WSL 2). The original Ubuntu 26.04 distribution is separate. The earlier installation approval block was resolved by explicit user approval; prerequisites and the project account are now installed. Hermes, NemoClaw and OpenShell are **not installed or running in the new distribution** yet.
+
+The current blocker is Docker Desktop WSL integration: a check from the assistant account returned Docker's instruction to enable integration. Open **Docker Desktop → Settings → Resources → WSL Integration**, enable **Ubuntu-24.04**, and apply. Applying may briefly interrupt existing containers. No Docker restart has been initiated by the setup scripts.
+
+Once Docker integration is ready, execute the prepared managed installer from PowerShell:
+
+```powershell
+wsl -d Ubuntu-24.04 -u assistant -- bash '/mnt/d/Opencode_/AI assistant/ops/install-stack.sh'
+```
+
+The official installer will present its Apache 2.0 / third-party software notice. Completing host installation is followed by credential onboarding and sandbox verification; a successful host install alone does not complete the assistant setup.
 
 Run the focused checks from the project directory with an installed development environment:
 

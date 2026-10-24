@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 [[ "$EUID" != 0 ]] || { echo 'Run this as the project assistant account, not root.' >&2; exit 1; }
+export NVM_DIR="$HOME/.nvm"
+if [[ -s "$NVM_DIR/nvm.sh" ]]; then
+  . "$NVM_DIR/nvm.sh"
+fi
 command -v docker >/dev/null || { echo 'Enable Docker Desktop integration for the project distro first.' >&2; exit 1; }
 docker info >/dev/null || { echo 'Docker is not reachable. No installer was run.' >&2; exit 1; }
 export NEMOCLAW_AGENT=hermes
