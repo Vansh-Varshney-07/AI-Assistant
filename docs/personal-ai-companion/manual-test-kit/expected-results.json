@@ -1,0 +1,35 @@
+{
+  "synthetic": true,
+  "period": {
+    "start_inclusive": "2026-10-12",
+    "end_exclusive": "2026-10-19",
+    "timezone": "Asia/Kolkata"
+  },
+  "per_provider": {
+    "recorded_steps": 30000,
+    "covered_step_days": 5,
+    "uncovered_step_days": 2,
+    "workout_count": 2,
+    "workout_minutes": 60,
+    "mean_steps_per_covered_day": 6000
+  },
+  "provider_a_reimport": {
+    "recorded_steps": 30000,
+    "workout_minutes": 60
+  },
+  "provider_a_after_revision_2": {
+    "recorded_steps": 31000,
+    "covered_step_days": 5,
+    "workout_minutes": 60
+  },
+  "overlapping_sources": "Do not sum both providers blindly. Display overlap and apply an explicit source-selection policy. Selecting A before its update gives 30000 recorded steps; selecting A after its revision gives 31000. Selecting B gives 30000.",
+  "uncovered_days": [
+    "2026-10-17",
+    "2026-10-18"
+  ],
+  "isolation": {
+    "cedar_label": "Cedar",
+    "maple_label": "Maple",
+    "maple_only_marker": "maple-orchid-862"
+  }
+}

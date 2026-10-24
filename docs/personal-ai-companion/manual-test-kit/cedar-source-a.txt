@@ -1,0 +1,7 @@
+SYNTHETIC MANUAL TEST SOURCE A
+Project: Cedar
+Option: Local archive
+All project documents remain on the user's chosen storage.
+Offline document lookup is supported.
+The user operates backups and recovery.
+This fixture makes no claim about any real product.

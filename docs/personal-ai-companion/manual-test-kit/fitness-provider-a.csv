@@ -1,0 +1,8 @@
+provider,record_id,revision,metric,value,unit,start_time,end_time,timezone
+fixture_a,steps-20261012,1,steps,4000,count,2026-10-12T00:00:00+05:30,2026-10-13T00:00:00+05:30,Asia/Kolkata
+fixture_a,steps-20261013,1,steps,6000,count,2026-10-13T00:00:00+05:30,2026-10-14T00:00:00+05:30,Asia/Kolkata
+fixture_a,steps-20261014,1,steps,5000,count,2026-10-14T00:00:00+05:30,2026-10-15T00:00:00+05:30,Asia/Kolkata
+fixture_a,steps-20261015,1,steps,7000,count,2026-10-15T00:00:00+05:30,2026-10-16T00:00:00+05:30,Asia/Kolkata
+fixture_a,steps-20261016,1,steps,8000,count,2026-10-16T00:00:00+05:30,2026-10-17T00:00:00+05:30,Asia/Kolkata
+fixture_a,workout-20261012,1,workout_duration,20,minute,2026-10-12T07:00:00+05:30,2026-10-12T07:20:00+05:30,Asia/Kolkata
+fixture_a,workout-20261015,1,workout_duration,40,minute,2026-10-15T07:00:00+05:30,2026-10-15T07:40:00+05:30,Asia/Kolkata

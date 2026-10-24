@@ -1,0 +1,7 @@
+SYNTHETIC MANUAL TEST SOURCE B
+Project: Cedar
+Option: Hosted archive
+Selected project documents are uploaded to an external provider.
+A network connection is required for archive lookup.
+Provider retention and processing location require verification.
+This fixture makes no claim about any real product.

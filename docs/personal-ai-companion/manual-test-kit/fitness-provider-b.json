@@ -1,0 +1,51 @@
+{
+  "synthetic": true,
+  "vendor": "fixture_b",
+  "zone": "Asia/Kolkata",
+  "daily_activity": [
+    {
+      "id": "daily-12",
+      "revision": 1,
+      "day": "2026-10-12",
+      "step_count": 4000
+    },
+    {
+      "id": "daily-13",
+      "revision": 1,
+      "day": "2026-10-13",
+      "step_count": 6000
+    },
+    {
+      "id": "daily-14",
+      "revision": 1,
+      "day": "2026-10-14",
+      "step_count": 5000
+    },
+    {
+      "id": "daily-15",
+      "revision": 1,
+      "day": "2026-10-15",
+      "step_count": 7000
+    },
+    {
+      "id": "daily-16",
+      "revision": 1,
+      "day": "2026-10-16",
+      "step_count": 8000
+    }
+  ],
+  "sessions": [
+    {
+      "id": "session-a",
+      "revision": 1,
+      "day": "2026-10-12",
+      "duration_seconds": 1200
+    },
+    {
+      "id": "session-b",
+      "revision": 1,
+      "day": "2026-10-15",
+      "duration_seconds": 2400
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+SYNTHETIC ISOLATION CONTROL
+Project: Maple
+Private test marker: maple-orchid-862
+This belongs only in the Maple test space. It must not appear in Cedar answers, worker packets or exported data.

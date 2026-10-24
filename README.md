@@ -115,3 +115,13 @@ Stop an existing workbench process before running this command. The interface st
 ## Independent memory spaces
 
 Use **New isolated space** and the **Active memory space** selector to keep tests separate. IDs and empty spaces persist across server restarts. All prompt operations and the inventory API use the selected space; old test namespaces remain individually selectable. Space IDs are local scopes, not authentication. See [usage, API and future user ownership](docs/memory-spaces.md) and [final tests](docs/memory-spaces-test-report.md).
+
+## Personal AI companion foundation
+
+The 30-page Personal AI Hackathon Foundation Research report is retained at the repository root. Its requirements are incorporated into the [companion product plan](docs/personal-ai-companion/PLAN.md) and [source-page integration record](docs/personal-ai-foundation-integration.md). These are design additions, not a claim that new provider, sandbox or connector features are implemented. Existing Windows/local, orchestrator-only memory and no-desktop-capture choices remain in force.
+
+The [phase-by-phase build and manual test plan](docs/personal-ai-companion/PHASE-BY-PHASE-PLAN.md) adds 19 testable handoffs, 69 manual acceptance cases and a synthetic fixture kit. Every case starts Not run; the document does not claim that the planned runtime features are implemented.
+
+## Current Wayfinder MVP plan — minimal app and quick chat
+
+The latest user scope is the [Wayfinder MVP v2 plan](docs/wayfinder-mvp-v2/PLAN.md): configurable chat/plugins/workflows/memory/skills/settings in a minimal app, plus a persistent plain quick-chat window. Animal UI and desktop scanning/capture are excluded. Use the [new phased manual acceptance plan](docs/wayfinder-mvp-v2/PHASES.md) and [memory-quality contract](docs/wayfinder-mvp-v2/MEMORY-QUALITY-CONTRACT.md). Earlier animal-first plans remain historical; this documentation update does not implement the proposed runtime.
