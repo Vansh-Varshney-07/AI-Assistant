@@ -40,7 +40,7 @@ The sandbox uses the release's **balanced** policy with npm, PyPI, Hugging Face 
 
 ## Verification
 
-Check the host CLI and OpenShell versions, actual sandbox status, Hermes health, loopback dashboard, tool-call execution and model route. Check that the existing memory workbench still loads and that its database volume is unchanged. Run the existing focused workbench and memory-space tests after the project move.
+Host CLI and OpenShell versions, sandbox status, Hermes health, dashboard, tool execution and the live model route were verified. The earlier focused relocation test run is recorded below. Future tests should use a disposable database, as explained in the persistence recovery section.
 
 Git setup is local only. No remote repository will be created or code published without selecting the remote destination. Private data, credentials, runtime disks and local logs must remain ignored.
 
@@ -56,7 +56,7 @@ Verified on 2026-10-24:
 - Focused relocation checks passed: **48 passed, 1 deselected** across `test_workbench.py`, `test_memory_spaces.py`, and `test_hosted_boundaries.py`. These checks use deterministic embeddings and isolated test storage; they do not verify hosted model quality.
 - The three relocated validation scripts compile. A pattern scan of 133 candidate Git files found no likely credentials; this is a limited pattern scan, not a guarantee.
 
-The workbench currently uses the existing Windows Python environment at `D:\Opencode_\reserchpaper\.venv` and its existing private NVIDIA credential file. Creating a dedicated Ubuntu runtime and connecting the assistant to this memory service are still pending.
+The memory workbench currently uses the existing Windows Python environment at `D:\Opencode_\reserchpaper\.venv` and its existing private NVIDIA credential file. Hermes uses the dedicated Ubuntu runtime. Connecting Hermes to this separate memory service remains a future integration step.
 
 The new `Ubuntu-24.04` distribution is registered (Ubuntu 24.04.5 LTS, WSL 2). The original Ubuntu 26.04 distribution is separate. The earlier installation approval block was resolved by explicit user approval. Sandbox `ai-assistant` is **Ready**, Hermes is **running**, and the OpenShell managed service is **enabled and active**. NVIDIA onboarding's live inference smoke passed; the local Hermes API then successfully completed both a real model request and an independently verified tool action.
 
@@ -94,9 +94,11 @@ The installer used its standard Apache 2.0 / third-party notice acceptance optio
 
 Both existing FalkorDB 4.20.7 instances crashed with signal 11 in `GraphContext_GetSchemaByID` while replaying `GRAPH.EFFECT` operations for test-prefixed graphs. This matches the failure class described in [FalkorDB issue 2201](https://github.com/FalkorDB/FalkorDB/issues/2201).
 
-The originals are stopped to prevent the crash loops; their persistence files have not been changed. Full checksummed archives are saved under ignored `.local/database-recovery/20261024-111839-df443c/`. Isolated copies using the same image started successfully after filtering **only GRAPH commands whose graph keys match test-owned prefixes**. All other commands were retained byte-for-byte. The memory copy removed 18,587 test commands and loaded 3 graphs; the research copy removed 1,927 test commands and loaded 87 graphs.
+The user explicitly approved repairing both databases on 2026-10-24. Full checksummed archives remain under ignored `.local/database-recovery/20261024-111839-df443c/`, with additional pre-repair AOF files beside the originals. Isolated copies using the same image first passed validation after filtering **only GRAPH commands whose graph keys match test-owned prefixes**. All other commands were retained byte-for-byte. The same verified changes were then applied atomically to both stopped originals. The memory repair removed 18,587 test commands; the research repair removed 1,927 test commands.
 
-Applying the validated repair is awaiting explicit approval because it changes persistence files and one affected store is outside the consolidated project. No database reset, deletion of the original volume, or major-version upgrade has been performed. Do not rerun the existing tests against the persistent service while this upstream AOF issue remains unresolved; test graph isolation alone does not isolate the shared persistence log.
+**Both original databases are now running and healthy.** A subsequent explicit restart confirmed persistence replay works: the memory database retained 3 graphs and the research database retained 87 graphs, with identical before/after graph-list fingerprints. Both remained healthy with zero automatic restarts throughout a further 30-second observation window. Evidence is in ignored `.local/database-recovery-verification.json`; `ops/verify-database-recovery.py` reproduces this bounded restart check.
+
+No database reset, deletion of the original volume, or major-version upgrade was performed. This repairs the affected history; it does not patch the upstream FalkorDB bug. Do not rerun the existing tests against the persistent service while that issue remains unresolved; test graph isolation alone does not isolate the shared persistence log.
 
 ## Dependency audit findings
 
