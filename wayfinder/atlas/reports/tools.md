@@ -96,9 +96,10 @@ Rather than building brittle, 1-off agents for every app, Wayfinder Atlas standa
 3. **`MessagingProvider`**: Unified interface for inbound events and outbound messaging (**WhatsApp**, **Gmail**; future: Slack, Discord).
 4. **`DesktopProvider`**: Unified interface for local OS automation (**Windows** file discovery, document text extraction, clipboard, notifications, and allowlisted application launching).
 
-### 📝 Notion Knowledge Integration
+### 📝 Notion Knowledge Integration — **VERIFIED**
 - **Connection**: REST API (v2022-06-28) authenticated via `NOTION_API_KEY` internal integration token.
 - **Access Boundary**: Integration accesses only pages and databases explicitly shared with it in Notion UI.
+- **Verification**: Live smoke-test passed 7/7 checks via `scripts/verify_notion.py` (auth, search, read, write-gate, error-handling, Wayfinder path).
 
 | Capability ID | Name | What It Enables | Primary Agent | Approval | Status |
 |---|---|---|---|---|---|
@@ -106,6 +107,7 @@ Rather than building brittle, 1-off agents for every app, Wayfinder Atlas standa
 | `notion.read_page` | Notion Read Page | Retrieve page metadata, properties, and markdown content blocks | **Knowledge Worker**, Document Analyst | ❌ auto | **verified** |
 | `notion.create_page` | Notion Create Page | Create a new page or database entry with title and markdown blocks | **Knowledge Worker** | ✅ **required** | **verified** |
 | `notion.update_page` | Notion Update Page | Update page properties or append markdown blocks | **Knowledge Worker** | ✅ **required** | **verified** |
+
 
 ### 🖥️ Windows Desktop Automation
 - **Connection**: Native Windows OS system harness (`wayfinder/atlas/harness/desktop_adapter.py`).
