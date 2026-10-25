@@ -185,28 +185,28 @@ def discover_hermes_capabilities() -> list[dict[str, Any]]:
     print("[inspect_hermes] Strategy 1: hermes tools list --json")
     discovered = _discover_via_cli_json()
     if discovered:
-        print(f"  ✓ Found {len(discovered)} tool(s) via JSON CLI")
+        print(f"  [+] Found {len(discovered)} tool(s) via JSON CLI")
         tools.extend(discovered)
     else:
-        print("  ✗ No JSON output — trying text parse")
+        print("  [-] No JSON output - trying text parse")
         discovered = _discover_via_cli_text()
         if discovered:
-            print(f"  ✓ Found {len(discovered)} tool(s) via text CLI")
+            print(f"  [+] Found {len(discovered)} tool(s) via text CLI")
             tools.extend(discovered)
         else:
-            print("  ✗ No CLI output")
+            print("  [-] No CLI output")
 
     if not tools:
         print("[inspect_hermes] Strategy 3: config directory scan")
         discovered = _discover_via_config_dir()
         if discovered:
-            print(f"  ✓ Found {len(discovered)} tool(s) in config dir")
+            print(f"  [+] Found {len(discovered)} tool(s) in config dir")
             tools.extend(discovered)
 
     if not tools:
         print("[inspect_hermes] Strategy 4: manual manifest fallback")
         discovered = _load_manual_manifest()
-        print(f"  ✓ Loaded {len(discovered)} tool(s) from manual manifest")
+        print(f"  [+] Loaded {len(discovered)} tool(s) from manual manifest")
         tools.extend(discovered)
 
     tools = _deduplicate(tools)
@@ -222,5 +222,5 @@ if __name__ == "__main__":
     # Optionally write to a discovery snapshot
     snapshot_path = REGISTRY_DIR / "snapshot_hermes.json"
     snapshot_path.write_text(out, encoding="utf-8")
-    print(f"\nSnapshot saved → {snapshot_path}")
+    print(f"\nSnapshot saved -> {snapshot_path}")
     sys.exit(0)

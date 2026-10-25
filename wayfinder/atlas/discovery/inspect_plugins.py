@@ -32,16 +32,32 @@ TOOLS_JSONL   = REGISTRY_DIR / "tools.jsonl"
 KNOWN_PLUGINS: list[dict[str, Any]] = [
     {
         "id": "whatsapp-agent-platform",
-        "display_name": "WhatsApp Agent Platform",
+        "display_name": "WhatsApp Agent Platform (Personal Assistant Adapter)",
+        "adapter_type": "messaging_platform_adapter",
+        "channel_scope": "personal_assistant",
+        "restriction": "Meta restricts replies to agent creator; not for customer-facing business bot",
         "install_cmd": "hermes plugins install whatsapp-agent-platform",
         "tools_contributed": [
-            "whatsapp.send_message",
+            "whatsapp.receive_event",
+            "whatsapp.reply_text",
             "whatsapp.send_media",
-            "whatsapp.send_poll",
-            "whatsapp.send_location",
-            "whatsapp.send_typing",
-            "whatsapp.voice_transcribe",
-            "planning.cronjob_manage",
+            "whatsapp.process_voice",
+            "whatsapp.proactive_notify",
+            "whatsapp.process_reaction",
+        ],
+        "source": "manual_declared",
+    },
+    {
+        "id": "whatsapp-cloud-api",
+        "display_name": "WhatsApp Business Cloud API (Planned)",
+        "adapter_type": "business_cloud_api",
+        "channel_scope": "business_messaging",
+        "restriction": "Requires Meta Business credentials and verified business phone number",
+        "install_cmd": "configure via Meta Cloud API webhook + credentials",
+        "tools_contributed": [
+            "whatsapp.biz_receive_message",
+            "whatsapp.biz_send_reply",
+            "whatsapp.biz_send_template",
         ],
         "source": "manual_declared",
     },
@@ -50,12 +66,12 @@ KNOWN_PLUGINS: list[dict[str, Any]] = [
         "display_name": "Tavily Search & Research",
         "install_cmd": "npx skills add tavily-ai/skills --skill '*' --global --yes",
         "tools_contributed": [
-            "tavily.web_search",
-            "tavily.web_extract",
-            "tavily.site_map",
-            "tavily.web_crawl",
-            "tavily.deep_research",
-            "tavily.dynamic_search",
+            "tavily_search",
+            "tavily_extract",
+            "tavily_research",
+            "tavily_map",
+            "tavily_crawl",
+            "tavily_dynamic_search",
         ],
         "source": "manual_declared",
     },
@@ -141,6 +157,8 @@ def _load_registered_tool_ids() -> set[str]:
                     t = json.loads(line)
                     if "id" in t:
                         ids.add(t["id"])
+                    for alias in t.get("aliases", []):
+                        ids.add(alias)
                 except json.JSONDecodeError:
                     pass
     return ids
@@ -202,7 +220,7 @@ def inspect_plugins() -> dict[str, Any]:
     print(f"  Installed:         {result['installed']}")
     print(f"  Not installed:     {result['not_installed']}")
     if unregistered_tools:
-        print(f"  ⚠ Tools not in registry: {list(set(unregistered_tools))}")
+        print(f"  [!] Tools not in registry: {list(set(unregistered_tools))}")
 
     return result
 
@@ -214,5 +232,5 @@ if __name__ == "__main__":
 
     snapshot_path = REGISTRY_DIR / "snapshot_plugins.json"
     snapshot_path.write_text(out, encoding="utf-8")
-    print(f"\nSnapshot saved → {snapshot_path}")
+    print(f"\nSnapshot saved -> {snapshot_path}")
     sys.exit(0)

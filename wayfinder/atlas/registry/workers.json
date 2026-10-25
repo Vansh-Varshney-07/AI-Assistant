@@ -23,7 +23,6 @@
       "denied_tools": [
         "system.terminal_exec",
         "whatsapp.*",
-        "planning.cronjob_manage",
         "agent.delegate_task"
       ],
       "capabilities": ["web_search", "source_collection", "research_synthesis", "site_mapping", "crawling"],
@@ -52,7 +51,7 @@
         "whatsapp.*"
       ],
       "capabilities": ["evidence_extraction", "fact_checking", "corroboration", "contradiction_detection", "verdict_generation"],
-      "workflow_role": "1. Receive claim + cited URL from Web Researcher -> 2. Extract source text via tavily_extract -> 3. Search corroboration/contradictions via tavily_search -> 4. Compare evidence & dates -> 5. Return verdict (supported / contradicted / partially supported / unverified) with excerpts and confidence.",
+      "workflow_role": "1. Receive claim + cited URL from Web Researcher -> 2. Extract source text via tavily_extract -> 3. Search corroboration/contradictions via tavily_search -> 4. Compare evidence & dates -> 5. Return verdict with excerpts and confidence.",
       "notes": "Restricted to search and extract only. Broad research tasks must be delegated back to Web Researcher.",
       "request_tools_through_orchestrator": true
     },
@@ -106,6 +105,114 @@
       "capabilities": ["data_retrieval", "statistical_computation", "table_generation", "trend_analysis"],
       "workflow_role": "Calculates statistics, produces summary tables, identifies trends, and states limitations.",
       "request_tools_through_orchestrator": true
+    },
+    {
+      "id": "message_analyst",
+      "name": "Message Analyst",
+      "description": "Reads incoming WhatsApp messages and permitted context; classifies intent (question, request, reminder, commitment, information, casual conversation), extracts entities, assesses urgency, and suggests next step.",
+      "permitted_tool_groups": ["whatsapp_read", "memory"],
+      "permitted_tools": [
+        "whatsapp.receive_event",
+        "whatsapp.process_voice",
+        "whatsapp.process_reaction",
+        "memory.recall",
+        "memory.session_search",
+        "agent.clarify"
+      ],
+      "denied_tools": [
+        "whatsapp.reply_text",
+        "whatsapp.send_media",
+        "whatsapp.proactive_notify",
+        "system.*",
+        "filesystem.patch_file"
+      ],
+      "capabilities": ["intent_classification", "entity_extraction", "urgency_scoring", "voice_transcription"],
+      "workflow_role": "Read-only intake analysis. Input: incoming message and permitted context. Output: intent, entities, urgency, suggested next step.",
+      "request_tools_through_orchestrator": true
+    },
+    {
+      "id": "commitment_tracker",
+      "name": "Commitment Tracker",
+      "description": "Detects commitments, promises, and deadlines from conversation context (e.g., 'I will submit report by Friday', 'Remind me to call Rahul tomorrow'). Proposes task and memory updates.",
+      "permitted_tool_groups": ["planning", "memory"],
+      "permitted_tools": [
+        "planning.todo_manage",
+        "memory.store",
+        "memory.recall",
+        "memory.session_search",
+        "agent.clarify"
+      ],
+      "denied_tools": [
+        "whatsapp.reply_text",
+        "whatsapp.send_media",
+        "system.*",
+        "tavily_*"
+      ],
+      "capabilities": ["commitment_detection", "deadline_extraction", "task_proposal", "memory_update_proposal"],
+      "workflow_role": "Input: message text and relevant context. Output: proposed task, deadline, owner, source message ID, confidence. No external writes without approval.",
+      "request_tools_through_orchestrator": true
+    },
+    {
+      "id": "response_drafter",
+      "name": "Response Drafter",
+      "description": "Drafts candidate WhatsApp replies based on incoming message, user preferences, and authorized Iron Web context. Flags assumptions explicitly.",
+      "permitted_tool_groups": ["memory", "filesystem_read"],
+      "permitted_tools": [
+        "memory.recall",
+        "memory.session_search",
+        "filesystem.read_file",
+        "agent.clarify"
+      ],
+      "denied_tools": [
+        "whatsapp.reply_text",
+        "whatsapp.send_media",
+        "whatsapp.proactive_notify",
+        "system.*"
+      ],
+      "capabilities": ["reply_drafting", "tone_adaptation", "context_synthesis"],
+      "workflow_role": "Draft-only. Input: incoming message, response goal, authorized context. Output: proposed reply with flagged assumptions. Does NOT send.",
+      "request_tools_through_orchestrator": true
+    },
+    {
+      "id": "communication_reviewer",
+      "name": "Communication Reviewer",
+      "description": "Quality assurance and safety guardrail for proposed replies. Checks factual accuracy, tone, missing context, privacy leakage, and unintended commitments.",
+      "permitted_tool_groups": ["memory"],
+      "permitted_tools": [
+        "memory.recall",
+        "memory.session_search",
+        "agent.clarify"
+      ],
+      "denied_tools": [
+        "whatsapp.reply_text",
+        "whatsapp.send_media",
+        "whatsapp.proactive_notify",
+        "system.*"
+      ],
+      "capabilities": ["reply_review", "privacy_checking", "commitment_safeguard", "tone_validation"],
+      "workflow_role": "Review-only. Input: original message, proposed reply, context. Output: approved-for-review | revise | reject with concrete reasons. Cannot send messages.",
+      "request_tools_through_orchestrator": true
+    },
+    {
+      "id": "message_action_worker",
+      "name": "Message Action Worker",
+      "description": "Approval-gated execution worker. Dispatches text replies, media attachments, or scheduled notifications strictly after explicit Wayfinder authorization.",
+      "permitted_tool_groups": ["whatsapp_actions"],
+      "permitted_tools": [
+        "whatsapp.reply_text",
+        "whatsapp.send_media",
+        "whatsapp.proactive_notify"
+      ],
+      "denied_tools": [
+        "memory.*",
+        "filesystem.*",
+        "system.*",
+        "tavily_*"
+      ],
+      "capabilities": ["message_dispatch", "media_dispatch", "proactive_notification"],
+      "workflow_role": "Send-only execution. Input: approved recipient, content, action params. Output: delivery result and message ID/status. No unrestricted history or memory access.",
+      "request_tools_through_orchestrator": true,
+      "notes": "Every action strictly requires orchestrator approval token before execution."
     },
     {
       "id": "file_discovery_worker",
@@ -169,32 +276,6 @@
       "capabilities": ["memory_query", "memory_aggregation"],
       "request_tools_through_orchestrator": true,
       "notes": "No default Tavily access. Operates exclusively on internal memory."
-    },
-    {
-      "id": "comms_worker",
-      "name": "Communications Worker",
-      "description": "Handles outbound WhatsApp messaging, media sharing, and scheduling. External writes require explicit confirmation.",
-      "permitted_tool_groups": ["whatsapp", "planning", "memory"],
-      "permitted_tools": [
-        "whatsapp.send_message",
-        "whatsapp.send_media",
-        "whatsapp.send_poll",
-        "whatsapp.send_location",
-        "whatsapp.send_typing",
-        "planning.cronjob_manage",
-        "planning.todo_manage",
-        "memory.recall",
-        "memory.session_search",
-        "agent.clarify"
-      ],
-      "denied_tools": [
-        "tavily_*",
-        "system.terminal_exec",
-        "filesystem.patch_file",
-        "browser.exec"
-      ],
-      "capabilities": ["messaging", "scheduling", "reminders", "media_delivery"],
-      "request_tools_through_orchestrator": true
     },
     {
       "id": "orchestrator",

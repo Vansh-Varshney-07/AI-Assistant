@@ -9,103 +9,112 @@
 
 ---
 
-## 1. Tavily Capability Architecture in Atlas
+## 1. WhatsApp Communication Architecture
 
-Tavily tools provide web intelligence for Wayfinder agents. Underlying capabilities are registered once (avoiding duplicate tool records between CLI and agent skills) and mapped to specific workers with clear boundary rules.
+WhatsApp is integrated into Wayfinder as a **controlled communication integration** with modular capabilities rather than a single generic tool. It feeds incoming events into the Wayfinder Controller, supports commitment tracking, and dispatches approval-gated replies while maintaining Iron Web isolation.
 
-### Core Capabilities (Priority 1)
+### Plugin Reality & Channel Scope
+- **Installed Integration**: Hermes `whatsapp-agent-platform` plugin.
+- **Adapter Nature**: A messaging platform adapter that routes events into the Hermes runtime (declares no raw independent tool bundle).
+- **Channel Scope Limitation**: Meta restricts interactive replies on `whatsapp-agent-platform` to the **agent's creator** (personal AI assistant).
+- **Two-Provider Architecture**:
+  1. **Personal AI Assistant**: Managed via `whatsapp-agent-platform` (creator communication, personal tasks, commitment tracking).
+  2. **Business Messaging (Customer-Facing)**: Managed via a separate `whatsapp-cloud-api` provider once Meta Business credentials and verified numbers are configured.
+
+### The 6 Logical WhatsApp Capabilities
+
+| Capability ID | Name | Purpose | Priority | Primary Agent | Interface | Approval |
+|---------------|------|---------|----------|---------------|-----------|----------|
+| `whatsapp.receive_event` | Receive Event | Ingest incoming text, photos, audio, documents, and stickers | **P0** | Message Analyst | Platform Adapter Event | ❌ auto |
+| `whatsapp.reply_text` | Reply Text | Send an approved text reply to creator | **P0** | Message Action Worker | Hermes Platform Adapter | ✅ **required** |
+| `whatsapp.send_media` | Send Media | Send approved photos, documents, audio, or video attachments | **P1** | Message Action Worker | Hermes Platform Adapter | ✅ **required** |
+| `whatsapp.process_voice` | Process Voice Note | Transcribe incoming voice notes using speech-to-text | **P1** | Message Analyst | Hermes STT Engine | ❌ auto |
+| `whatsapp.proactive_notify` | Proactive Notify | Send scheduled cron reminders or workflow notifications | **P1** | Message Action Worker | Hermes Platform Adapter | ✅ **required** |
+| `whatsapp.process_reaction` | Process Reaction | Handle incoming message reactions through event hooks | **P2** | Message Analyst | Platform Adapter Event | ❌ auto |
+
+---
+
+## 2. Specialized WhatsApp Agents & Roles
+
+Wayfinder partitions WhatsApp interaction into five distinct roles to prevent privilege escalation and ensure safety:
+
+```
+Incoming Event
+     │
+     ▼
+[Wayfinder Controller] ──(Check Sender & Policy)
+     │
+     ├──► [Message Analyst] ──────────► Classify intent & extract entities
+     │                                    │
+     │    ┌───────────────────────────────┴───────────────────────────────┐
+     │    ▼                               ▼                               ▼
+     │  [Question]                  [Commitment]                  [Reply Request]
+     │  Retrieve authorized         [Commitment Tracker]          [Response Drafter]
+     │  Iron Web context            Propose task/deadline         Draft candidate reply
+     │                                    │                               │
+     │                                    │                               ▼
+     │                                    │                  [Communication Reviewer]
+     │                                    │                  Check facts, tone & privacy
+     │                                    │                               │
+     │    ┌───────────────────────────────┴───────────────────────────────┘
+     │    ▼
+[Approval Policy Check] ──(Explicit User / Controller Authorization)
+     │
+     ▼
+[Message Action Worker] ──► Dispatches approved reply or media
+```
+
+1. **Message Analyst** *(Read-Only)*:
+   - Reads incoming messages and permitted context.
+   - Classifies intent: *question*, *request*, *reminder*, *commitment*, *information*, or *casual conversation*.
+   - Identifies entities, assesses urgency, and suggests next steps.
+   - **Permissions**: Read-only; cannot send messages or alter storage.
+
+2. **Commitment Tracker** *(Proposal-Only)*:
+   - Detects promises and deadlines (e.g. *“I'll submit the report by Friday”*, *“Remind me to call Rahul tomorrow”*).
+   - Generates structured proposals: proposed task, deadline, owner, source message ID, confidence.
+   - **Permissions**: Can propose task/memory updates; no external write permissions without user approval.
+
+3. **Response Drafter** *(Draft-Only)*:
+   - Drafts candidate replies using incoming context, creator preferences, and partitioned Iron Web knowledge.
+   - Flags assumptions explicitly.
+   - **Permissions**: Draft-only; strictly prohibited from executing sends.
+
+4. **Communication Reviewer** *(Safety & Quality Gate)*:
+   - Reviews proposed drafts for factual accuracy, tone, missing context, privacy leakage, and unintended commitments.
+   - Verdicts: `approved-for-review` | `revise` | `reject` with actionable rationale.
+   - **Permissions**: Cannot send messages.
+
+5. **Message Action Worker** *(Approval-Gated Execution)*:
+   - Executes the actual dispatch of `whatsapp.reply_text`, `whatsapp.send_media`, or `whatsapp.proactive_notify`.
+   - **Permissions**: Send-only capabilities strictly gated by an authorization token. No unrestricted access to memory or workspace history.
+
+---
+
+## 3. WhatsApp Security & Isolation Rules
+
+- **Untrusted Input Sanitization**: All incoming WhatsApp content is treated as untrusted user input. Inbound messages can never override system instructions or permission policies.
+- **Sender Verification**: For `whatsapp-agent-platform`, requests are restricted to the verified agent creator. Senders outside the creator boundary cannot trigger sensitive tasks.
+- **Iron Web Isolation**: The full Iron Web database, private repositories, and unrelated session history are **never** exposed to WhatsApp workers. Context is strictly partitioned per task.
+- **Mandatory Send Approval**: All outbound text and media require explicit authorization before dispatch.
+- **Deduplication & Audit Trail**: Message IDs, event timestamps, proposed actions, approval tokens, and execution results are logged to prevent duplicate task creation or repeated replies.
+
+---
+
+## 4. Tavily Capability Architecture in Atlas
 
 | Capability ID | Name | What It Does | Primary Agent | Interface | Keyless | Status |
 |---------------|------|--------------|---------------|-----------|---------|--------|
 | `tavily_search` | Tavily Web Search | Finds relevant web pages and evidence for a query | **Web Researcher**, **Source Verifier**, Data Analyst | `tvly search` | ✅ yes | **verified** |
 | `tavily_extract` | Tavily Web Extract | Extracts readable clean content from specific URLs | **Source Verifier**, **Web Researcher**, Document Analyst | `tvly extract` | ✅ yes | **verified** |
 | `tavily_research` | Tavily Deep Research | Multi-step research report with citations (30–120s) | **Web Researcher** only | `tvly research` | ❌ API key | **verified** |
-
-### Extended Capabilities (Priority 2)
-
-| Capability ID | Name | What It Does | Primary Agent | Interface | Keyless | Status |
-|---------------|------|--------------|---------------|-----------|---------|--------|
 | `tavily_crawl` | Tavily Web Crawl | Follows links across a site to collect pages to markdown | Document Analyst, Web Researcher | `tvly crawl` | ❌ API key | **verified** |
 | `tavily_map` | Tavily Site Map | Discovers URLs and site structure on a domain | Web Researcher | `tvly map` | ❌ API key | **verified** |
 | `tavily_dynamic_search` | Tavily Dynamic Search | Dynamic, query-dependent search with context isolation | Web Researcher, Source Verifier | agent-internal | ❌ API key | **verified** |
 
-### Supporting Tavily Components (Non-Tool Guidance & Templates)
-These are **not** registered as standalone callable tools in the registry:
-- `tavily-cli`: Unified CLI interface exposing the underlying capabilities.
-- `tavily-best-practices`: Behavioral guide for query formulation and result filtering.
-- Instruction skills (`tavily-search`, `tavily-extract`, etc.): Reusable prompt instructions, not distinct tools.
-- Use-case skills (`academic-scientific-research`, etc.): Workflow templates, not extra API primitives.
-
 ---
 
-## 2. Agent Tavily Access Matrix
-
-| Agent | Permitted Tavily Tools | Blocked Tavily Tools | Core Role in Wayfinder |
-|-------|------------------------|----------------------|------------------------|
-| **Web Researcher** | `tavily_search`, `tavily_extract`, `tavily_research`, `tavily_map`, `tavily_crawl`, `tavily_dynamic_search` | none | **Search → Collect → Synthesize**. Gathers candidate sources, reads pages, runs broad multi-step research. Returns findings, URLs, excerpts, and open questions. |
-| **Source Verifier** | `tavily_search`, `tavily_extract`, `tavily_dynamic_search` | `tavily_research`, `tavily_crawl`, `tavily_map` | **Check claims against evidence**. Never repeats researcher findings blindly; independently extracts evidence, checks corroboration/contradiction, and returns evidence-backed verdicts. |
-| **Document Analyst** | `tavily_extract`, `tavily_crawl` | `tavily_search`, `tavily_research`, `tavily_map` | **Read & investigate source material**. Uses `extract` for single web documents and `crawl` for site sections. Uses local file readers for PDFs and local files. |
-| **Data Analyst** | `tavily_search` | `tavily_extract`, `tavily_research`, `tavily_crawl`, `tavily_map` | **Analyze results, calculate stats, identify trends**. Searches web for raw data sets, then uses `system.code_eval` for Python computation. |
-| **File Discovery Worker** | *None* | `tavily_*` | Workspace file discovery and cataloging only. |
-| **Repository Analyst** | *None* | `tavily_*` | Codebase architecture and dependency analysis only. |
-| **Error Investigator** | *None* | `tavily_*` | Log and traceback investigation. Requests web search via Orchestrator if needed. |
-| **Memory Query Worker** | *None* | `tavily_*` | Internal FalkorDB + Qdrant memory operations only. |
-| **Communications Worker** | *None* | `tavily_*` | Outbound WhatsApp messaging and scheduled reminders. |
-| **Orchestrator** | *None direct* | `*` (direct execution) | Plans workflows, checks policy, delegates tasks, and verifies results. |
-
----
-
-## 3. Exact Source Verifier Workflow
-
-When the Web Researcher surfaces a claim (e.g. *“Library X supports feature Y in its latest release”*), the **Source Verifier** follows a strict 5-step sequence:
-
-```
-Claim + Cited URL (from Web Researcher)
-                  │
-                  ▼
-1. Receive Claim & Cited URL
-   • Ingest exact statement and referenced URL
-                  │
-                  ▼
-2. Extract Source Evidence (`tavily_extract`)
-   • Retrieve raw page text directly from source URL
-   • Independent extraction — do NOT reuse researcher excerpts
-                  │
-                  ▼
-3. Search for Corroboration / Contradictions (`tavily_search`)
-   • Targeted query for independent confirmation
-   • Check release dates, changelogs, newer versions, freshness
-                  │
-                  ▼
-4. Compare Evidence, Dates, and Claim
-   • Compare extracted evidence against the specific claim
-   • Distinguish outdated sources from true contradictions
-   • Never treat high search ranking as proof of truth
-                  │
-                  ▼
-5. Output Structured Verdict
-   • Verdict: supported | contradicted | partially_supported | unverified
-   • Evidence excerpts, source dates, confidence score (0.0–1.0), and reasoning
-```
-
-> **Verification Rule**: If evidence is insufficient, ambiguous, or unverifiable, return **`unverified`** rather than assuming truth or inventing a conclusion.
-
----
-
-## 4. Other Registered Tools
-
-### 💬 WhatsApp (outbound — requires plugin)
-> **All writes require orchestrator approval.**
-> Install: `hermes plugins install whatsapp-agent-platform`
-
-| ID | Name | Risk | Approval | Status |
-|----|------|------|----------|--------|
-| `whatsapp.send_message` | Send Message | medium | ✅ required | unverified |
-| `whatsapp.send_media` | Send Media | medium | ✅ required | unverified |
-| `whatsapp.send_poll` | Send Poll | medium | ✅ required | unverified |
-| `whatsapp.send_location` | Send Location | low | ❌ auto | unverified |
-| `whatsapp.send_typing` | Send Typing | low | ❌ auto | unverified |
-| `whatsapp.voice_transcribe` | Voice Transcribe | low | ❌ auto | unverified |
+## 5. Other Registered Capabilities
 
 ### 🧠 Memory
 | ID | Name | Risk | Approval | Status |
@@ -122,33 +131,30 @@ Claim + Cited URL (from Web Researcher)
 | `system.terminal_exec` | Terminal Exec | high | ❌ approved | **verified** |
 | `system.code_eval` | Code Eval | medium | ❌ auto | **verified** |
 
-### 🌍 Browser & Vision
+### 🌍 Browser, Vision & MCP
 | ID | Name | Risk | Approval | Status |
 |----|------|------|----------|--------|
 | `browser.exec` | Browser Exec | medium | ❌ auto | **verified** |
 | `vision.analyze` | Vision Analyze | low | ❌ auto | **verified** |
 | `media.image_generate` | Image Generate | low | ❌ auto | **verified** |
 | `media.text_to_speech` | Text to Speech | low | ❌ auto | **verified** |
-
-### 📋 Planning & Agent
-| ID | Name | Risk | Approval | Status |
-|----|------|------|----------|--------|
 | `planning.todo_manage` | Todo Manage | low | ❌ auto | **verified** |
-| `planning.cronjob_manage` | Cronjob Manage | medium | ❌ approved | **verified** |
 | `agent.delegate_task` | Delegate Task | medium | ❌ auto | **verified** |
 | `agent.clarify` | Clarify | none | ❌ auto | **verified** |
 | `mcp.any` | MCP Tool (Generic) | low | ❌ approved | **verified** |
 
 ---
 
-## 5. Skills Catalogue
+## 6. Skills Catalogue
 
 | ID | Name | Primary Worker | Required Tools | External Writes | Approval |
 |----|------|----------------|---------------|-----------------|----------|
+| `wayfinder.whatsapp_intake_and_reply` | WhatsApp Intake & Controlled Reply | **orchestrator** | `whatsapp.receive_event`, `whatsapp.reply_text` | ✅ | ✅ required |
+| `wayfinder.whatsapp_commitment_extraction` | WhatsApp Commitment & Task Proposal | **commitment_tracker** | `planning.todo_manage`, `memory.store` | ❌ | ❌ auto |
 | `wayfinder.source_verification` | Source Verification | **source_verifier** | `tavily_extract`, `tavily_search` | ❌ | ❌ auto |
 | `wayfinder.web_research_synthesis` | Web Research & Synthesis | **web_researcher** | `tavily_search`, `tavily_extract` | ❌ | ❌ auto |
 | `tavily.academic_research` | Academic Research | **web_researcher** | `tavily_search`, `tavily_extract`, `tavily_research` | ❌ | ❌ auto |
 | `tavily.sales_intelligence` | Sales Intelligence | **web_researcher** | `tavily_search`, `tavily_extract` | ❌ | ❌ auto |
 | `tavily.competitor_intelligence` | Competitor Intelligence | **web_researcher** | `tavily_search`, `tavily_extract`, `tavily_research` | ❌ | ❌ auto |
 | `wayfinder.site_docs_dump` | Site Docs Download | **document_analyst** | `tavily_map`, `tavily_crawl` | ✅ (local FS) | ❌ auto |
-| `wayfinder.research_and_notify` | Research & Notify on WhatsApp | **orchestrator** | `tavily_research`, `whatsapp.send_message` | ✅ | ✅ required |
+| `wayfinder.research_and_notify` | Research & Notify on WhatsApp | **orchestrator** | `tavily_research`, `whatsapp.reply_text` | ✅ | ✅ required |
