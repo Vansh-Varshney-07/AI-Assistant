@@ -1,0 +1,210 @@
+# Wayfinder Atlas — Tool Permission Policies
+# Defines access levels, risk classifications, approval requirements,
+# and worker-level capability constraints.
+#
+# Risk levels: none | low | medium | high | critical
+# Access types: none | local | local_write | filesystem_read | filesystem_write |
+#               network | external_write | system_exec | sandbox_exec | agent_spawn | varies
+
+version: "1.2"
+policy_author: "wayfinder-atlas"
+last_updated: "2026-10-25"
+
+# ─── Default policy for any tool not listed ───────────────────────────────────
+defaults:
+  risk: high
+  approval_required: true
+  enabled: false
+
+# ─── Tool group policies ──────────────────────────────────────────────────────
+groups:
+
+  tavily:
+    description: "Web information retrieval tools via Tavily CLI"
+    risk: low
+    approval_required: false
+    enabled: true
+    notes: "Read-only network access. Verified & approved."
+
+  whatsapp:
+    description: "Outbound WhatsApp messaging tools via hermes plugin"
+    risk: medium
+    approval_required: true
+    enabled: false   # set to true after plugin is installed and verified
+    notes: >
+      All whatsapp.* tools constitute external writes.
+      Require orchestrator approval gate before each invocation.
+      Do NOT batch-approve multiple sends in a single step.
+
+  memory:
+    description: "Persistent and session memory operations"
+    risk: low
+    approval_required: false
+    enabled: true
+    notes: "Verified & approved."
+
+  filesystem_read:
+    description: "Read-only filesystem access"
+    risk: low
+    approval_required: false
+    enabled: true
+    notes: "Verified & approved."
+
+  filesystem_write:
+    description: "Filesystem write access"
+    risk: medium
+    approval_required: false
+    enabled: true
+    notes: "Verified & approved for patch_file and crawl output."
+
+  system_exec:
+    description: "Shell command execution on the local system"
+    risk: high
+    approval_required: false
+    enabled: true
+    notes: "Verified and approved by user policy."
+
+  sandbox_exec:
+    description: "Sandboxed Python code evaluation"
+    risk: medium
+    approval_required: false
+    enabled: true
+    notes: "Verified & approved for computation and data analysis."
+
+  browser:
+    description: "Chromium browser automation via CDP"
+    risk: medium
+    approval_required: false
+    enabled: true
+    notes: "Verified & approved."
+
+  agent_spawn:
+    description: "Spawning sub-agents or delegating tasks"
+    risk: medium
+    approval_required: false
+    enabled: true
+    notes: "Verified & approved."
+
+  mcp:
+    description: "Externally connected MCP server tools"
+    risk: low
+    approval_required: false
+    enabled: true
+    notes: "Verified and approved for active MCP servers."
+
+# ─── Individual tool overrides ────────────────────────────────────────────────
+tool_overrides:
+
+  tavily_crawl:
+    risk: medium
+    approval_required: false
+    notes: "Crawl writes to local filesystem. Verified and approved."
+
+  system.terminal_exec:
+    risk: high
+    approval_required: false
+    notes: "Verified and approved by user policy."
+
+  whatsapp.send_location:
+    risk: low
+    approval_required: false
+    notes: "Location share is low-risk; does not expose private content."
+
+  whatsapp.send_typing:
+    risk: low
+    approval_required: false
+    notes: "Presence signal only; no content transmitted."
+
+  planning.cronjob_manage:
+    risk: medium
+    approval_required: false
+    notes: "Verified and approved by user policy."
+
+  agent.delegate_task:
+    risk: medium
+    approval_required: false
+    notes: "Sub-agent delegation verified and approved."
+
+# ─── Worker Access Policies & Boundary Rules ──────────────────────────────────
+worker_policies:
+
+  web_researcher:
+    allowed_tavily_tools:
+      - tavily_search
+      - tavily_extract
+      - tavily_research
+      - tavily_map
+      - tavily_crawl
+      - tavily_dynamic_search
+    notes: "Primary agent for search, collection, and synthesis."
+
+  source_verifier:
+    allowed_tavily_tools:
+      - tavily_search
+      - tavily_extract
+      - tavily_dynamic_search
+    blocked_tavily_tools:
+      - tavily_research
+      - tavily_crawl
+      - tavily_map
+    notes: >
+      Source Verifier is strictly restricted to search and extract only.
+      Must not invoke tavily_research; broad research must be delegated
+      back to Web Researcher via orchestrator.
+
+  document_analyst:
+    allowed_tavily_tools:
+      - tavily_extract
+      - tavily_crawl
+    blocked_tavily_tools:
+      - tavily_search
+      - tavily_research
+      - tavily_map
+    notes: "Uses extract for single pages and crawl for multi-page site docs."
+
+  data_analyst:
+    allowed_tavily_tools:
+      - tavily_search
+    blocked_tavily_tools:
+      - tavily_extract
+      - tavily_research
+      - tavily_crawl
+      - tavily_map
+    notes: "Uses tavily_search only when data must be found online; computes with code_eval."
+
+  restricted_local_workers:
+    workers:
+      - file_discovery_worker
+      - repository_analyst
+      - error_investigator
+      - memory_query_worker
+    allowed_tavily_tools: []
+    enforcement: "DENY_ALL_TAVILY_BY_DEFAULT"
+    notes: "Must request web research via orchestrator when online knowledge is needed."
+
+# ─── Capability relationship & Verification rules ─────────────────────────────
+capability_rules:
+
+  - rule: "independent_evidence_extraction"
+    description: >
+      Source Verifier must independently extract evidence from raw source text
+      (via tavily_extract) rather than relying on Web Researcher excerpts.
+    enforced_by: source_verifier
+
+  - rule: "no_unsolicited_external_write"
+    description: >
+      No external write (whatsapp.*) may be executed unless
+      the user's original request explicitly requests an outbound action.
+    enforced_by: orchestrator
+
+  - rule: "research_before_verification"
+    description: >
+      Web Researcher collects claims and cited URLs first.
+      Source Verifier validates claims against evidence before final synthesis.
+    enforced_by: orchestrator
+
+  - rule: "verifier_delegates_research"
+    description: >
+      If Source Verifier identifies that a claim requires broader multi-step research,
+      it must delegate that task to Web Researcher rather than spending calls on tavily_research.
+    enforced_by: source_verifier

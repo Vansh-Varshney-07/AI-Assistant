@@ -18,3 +18,7 @@ backups/
 *.vhd
 *.pem
 *.key
+
+# Wayfinder Atlas generated index
+wayfinder/atlas/_index/
+wayfinder/atlas/registry/snapshot_*.json

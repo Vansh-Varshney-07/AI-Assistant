@@ -1,0 +1,218 @@
+{
+  "workers": [
+    {
+      "id": "web_researcher",
+      "name": "Web Researcher",
+      "description": "Performs web research: search -> collect -> synthesize. Finds candidate sources, reads promising pages, conducts broad multi-step research, and investigates domains.",
+      "permitted_tool_groups": ["tavily", "memory", "filesystem", "planning"],
+      "permitted_tools": [
+        "tavily_search",
+        "tavily_extract",
+        "tavily_research",
+        "tavily_map",
+        "tavily_crawl",
+        "tavily_dynamic_search",
+        "memory.recall",
+        "memory.store",
+        "memory.session_search",
+        "filesystem.read_file",
+        "filesystem.patch_file",
+        "planning.todo_manage",
+        "agent.clarify"
+      ],
+      "denied_tools": [
+        "system.terminal_exec",
+        "whatsapp.*",
+        "planning.cronjob_manage",
+        "agent.delegate_task"
+      ],
+      "capabilities": ["web_search", "source_collection", "research_synthesis", "site_mapping", "crawling"],
+      "workflow_role": "Search candidate sources, read promising pages via tavily_extract, run broad research via tavily_research, map/crawl specific domains. Returns findings, URLs, excerpts, and open questions.",
+      "request_tools_through_orchestrator": true
+    },
+    {
+      "id": "source_verifier",
+      "name": "Source Verifier",
+      "description": "Checks claims against raw evidence rather than repeating findings. Extracts source text, searches for independent corroboration or contradictions, compares claim vs evidence, and returns structured verdicts.",
+      "permitted_tool_groups": ["tavily_verification", "memory", "planning"],
+      "permitted_tools": [
+        "tavily_extract",
+        "tavily_search",
+        "tavily_dynamic_search",
+        "memory.recall",
+        "memory.session_search",
+        "agent.clarify"
+      ],
+      "denied_tools": [
+        "tavily_research",
+        "tavily_crawl",
+        "tavily_map",
+        "system.terminal_exec",
+        "filesystem.patch_file",
+        "whatsapp.*"
+      ],
+      "capabilities": ["evidence_extraction", "fact_checking", "corroboration", "contradiction_detection", "verdict_generation"],
+      "workflow_role": "1. Receive claim + cited URL from Web Researcher -> 2. Extract source text via tavily_extract -> 3. Search corroboration/contradictions via tavily_search -> 4. Compare evidence & dates -> 5. Return verdict (supported / contradicted / partially supported / unverified) with excerpts and confidence.",
+      "notes": "Restricted to search and extract only. Broad research tasks must be delegated back to Web Researcher.",
+      "request_tools_through_orchestrator": true
+    },
+    {
+      "id": "document_analyst",
+      "name": "Document Analyst",
+      "description": "Reads and investigates source material. Uses tavily_extract for web documents and tavily_crawl when multiple pages from a site matter. For uploaded PDFs and local files, uses local file-reading tools.",
+      "permitted_tool_groups": ["tavily_docs", "filesystem_read", "memory", "planning"],
+      "permitted_tools": [
+        "tavily_extract",
+        "tavily_crawl",
+        "filesystem.read_file",
+        "memory.recall",
+        "memory.session_search",
+        "planning.todo_manage",
+        "agent.clarify"
+      ],
+      "denied_tools": [
+        "tavily_research",
+        "tavily_search",
+        "system.terminal_exec",
+        "filesystem.patch_file",
+        "whatsapp.*"
+      ],
+      "capabilities": ["document_reading", "web_extraction", "site_crawling", "fact_extraction"],
+      "workflow_role": "Extracts structured facts, summaries, and references from web pages and local files.",
+      "request_tools_through_orchestrator": true
+    },
+    {
+      "id": "data_analyst",
+      "name": "Data Analyst",
+      "description": "Analyzes results, calculates statistics, compares results, and identifies trends. Uses Tavily when data must be found online, then uses Python code evaluation to analyze.",
+      "permitted_tool_groups": ["tavily_search_only", "sandbox_exec", "filesystem", "memory", "planning"],
+      "permitted_tools": [
+        "tavily_search",
+        "system.code_eval",
+        "filesystem.read_file",
+        "filesystem.patch_file",
+        "memory.recall",
+        "memory.session_search",
+        "planning.todo_manage",
+        "agent.clarify"
+      ],
+      "denied_tools": [
+        "tavily_research",
+        "tavily_crawl",
+        "tavily_map",
+        "system.terminal_exec",
+        "whatsapp.*"
+      ],
+      "capabilities": ["data_retrieval", "statistical_computation", "table_generation", "trend_analysis"],
+      "workflow_role": "Calculates statistics, produces summary tables, identifies trends, and states limitations.",
+      "request_tools_through_orchestrator": true
+    },
+    {
+      "id": "file_discovery_worker",
+      "name": "File Discovery Worker",
+      "description": "Locates and catalogs files in the local workspace. No default web access.",
+      "permitted_tool_groups": ["filesystem_read", "memory"],
+      "permitted_tools": [
+        "filesystem.read_file",
+        "memory.recall",
+        "agent.clarify"
+      ],
+      "denied_tools": ["tavily_*", "system.terminal_exec", "whatsapp.*"],
+      "capabilities": ["file_discovery", "workspace_scanning"],
+      "request_tools_through_orchestrator": true,
+      "notes": "No default Tavily access. Can request web research through the orchestrator if needed."
+    },
+    {
+      "id": "repository_analyst",
+      "name": "Repository Analyst",
+      "description": "Analyzes local codebase structure, dependencies, and git metadata. No default web access.",
+      "permitted_tool_groups": ["filesystem_read", "sandbox_exec", "memory"],
+      "permitted_tools": [
+        "filesystem.read_file",
+        "system.code_eval",
+        "memory.recall",
+        "agent.clarify"
+      ],
+      "denied_tools": ["tavily_*", "system.terminal_exec", "whatsapp.*"],
+      "capabilities": ["code_analysis", "architecture_inspection"],
+      "request_tools_through_orchestrator": true,
+      "notes": "No default Tavily access. Can request web research through the orchestrator if needed."
+    },
+    {
+      "id": "error_investigator",
+      "name": "Error Investigator",
+      "description": "Investigates runtime errors, tracebacks, and logs locally. No default web access.",
+      "permitted_tool_groups": ["filesystem_read", "memory"],
+      "permitted_tools": [
+        "filesystem.read_file",
+        "memory.session_search",
+        "memory.recall",
+        "agent.clarify"
+      ],
+      "denied_tools": ["tavily_*", "system.terminal_exec", "whatsapp.*"],
+      "capabilities": ["log_investigation", "traceback_analysis"],
+      "request_tools_through_orchestrator": true,
+      "notes": "No default Tavily access. Requests web documentation lookups via orchestrator."
+    },
+    {
+      "id": "memory_query_worker",
+      "name": "Memory Query Worker",
+      "description": "Searches, queries, and aggregates persistent and session memory. No default web access.",
+      "permitted_tool_groups": ["memory"],
+      "permitted_tools": [
+        "memory.recall",
+        "memory.store",
+        "memory.session_search",
+        "agent.clarify"
+      ],
+      "denied_tools": ["tavily_*", "system.*", "whatsapp.*"],
+      "capabilities": ["memory_query", "memory_aggregation"],
+      "request_tools_through_orchestrator": true,
+      "notes": "No default Tavily access. Operates exclusively on internal memory."
+    },
+    {
+      "id": "comms_worker",
+      "name": "Communications Worker",
+      "description": "Handles outbound WhatsApp messaging, media sharing, and scheduling. External writes require explicit confirmation.",
+      "permitted_tool_groups": ["whatsapp", "planning", "memory"],
+      "permitted_tools": [
+        "whatsapp.send_message",
+        "whatsapp.send_media",
+        "whatsapp.send_poll",
+        "whatsapp.send_location",
+        "whatsapp.send_typing",
+        "planning.cronjob_manage",
+        "planning.todo_manage",
+        "memory.recall",
+        "memory.session_search",
+        "agent.clarify"
+      ],
+      "denied_tools": [
+        "tavily_*",
+        "system.terminal_exec",
+        "filesystem.patch_file",
+        "browser.exec"
+      ],
+      "capabilities": ["messaging", "scheduling", "reminders", "media_delivery"],
+      "request_tools_through_orchestrator": true
+    },
+    {
+      "id": "orchestrator",
+      "name": "Orchestrator",
+      "description": "Top-level planning and policy enforcement agent. Decomposes user goals, checks capability registry and permissions, delegates tasks to workers, and synthesizes final responses.",
+      "permitted_tool_groups": ["agent", "planning", "memory"],
+      "permitted_tools": [
+        "agent.delegate_task",
+        "agent.clarify",
+        "planning.todo_manage",
+        "memory.recall",
+        "memory.store",
+        "memory.session_search"
+      ],
+      "denied_tools": ["*"],
+      "capabilities": ["planning", "delegation", "workflow_composition", "permission_enforcement"],
+      "request_tools_through_orchestrator": false,
+      "notes": "Checks capability availability and policy permissions before delegating to workers."
+    }
+  ]
+}
