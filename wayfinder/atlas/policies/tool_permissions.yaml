@@ -34,6 +34,27 @@ groups:
     enabled: true
     notes: "Strictly approval-gated. Requires explicit user authorization."
 
+  notion_read:
+    description: "Read-only access to Notion pages, databases, and blocks"
+    risk: low
+    approval_required: false
+    enabled: true
+    notes: "Authenticated via NOTION_API_KEY. Read-only search and retrieval."
+
+  notion_write:
+    description: "Write operations in Notion: creating pages and updating blocks/properties"
+    risk: medium
+    approval_required: true
+    enabled: true
+    notes: "Strictly approval-gated. Requires explicit user authorization."
+
+  desktop_automation:
+    description: "Local desktop operations: file discovery, document reading, clipboard, notifications, allowlisted app launch"
+    risk: medium
+    approval_required: false
+    enabled: true
+    notes: "Read operations auto-permitted; application launching is strictly gated by allowlist."
+
   tavily:
     description: "Web information retrieval tools via Tavily CLI"
     risk: low
@@ -164,6 +185,56 @@ tool_overrides:
     approval_required: false
     notes: "Verified and approved by user policy."
 
+  notion.search_pages:
+    risk: low
+    approval_required: false
+    notes: "Read-only search across Notion workspace pages and databases."
+
+  notion.read_page:
+    risk: low
+    approval_required: false
+    notes: "Read-only retrieval of page properties and content blocks."
+
+  notion.create_page:
+    risk: medium
+    approval_required: true
+    notes: "Creating new pages in Notion requires explicit user authorization."
+
+  notion.update_page:
+    risk: medium
+    approval_required: true
+    notes: "Modifying existing Notion pages or appending blocks requires confirmation."
+
+  desktop.find_files:
+    risk: low
+    approval_required: false
+    notes: "Local read-only search for files matching patterns in user directories."
+
+  desktop.read_document:
+    risk: low
+    approval_required: false
+    notes: "Local read-only inspection of documents (.pdf, .docx, .md, .txt)."
+
+  desktop.read_clipboard:
+    risk: low
+    approval_required: false
+    notes: "Retrieval of current system clipboard text."
+
+  desktop.set_clipboard:
+    risk: low
+    approval_required: false
+    notes: "Placing synthesized text onto the system clipboard."
+
+  desktop.send_notification:
+    risk: low
+    approval_required: false
+    notes: "Dispatching non-intrusive Windows system toast notifications."
+
+  desktop.open_application:
+    risk: medium
+    approval_required: true
+    notes: "Launching local desktop applications requires user confirmation and is restricted to APPLICATION_ALLOWLIST."
+
 # ─── Google Workspace Security & Access Rules ─────────────────────────────────
 google_security_rules:
 
@@ -184,3 +255,27 @@ google_security_rules:
       Creating events, sending emails, updating docs/sheets, or modifying tasks must be presented
       to the user for confirmation before execution.
     enforced_by: orchestrator
+
+# ─── Notion & Desktop Security & Access Rules ─────────────────────────────────
+notion_and_desktop_security_rules:
+
+  - rule: "notion_write_approval_gate"
+    description: >
+      Creating pages or modifying existing content in Notion requires user confirmation
+      showing the proposed title, parent location, and markdown content.
+    enforced_by: orchestrator
+
+  - rule: "desktop_application_allowlist"
+    description: >
+      desktop.open_application is strictly limited to pre-approved productivity tools
+      (notion, vscode, notepad, calc, terminal, browser, explorer). Arbitrary command
+      execution or unlisted binary execution is prohibited.
+    enforced_by: desktop_execution_worker
+
+  - rule: "general_purpose_harness_boundary"
+    description: >
+      General-purpose harness workers interact through standardized interfaces
+      (KnowledgeProvider, TaskProvider, MessagingProvider, DesktopProvider), ensuring
+      identical security policies and approval gates are enforced across all connected applications.
+    enforced_by: orchestrator
+

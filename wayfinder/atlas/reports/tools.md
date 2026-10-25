@@ -88,7 +88,55 @@ Google's capabilities are integrated into Atlas as a primary provider alongside 
 
 ---
 
-## 5. Other Registered Capabilities
+## 5. General-Purpose Reusable Harness Architecture
+
+Rather than building brittle, 1-off agents for every app, Wayfinder Atlas standardizes multi-app interactions through **four reusable harness protocols** (`wayfinder/atlas/harness/base.py`):
+1. **`KnowledgeProvider`**: Unified interface for notes, docs, and knowledge bases (currently **Notion** & **Google Docs/Drive**; future: Markdown vaults, Confluence).
+2. **`TaskProvider`**: Unified interface for task items and deadlines (primary task authority: **Google Tasks**; future: Todoist, Linear).
+3. **`MessagingProvider`**: Unified interface for inbound events and outbound messaging (**WhatsApp**, **Gmail**; future: Slack, Discord).
+4. **`DesktopProvider`**: Unified interface for local OS automation (**Windows** file discovery, document text extraction, clipboard, notifications, and allowlisted application launching).
+
+### 📝 Notion Knowledge Integration
+- **Connection**: REST API (v2022-06-28) authenticated via `NOTION_API_KEY` internal integration token.
+- **Access Boundary**: Integration accesses only pages and databases explicitly shared with it in Notion UI.
+
+| Capability ID | Name | What It Enables | Primary Agent | Approval | Status |
+|---|---|---|---|---|---|
+| `notion.search_pages` | Notion Search | Query pages and databases by title or content | **Knowledge Worker**, Document Analyst | ❌ auto | **verified** |
+| `notion.read_page` | Notion Read Page | Retrieve page metadata, properties, and markdown content blocks | **Knowledge Worker**, Document Analyst | ❌ auto | **verified** |
+| `notion.create_page` | Notion Create Page | Create a new page or database entry with title and markdown blocks | **Knowledge Worker** | ✅ **required** | **verified** |
+| `notion.update_page` | Notion Update Page | Update page properties or append markdown blocks | **Knowledge Worker** | ✅ **required** | **verified** |
+
+### 🖥️ Windows Desktop Automation
+- **Connection**: Native Windows OS system harness (`wayfinder/atlas/harness/desktop_adapter.py`).
+- **Security Guardrail**: Application launching is strictly restricted to `APPLICATION_ALLOWLIST` (notion, vscode, notepad, calc, terminal, browser, explorer).
+
+| Capability ID | Name | What It Enables | Primary Agent | Approval | Status |
+|---|---|---|---|---|---|
+| `desktop.find_files` | Desktop Find Files | Search user directories by pattern and extensions | **Desktop Worker**, File Discovery Worker | ❌ auto | **verified** |
+| `desktop.read_document` | Desktop Read Document | Read local documents (.pdf, .docx, .md, .txt) | **Desktop Worker**, Document Analyst | ❌ auto | **verified** |
+| `desktop.read_clipboard` | Desktop Read Clipboard | Inspect current clipboard text | **Desktop Worker** | ❌ auto | **verified** |
+| `desktop.set_clipboard` | Desktop Set Clipboard | Place synthesized content onto system clipboard | **Desktop Worker** | ❌ auto | **verified** |
+| `desktop.send_notification` | Desktop Toast Notify | Display non-intrusive Windows system notification | **Desktop Worker** | ❌ auto | **verified** |
+| `desktop.open_application` | Desktop Open App | Launch allowlisted desktop productivity application | **Desktop Worker** | ✅ **required** | **verified** |
+
+---
+
+## 6. General-Purpose Operational Harness Workers
+
+These 5 unified workers operate across all current and future connected applications through the harness protocols:
+
+| Worker | Reusable Role | Connected Interfaces | Primary Safety Boundary |
+|---|---|---|---|
+| **Knowledge Worker** | Unified note & document management | Notion, Google Docs, Drive, local docs | Reads auto; page/document create/update requires user approval |
+| **Task & Schedule Worker** | Unified task & calendar coordination | Google Tasks (authority), Google Calendar | Reads auto; task/event mutations require user approval |
+| **Communication Worker** | Unified messaging & email intake/reply | WhatsApp, Gmail | Inbound intake auto; all outbound dispatches require approval |
+| **Research & Verification Worker** | External web research & fact verification | Tavily Search, Extract, Crawl, Research | External web queries verified; broad research isolated |
+| **Desktop Execution Worker** | Local OS file, document, & app actions | Windows Desktop Adapter | File/doc reading auto; app launch restricted to allowlist & approval |
+
+---
+
+## 7. Other Registered Capabilities
 
 ### 🧠 Memory
 | ID | Name | Risk | Approval | Status |
@@ -119,10 +167,13 @@ Google's capabilities are integrated into Atlas as a primary provider alongside 
 
 ---
 
-## 6. Skills Catalogue
+## 8. Skills Catalogue
 
 | ID | Name | Primary Worker | Required Tools | External Writes | Approval |
 |---|---|---|---|---|---|
+| `wayfinder.morning_briefing` | Integrated Morning Briefing & Agenda | **task_and_schedule_worker** | `google.calendar_read`, `google.tasks_read` | ❌ | ❌ auto |
+| `wayfinder.knowledge_capture` | Structured Knowledge Capture to Notion | **knowledge_worker** | `notion.search_pages`, `notion.create_page` | ✅ | ✅ required |
+| `wayfinder.desktop_task_automation` | Desktop File Inspection & Workflow Automation | **desktop_execution_worker** | `desktop.find_files`, `desktop.read_document` | ❌ | ❌ auto |
 | `wayfinder.meeting_preparation` | Meeting Preparation & Briefing | **meeting_prep_worker** | `google.calendar_read`, `google.gmail_read` | ❌ | ❌ auto |
 | `wayfinder.schedule_optimization` | Schedule Optimization | **schedule_optimizer** | `google.calendar_read`, `google.tasks_read` | ❌ | ❌ auto |
 | `wayfinder.whatsapp_intake_and_reply` | WhatsApp Intake & Controlled Reply | **orchestrator** | `whatsapp.receive_event`, `whatsapp.reply_text` | ✅ | ✅ required |
@@ -134,3 +185,4 @@ Google's capabilities are integrated into Atlas as a primary provider alongside 
 | `tavily.competitor_intelligence` | Competitor Intelligence | **web_researcher** | `tavily_search`, `tavily_extract`, `tavily_research` | ❌ | ❌ auto |
 | `wayfinder.site_docs_dump` | Site Docs Download | **document_analyst** | `tavily_map`, `tavily_crawl` | ✅ (local FS) | ❌ auto |
 | `wayfinder.research_and_notify` | Research & Notify on WhatsApp | **orchestrator** | `tavily_research`, `whatsapp.reply_text` | ✅ | ✅ required |
+

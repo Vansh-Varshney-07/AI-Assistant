@@ -416,6 +416,143 @@
       "notes": "No default Tavily access. Operates exclusively on internal memory."
     },
     {
+      "id": "knowledge_worker",
+      "name": "General Knowledge Worker",
+      "description": "General-purpose knowledge and documentation worker operating across Notion, Google Docs, Drive, and local notes through the KnowledgeProvider harness. Searches and reads notes automatically; creating or updating pages is approval-gated.",
+      "permitted_tool_groups": ["notion_read", "google_workspace_read", "filesystem_read", "memory", "planning"],
+      "permitted_tools": [
+        "notion.search_pages",
+        "notion.read_page",
+        "google.drive_read",
+        "google.docs_read",
+        "filesystem.read_file",
+        "memory.recall",
+        "memory.session_search",
+        "planning.todo_manage",
+        "agent.clarify"
+      ],
+      "approval_gated_tools": [
+        "notion.create_page",
+        "notion.update_page",
+        "google.docs_write"
+      ],
+      "denied_tools": [
+        "system.terminal_exec",
+        "whatsapp.*"
+      ],
+      "capabilities": ["knowledge_search", "document_synthesis", "note_organization", "content_drafting"],
+      "workflow_role": "Unified knowledge interface across Notion and Google Docs. Finds references, reads documents, and drafts structured notes.",
+      "request_tools_through_orchestrator": true
+    },
+    {
+      "id": "task_and_schedule_worker",
+      "name": "General Task & Schedule Worker",
+      "description": "General-purpose planning worker managing tasks, commitments, and calendar events across Google Tasks, Google Calendar, and future task tools via TaskProvider harness. Reads auto; scheduling and task writes are approval-gated.",
+      "permitted_tool_groups": ["google_workspace", "planning", "memory"],
+      "permitted_tools": [
+        "google.tasks_read",
+        "google.calendar_read",
+        "planning.todo_manage",
+        "memory.recall",
+        "memory.session_search",
+        "agent.clarify"
+      ],
+      "approval_gated_tools": [
+        "google.tasks_write",
+        "google.calendar_write"
+      ],
+      "denied_tools": [
+        "system.terminal_exec",
+        "whatsapp.*"
+      ],
+      "capabilities": ["task_coordination", "calendar_scheduling", "conflict_detection", "daily_planning"],
+      "workflow_role": "Unified task and calendar interface. Aggregates to-dos from Google Tasks, cross-checks deadlines with Calendar, and proposes daily agendas.",
+      "request_tools_through_orchestrator": true
+    },
+    {
+      "id": "communication_worker",
+      "name": "General Communication Worker",
+      "description": "General-purpose communication harness worker managing messaging across WhatsApp, Gmail, and future chat platforms via MessagingProvider harness. Reads and analyzes inbound messages auto; outbound dispatch is strictly approval-gated.",
+      "permitted_tool_groups": ["whatsapp_read", "google_workspace_read", "memory", "planning"],
+      "permitted_tools": [
+        "whatsapp.receive_event",
+        "whatsapp.process_voice",
+        "whatsapp.process_reaction",
+        "google.gmail_read",
+        "memory.recall",
+        "memory.session_search",
+        "agent.clarify"
+      ],
+      "approval_gated_tools": [
+        "whatsapp.reply_text",
+        "whatsapp.send_media",
+        "whatsapp.proactive_notify",
+        "google.gmail_send"
+      ],
+      "denied_tools": [
+        "system.terminal_exec"
+      ],
+      "capabilities": ["message_intake", "intent_classification", "communication_review", "controlled_reply"],
+      "workflow_role": "Unified communications interface. Ingests messages from WhatsApp and Gmail, extracts requests and commitments, drafts replies, and dispatches only with user approval.",
+      "request_tools_through_orchestrator": true
+    },
+    {
+      "id": "research_and_verification_worker",
+      "name": "General Research & Verification Worker",
+      "description": "General-purpose external intelligence worker combining web search, content extraction, crawling, and independent evidence verification via Tavily CLI and skills.",
+      "permitted_tool_groups": ["tavily", "memory", "filesystem", "planning"],
+      "permitted_tools": [
+        "tavily_search",
+        "tavily_extract",
+        "tavily_research",
+        "tavily_map",
+        "tavily_crawl",
+        "tavily_dynamic_search",
+        "memory.recall",
+        "memory.store",
+        "memory.session_search",
+        "filesystem.read_file",
+        "filesystem.patch_file",
+        "planning.todo_manage",
+        "agent.clarify"
+      ],
+      "denied_tools": [
+        "system.terminal_exec",
+        "whatsapp.*",
+        "agent.delegate_task"
+      ],
+      "capabilities": ["web_research", "source_extraction", "fact_verification", "corroboration"],
+      "workflow_role": "Searches external web sources, extracts structured content, verifies claims against independent sources, and produces cited evidence briefs.",
+      "request_tools_through_orchestrator": true
+    },
+    {
+      "id": "desktop_execution_worker",
+      "name": "General Desktop Execution Worker",
+      "description": "General-purpose desktop automation worker operating on Windows OS via DesktopProvider harness. Finds local files, inspects documents, manages clipboard, sends notifications, and launches allowlisted applications.",
+      "permitted_tool_groups": ["desktop_automation", "filesystem_read", "memory"],
+      "permitted_tools": [
+        "desktop.find_files",
+        "desktop.read_document",
+        "desktop.read_clipboard",
+        "desktop.set_clipboard",
+        "desktop.send_notification",
+        "filesystem.read_file",
+        "memory.recall",
+        "memory.session_search",
+        "agent.clarify"
+      ],
+      "approval_gated_tools": [
+        "desktop.open_application"
+      ],
+      "denied_tools": [
+        "system.terminal_exec",
+        "whatsapp.*"
+      ],
+      "capabilities": ["desktop_file_discovery", "document_text_extraction", "clipboard_management", "notification_dispatch", "allowlisted_app_launch"],
+      "workflow_role": "Bridges AI workflows to the local desktop environment. Searches documents, handles clipboard transfers, and sends OS notifications.",
+      "request_tools_through_orchestrator": true
+    },
+    {
       "id": "orchestrator",
       "name": "Orchestrator",
       "description": "Top-level planning and policy enforcement agent. Decomposes user goals, checks capability registry and permissions, delegates tasks to workers, and synthesizes final responses.",
