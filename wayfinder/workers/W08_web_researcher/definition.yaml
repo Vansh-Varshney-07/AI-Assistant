@@ -1,0 +1,45 @@
+id: W08
+name: Web Researcher
+status: fixture-tested
+
+responsibility: >
+  Execute a web research plan: issue targeted searches, retrieve
+  candidate URLs, extract content from promising pages, and return
+  a structured list of SourceReferences with raw excerpts.
+  Does NOT synthesise or verify — that is W07 and W09.
+
+implementation_approach: hermes_instructions + existing_tavily_capabilities
+new_code_needed: false   # Tavily already registered and verified
+
+capabilities:
+  - tavily_search        # primary: discover candidate URLs
+  - tavily_extract       # primary: read raw content from URLs
+  - tavily_research      # extended: broad multi-step research (TAVILY_API_KEY required)
+  - tavily_dynamic_search  # extended: filtered search
+
+denied_capabilities:
+  - notion.*
+  - google.*
+  - desktop.*
+  - whatsapp.*
+  - filesystem.patch_file
+  - agent.delegate_task
+
+tool_use_sequence:
+  1: tavily_search       → candidate URLs + snippets
+  2: tavily_extract      → raw content from top-N URLs (max 20 per call)
+  3: (optional) tavily_research → if broad synthesis required by plan
+
+output_contract:
+  # List of SourceReference records (see schemas.py) + a raw_sources dict
+  sources: list[SourceReference]
+  raw_sources: dict   # {url: full_extracted_text}
+  queries_issued: list[str]
+  urls_extracted: int
+
+acceptance_criteria:
+  - At least one tavily_search call is made
+  - sources list is non-empty on success
+  - raw_sources contains text for each extracted URL
+  - No writes to filesystem, external services, or memory performed
+  - Timeout or rate-limit errors are caught and returned as failure, not raised

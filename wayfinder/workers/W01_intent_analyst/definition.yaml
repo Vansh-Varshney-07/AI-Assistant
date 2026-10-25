@@ -1,0 +1,46 @@
+id: W01
+name: Intent Analyst
+status: fixture-tested
+
+responsibility: >
+  Parse a raw user request into a structured intent record.
+  Identify the primary goal, action type, subject entities,
+  urgency level, and ambiguities that need clarification before
+  task planning can proceed. Does not plan; does not call tools.
+
+implementation_approach: hermes_instructions
+new_code_needed: false
+
+# Capabilities consumed (all already verified in Atlas)
+capabilities:
+  - memory.session_search   # retrieve recent thread context
+  - memory.recall           # retrieve user preferences
+  - agent.clarify           # ask for clarification when ambiguous
+
+denied_capabilities:
+  - agent.delegate_task
+  - filesystem.*
+  - tavily_*
+  - google.*
+  - notion.*
+  - desktop.*
+  - whatsapp.*
+
+output_contract:
+  # Must emit exactly this structure; orchestrator validates schema.
+  intent_id: string          # uuid4
+  raw_input: string
+  primary_goal: string       # imperative sentence
+  action_type: enum          # [research, create, update, schedule, review, communicate, analyse, recall, clarify]
+  subject_entities: list     # named things the request is about
+  urgency: enum              # [immediate, today, this_week, unspecified]
+  ambiguities: list          # open questions that must be resolved before planning
+  requires_clarification: bool
+  confidence: float          # 0.0-1.0
+
+acceptance_criteria:
+  - Output matches schema with all required fields
+  - action_type drawn from the allowed enum
+  - requires_clarification is true when ambiguities is non-empty
+  - confidence < 0.6 triggers clarification regardless of ambiguities list
+  - No external tool calls made

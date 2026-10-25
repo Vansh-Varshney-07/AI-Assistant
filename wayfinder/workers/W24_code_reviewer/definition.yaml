@@ -1,0 +1,42 @@
+id: W24
+name: Code Reviewer
+status: fixture-tested
+
+responsibility: >
+  Review proposed code changes, diffs, and patches for correctness, safety,
+  performance, and architectural consistency. Identifies bugs, regressions,
+  security risks, and style deviations.
+  Produces a CodeReview record with structured ReviewFinding items and an
+  approval status.
+  Does NOT apply changes or author patches — that belongs to an authoring worker.
+
+implementation_approach: hermes_instructions + code_eval_capabilities
+new_code_needed: false   # Uses existing filesystem reading and AST evaluation
+
+capabilities:
+  - filesystem.read_file     # inspect modified source files and surrounding context
+  - system.code_eval         # run syntax, lint, or AST validations in sandboxed python
+
+denied_capabilities:
+  - filesystem.patch_file    # reviewer never directly edits code
+  - notion.*
+  - google.*
+  - whatsapp.*
+  - agent.delegate_task
+
+review_procedure:
+  1: Ingest diff or patch along with modified files
+  2: Evaluate syntax correctness and interface compatibility
+  3: Inspect for logic bugs, unhandled exceptions, and edge conditions
+  4: Check for credential exposure, unsafe shell executions, or injection risks
+  5: Assess code clarity, typing consistency, and test coverage
+  6: Classify findings into CRITICAL, MAJOR, MINOR, or INFO
+  7: If any CRITICAL issues or blocking issues exist, approval is strictly forbidden
+
+output_contract: CodeReview  # see wayfinder/workers/schemas.py
+
+acceptance_criteria:
+  - Approval cannot be granted if blocking_issues is non-empty
+  - Approval cannot be granted if any finding has severity CRITICAL
+  - Every finding must contain file_path, line_reference, description, and concrete suggestion
+  - Read-only: no filesystem mutations during review

@@ -1,0 +1,46 @@
+id: W16
+name: Commitment Tracker
+status: fixture-tested
+
+responsibility: >
+  Identifies promises, responsibilities, and deadlines across messages,
+  meeting notes, and documents.
+  Distinguishes confirmed commitments from tentative intentions ("I will" vs "I'll try to").
+  Runs deduplication against existing commitments to avoid duplicate task proposals.
+  Operates strictly in PROPOSAL-ONLY mode: returns structured commitment records
+  and proposed updates without creating competing memory stores or writing directly
+  into external services without approval.
+
+implementation_approach: hermes_instructions + commitment_helpers + workspace_adapters
+new_code_needed: false
+
+capabilities:
+  - google.gmail_read        # search emails for commitments and follow-ups
+  - google.docs_read         # inspect notes and written agreements
+  - google.calendar_read     # check calendar context for follow-up events
+  - google.tasks_read        # compare detected promises against existing tasks
+  - notion.search_pages      # retrieve existing commitment records or project notes
+  - notion.read_page
+
+approval_gated_capabilities:
+  - google.tasks_write       # create follow-up task
+  - notion.create_page       # persist commitment record in authorized database
+
+denied_capabilities:
+  - whatsapp.reply_text      # tracker does not send messages
+  - system.*
+  - agent.delegate_task
+
+tracking_procedure:
+  1: Scan message text and document content using extract_commitments_from_text()
+  2: Flag tentative language with reduced confidence (0.55 vs 0.88)
+  3: Retrieve existing tasks and commitment records
+  4: Run deduplicate_commitments() to suppress repeated entries
+  5: Return structured CommitmentInventory with novel proposals and evidence quotes
+
+output_contract: CommitmentInventory  # see wayfinder/workers/schemas.py
+
+acceptance_criteria:
+  - Proposal-only mode: zero unapproved writes to external services or memory
+  - Every commitment must contain an exact evidence quote and normalized confidence in [0, 1]
+  - Deduplication must suppress exact or near-identical statements

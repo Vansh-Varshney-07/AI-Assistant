@@ -1,0 +1,37 @@
+id: W03
+name: Task Planner
+status: fixture-tested
+
+responsibility: >
+  Accepts a validated IntentOutput (W01) and decomposes it into
+  an ordered TaskPlan: a numbered sequence of steps each assigned
+  to a named worker with explicit required Atlas capability IDs.
+  Identifies whether any step requires external writes or user approval.
+  Does not execute steps; does not call external tools.
+
+implementation_approach: hermes_instructions
+new_code_needed: false
+
+capabilities:
+  - memory.session_search
+  - memory.recall
+  - agent.clarify
+
+denied_capabilities:
+  - agent.delegate_task
+  - tavily_*
+  - google.*
+  - notion.*
+  - desktop.*
+  - whatsapp.*
+  - filesystem.*
+
+output_contract: TaskPlan  # see wayfinder/workers/schemas.py
+
+acceptance_criteria:
+  - TaskPlan has at least one PlannedStep
+  - Every step references a valid worker ID from the registered workers registry
+  - Every step lists at least one Atlas capability ID
+  - requires_approval is true if any step.is_approval_gated is true
+  - requires_external_writes is true if any step uses external_write capabilities
+  - Steps are numbered sequentially starting at 1

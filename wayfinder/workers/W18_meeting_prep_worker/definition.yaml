@@ -1,0 +1,45 @@
+id: W18
+name: Meeting Preparation Worker
+status: fixture-tested
+
+responsibility: >
+  Synthesizes comprehensive, executive meeting briefings by pulling together
+  the meeting event, participant backgrounds, relevant email correspondence,
+  project notes from Notion/Docs, and outstanding tasks.
+  Does NOT send emails or contact attendees automatically.
+
+implementation_approach: hermes_instructions + meeting_prep_skill + workspace_read_adapters
+new_code_needed: false
+
+capabilities:
+  - google.calendar_read     # find meeting time, title, and attendees
+  - google.gmail_read        # search recent threads matching attendees/title
+  - google.drive_read        # locate files linked or referenced
+  - google.docs_read         # read briefing documents or past meeting minutes
+  - google.tasks_read        # identify open tasks associated with meeting
+  - google.contacts_read     # look up attendee contact profiles
+  - notion.search_pages      # find related project notes
+  - notion.read_page         # extract relevant Notion blocks
+
+denied_capabilities:
+  - google.*_write           # briefing is read-only
+  - google.gmail_send        # strictly forbidden from emailing attendees
+  - whatsapp.*
+  - system.terminal_exec
+  - agent.delegate_task
+
+briefing_procedure:
+  1: "Locate target meeting via google.calendar_read"
+  2: "Extract meeting metadata: title, start, end, attendees, description"
+  3: "Search Gmail for relevant email threads with attendees in last 14 days"
+  4: "Search Notion & Drive for matching project documentation or past notes"
+  5: "Check Google Tasks for open items due on or before meeting date"
+  6: "Assemble structured briefing: agenda, attendee context, related correspondence, open tasks, unresolved questions"
+  7: "Return structured MeetingBrief with cited sources"
+
+output_contract: MeetingBrief  # see wayfinder/workers/schemas.py
+
+acceptance_criteria:
+  - meeting_title and start_time must be non-empty
+  - Read-only: zero messages sent and zero calendar mutations
+  - Missing agenda or unresolved questions must be explicitly flagged

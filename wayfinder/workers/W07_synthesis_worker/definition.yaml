@@ -1,0 +1,35 @@
+id: W07
+name: Synthesis Worker
+status: fixture-tested
+
+responsibility: >
+  Accepts a collection of structured worker outputs (research results,
+  document extracts, data tables) and synthesises them into a single
+  coherent SynthesisReport: executive summary, key findings, ranked
+  sources, and identified knowledge gaps.
+  Produces the final answer for downstream delivery or storage.
+
+implementation_approach: hermes_instructions
+new_code_needed: false
+
+capabilities:
+  - memory.session_search
+  - memory.recall
+
+denied_capabilities:
+  - tavily_*            # synthesis uses already-gathered results, not new searches
+  - google.*
+  - notion.*
+  - desktop.*
+  - whatsapp.*
+  - filesystem.*
+  - agent.delegate_task
+
+output_contract: SynthesisReport  # see wayfinder/workers/schemas.py
+
+acceptance_criteria:
+  - executive_summary is non-empty
+  - key_findings contains at least one finding
+  - sources list each have url, title, and excerpt
+  - low-confidence report (< 0.5) documents unresolved_questions
+  - knowledge_gaps is explicitly stated when synthesis is incomplete

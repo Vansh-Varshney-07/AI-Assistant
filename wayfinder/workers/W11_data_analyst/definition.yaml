@@ -1,0 +1,42 @@
+id: W11
+name: Data Analyst
+status: fixture-tested
+
+responsibility: >
+  Analyzes spreadsheet and tabular data accurately using deterministic
+  calculation and schema inspection tools.
+  Avoids mental LLM arithmetic by relying on python/statistical evaluators.
+  Detects missing data, formula errors (#REF!, #DIV/0!), and flags caveats
+  explicitly when data quality is imperfect.
+  Writing back to Google Sheets is strictly approval-gated.
+
+implementation_approach: hermes_instructions + shared_data_helpers + google_sheets_adapter
+new_code_needed: false
+
+capabilities:
+  - google.sheets_read       # read ranges and tabular values from Google Sheets
+  - google.drive_read        # locate spreadsheet files and metadata
+  - system.code_eval         # execute sandboxed python data transformations
+
+approval_gated_capabilities:
+  - google.sheets_write      # write metrics or append rows to Google Sheets
+
+denied_capabilities:
+  - system.terminal_exec
+  - whatsapp.*
+  - agent.delegate_task
+
+analysis_procedure:
+  1: Retrieve tabular data from Google Sheets or local CSV/JSON
+  2: Run inspect_tabular_schema() to identify column types and null counts
+  3: Run validate_data_quality() to detect duplicate rows or formula errors
+  4: Run calculate_column_stats() for exact, non-hallucinated statistics
+  5: If quality issues exist, document explicit caveats in the report
+  6: Return structured DataAnalysisReport
+
+output_contract: DataAnalysisReport  # see wayfinder/workers/schemas.py
+
+acceptance_criteria:
+  - Numeric metrics must be computed deterministically
+  - Datasets with formula errors or duplicate rows must list caveats
+  - findings list must be non-empty

@@ -1,0 +1,36 @@
+id: W12
+name: Knowledge Synthesizer
+status: fixture-tested
+
+responsibility: >
+  Combines knowledge from multiple sources — Notion pages, Google Docs,
+  Drive documents, and web research outputs — into a coherent SynthesisReport.
+  Distinct from W07 (general synthesis): W12 is specifically scoped to
+  knowledge management sources. Surfaces knowledge gaps explicitly.
+
+implementation_approach: hermes_instructions + existing_harness
+new_code_needed: false   # Notion and Google Workspace harnesses already verified
+
+capabilities:
+  - notion.search_pages    # find relevant Notion pages
+  - notion.read_page       # read full content of relevant pages
+  - google.docs_read       # read Google Docs
+  - google.drive_read      # search Drive for relevant documents
+  - memory.session_search
+  - memory.recall
+
+denied_capabilities:
+  - notion.create_page     # read-only for synthesis
+  - notion.update_page     # read-only for synthesis
+  - tavily_*               # synthesis from existing knowledge, not new searches
+  - whatsapp.*
+  - desktop.*
+  - filesystem.patch_file
+
+output_contract: SynthesisReport  # see wayfinder/workers/schemas.py
+
+acceptance_criteria:
+  - Sources reference actual Notion or Google URLs, not fabricated ones
+  - knowledge_gaps explicitly documented when pages not found or insufficient
+  - Does not modify any Notion page or Google Doc
+  - confidence below 0.6 requires unresolved_questions to be populated
