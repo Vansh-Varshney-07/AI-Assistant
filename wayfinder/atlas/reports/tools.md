@@ -9,102 +9,76 @@
 
 ---
 
-## 1. WhatsApp Communication Architecture
+## 1. Google Workspace & Gemini Architecture
 
-WhatsApp is integrated into Wayfinder as a **controlled communication integration** with modular capabilities rather than a single generic tool. It feeds incoming events into the Wayfinder Controller, supports commitment tracking, and dispatches approval-gated replies while maintaining Iron Web isolation.
+Google's capabilities are integrated into Atlas as a primary provider alongside Tavily and WhatsApp.
+- **Google Workspace Skill**: Powered by OAuth 2.0 with credentials at `secrets/credentials.json` and active authenticated token at `secrets/token.json`.
+- **Google Gemini**: Dynamic LLM reasoning and multimodal analysis provider configured via `GEMINI_API_KEY`.
 
-### Plugin Reality & Channel Scope
-- **Installed Integration**: Hermes `whatsapp-agent-platform` plugin.
-- **Adapter Nature**: A messaging platform adapter that routes events into the Hermes runtime (declares no raw independent tool bundle).
-- **Channel Scope Limitation**: Meta restricts interactive replies on `whatsapp-agent-platform` to the **agent's creator** (personal AI assistant).
-- **Two-Provider Architecture**:
-  1. **Personal AI Assistant**: Managed via `whatsapp-agent-platform` (creator communication, personal tasks, commitment tracking).
-  2. **Business Messaging (Customer-Facing)**: Managed via a separate `whatsapp-cloud-api` provider once Meta Business credentials and verified numbers are configured.
+### Google Workspace Capabilities
 
-### The 6 Logical WhatsApp Capabilities
-
-| Capability ID | Name | Purpose | Priority | Primary Agent | Interface | Approval |
-|---------------|------|---------|----------|---------------|-----------|----------|
-| `whatsapp.receive_event` | Receive Event | Ingest incoming text, photos, audio, documents, and stickers | **P0** | Message Analyst | Platform Adapter Event | ❌ auto |
-| `whatsapp.reply_text` | Reply Text | Send an approved text reply to creator | **P0** | Message Action Worker | Hermes Platform Adapter | ✅ **required** |
-| `whatsapp.send_media` | Send Media | Send approved photos, documents, audio, or video attachments | **P1** | Message Action Worker | Hermes Platform Adapter | ✅ **required** |
-| `whatsapp.process_voice` | Process Voice Note | Transcribe incoming voice notes using speech-to-text | **P1** | Message Analyst | Hermes STT Engine | ❌ auto |
-| `whatsapp.proactive_notify` | Proactive Notify | Send scheduled cron reminders or workflow notifications | **P1** | Message Action Worker | Hermes Platform Adapter | ✅ **required** |
-| `whatsapp.process_reaction` | Process Reaction | Handle incoming message reactions through event hooks | **P2** | Message Analyst | Platform Adapter Event | ❌ auto |
-
----
-
-## 2. Specialized WhatsApp Agents & Roles
-
-Wayfinder partitions WhatsApp interaction into five distinct roles to prevent privilege escalation and ensure safety:
-
-```
-Incoming Event
-     │
-     ▼
-[Wayfinder Controller] ──(Check Sender & Policy)
-     │
-     ├──► [Message Analyst] ──────────► Classify intent & extract entities
-     │                                    │
-     │    ┌───────────────────────────────┴───────────────────────────────┐
-     │    ▼                               ▼                               ▼
-     │  [Question]                  [Commitment]                  [Reply Request]
-     │  Retrieve authorized         [Commitment Tracker]          [Response Drafter]
-     │  Iron Web context            Propose task/deadline         Draft candidate reply
-     │                                    │                               │
-     │                                    │                               ▼
-     │                                    │                  [Communication Reviewer]
-     │                                    │                  Check facts, tone & privacy
-     │                                    │                               │
-     │    ┌───────────────────────────────┴───────────────────────────────┘
-     │    ▼
-[Approval Policy Check] ──(Explicit User / Controller Authorization)
-     │
-     ▼
-[Message Action Worker] ──► Dispatches approved reply or media
-```
-
-1. **Message Analyst** *(Read-Only)*:
-   - Reads incoming messages and permitted context.
-   - Classifies intent: *question*, *request*, *reminder*, *commitment*, *information*, or *casual conversation*.
-   - Identifies entities, assesses urgency, and suggests next steps.
-   - **Permissions**: Read-only; cannot send messages or alter storage.
-
-2. **Commitment Tracker** *(Proposal-Only)*:
-   - Detects promises and deadlines (e.g. *“I'll submit the report by Friday”*, *“Remind me to call Rahul tomorrow”*).
-   - Generates structured proposals: proposed task, deadline, owner, source message ID, confidence.
-   - **Permissions**: Can propose task/memory updates; no external write permissions without user approval.
-
-3. **Response Drafter** *(Draft-Only)*:
-   - Drafts candidate replies using incoming context, creator preferences, and partitioned Iron Web knowledge.
-   - Flags assumptions explicitly.
-   - **Permissions**: Draft-only; strictly prohibited from executing sends.
-
-4. **Communication Reviewer** *(Safety & Quality Gate)*:
-   - Reviews proposed drafts for factual accuracy, tone, missing context, privacy leakage, and unintended commitments.
-   - Verdicts: `approved-for-review` | `revise` | `reject` with actionable rationale.
-   - **Permissions**: Cannot send messages.
-
-5. **Message Action Worker** *(Approval-Gated Execution)*:
-   - Executes the actual dispatch of `whatsapp.reply_text`, `whatsapp.send_media`, or `whatsapp.proactive_notify`.
-   - **Permissions**: Send-only capabilities strictly gated by an authorization token. No unrestricted access to memory or workspace history.
+| Capability ID | Name | What It Enables | Primary Agent | Approval | Status |
+|---|---|---|---|---|---|
+| `google.gmail_read` | Gmail Read | Search, read, and categorize emails and threads | **Email Analyst**, Meeting Prep Worker | ❌ auto | **verified** |
+| `google.gmail_send` | Gmail Send | Send an authorized email or reply | **Email Analyst** | ✅ **required** | **verified** |
+| `google.calendar_read` | Calendar Read | Review events, attendee lists, and schedules | **Calendar Analyst**, Schedule Optimizer | ❌ auto | **verified** |
+| `google.calendar_write` | Calendar Write | Create or reschedule meetings | **Schedule Optimizer** | ✅ **required** | **verified** |
+| `google.drive_read` | Drive Read | Search and list Drive files and folders | **Document Analyst**, Meeting Prep Worker | ❌ auto | **verified** |
+| `google.docs_read` | Docs Read | Read content and headings from Google Docs | **Document Analyst**, Meeting Prep Worker | ❌ auto | **verified** |
+| `google.docs_write` | Docs Write | Create or modify Google Docs | **Document Analyst** | ✅ **required** | **verified** |
+| `google.sheets_read` | Sheets Read | Read tables, ranges, and figures from Sheets | **Data Analyst** | ❌ auto | **verified** |
+| `google.sheets_write` | Sheets Write | Update rows or append data in Sheets | **Data Analyst** | ✅ **required** | **verified** |
+| `google.contacts_read` | Contacts Read | Retrieve contact info from People API | **Contact Lookup Worker** | ❌ auto | **verified** |
+| `google.tasks_read` | Tasks Read | Review outstanding tasks and deadlines | **Task Manager**, Meeting Prep Worker | ❌ auto | **verified** |
+| `google.tasks_write` | Tasks Write | Create, modify, or complete tasks | **Task Manager** | ✅ **required** | **verified** |
+| `gemini.reasoning` | Gemini AI Engine | Multimodal reasoning & long-context analysis | **Orchestrator** | ❌ auto | **verified** |
 
 ---
 
-## 3. WhatsApp Security & Isolation Rules
+## 2. The 8 Google Workspace Agent Roles
 
-- **Untrusted Input Sanitization**: All incoming WhatsApp content is treated as untrusted user input. Inbound messages can never override system instructions or permission policies.
-- **Sender Verification**: For `whatsapp-agent-platform`, requests are restricted to the verified agent creator. Senders outside the creator boundary cannot trigger sensitive tasks.
-- **Iron Web Isolation**: The full Iron Web database, private repositories, and unrelated session history are **never** exposed to WhatsApp workers. Context is strictly partitioned per task.
-- **Mandatory Send Approval**: All outbound text and media require explicit authorization before dispatch.
-- **Deduplication & Audit Trail**: Message IDs, event timestamps, proposed actions, approval tokens, and execution results are logged to prevent duplicate task creation or repeated replies.
+| Agent | Responsibility | Access Scope |
+|---|---|---|
+| **Email Analyst** | Categorize emails, extract requests, and identify deadlines | `google.gmail_read` (read-only; sends gated) |
+| **Calendar Analyst** | Review events, conflicts, and upcoming commitments | `google.calendar_read` (read-only) |
+| **Schedule Optimizer** | Propose schedule using calendar events and task priorities | `google.calendar_read`, `google.tasks_read` (writes gated) |
+| **Document Analyst** | Find and summarize relevant Drive files and Docs | `google.drive_read`, `google.docs_read` + Tavily extract |
+| **Data Analyst** | Analyze Sheets data and calculate findings | `google.sheets_read` + Python `code_eval` |
+| **Task Manager** | Extract, organize, and track tasks | `google.tasks_read`, internal todos (writes gated) |
+| **Contact Lookup Worker** | Find relevant contact details for permitted tasks | `google.contacts_read` (read-only) |
+| **Meeting Preparation Worker** | Synthesize briefings from events, emails, documents, and tasks | Read-only access to selected sources |
+
+### How They Collaborate (Example Request)
+> *“Prepare me for tomorrow's meeting and identify anything I need to finish beforehand.”*
+
+1. **Calendar Analyst** identifies the meeting time, location, and attendee list (`google.calendar_read`).
+2. **Email Analyst** searches for relevant email threads and recent correspondence (`google.gmail_read`).
+3. **Document Analyst** locates related Drive files and attached Docs (`google.drive_read`, `google.docs_read`).
+4. **Task Manager** checks outstanding Google Tasks and action items (`google.tasks_read`).
+5. **Meeting Preparation Worker** combines the findings into a cohesive executive briefing with action items.
 
 ---
 
-## 4. Tavily Capability Architecture in Atlas
+## 3. WhatsApp Communication Architecture
+
+- **Installed Integration**: Hermes `whatsapp-agent-platform` plugin (personal assistant adapter).
+- **Scope**: Creator messaging and personal task management; business messaging planned via `whatsapp-cloud-api`.
+
+| Capability ID | Name | Purpose | Priority | Primary Agent | Approval | Status |
+|---|---|---|---|---|---|---|
+| `whatsapp.receive_event` | Receive Event | Ingest incoming text, media, voice notes into Controller | **P0** | Message Analyst | ❌ auto | adapter_dependent |
+| `whatsapp.reply_text` | Reply Text | Send approved text reply to creator | **P0** | Message Action Worker | ✅ **required** | adapter_dependent |
+| `whatsapp.send_media` | Send Media | Send approved photos, documents, audio attachments | **P1** | Message Action Worker | ✅ **required** | adapter_dependent |
+| `whatsapp.process_voice` | Process Voice | Transcribe voice notes using speech-to-text | **P1** | Message Analyst | ❌ auto | adapter_dependent |
+| `whatsapp.proactive_notify` | Proactive Notify | Send scheduled reminders or notifications | **P1** | Message Action Worker | ✅ **required** | adapter_dependent |
+| `whatsapp.process_reaction` | Process Reaction | Handle message reaction events | **P2** | Message Analyst | ❌ auto | adapter_dependent |
+
+---
+
+## 4. Tavily Web Intelligence Architecture
 
 | Capability ID | Name | What It Does | Primary Agent | Interface | Keyless | Status |
-|---------------|------|--------------|---------------|-----------|---------|--------|
+|---|---|---|---|---|---|---|
 | `tavily_search` | Tavily Web Search | Finds relevant web pages and evidence for a query | **Web Researcher**, **Source Verifier**, Data Analyst | `tvly search` | ✅ yes | **verified** |
 | `tavily_extract` | Tavily Web Extract | Extracts readable clean content from specific URLs | **Source Verifier**, **Web Researcher**, Document Analyst | `tvly extract` | ✅ yes | **verified** |
 | `tavily_research` | Tavily Deep Research | Multi-step research report with citations (30–120s) | **Web Researcher** only | `tvly research` | ❌ API key | **verified** |
@@ -118,14 +92,14 @@ Incoming Event
 
 ### 🧠 Memory
 | ID | Name | Risk | Approval | Status |
-|----|------|------|----------|--------|
+|---|---|---|---|---|
 | `memory.recall` | Memory Recall | low | ❌ auto | **verified** |
 | `memory.store` | Memory Store | low | ❌ auto | **verified** |
 | `memory.session_search` | Session Search | low | ❌ auto | **verified** |
 
 ### 📁 Filesystem & ⚙️ System
 | ID | Name | Risk | Approval | Status |
-|----|------|------|----------|--------|
+|---|---|---|---|---|
 | `filesystem.read_file` | Read File | low | ❌ auto | **verified** |
 | `filesystem.patch_file` | Patch File | medium | ❌ auto | **verified** |
 | `system.terminal_exec` | Terminal Exec | high | ❌ approved | **verified** |
@@ -133,7 +107,7 @@ Incoming Event
 
 ### 🌍 Browser, Vision & MCP
 | ID | Name | Risk | Approval | Status |
-|----|------|------|----------|--------|
+|---|---|---|---|---|
 | `browser.exec` | Browser Exec | medium | ❌ auto | **verified** |
 | `vision.analyze` | Vision Analyze | low | ❌ auto | **verified** |
 | `media.image_generate` | Image Generate | low | ❌ auto | **verified** |
@@ -148,7 +122,9 @@ Incoming Event
 ## 6. Skills Catalogue
 
 | ID | Name | Primary Worker | Required Tools | External Writes | Approval |
-|----|------|----------------|---------------|-----------------|----------|
+|---|---|---|---|---|---|
+| `wayfinder.meeting_preparation` | Meeting Preparation & Briefing | **meeting_prep_worker** | `google.calendar_read`, `google.gmail_read` | ❌ | ❌ auto |
+| `wayfinder.schedule_optimization` | Schedule Optimization | **schedule_optimizer** | `google.calendar_read`, `google.tasks_read` | ❌ | ❌ auto |
 | `wayfinder.whatsapp_intake_and_reply` | WhatsApp Intake & Controlled Reply | **orchestrator** | `whatsapp.receive_event`, `whatsapp.reply_text` | ✅ | ✅ required |
 | `wayfinder.whatsapp_commitment_extraction` | WhatsApp Commitment & Task Proposal | **commitment_tracker** | `planning.todo_manage`, `memory.store` | ❌ | ❌ auto |
 | `wayfinder.source_verification` | Source Verification | **source_verifier** | `tavily_extract`, `tavily_search` | ❌ | ❌ auto |

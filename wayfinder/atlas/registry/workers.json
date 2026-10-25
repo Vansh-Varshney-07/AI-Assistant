@@ -1,6 +1,195 @@
 {
   "workers": [
     {
+      "id": "email_analyst",
+      "name": "Email Analyst",
+      "description": "Categorizes emails, extracts requests, identifies commitments and deadlines, and prepares context for briefings. Read-only by default.",
+      "permitted_tool_groups": ["google_workspace_read", "memory"],
+      "permitted_tools": [
+        "google.gmail_read",
+        "memory.recall",
+        "memory.session_search",
+        "agent.clarify"
+      ],
+      "denied_tools": [
+        "google.gmail_send",
+        "system.*",
+        "whatsapp.*"
+      ],
+      "capabilities": ["email_categorization", "request_extraction", "deadline_identification", "thread_analysis"],
+      "workflow_role": "Input: search query or thread ID. Output: categorized emails, action items, deadlines, relevant correspondence. Does not send emails.",
+      "request_tools_through_orchestrator": true
+    },
+    {
+      "id": "calendar_analyst",
+      "name": "Calendar Analyst",
+      "description": "Reviews calendar events, attendee schedules, upcoming commitments, and identifies scheduling conflicts. Read-only.",
+      "permitted_tool_groups": ["google_workspace_read", "memory"],
+      "permitted_tools": [
+        "google.calendar_read",
+        "memory.recall",
+        "memory.session_search",
+        "agent.clarify"
+      ],
+      "denied_tools": [
+        "google.calendar_write",
+        "system.*",
+        "whatsapp.*"
+      ],
+      "capabilities": ["calendar_review", "event_analysis", "conflict_detection", "attendee_inspection"],
+      "workflow_role": "Input: date range or event title. Output: scheduled events, meeting times, attendees, potential conflicts.",
+      "request_tools_through_orchestrator": true
+    },
+    {
+      "id": "schedule_optimizer",
+      "name": "Schedule Optimizer",
+      "description": "Proposes optimal schedules using calendar events and task priorities. Proposes event updates; writes strictly approval-gated.",
+      "permitted_tool_groups": ["google_workspace", "planning", "memory"],
+      "permitted_tools": [
+        "google.calendar_read",
+        "google.tasks_read",
+        "planning.todo_manage",
+        "memory.recall",
+        "agent.clarify"
+      ],
+      "approval_gated_tools": [
+        "google.calendar_write"
+      ],
+      "denied_tools": [
+        "system.*",
+        "whatsapp.*"
+      ],
+      "capabilities": ["schedule_optimization", "time_blocking", "priority_scheduling"],
+      "workflow_role": "Input: tasks, priorities, available calendar slots. Output: proposed optimized schedule. Creating/modifying events requires approval.",
+      "request_tools_through_orchestrator": true
+    },
+    {
+      "id": "document_analyst",
+      "name": "Document Analyst",
+      "description": "Reads and investigates source material. Uses Google Drive and Docs for workspace files, tavily_extract and crawl for web documents, and local file tools.",
+      "permitted_tool_groups": ["google_workspace_read", "tavily_docs", "filesystem_read", "memory", "planning"],
+      "permitted_tools": [
+        "google.drive_read",
+        "google.docs_read",
+        "tavily_extract",
+        "tavily_crawl",
+        "filesystem.read_file",
+        "memory.recall",
+        "memory.session_search",
+        "planning.todo_manage",
+        "agent.clarify"
+      ],
+      "approval_gated_tools": [
+        "google.docs_write"
+      ],
+      "denied_tools": [
+        "tavily_research",
+        "tavily_search",
+        "system.terminal_exec",
+        "whatsapp.*"
+      ],
+      "capabilities": ["document_reading", "drive_search", "web_extraction", "fact_extraction"],
+      "workflow_role": "Extracts structured facts, summaries, and references from Drive files, Google Docs, web pages, and local files.",
+      "request_tools_through_orchestrator": true
+    },
+    {
+      "id": "data_analyst",
+      "name": "Data Analyst",
+      "description": "Analyzes spreadsheet data and figures. Reads Google Sheets, searches online data via Tavily, and calculates statistics using Python code evaluation.",
+      "permitted_tool_groups": ["google_workspace", "tavily_search_only", "sandbox_exec", "filesystem", "memory", "planning"],
+      "permitted_tools": [
+        "google.sheets_read",
+        "tavily_search",
+        "system.code_eval",
+        "filesystem.read_file",
+        "filesystem.patch_file",
+        "memory.recall",
+        "memory.session_search",
+        "planning.todo_manage",
+        "agent.clarify"
+      ],
+      "approval_gated_tools": [
+        "google.sheets_write"
+      ],
+      "denied_tools": [
+        "tavily_research",
+        "tavily_crawl",
+        "tavily_map",
+        "system.terminal_exec",
+        "whatsapp.*"
+      ],
+      "capabilities": ["sheets_analysis", "statistical_computation", "table_generation", "trend_analysis"],
+      "workflow_role": "Calculates statistics, extracts metrics from Google Sheets, identifies trends, and produces tables.",
+      "request_tools_through_orchestrator": true
+    },
+    {
+      "id": "task_manager",
+      "name": "Task Manager",
+      "description": "Extracts, organizes, prioritizes, and tracks tasks across Google Tasks and internal todos. Task modifications require approval.",
+      "permitted_tool_groups": ["google_workspace", "planning", "memory"],
+      "permitted_tools": [
+        "google.tasks_read",
+        "planning.todo_manage",
+        "memory.recall",
+        "memory.session_search",
+        "agent.clarify"
+      ],
+      "approval_gated_tools": [
+        "google.tasks_write"
+      ],
+      "denied_tools": [
+        "system.terminal_exec",
+        "whatsapp.*"
+      ],
+      "capabilities": ["task_tracking", "todo_organization", "deadline_monitoring"],
+      "workflow_role": "Input: task lists and context. Output: organized task status, upcoming deadlines, proposed task completions.",
+      "request_tools_through_orchestrator": true
+    },
+    {
+      "id": "contact_lookup_worker",
+      "name": "Contact Lookup Worker",
+      "description": "Finds relevant contact details, email addresses, and phone numbers from Google Contacts for permitted tasks. Read-only.",
+      "permitted_tool_groups": ["google_workspace_read", "memory"],
+      "permitted_tools": [
+        "google.contacts_read",
+        "memory.recall",
+        "memory.session_search",
+        "agent.clarify"
+      ],
+      "denied_tools": [
+        "system.*",
+        "whatsapp.*"
+      ],
+      "capabilities": ["contact_lookup", "address_book_query"],
+      "workflow_role": "Input: person name or organization. Output: verified contact details, email addresses, phone numbers.",
+      "request_tools_through_orchestrator": true
+    },
+    {
+      "id": "meeting_prep_worker",
+      "name": "Meeting Preparation Worker",
+      "description": "Synthesizes comprehensive meeting briefings by orchestrating Calendar, Email, Drive/Docs, and Tasks. Read-only access to selected sources.",
+      "permitted_tool_groups": ["google_workspace_read", "memory", "planning"],
+      "permitted_tools": [
+        "google.calendar_read",
+        "google.gmail_read",
+        "google.drive_read",
+        "google.docs_read",
+        "google.tasks_read",
+        "memory.recall",
+        "memory.session_search",
+        "agent.clarify"
+      ],
+      "denied_tools": [
+        "google.*_write",
+        "google.gmail_send",
+        "system.terminal_exec",
+        "whatsapp.*"
+      ],
+      "capabilities": ["meeting_briefing", "multi_source_synthesis", "action_item_aggregation"],
+      "workflow_role": "Input: meeting title or time. Output: structured executive briefing, participant backgrounds, related email context, relevant documents, and outstanding to-dos.",
+      "request_tools_through_orchestrator": true
+    },
+    {
       "id": "web_researcher",
       "name": "Web Researcher",
       "description": "Performs web research: search -> collect -> synthesize. Finds candidate sources, reads promising pages, conducts broad multi-step research, and investigates domains.",
@@ -53,57 +242,6 @@
       "capabilities": ["evidence_extraction", "fact_checking", "corroboration", "contradiction_detection", "verdict_generation"],
       "workflow_role": "1. Receive claim + cited URL from Web Researcher -> 2. Extract source text via tavily_extract -> 3. Search corroboration/contradictions via tavily_search -> 4. Compare evidence & dates -> 5. Return verdict with excerpts and confidence.",
       "notes": "Restricted to search and extract only. Broad research tasks must be delegated back to Web Researcher.",
-      "request_tools_through_orchestrator": true
-    },
-    {
-      "id": "document_analyst",
-      "name": "Document Analyst",
-      "description": "Reads and investigates source material. Uses tavily_extract for web documents and tavily_crawl when multiple pages from a site matter. For uploaded PDFs and local files, uses local file-reading tools.",
-      "permitted_tool_groups": ["tavily_docs", "filesystem_read", "memory", "planning"],
-      "permitted_tools": [
-        "tavily_extract",
-        "tavily_crawl",
-        "filesystem.read_file",
-        "memory.recall",
-        "memory.session_search",
-        "planning.todo_manage",
-        "agent.clarify"
-      ],
-      "denied_tools": [
-        "tavily_research",
-        "tavily_search",
-        "system.terminal_exec",
-        "filesystem.patch_file",
-        "whatsapp.*"
-      ],
-      "capabilities": ["document_reading", "web_extraction", "site_crawling", "fact_extraction"],
-      "workflow_role": "Extracts structured facts, summaries, and references from web pages and local files.",
-      "request_tools_through_orchestrator": true
-    },
-    {
-      "id": "data_analyst",
-      "name": "Data Analyst",
-      "description": "Analyzes results, calculates statistics, compares results, and identifies trends. Uses Tavily when data must be found online, then uses Python code evaluation to analyze.",
-      "permitted_tool_groups": ["tavily_search_only", "sandbox_exec", "filesystem", "memory", "planning"],
-      "permitted_tools": [
-        "tavily_search",
-        "system.code_eval",
-        "filesystem.read_file",
-        "filesystem.patch_file",
-        "memory.recall",
-        "memory.session_search",
-        "planning.todo_manage",
-        "agent.clarify"
-      ],
-      "denied_tools": [
-        "tavily_research",
-        "tavily_crawl",
-        "tavily_map",
-        "system.terminal_exec",
-        "whatsapp.*"
-      ],
-      "capabilities": ["data_retrieval", "statistical_computation", "table_generation", "trend_analysis"],
-      "workflow_role": "Calculates statistics, produces summary tables, identifies trends, and states limitations.",
       "request_tools_through_orchestrator": true
     },
     {

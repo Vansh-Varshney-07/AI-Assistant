@@ -18,6 +18,9 @@ backups/
 *.vhd
 *.pem
 *.key
+credentials.json
+token.json
+client_secret*.json
 
 # Wayfinder Atlas generated index
 wayfinder/atlas/_index/

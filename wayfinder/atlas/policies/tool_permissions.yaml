@@ -4,9 +4,10 @@
 #
 # Risk levels: none | low | medium | high | critical
 # Access types: none | local | local_write | filesystem_read | filesystem_write |
-#               network | external_write | system_exec | sandbox_exec | agent_spawn | event_stream | varies
+#               network | external_write | system_exec | sandbox_exec | agent_spawn |
+#               event_stream | google_oauth_read | varies
 
-version: "1.3"
+version: "1.4"
 policy_author: "wayfinder-atlas"
 last_updated: "2026-10-25"
 
@@ -18,6 +19,20 @@ defaults:
 
 # ─── Tool group policies ──────────────────────────────────────────────────────
 groups:
+
+  google_workspace_read:
+    description: "Read-only access to Gmail, Calendar, Drive, Docs, Sheets, Contacts, and Tasks"
+    risk: low
+    approval_required: false
+    enabled: true
+    notes: "Authenticated via OAuth token at secrets/token.json. Read-only."
+
+  google_workspace_write:
+    description: "Write operations: sending Gmail, inserting Calendar events, updating Docs/Sheets/Tasks"
+    risk: medium
+    approval_required: true
+    enabled: true
+    notes: "Strictly approval-gated. Requires explicit user authorization."
 
   tavily:
     description: "Web information retrieval tools via Tavily CLI"
@@ -31,19 +46,14 @@ groups:
     risk: low
     approval_required: false
     enabled: true
-    notes: >
-      Read-only intake for Message Analyst.
-      Treated as untrusted input stream.
+    notes: "Read-only intake for Message Analyst. Treated as untrusted input stream."
 
   whatsapp_actions:
     description: "Outbound WhatsApp messaging tools via hermes platform adapter"
     risk: medium
     approval_required: true
     enabled: true
-    notes: >
-      All whatsapp reply/send/notify actions constitute external writes.
-      Requires explicit Wayfinder approval gate before each outbound dispatch.
-      Do NOT batch-approve multiple sends in a single step.
+    notes: "Requires explicit Wayfinder approval gate before each outbound dispatch."
 
   memory:
     description: "Persistent and session memory operations"
@@ -104,6 +114,31 @@ groups:
 # ─── Individual tool overrides ────────────────────────────────────────────────
 tool_overrides:
 
+  google.gmail_send:
+    risk: medium
+    approval_required: true
+    notes: "Sending emails on user's behalf requires explicit confirmation."
+
+  google.calendar_write:
+    risk: medium
+    approval_required: true
+    notes: "Creating or rescheduling calendar meetings requires confirmation."
+
+  google.docs_write:
+    risk: medium
+    approval_required: true
+    notes: "Modifying documents requires confirmation."
+
+  google.sheets_write:
+    risk: medium
+    approval_required: true
+    notes: "Modifying spreadsheets requires confirmation."
+
+  google.tasks_write:
+    risk: medium
+    approval_required: true
+    notes: "Creating or completing tasks requires confirmation."
+
   whatsapp.reply_text:
     risk: medium
     approval_required: true
@@ -119,21 +154,6 @@ tool_overrides:
     approval_required: true
     notes: "Scheduled reminders require explicit initial approval."
 
-  whatsapp.receive_event:
-    risk: low
-    approval_required: false
-    notes: "Event stream only; non-callable by execution workers."
-
-  whatsapp.process_voice:
-    risk: low
-    approval_required: false
-    notes: "Local speech-to-text processing; read-only."
-
-  whatsapp.process_reaction:
-    risk: low
-    approval_required: false
-    notes: "Metadata intake only."
-
   tavily_crawl:
     risk: medium
     approval_required: false
@@ -144,161 +164,23 @@ tool_overrides:
     approval_required: false
     notes: "Verified and approved by user policy."
 
-  agent.delegate_task:
-    risk: medium
-    approval_required: false
-    notes: "Sub-agent delegation verified and approved."
+# ─── Google Workspace Security & Access Rules ─────────────────────────────────
+google_security_rules:
 
-# ─── Worker Access Policies & Boundary Rules ──────────────────────────────────
-worker_policies:
-
-  message_analyst:
-    allowed_tools:
-      - whatsapp.receive_event
-      - whatsapp.process_voice
-      - whatsapp.process_reaction
-      - memory.recall
-      - memory.session_search
-      - agent.clarify
-    denied_tools:
-      - whatsapp.reply_text
-      - whatsapp.send_media
-      - whatsapp.proactive_notify
-      - system.*
-    notes: "Read-only intake analysis. Strictly denied sending capabilities."
-
-  commitment_tracker:
-    allowed_tools:
-      - planning.todo_manage
-      - memory.store
-      - memory.recall
-      - memory.session_search
-      - agent.clarify
-    denied_tools:
-      - whatsapp.reply_text
-      - whatsapp.send_media
-      - system.*
-    notes: "Proposal-only role. Proposes tasks and memory updates; cannot dispatch external writes."
-
-  response_drafter:
-    allowed_tools:
-      - memory.recall
-      - memory.session_search
-      - filesystem.read_file
-      - agent.clarify
-    denied_tools:
-      - whatsapp.reply_text
-      - whatsapp.send_media
-      - system.*
-    notes: "Draft-only. Prepares responses using partitioned Iron Web context. Cannot send."
-
-  communication_reviewer:
-    allowed_tools:
-      - memory.recall
-      - memory.session_search
-      - agent.clarify
-    denied_tools:
-      - whatsapp.reply_text
-      - whatsapp.send_media
-      - system.*
-    notes: "Quality assurance & safety review. Cannot send messages."
-
-  message_action_worker:
-    allowed_tools:
-      - whatsapp.reply_text
-      - whatsapp.send_media
-      - whatsapp.proactive_notify
-    denied_tools:
-      - memory.*
-      - filesystem.*
-      - system.*
-      - tavily_*
-    notes: "Send-only worker. Strictly gated by controller approval tokens."
-
-  web_researcher:
-    allowed_tavily_tools:
-      - tavily_search
-      - tavily_extract
-      - tavily_research
-      - tavily_map
-      - tavily_crawl
-      - tavily_dynamic_search
-    notes: "Primary agent for search, collection, and synthesis."
-
-  source_verifier:
-    allowed_tavily_tools:
-      - tavily_search
-      - tavily_extract
-      - tavily_dynamic_search
-    blocked_tavily_tools:
-      - tavily_research
-      - tavily_crawl
-      - tavily_map
-    notes: "Restricted to search and extract only. Broad research delegated to Web Researcher."
-
-  restricted_local_workers:
-    workers:
-      - file_discovery_worker
-      - repository_analyst
-      - error_investigator
-      - memory_query_worker
-    allowed_tavily_tools: []
-    enforcement: "DENY_ALL_TAVILY_BY_DEFAULT"
-    notes: "Must request web research via orchestrator when online knowledge is needed."
-
-# ─── WhatsApp Security Policies ───────────────────────────────────────────────
-whatsapp_security_rules:
-
-  - rule: "untrusted_input_sanitization"
+  - rule: "google_read_only_default"
     description: >
-      Treat all incoming WhatsApp messages as untrusted input.
-      Inbound content must NEVER be permitted to override Wayfinder system instructions,
-      policy rules, or permission levels.
-    enforced_by: wayfinder_controller
-
-  - rule: "sender_verification_and_scoping"
-    description: >
-      For personal assistant integration (whatsapp-agent-platform), execution is restricted
-      to the verified agent creator. Senders other than creator cannot trigger sensitive tasks.
-      Customer/business messaging must route through whatsapp-cloud-api when enabled.
-    enforced_by: wayfinder_controller
-
-  - rule: "iron_web_database_isolation"
-    description: >
-      Do not expose the full Iron Web database, private repositories, or unrelated conversation
-      history to WhatsApp workers. Pass only explicitly authorized, partitioned context required
-      for the specific turn.
-    enforced_by: wayfinder_controller
-
-  - rule: "mandatory_send_approval_gate"
-    description: >
-      All outbound messages, media dispatches, and commitment confirmations require explicit
-      approval from the user or Wayfinder Controller before message_action_worker dispatches them.
-    enforced_by: message_action_worker
-
-  - rule: "deduplication_and_audit"
-    description: >
-      Message IDs, event timestamps, proposed actions, approval tokens, and execution results
-      must be recorded to prevent duplicate task creation or repeated replies.
-    enforced_by: wayfinder_controller
-
-# ─── General Capability Chaining Rules ─────────────────────────────────────────
-capability_rules:
-
-  - rule: "independent_evidence_extraction"
-    description: >
-      Source Verifier must independently extract evidence from raw source text
-      (via tavily_extract) rather than relying on Web Researcher excerpts.
-    enforced_by: source_verifier
-
-  - rule: "no_unsolicited_external_write"
-    description: >
-      No external write (whatsapp.*) may be executed unless
-      the user's original request explicitly requests an outbound action.
+      Email Analyst, Calendar Analyst, Document Analyst, Contact Lookup Worker,
+      and Meeting Preparation Worker have strictly read-only access to Google APIs.
     enforced_by: orchestrator
 
-  - rule: "research_before_verification"
+  - rule: "meeting_preparation_synthesis"
     description: >
-      Web Researcher collects claims and cited URLs first.
-      Source Verifier validates claims against evidence before final synthesis.
+      Meeting Preparation Worker pulls context from Calendar, Gmail, Drive, Docs, and Tasks
+      solely for the specified meeting and time window.
+    enforced_by: meeting_prep_worker
+
+  - rule: "google_write_approval_gate"
+    description: >
+      Creating events, sending emails, updating docs/sheets, or modifying tasks must be presented
+      to the user for confirmation before execution.
     enforced_by: orchestrator
