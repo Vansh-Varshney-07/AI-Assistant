@@ -17,7 +17,7 @@ Selected by the user: **Google Calendar, Google Tasks and Gmail**. Fitness remai
 2. Under **Google Auth platform → Clients**, create an OAuth client of type **Desktop app**, then download its JSON. Save that file as:
 
    ```text
-   D:\Opencode_\AI assistant\secrets\credentials.json
+   C:\Users\User\.codex\worktrees\ui-backend-integration\AI assistant\secrets\credentials.json
    ```
 
    This must be a desktop OAuth client, rather than an API key or service-account key. Google's [credential setup guide](https://developers.google.com/workspace/guides/create-credentials) and [Python quickstart](https://developers.google.com/workspace/calendar/api/quickstart/python) explain the project/client setup. Do not paste the JSON or resulting token into chat.
@@ -25,7 +25,7 @@ Selected by the user: **Google Calendar, Google Tasks and Gmail**. Fitness remai
 3. Tell Codex when the client file is saved. Technical setup is already prepared. The consent command is:
 
    ```powershell
-   & 'D:\Opencode_\AI assistant\ops\Connect-Google.ps1'
+   & 'C:\Users\User\.codex\worktrees\ui-backend-integration\AI assistant\ops\Connect-Google.ps1'
    ```
 
    Open its displayed URL yourself, select the intended account, and grant the three read-only permissions. The browser redirects to the local callback. Successful consent stores private `secrets/token.json`; it does not read account data or establish a live-provider pass by itself.
@@ -35,14 +35,14 @@ Selected by the user: **Google Calendar, Google Tasks and Gmail**. Fitness remai
 Local checks issue no account requests and start no browser or callback listener:
 
 ```powershell
-& 'D:\Opencode_\AI assistant\ops\Connect-Google.ps1' -Check
-& 'D:\Opencode_\AI assistant\ops\Test-GoogleConnection.ps1'
+& 'C:\Users\User\.codex\worktrees\ui-backend-integration\AI assistant\ops\Connect-Google.ps1' -Check
+& 'C:\Users\User\.codex\worktrees\ui-backend-integration\AI assistant\ops\Test-GoogleConnection.ps1'
 ```
 
 After consent, Codex can run:
 
 ```powershell
-& 'D:\Opencode_\AI assistant\ops\Test-GoogleConnection.ps1' -Live
+& 'C:\Users\User\.codex\worktrees\ui-backend-integration\AI assistant\ops\Test-GoogleConnection.ps1' -Live
 ```
 
 That uses the authenticated application API and the real read adapters with a fresh temporary application store. It grants and revokes each exact resource: primary calendar for the next 24 hours, default task list, and Gmail `INBOX`. Each read is capped at **three items and one page**. It sends no messages, creates no events/tasks, invokes no model, opens no desktop UI, and accesses no live Iron Web store.

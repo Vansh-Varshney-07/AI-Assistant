@@ -1,3 +1,5 @@
+> Historical 0.2 baseline. For current 0.3 code, branch integration, results and test instructions see [the consolidated implementation](../../platform/CONSOLIDATED-IMPLEMENTATION.md).
+
 # Integration implementation and evidence
 
 26 October 2026 · `codex/ui-backend-integration` · **workspace-parity candidate, not an accepted R1–R7 release**

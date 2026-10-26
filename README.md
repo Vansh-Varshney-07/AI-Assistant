@@ -5,7 +5,7 @@ This folder is self-contained source for the FalkorDB + embedded Qdrant memory s
 
 ## Assistant stack setup
 
-The canonical project folder is `D:\Opencode_\AI assistant`. See [ops/SETUP.md](ops/SETUP.md) for the dedicated Ubuntu environment, Hermes/NemoClaw/OpenShell installation steps, verified migration checks and remaining setup work.
+The managed stack was originally configured from `D:\Opencode_\AI assistant`; use the current `main` checkout for this app, as shown in the [test guide](docs/platform/TESTING-APP.md). See [ops/SETUP.md](ops/SETUP.md) for the dedicated Ubuntu environment, Hermes/NemoClaw/OpenShell installation steps, verified migration checks and remaining setup work.
 
 The current Wayfinder app uses the new GitHub Electron UI and existing scoped backend. Launch `Start-Wayfinder.ps1 -Demo` for isolated manual testing, then open **Agents & apps**. See the [test guide](docs/platform/TESTING-APP.md) and [implementation results](docs/platform/CONSOLIDATED-IMPLEMENTATION.md). Legacy desktop-worker sources are preserved; W33/W36 UI and W37 native actions are not enabled by the current launcher.
 
