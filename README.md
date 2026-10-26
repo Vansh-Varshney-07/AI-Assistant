@@ -82,19 +82,53 @@ Stop the API before taking a cold backup:
 Restore refuses existing targets and uses fresh graph names. Backups contain private source data and credentials. Optional GPU card matching is configured with `context.use_gpu`; its dependencies are listed in `requirements/context-gpu.txt`. GPU matching holds retrieval vectors, not a generative model KV cache.
 
 
-## Memory Testing Workbench
+## Wayfinder AI Desktop Interface & Memory Workbench
 
-This loopback-only interface uses the existing engine and configured stores. It provides manual ingestion/retrieval, actual source and claim inspection, saved memory-space selection, scoped record inspection, diagnostics and clean shutdown. Evidence-only mode returns actual engine evidence and receipts. Explicit --nvidia mode adds validated Nemotron Lightning/Ultra extraction and evidence-grounded answers while retaining the same memory engine and stores.
+The project now includes the full **Wayfinder AI Desktop Interface** (merged from the `stitch_wayfinder_ai_desktop_interface` design system) alongside the existing dual-store FalkorDB + Qdrant memory testing engine.
 
-On this machine, reuse the existing virtual environment:
+### Integrated Subsystems & Screens
 
+The interface is served locally via `workbench_server.py` and provides a responsive, single-page application with dark/light themes, keyboard shortcuts (`Ctrl+K` for Quick Search, `Alt+Space` for Companion Pet), real-time host telemetry, and 10 integrated views:
+
+1. **Home Command Center** (`#home`): Chat with Wayfinder, diurnal schedule summary, animated compass reticle, quick action pills, and active automations.
+2. **Planner Matrix** (`#planner`): Operating schedule timeline (08:00–18:00), priority task queue, and telemetry gates.
+3. **Notion Connected Knowledge** (`#notion`): Workspace documents tree, architecture specifications, and database cards.
+4. **Workflows Automation Engine** (`#workflows`): Workflow catalog, triggers, and visual DAG state-machine node canvas.
+5. **Activity & Execution Monitor** (`#activity`): Live status of the 16 Wayfinder agent workers (`W01` to `W24`), execution logs, and trace inspector.
+6. **Connections & Data Bridges** (`#connections`): Service bridges for FalkorDB, Qdrant, SQLite Journal, Notion, GitHub, Linear, Google Calendar, and NVIDIA NIM.
+7. **Permissions & Security** (`#permissions`): SecOps matrix, enforced policy engine, human sign-off gates, and sandbox status.
+8. **Memory & Knowledge Workbench** (`#memory`): Full FalkorDB + Qdrant testing workbench with isolated memory spaces, prompt ingestion/retrieval, assertion confirmations, explicit JSON claims, live inventory filters, and record inspectors.
+9. **Settings & Diagnostics** (`#settings`): Service status, loopback checks, telemetry auto-refresh, and clean shutdown.
+10. **Pet & Desktop Companion** (`#pet`): Contextual summon overlay accessible via `Alt+Space`.
+
+### Running the Desktop Interface
+
+#### 1. Full Mode (Live FalkorDB + Qdrant Memory Engine)
 ```powershell
-Set-Location 'D:\Opencode_\AI assistant'
-docker compose up -d --pull never falkordb
-& 'D:\Opencode_\reserchpaper\.venv\Scripts\python.exe' .\workbench_server.py
+# Start FalkorDB
+docker compose up -d falkordb
+
+# Start the Desktop Interface Server
+.\.venv\Scripts\python.exe .\workbench_server.py
+```
+Open [http://127.0.0.1:3352](http://127.0.0.1:3352) in your browser.
+
+#### 2. Preview / UI-Only Mode (Offline / No Docker Required)
+You can explore and test the entire UI, workers, and simulated memory spaces without starting Docker:
+```powershell
+python .\workbench_server.py --preview
 ```
 
-Open http://127.0.0.1:3352. Stop using the Stop workbench button or Ctrl+C. No test facts are inserted at startup. The eight manual scenarios remain unrun until submitted by the user.
+#### 3. Standalone Stitch Design Screens
+Any individual Stitch mockup screen can also be viewed directly in isolation:
+- [http://127.0.0.1:3352/screens/home](http://127.0.0.1:3352/screens/home) — Home Command Center
+- [http://127.0.0.1:3352/screens/planner](http://127.0.0.1:3352/screens/planner) — Planner Today Matrix
+- [http://127.0.0.1:3352/screens/notion](http://127.0.0.1:3352/screens/notion) — Connected Notion Workspace
+- [http://127.0.0.1:3352/screens/workflows](http://127.0.0.1:3352/screens/workflows) — Workflow Editor
+- [http://127.0.0.1:3352/screens/activity](http://127.0.0.1:3352/screens/activity) — Activity Execution Monitor
+- [http://127.0.0.1:3352/screens/connections](http://127.0.0.1:3352/screens/connections) — Data Bridges
+- [http://127.0.0.1:3352/screens/permissions](http://127.0.0.1:3352/screens/permissions) — Security & Permissions
+- [http://127.0.0.1:3352/screens/list](http://127.0.0.1:3352/screens/list) — Catalog of all Stitch source screens
 
 - [Inspection report](docs/workbench-inspection.md)
 - [Startup and all eight manual scenarios](docs/workbench-guide.md)

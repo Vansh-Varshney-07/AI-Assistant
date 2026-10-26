@@ -18,6 +18,7 @@ backups/
 *.vhd
 *.pem
 *.key
+*.zip
 credentials.json
 token.json
 client_secret*.json

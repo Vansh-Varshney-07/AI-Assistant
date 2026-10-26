@@ -1,33 +1,1487 @@
-<!doctype html>
-<html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI assistant · Memory Workbench</title><link rel="stylesheet" href="/style.css"><script src="/app.js" defer></script></head>
-<body>
-<header><div><span class="eyebrow">AI ASSISTANT / LOCAL VALIDATION</span><h1>AI assistant</h1><p>Memory Testing Workbench</p></div><div><button id="refresh">Refresh records</button> <button id="stop">Stop workbench</button></div></header>
-<p class="notice" id="provider-notice">Evidence-only mode makes no hosted calls. When a Nemotron model is selected, prompt text and this memory space's relevant evidence are sent to NVIDIA. Storage and embeddings remain local.</p>
-<section aria-labelledby="spaces-heading"><h2 id="spaces-heading">Memory spaces</h2><div class="row"><label>Active memory space<select id="space-select" aria-describedby="active-space"></select></label><label>Name for a new test<input id="space-name" maxlength="100" placeholder="e.g. Research experiment"></label></div><button id="new-space" type="button">New isolated space</button><p id="active-space" class="muted" role="status">Loading spaces…</p><p class="muted">The same ID returns to the same memories across conversations and restarts. A new ID starts empty. Switching spaces preserves the others. IDs are case-sensitive and are not passwords.</p><p id="space-error" class="error" role="alert"></p></section>
-<details><summary>Storage &amp; execution configuration</summary><pre id="status">Loading…</pre></details>
-<main>
-<section aria-labelledby="manual-heading"><div class="section-title"><h2 id="manual-heading">Manual prompts</h2><button id="fresh">Fresh conversation</button></div>
-<p class="muted">Fresh conversations clear this space's conversation in this tab. Stored memories and space ID stay intact. History is never supplied to retrieval.</p>
-<form id="prompt-form">
-<label>Response / extraction model<select id="model"><option value="">Evidence only · no hosted calls</option></select></label>
-<label>Operation<select id="mode"><option value="retrieve">Retrieve only</option><option value="store">Store prompt + retrieve first</option><option value="claim">Store explicit claims + retrieve first</option><option value="recall">Recall a declared field</option></select></label>
-<label for="prompt">Prompt</label><textarea id="prompt" rows="5" required placeholder="Enter a manual prompt. Retrieval-only requests never write memories."></textarea>
-<div class="row"><label>Subject<input id="subject" value="manual-user" maxlength="200"></label><label>Predicate for recall<input id="predicate" placeholder="e.g. project_label" maxlength="128"></label></div>
-<div class="row"><label>Top K<input id="top-k" type="number" min="1" max="50" value="5"></label><label>Temporal mode<select id="temporal"><option value="now">Current</option><option value="auto">All times</option><option value="historical">Historical</option></select></label></div>
-<div id="claim-controls" hidden><label for="claims">Explicit claims · JSON array</label><textarea id="claims" rows="7" spellcheck="false" placeholder='[{"subject":"manual-user","predicate":"project_label","value":"your value","kind":"fact","action":"assert"}]'></textarea><p class="muted">Space scope is added automatically. Changes require target claim IDs and a reason. Select Store prompt with a Nemotron model to extract claims automatically.</p></div>
-<label class="check"><input id="confirmed" type="checkbox"> I confirm these manually submitted assertions or changes as a user source.</label>
-<button id="send" class="primary" type="submit">Send</button><span id="activity" role="status" aria-live="polite"></span><p id="request-error" class="error" role="alert"></p>
-</form>
-<h3>Current conversation</h3><div id="history"><p class="muted">No prompts submitted in this session.</p></div>
-<h3>Retrieved for selected request</h3><p class="muted">Query results and inventory belong to the active memory space. For store operations, retrieval runs before the write.</p><div id="retrieved">Unavailable — send a prompt.</div>
-</section>
-<section aria-labelledby="inventory-heading"><h2 id="inventory-heading">Stored records</h2><p id="inventory-count" class="muted">Loading actual backend records…</p>
-<label>Search stored content, IDs &amp; metadata<input id="search" type="search" placeholder="Text search over stored records"></label>
-<label>Sort<select id="sort"><option value="created-desc">Creation · newest</option><option value="created-asc">Creation · oldest</option><option value="updated-desc">Update · newest (if available)</option><option value="updated-asc">Update · oldest (if available)</option></select></label>
-<div class="row"><label>Claim status<select id="status-filter"><option value="">All statuses</option></select></label><label>Stored type / claim kind<select id="type-filter"><option value="">All types</option></select></label></div>
-<p id="inventory-error" class="error" role="alert"></p><div id="records"></div>
-<h3>Memory detail</h3><p class="muted">Claim states come from the engine's existing lifecycle view. Source records have no independent active/superseded status column. Update timestamps are unavailable in this schema.</p><pre id="detail">Select a stored record.</pre>
-</section>
-</main><footer>Loopback only · manual testing tool · not production-secure · no sample memories are inserted at startup</footer>
-</body></html>
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="web_dashboard" name="shell-type"/>
+  <title>WAYFINDER // AI Workspace & Desktop Interface</title>
+
+  <!-- Typography & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=JetBrains+Mono:wght@100..900&family=Space+Grotesk:wght@300..900&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-bright": "#f4fafc",
+            "inverse-primary": "#35d9ee",
+            "on-error-container": "#93000a",
+            "inverse-surface": "#2b3233",
+            "on-tertiary-fixed-variant": "#653e00",
+            "on-primary-container": "#005761",
+            "tertiary-container": "#ffb043",
+            "tertiary": "#855400",
+            "on-error": "#ffffff",
+            "inverse-on-surface": "#ebf2f3",
+            "surface": "#f4fafc",
+            "surface-container": "#e8eff0",
+            "on-secondary-fixed": "#001f24",
+            "on-primary": "#ffffff",
+            "surface-dim": "#d5dbdc",
+            "error": "#ba1a1a",
+            "surface-container-low": "#eef5f6",
+            "secondary-fixed-dim": "#9dcfd8",
+            "on-tertiary": "#ffffff",
+            "on-secondary-container": "#396a72",
+            "primary-container": "#29d3e8",
+            "background": "#f4fafc",
+            "surface-container-high": "#e3e9eb",
+            "on-surface": "#161d1e",
+            "on-secondary-fixed-variant": "#194d55",
+            "secondary-fixed": "#b9ebf4",
+            "surface-tint": "#006874",
+            "secondary-container": "#b6e8f1",
+            "on-primary-fixed-variant": "#004f58",
+            "secondary": "#34666d",
+            "on-surface-variant": "#3c494b",
+            "on-primary-fixed": "#001f24",
+            "surface-variant": "#dde4e5",
+            "surface-container-highest": "#dde4e5",
+            "on-secondary": "#ffffff",
+            "tertiary-fixed-dim": "#ffb95e",
+            "primary-fixed": "#97f0ff",
+            "primary-fixed-dim": "#35d9ee",
+            "outline-variant": "#bbc9cc",
+            "surface-container-lowest": "#ffffff",
+            "on-tertiary-container": "#6f4500",
+            "outline": "#6c797c",
+            "tertiary-fixed": "#ffddb7",
+            "error-container": "#ffdad6",
+            "on-tertiary-fixed": "#2a1700",
+            "primary": "#006874",
+            "on-background": "#161d1e"
+          },
+          borderRadius: {
+            DEFAULT: "0.125rem",
+            lg: "0.25rem",
+            xl: "0.5rem",
+            full: "0.75rem"
+          },
+          spacing: {
+            "space-xs": "0.25rem",
+            "space-sm": "0.5rem",
+            "space-md": "0.75rem",
+            "space-lg": "1rem",
+            "space-xl": "1.5rem",
+            "gutter": "0.75rem",
+            "margin": "1rem"
+          },
+          fontFamily: {
+            "headline": ["Space Grotesk", "sans-serif"],
+            "headline-lg": ["Space Grotesk", "sans-serif"],
+            "headline-md": ["Space Grotesk", "sans-serif"],
+            "headline-sm": ["Space Grotesk", "sans-serif"],
+            "display": ["Space Grotesk", "sans-serif"],
+            "display-lg": ["Space Grotesk", "sans-serif"],
+            "body": ["Geist", "sans-serif"],
+            "body-lg": ["Geist", "sans-serif"],
+            "body-md": ["Geist", "sans-serif"],
+            "body-sm": ["Geist", "sans-serif"],
+            "label": ["JetBrains Mono", "monospace"],
+            "label-lg": ["JetBrains Mono", "monospace"],
+            "label-md": ["JetBrains Mono", "monospace"],
+            "label-sm": ["JetBrains Mono", "monospace"],
+            "code-stream": ["JetBrains Mono", "monospace"]
+          }
+        }
+      }
+    };
+  </script>
+
+  <link rel="stylesheet" href="/style.css"/>
+  <script src="/app.js" defer></script>
+</head>
+<body class="bg-background font-body-md text-on-surface antialiased min-h-screen selection:bg-primary-container selection:text-on-primary-container">
+
+  <!-- ================= SIDEBAR NAVIGATION ================= -->
+  <aside class="fixed left-0 top-0 h-full w-60 bg-surface-container-lowest border-r border-outline-variant z-50 flex flex-col justify-between select-none">
+    <div class="flex flex-col h-full">
+      <!-- Title bar header in sidebar -->
+      <div class="h-8 px-space-md border-b border-outline-variant flex items-center justify-between bg-surface-container-lowest">
+        <div class="flex items-center gap-space-xs">
+          <span class="w-1.5 h-1.5 bg-primary rounded-none"></span>
+          <span class="font-label-sm text-label-sm text-primary uppercase tracking-widest">WAYFINDER.SYS</span>
+        </div>
+        <span class="font-label-sm text-label-sm text-on-surface-variant">v2.4</span>
+      </div>
+
+      <!-- App Logo / Header -->
+      <div class="p-space-md border-b border-outline-variant flex items-center gap-space-sm bg-surface-container-low">
+        <div class="w-8 h-8 flex items-center justify-center bg-primary text-on-primary font-headline-md font-bold">W</div>
+        <div class="flex flex-col">
+          <span class="font-headline-sm text-headline-sm font-bold tracking-tight text-on-surface leading-none">WAYFINDER</span>
+          <span class="font-label-sm text-label-sm text-on-surface-variant uppercase mt-0.5">AI Workspace</span>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <div class="flex-1 overflow-y-auto px-space-sm py-space-md flex flex-col gap-space-md custom-scroll">
+        <!-- WORKSPACE -->
+        <div class="flex flex-col">
+          <span class="px-space-sm pb-space-xs font-label-sm text-label-sm text-outline uppercase tracking-wider">WORKSPACE</span>
+          <nav class="flex flex-col gap-0.5" id="nav-workspace">
+            <a href="#home" data-view="home" class="nav-item flex items-center gap-space-sm px-space-sm py-1.5 rounded-none transition-colors active-nav">
+              <span class="material-symbols-outlined text-base">grid_view</span>
+              <span>Home</span>
+            </a>
+            <a href="#planner" data-view="planner" class="nav-item flex items-center gap-space-sm px-space-sm py-1.5 rounded-none text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm">
+              <span class="material-symbols-outlined text-base">calendar_month</span>
+              <span>Planner</span>
+            </a>
+            <a href="#notion" data-view="notion" class="nav-item flex items-center gap-space-sm px-space-sm py-1.5 rounded-none text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm">
+              <span class="material-symbols-outlined text-base">description</span>
+              <span>Notion</span>
+            </a>
+          </nav>
+        </div>
+
+        <!-- AUTOMATION -->
+        <div class="flex flex-col">
+          <span class="px-space-sm pb-space-xs font-label-sm text-label-sm text-outline uppercase tracking-wider">AUTOMATION</span>
+          <nav class="flex flex-col gap-0.5" id="nav-automation">
+            <a href="#workflows" data-view="workflows" class="nav-item flex items-center gap-space-sm px-space-sm py-1.5 rounded-none text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm">
+              <span class="material-symbols-outlined text-base">account_tree</span>
+              <span>Workflows</span>
+            </a>
+            <a href="#activity" data-view="activity" class="nav-item flex items-center gap-space-sm px-space-sm py-1.5 rounded-none text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm">
+              <span class="material-symbols-outlined text-base">pulse_alert</span>
+              <span>Activity</span>
+            </a>
+          </nav>
+        </div>
+
+        <!-- INTEGRATIONS -->
+        <div class="flex flex-col">
+          <span class="px-space-sm pb-space-xs font-label-sm text-label-sm text-outline uppercase tracking-wider">INTEGRATIONS</span>
+          <nav class="flex flex-col gap-0.5" id="nav-integrations">
+            <a href="#connections" data-view="connections" class="nav-item flex items-center gap-space-sm px-space-sm py-1.5 rounded-none text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm">
+              <span class="material-symbols-outlined text-base">hub</span>
+              <span>Connections</span>
+            </a>
+          </nav>
+        </div>
+
+        <!-- CONTROL -->
+        <div class="flex flex-col">
+          <span class="px-space-sm pb-space-xs font-label-sm text-label-sm text-outline uppercase tracking-wider">CONTROL</span>
+          <nav class="flex flex-col gap-0.5" id="nav-control">
+            <a href="#permissions" data-view="permissions" class="nav-item flex items-center gap-space-sm px-space-sm py-1.5 rounded-none text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm">
+              <span class="material-symbols-outlined text-base">shield_lock</span>
+              <span>Permissions &amp; Sec</span>
+            </a>
+            <a href="#pet" data-view="pet" class="nav-item flex items-center gap-space-sm px-space-sm py-1.5 rounded-none text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm">
+              <span class="material-symbols-outlined text-base">smart_toy</span>
+              <span>Pet &amp; Widget</span>
+            </a>
+          </nav>
+        </div>
+
+        <!-- SYSTEM -->
+        <div class="flex flex-col">
+          <span class="px-space-sm pb-space-xs font-label-sm text-label-sm text-outline uppercase tracking-wider">SYSTEM</span>
+          <nav class="flex flex-col gap-0.5" id="nav-system">
+            <a href="#memory" data-view="memory" class="nav-item flex items-center gap-space-sm px-space-sm py-1.5 rounded-none text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm">
+              <span class="material-symbols-outlined text-base">neurology</span>
+              <span>Memory &amp; Knowledge</span>
+            </a>
+            <a href="#settings" data-view="settings" class="nav-item flex items-center gap-space-sm px-space-sm py-1.5 rounded-none text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm">
+              <span class="material-symbols-outlined text-base">tune</span>
+              <span>Settings &amp; Diag</span>
+            </a>
+          </nav>
+        </div>
+
+        <!-- Standalone Screen Mockups Links -->
+        <div class="flex flex-col pt-2 border-t border-outline-variant/50">
+          <span class="px-space-sm pb-space-xs font-label-sm text-[10px] text-outline uppercase tracking-wider">STITCH SOURCE SCREENS</span>
+          <div class="grid grid-cols-2 gap-1 px-space-sm text-[10px] font-mono">
+            <a href="/screens/home" target="_blank" class="text-primary hover:underline">↗ Home 2</a>
+            <a href="/screens/planner" target="_blank" class="text-primary hover:underline">↗ Planner</a>
+            <a href="/screens/notion" target="_blank" class="text-primary hover:underline">↗ Notion</a>
+            <a href="/screens/workflows" target="_blank" class="text-primary hover:underline">↗ Workflows</a>
+            <a href="/screens/activity" target="_blank" class="text-primary hover:underline">↗ Activity</a>
+            <a href="/screens/connections" target="_blank" class="text-primary hover:underline">↗ Bridges</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Host Status Card -->
+      <div class="p-space-md border-t border-outline-variant bg-surface-container-low">
+        <div class="flex items-center justify-between mb-space-xs">
+          <span class="font-label-sm text-label-sm text-outline uppercase">HOST STATUS</span>
+          <span class="w-1.5 h-1.5 bg-primary-container rounded-none animate-pulse"></span>
+        </div>
+        <div class="font-label-sm text-label-sm text-on-surface-variant flex flex-col gap-0.5">
+          <div class="flex justify-between"><span>CPU LOAD</span><span id="telemetry-cpu" class="text-primary font-bold">12%</span></div>
+          <div class="flex justify-between"><span>MEM ALLOC</span><span id="telemetry-mem" class="text-primary font-bold">1.4 GB</span></div>
+          <div class="flex justify-between"><span>ACTIVE NODES</span><span id="telemetry-nodes" class="text-secondary font-bold">16 ONLINE</span></div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ================= TOP TITLEBAR & HEADER ================= -->
+  <div class="pl-60 flex flex-col min-h-screen">
+    <header class="fixed top-0 left-60 right-0 z-40 bg-surface-container-lowest border-b border-outline-variant flex flex-col">
+      <!-- Top Titlebar Line -->
+      <div class="h-8 w-full border-b border-outline-variant/60 flex items-center justify-between px-space-md select-none bg-surface-container-lowest">
+        <div class="flex items-center gap-space-md">
+          <div class="flex items-center gap-space-xs">
+            <span class="material-symbols-outlined text-sm text-primary">terminal</span>
+            <span class="font-label-sm text-label-sm tracking-wider text-on-surface-variant uppercase">WAYFINDER // AI WORKSPACE v2.4</span>
+          </div>
+          <div class="h-3 w-px bg-outline-variant"></div>
+          <div class="flex items-center gap-space-xs">
+            <span class="w-1.5 h-1.5 bg-primary-container rounded-none"></span>
+            <span id="system-status-indicator" class="font-label-sm text-label-sm text-primary uppercase">SYSTEM ONLINE • 14ms latency</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-space-md">
+          <!-- Quick Search -->
+          <button id="search-modal-trigger" class="flex items-center gap-space-xs bg-surface-container-low px-space-sm py-0.5 border border-outline-variant hover:border-primary transition-colors cursor-pointer">
+            <span class="material-symbols-outlined text-xs text-outline">search</span>
+            <span class="font-label-sm text-label-sm text-outline">Quick Search</span>
+            <kbd class="font-label-sm text-label-sm text-primary bg-surface-container-high px-1 py-0 border border-outline-variant ml-space-xs">Ctrl+K</kbd>
+          </button>
+
+          <!-- Theme Toggle -->
+          <button id="theme-toggle" title="Toggle Light/Dark Theme" class="p-1 text-on-surface-variant hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-sm">dark_mode</span>
+          </button>
+
+          <!-- Window Controls Mock -->
+          <div class="flex items-center">
+            <button aria-label="Minimize" class="w-6 h-6 flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-sm">remove</span></button>
+            <button aria-label="Maximize" class="w-6 h-6 flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-sm">crop_square</span></button>
+            <button aria-label="Close" class="w-6 h-6 flex items-center justify-center text-on-surface-variant hover:bg-error-container hover:text-on-error-container transition-colors" type="button"><span class="material-symbols-outlined text-sm">close</span></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Command Portal Ribbon -->
+      <div class="h-12 w-full px-space-lg flex items-center justify-between bg-surface-container-low">
+        <div class="flex items-center gap-space-md">
+          <span class="font-label-md text-label-md text-outline uppercase tracking-wider">COMMAND PORTAL</span>
+          <div class="h-3 w-px bg-outline-variant"></div>
+          <span class="px-space-xs py-0.5 bg-surface-container border border-outline-variant font-label-sm text-label-sm text-on-surface-variant">ACTIVE RUNTIME: LOCAL-HOST-01</span>
+          <span id="active-space-pill" class="px-space-xs py-0.5 bg-primary-container/10 border border-primary/30 font-label-sm text-label-sm text-primary hidden md:inline-block">SPACE: Loading…</span>
+        </div>
+        <div class="flex items-center gap-space-md">
+          <button id="summon-pet-btn" class="flex items-center gap-space-xs px-space-sm py-1 bg-surface-container border border-outline-variant hover:border-primary transition-colors">
+            <span class="material-symbols-outlined text-xs text-primary">pets</span>
+            <span class="font-label-sm text-label-sm text-primary font-bold">ƒ ⌥ SPACE to Summon Pet</span>
+          </button>
+          <div class="flex items-center gap-space-xs">
+            <div class="relative flex items-center">
+              <div class="w-7 h-7 bg-primary text-on-primary flex items-center justify-center font-mono font-bold text-xs border border-outline-variant">SA</div>
+              <span class="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-secondary border border-surface-container-low"></span>
+            </div>
+            <div class="flex flex-col ml-space-xs">
+              <span class="font-label-sm text-label-sm font-bold text-on-surface leading-tight">SYS_ADMIN</span>
+              <span class="font-label-sm text-label-sm text-primary leading-none">ACTIVE</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ================= MAIN CONTENT VIEWS ================= -->
+    <main class="w-full pt-20 px-space-lg pb-space-xl flex-1 bg-background">
+
+      <!-- ================= 1. HOME VIEW ================= -->
+      <section id="view-home" class="view-panel active flex flex-col w-full gap-space-lg">
+        <!-- Greeting Header -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md pb-space-xs border-b border-outline-variant/40">
+          <div class="flex flex-col gap-1">
+            <div class="flex items-center gap-space-sm">
+              <span class="font-label-sm text-label-sm text-primary uppercase tracking-widest flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 bg-primary"></span>
+                WAYFINDER // COMMAND_STATION
+              </span>
+              <span class="text-outline-variant font-label-sm">/</span>
+              <span class="px-1.5 py-0.5 bg-surface-container font-label-sm text-label-sm text-on-surface-variant border border-outline-variant/60">
+                WORKSPACE: PRIMARY_CORE
+              </span>
+            </div>
+            <h1 class="font-headline-lg text-headline-lg text-on-surface font-semibold tracking-tight mt-1">
+              Good day, Operator
+            </h1>
+            <p class="font-body-md text-body-md text-on-surface-variant">
+              Your autonomous agents, workflows, tasks, and memory runtime in one unified console.
+            </p>
+          </div>
+          <div class="flex flex-wrap items-center gap-space-sm select-none">
+            <div class="px-space-sm py-1 bg-surface-container-low border border-outline-variant/80 flex items-center gap-space-xs">
+              <span class="material-symbols-outlined text-xs text-outline">calendar_today</span>
+              <span id="home-date-display" class="font-label-md text-label-md text-on-surface font-semibold">Today</span>
+            </div>
+            <div class="px-space-sm py-1 bg-primary/10 border border-primary/40 flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 bg-primary animate-pulse"></span>
+              <span class="font-label-sm text-label-sm text-primary font-bold tracking-wider">LOCAL DAEMON: ACTIVE</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chat with Wayfinder & Animated Reticle Anchor -->
+        <div class="relative bg-surface-container-low border border-outline-variant p-space-lg flex flex-col lg:flex-row items-stretch justify-between gap-space-lg overflow-hidden shadow-sm">
+          <span class="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-primary pointer-events-none"></span>
+          <span class="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-primary pointer-events-none"></span>
+
+          <!-- Left Command Area -->
+          <div class="flex-1 flex flex-col justify-between gap-space-md z-10">
+            <div class="flex flex-col gap-1">
+              <div class="flex items-center gap-space-xs">
+                <span class="material-symbols-outlined text-base text-primary">auto_awesome</span>
+                <span class="font-headline-md text-headline-md text-on-surface font-semibold tracking-tight">Chat with Wayfinder</span>
+                <span class="ml-space-xs px-1.5 py-0.5 bg-surface-container border border-outline-variant font-label-sm text-label-sm text-primary uppercase">FalkorDB + Qdrant</span>
+              </div>
+              <p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">
+                Instruct your assistant to store evidence, run intent analysis, recall memories, or execute workflows.
+              </p>
+            </div>
+
+            <!-- Home Prompt Input Form -->
+            <form id="home-prompt-form" class="flex flex-col gap-space-xs">
+              <div class="relative flex items-center bg-surface-container border border-outline-variant hover:border-primary/80 focus-within:border-primary transition-colors">
+                <span class="pl-space-md text-primary font-code-stream font-bold select-none">&gt;</span>
+                <input id="home-prompt-input" class="w-full py-2.5 px-space-sm bg-transparent font-code-stream text-code-stream text-on-surface placeholder:text-outline focus:outline-none" placeholder="Instruct Wayfinder (e.g. 'Summarize review cycle policy' or 'Plan meeting prep')..." type="text"/>
+                <div class="flex items-center gap-1.5 pr-space-md">
+                  <kbd class="px-1.5 py-0.5 bg-surface-container-high border border-outline-variant font-label-sm text-label-sm text-primary">⌘K</kbd>
+                  <button type="submit" class="px-space-md py-1 bg-primary text-on-primary font-label-md text-label-md font-bold hover:bg-primary/90 transition-colors flex items-center gap-1">
+                    <span>Send</span>
+                    <span class="material-symbols-outlined text-xs">arrow_forward</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Suggested Pills -->
+              <div class="flex flex-wrap items-center gap-space-xs pt-1">
+                <span class="font-label-sm text-label-sm text-outline uppercase mr-1">Suggested:</span>
+                <button type="button" class="quick-prompt-btn px-space-sm py-0.5 bg-surface-container border border-outline-variant hover:border-primary hover:text-primary text-on-surface-variant font-label-sm text-label-sm transition-colors flex items-center gap-1" data-prompt="Analyze screen and verify open tasks">
+                  <span class="material-symbols-outlined text-xs">crop</span>
+                  <span>Analyze screen</span>
+                </button>
+                <button type="button" class="quick-prompt-btn px-space-sm py-0.5 bg-surface-container border border-outline-variant hover:border-primary hover:text-primary text-on-surface-variant font-label-sm text-label-sm transition-colors flex items-center gap-1" data-prompt="Search memory for project review cycle policy">
+                  <span class="material-symbols-outlined text-xs">folder_open</span>
+                  <span>Find in memory</span>
+                </button>
+                <button type="button" class="quick-prompt-btn px-space-sm py-0.5 bg-surface-container border border-outline-variant hover:border-primary hover:text-primary text-on-surface-variant font-label-sm text-label-sm transition-colors flex items-center gap-1" data-prompt="Create workflow for automated meeting preparation">
+                  <span class="material-symbols-outlined text-xs">account_tree</span>
+                  <span>Create workflow</span>
+                </button>
+                <button type="button" class="quick-prompt-btn px-space-sm py-0.5 bg-surface-container border border-outline-variant hover:border-primary hover:text-primary text-on-surface-variant font-label-sm text-label-sm transition-colors flex items-center gap-1" data-prompt="Plan today operating schedule across priorities">
+                  <span class="material-symbols-outlined text-xs">event_available</span>
+                  <span>Plan my day</span>
+                </button>
+              </div>
+            </form>
+
+            <div class="flex flex-wrap items-center gap-space-md pt-2">
+              <a href="#memory" class="px-space-md py-1.5 bg-primary text-on-primary font-label-md text-label-md font-bold tracking-wide hover:brightness-110 transition-all flex items-center gap-1.5 shadow-sm">
+                <span>Open Memory Console</span>
+                <span class="material-symbols-outlined text-xs">north_east</span>
+              </a>
+              <button id="home-pet-trigger" type="button" class="px-space-md py-1.5 bg-transparent border border-outline-variant hover:border-primary text-on-surface hover:text-primary font-label-md text-label-md transition-colors flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-xs text-primary">pets</span>
+                <span>Summon Pet</span>
+                <span class="font-label-sm text-label-sm text-outline">ƒ ⌥ SPACE</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Wayfinder Compass / Reticle SVG Anchor -->
+          <div class="relative w-full lg:w-64 flex items-center justify-center border-t lg:border-t-0 lg:border-l border-outline-variant/60 pt-space-md lg:pt-0 lg:pl-space-lg select-none">
+            <div class="relative w-44 h-44 flex items-center justify-center">
+              <span class="absolute w-full h-px bg-outline-variant/40"></span>
+              <span class="absolute h-full w-px bg-outline-variant/40"></span>
+              <svg class="w-40 h-40 transform animate-[spin_60s_linear_infinite]" viewBox="0 0 160 160">
+                <circle class="text-outline-variant" cx="80" cy="80" fill="none" r="74" stroke="currentColor" stroke-dasharray="3,3" stroke-width="1"></circle>
+                <circle class="text-primary/40" cx="80" cy="80" fill="none" r="60" stroke="currentColor" stroke-dasharray="8 4 2 4" stroke-width="1.5"></circle>
+                <circle class="text-primary" cx="80" cy="80" fill="none" r="42" stroke="currentColor" stroke-width="1"></circle>
+                <circle class="text-secondary" cx="80" cy="80" fill="none" r="22" stroke="currentColor" stroke-dasharray="4,2" stroke-width="1.5"></circle>
+                <line class="text-primary" stroke="currentColor" stroke-width="2" x1="80" x2="80" y1="2" y2="10"></line>
+                <line class="text-primary" stroke="currentColor" stroke-width="2" x1="80" x2="80" y1="150" y2="158"></line>
+                <line class="text-primary" stroke="currentColor" stroke-width="2" x1="2" x2="10" y1="80" y2="80"></line>
+                <line class="text-primary" stroke="currentColor" stroke-width="2" x1="150" x2="158" y1="80" y2="80"></line>
+              </svg>
+              <div class="absolute inset-0 m-auto w-16 h-16 bg-surface-container border border-primary/60 flex flex-col items-center justify-center text-center">
+                <span class="material-symbols-outlined text-primary text-base">explore</span>
+                <span class="font-label-sm text-[9px] text-primary font-bold uppercase tracking-tighter">NAV.SYS</span>
+              </div>
+              <span class="absolute top-1 left-1 font-label-sm text-[8px] text-outline font-mono">LAT: 37.7749</span>
+              <span class="absolute bottom-1 right-1 font-label-sm text-[8px] text-outline font-mono">AZM: 142.8°</span>
+              <span class="absolute top-1 right-1 flex items-center gap-1 font-label-sm text-[8px] text-primary">
+                <span class="w-1 h-1 bg-primary"></span>LIVE
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions Row -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-space-sm">
+          <a href="#workflows" class="group px-space-md py-2.5 bg-surface-container-low border border-outline-variant hover:border-primary hover:bg-surface-container transition-all flex items-center justify-between text-left">
+            <div class="flex items-center gap-space-sm min-w-0">
+              <span class="material-symbols-outlined text-base text-primary group-hover:scale-110 transition-transform">account_tree</span>
+              <div class="flex flex-col min-w-0">
+                <span class="font-label-md text-label-md font-bold text-on-surface truncate">+ Create Workflow</span>
+                <span class="font-label-sm text-label-sm text-outline truncate">Automate tasks</span>
+              </div>
+            </div>
+            <span class="material-symbols-outlined text-xs text-outline group-hover:text-primary transition-colors">chevron_right</span>
+          </a>
+          <a href="#planner" class="group px-space-md py-2.5 bg-surface-container-low border border-outline-variant hover:border-primary hover:bg-surface-container transition-all flex items-center justify-between text-left">
+            <div class="flex items-center gap-space-sm min-w-0">
+              <span class="material-symbols-outlined text-base text-secondary group-hover:scale-110 transition-transform">check_box</span>
+              <div class="flex flex-col min-w-0">
+                <span class="font-label-md text-label-md font-bold text-on-surface truncate">+ Add Task</span>
+                <span class="font-label-sm text-label-sm text-outline truncate">Assign or triage</span>
+              </div>
+            </div>
+            <span class="material-symbols-outlined text-xs text-outline group-hover:text-primary transition-colors">chevron_right</span>
+          </a>
+          <a href="#notion" class="group px-space-md py-2.5 bg-surface-container-low border border-outline-variant hover:border-primary hover:bg-surface-container transition-all flex items-center justify-between text-left">
+            <div class="flex items-center gap-space-sm min-w-0">
+              <span class="material-symbols-outlined text-base text-tertiary group-hover:scale-110 transition-transform">edit_note</span>
+              <div class="flex flex-col min-w-0">
+                <span class="font-label-md text-label-md font-bold text-on-surface truncate">✎ Quick Note</span>
+                <span class="font-label-sm text-label-sm text-outline truncate">Connected Notion notes</span>
+              </div>
+            </div>
+            <span class="material-symbols-outlined text-xs text-outline group-hover:text-primary transition-colors">chevron_right</span>
+          </a>
+          <a href="#activity" class="group px-space-md py-2.5 bg-surface-container-low border border-outline-variant hover:border-primary hover:bg-surface-container transition-all flex items-center justify-between text-left">
+            <div class="flex items-center gap-space-sm min-w-0">
+              <span class="material-symbols-outlined text-base text-primary-fixed-dim group-hover:scale-110 transition-transform">monitoring</span>
+              <div class="flex flex-col min-w-0">
+                <span class="font-label-md text-label-md font-bold text-on-surface truncate">◷ Agent Activity</span>
+                <span class="font-label-sm text-label-sm text-outline truncate">16 Workers telemetry</span>
+              </div>
+            </div>
+            <span class="material-symbols-outlined text-xs text-outline group-hover:text-primary transition-colors">chevron_right</span>
+          </a>
+        </div>
+
+        <!-- Schedule Timeline & Daily Tasks Panels -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-space-md">
+          <!-- PANEL A: Today's Tasks -->
+          <div class="bg-surface-container-low border border-outline-variant flex flex-col justify-between">
+            <div class="h-10 px-space-md border-b border-outline-variant flex items-center justify-between bg-surface-container">
+              <div class="flex items-center gap-space-sm">
+                <span class="material-symbols-outlined text-sm text-primary">task_alt</span>
+                <span class="font-headline-sm text-headline-sm font-bold text-on-surface">Today's Tasks</span>
+                <span class="px-1.5 py-0.2 bg-surface-container-high text-primary font-label-sm text-label-sm border border-outline-variant">3 PENDING</span>
+              </div>
+              <a href="#planner" class="text-xs text-primary hover:underline font-label-sm">View in Planner →</a>
+            </div>
+            <div class="p-space-md flex flex-col gap-space-sm">
+              <div class="p-space-sm bg-surface-container border border-outline-variant/60 flex items-center justify-between">
+                <div class="flex items-center gap-space-sm">
+                  <span class="material-symbols-outlined text-primary text-sm">radio_button_unchecked</span>
+                  <span class="font-body-md text-on-surface font-medium">Verify FalkorDB + Qdrant memory partition</span>
+                </div>
+                <span class="px-1.5 py-0.5 bg-primary/10 text-primary font-label-sm text-[10px]">W06 VALIDATOR</span>
+              </div>
+              <div class="p-space-sm bg-surface-container border border-outline-variant/60 flex items-center justify-between">
+                <div class="flex items-center gap-space-sm">
+                  <span class="material-symbols-outlined text-primary text-sm">radio_button_unchecked</span>
+                  <span class="font-body-md text-on-surface font-medium">Run Task Planner W03 on user intent</span>
+                </div>
+                <span class="px-1.5 py-0.5 bg-secondary/10 text-secondary font-label-sm text-[10px]">W03 PLANNER</span>
+              </div>
+              <div class="p-space-sm bg-surface-container border border-outline-variant/60 flex items-center justify-between">
+                <div class="flex items-center gap-space-sm">
+                  <span class="material-symbols-outlined text-primary text-sm">radio_button_unchecked</span>
+                  <span class="font-body-md text-on-surface font-medium">Synchronize Notion project workspace database</span>
+                </div>
+                <span class="px-1.5 py-0.5 bg-tertiary/10 text-tertiary font-label-sm text-[10px]">INTEGRATION</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- PANEL B: Diurnal Schedule Matrix -->
+          <div class="bg-surface-container-low border border-outline-variant flex flex-col justify-between">
+            <div class="h-10 px-space-md border-b border-outline-variant flex items-center justify-between bg-surface-container">
+              <div class="flex items-center gap-space-sm">
+                <span class="material-symbols-outlined text-sm text-secondary">schedule</span>
+                <span class="font-headline-sm text-headline-sm font-bold text-on-surface">Diurnal Schedule Matrix</span>
+                <span class="px-1.5 py-0.2 bg-secondary/10 text-secondary font-label-sm text-label-sm">4 DISPATCHED</span>
+              </div>
+              <span class="font-label-sm text-label-sm text-outline">TIMEZONE: LOCAL</span>
+            </div>
+            <div class="p-space-md grid grid-cols-2 gap-space-sm">
+              <div class="p-space-sm bg-surface-container border-l-2 border-secondary flex flex-col justify-between h-24">
+                <div>
+                  <span class="font-label-sm text-secondary font-bold">09:00</span>
+                  <p class="font-headline-sm text-xs font-bold text-on-surface truncate">Core Alignment</p>
+                  <p class="font-body-sm text-[11px] text-on-surface-variant truncate">Model Routing &amp; Engine</p>
+                </div>
+                <span class="font-label-sm text-[10px] text-tertiary">CONCLUDED</span>
+              </div>
+              <div class="p-space-sm bg-surface-container border-l-2 border-primary flex flex-col justify-between h-24">
+                <div>
+                  <span class="font-label-sm text-primary font-bold">11:30</span>
+                  <p class="font-headline-sm text-xs font-bold text-on-surface truncate">Telemetry Audit</p>
+                  <p class="font-body-sm text-[11px] text-on-surface-variant truncate">Automated Vector Health</p>
+                </div>
+                <span class="font-label-sm text-[10px] text-primary">COMPLETE</span>
+              </div>
+              <div class="p-space-sm bg-surface-container border-l-2 border-secondary flex flex-col justify-between h-24">
+                <div>
+                  <span class="font-label-sm text-secondary font-bold">14:00</span>
+                  <p class="font-headline-sm text-xs font-bold text-on-surface truncate">Synthesis Sprint</p>
+                  <p class="font-body-sm text-[11px] text-on-surface-variant truncate">W07 Synthesis &amp; Report</p>
+                </div>
+                <span class="font-label-sm text-[10px] text-secondary">ACTIVE</span>
+              </div>
+              <div class="p-space-sm bg-surface-container border-l-2 border-outline-variant flex flex-col justify-between h-24">
+                <div>
+                  <span class="font-label-sm text-outline font-bold">16:30</span>
+                  <p class="font-headline-sm text-xs font-bold text-on-surface truncate">Code Reviewer</p>
+                  <p class="font-body-sm text-[11px] text-on-surface-variant truncate">W24 Automated Review</p>
+                </div>
+                <span class="font-label-sm text-[10px] text-outline">QUEUED</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Active Automations & Integrations Strip -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+          <div class="p-space-md bg-surface-container-low border border-outline-variant flex items-center justify-between">
+            <div class="flex items-center gap-space-sm">
+              <span class="material-symbols-outlined text-primary text-xl">database</span>
+              <div>
+                <p class="font-label-md text-on-surface font-bold">FalkorDB + Qdrant</p>
+                <p class="font-body-sm text-outline">Dual-store memory active</p>
+              </div>
+            </div>
+            <a href="#memory" class="text-xs text-primary font-label-sm hover:underline">Inspect →</a>
+          </div>
+          <div class="p-space-md bg-surface-container-low border border-outline-variant flex items-center justify-between">
+            <div class="flex items-center gap-space-sm">
+              <span class="material-symbols-outlined text-secondary text-xl">hub</span>
+              <div>
+                <p class="font-label-md text-on-surface font-bold">Data Bridges</p>
+                <p class="font-body-sm text-outline">8 Connected services</p>
+              </div>
+            </div>
+            <a href="#connections" class="text-xs text-secondary font-label-sm hover:underline">Manage →</a>
+          </div>
+          <div class="p-space-md bg-surface-container-low border border-outline-variant flex items-center justify-between">
+            <div class="flex items-center gap-space-sm">
+              <span class="material-symbols-outlined text-tertiary text-xl">shield</span>
+              <div>
+                <p class="font-label-md text-on-surface font-bold">SecOps Matrix</p>
+                <p class="font-body-sm text-outline">Human approval gates enabled</p>
+              </div>
+            </div>
+            <a href="#permissions" class="text-xs text-tertiary font-label-sm hover:underline">Audit →</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 2. PLANNER VIEW ================= -->
+      <section id="view-planner" class="view-panel hidden flex flex-col w-full gap-space-md">
+        <!-- Planner Header -->
+        <div class="w-full bg-surface-container-low px-space-lg py-space-md border border-outline-variant">
+          <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-space-md">
+            <div>
+              <div class="flex items-center gap-space-xs font-label-sm text-label-sm text-primary uppercase tracking-widest">
+                <span class="w-1.5 h-1.5 bg-primary-container inline-block"></span>
+                <span>PLANNER // TIME &amp; TASK MATRIX</span>
+                <span class="text-outline">/</span>
+                <span class="text-on-surface-variant">RUNTIME: LOCAL-HOST-01</span>
+              </div>
+              <h1 class="font-headline-lg text-headline-lg text-on-surface font-semibold tracking-tight mt-0.5">Today's Operating Schedule</h1>
+              <p class="font-body-sm text-body-sm text-outline mt-0.5">Real-time operational feeds: tasks, telemetry gates, calendar syncs, and autonomous agent queues.</p>
+            </div>
+            <div class="flex items-center gap-space-md">
+              <div class="flex items-center bg-surface-container px-space-xs py-0.5 border border-outline-variant">
+                <button class="p-1 text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined text-sm">chevron_left</span></button>
+                <span class="px-space-sm py-0.5 bg-primary text-on-primary font-label-sm text-label-sm font-bold uppercase">TODAY</span>
+                <button class="p-1 text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined text-sm">chevron_right</span></button>
+              </div>
+              <button class="px-space-md py-1.5 bg-primary text-on-primary font-label-md text-label-md font-bold flex items-center gap-1">
+                <span class="material-symbols-outlined text-sm">add</span>
+                <span>New Event</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Diurnal Planner Matrix Grid -->
+        <div class="grid grid-cols-1 xl:grid-cols-12 gap-space-md">
+          <!-- Timeline Blocks (8 cols) -->
+          <div class="xl:col-span-8 bg-surface-container-low border border-outline-variant p-space-md flex flex-col gap-space-sm">
+            <div class="flex items-center justify-between border-b border-outline-variant pb-2">
+              <span class="font-label-sm text-on-surface font-bold uppercase">HOURLY DISPATCH MATRIX (08:00 – 18:00)</span>
+              <span class="font-label-sm text-primary font-mono">LIVE TRACKING</span>
+            </div>
+            <div class="flex flex-col gap-space-xs">
+              <div class="grid grid-cols-12 gap-space-sm p-space-sm bg-surface-container border border-outline-variant/60 items-center">
+                <span class="col-span-2 font-mono text-xs text-primary font-bold">08:00 - 09:30</span>
+                <div class="col-span-7 flex flex-col">
+                  <span class="font-headline-sm text-xs font-semibold text-on-surface">Telemetry Gate &amp; Engine Boot</span>
+                  <span class="text-[11px] text-outline">FalkorDB graph validation, embedding cache verification</span>
+                </div>
+                <div class="col-span-3 text-right">
+                  <span class="px-1.5 py-0.5 bg-tertiary/20 text-tertiary text-[10px] font-mono">COMPLETE</span>
+                </div>
+              </div>
+              <div class="grid grid-cols-12 gap-space-sm p-space-sm bg-surface-container border-l-2 border-primary border border-outline-variant/60 items-center">
+                <span class="col-span-2 font-mono text-xs text-secondary font-bold">10:00 - 11:30</span>
+                <div class="col-span-7 flex flex-col">
+                  <span class="font-headline-sm text-xs font-semibold text-on-surface">W08 Web Researcher &amp; W09 Source Verifier</span>
+                  <span class="text-[11px] text-outline">Autonomous retrieval across verified technical literature</span>
+                </div>
+                <div class="col-span-3 text-right">
+                  <span class="px-1.5 py-0.5 bg-primary/20 text-primary text-[10px] font-mono">ACTIVE RUN</span>
+                </div>
+              </div>
+              <div class="grid grid-cols-12 gap-space-sm p-space-sm bg-surface-container border border-outline-variant/60 items-center">
+                <span class="col-span-2 font-mono text-xs text-outline font-bold">13:00 - 14:30</span>
+                <div class="col-span-7 flex flex-col">
+                  <span class="font-headline-sm text-xs font-semibold text-on-surface">W18 Meeting Prep Worker</span>
+                  <span class="text-[11px] text-outline">Synthesize agenda notes, attendee profiles, past commitments</span>
+                </div>
+                <div class="col-span-3 text-right">
+                  <span class="px-1.5 py-0.5 bg-surface-container-high text-outline text-[10px] font-mono">SCHEDULED</span>
+                </div>
+              </div>
+              <div class="grid grid-cols-12 gap-space-sm p-space-sm bg-surface-container border border-outline-variant/60 items-center">
+                <span class="col-span-2 font-mono text-xs text-outline font-bold">15:00 - 17:00</span>
+                <div class="col-span-7 flex flex-col">
+                  <span class="font-headline-sm text-xs font-semibold text-on-surface">Deep Focus: Multi-Agent Workflow Execution</span>
+                  <span class="text-[11px] text-outline">Orchestrator pipeline execution with human approval checkpoints</span>
+                </div>
+                <div class="col-span-3 text-right">
+                  <span class="px-1.5 py-0.5 bg-surface-container-high text-outline text-[10px] font-mono">QUEUED</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Priority Task Queue & Calendar Sync (4 cols) -->
+          <div class="xl:col-span-4 flex flex-col gap-space-md">
+            <div class="bg-surface-container-low border border-outline-variant p-space-md flex flex-col gap-space-sm">
+              <div class="flex items-center justify-between border-b border-outline-variant pb-2">
+                <span class="font-label-sm text-on-surface font-bold uppercase">PRIORITY QUEUE</span>
+                <span class="font-label-sm text-tertiary">3 TASKS</span>
+              </div>
+              <div class="flex flex-col gap-space-xs">
+                <div class="p-space-sm bg-surface-container border border-outline-variant/60 flex items-start gap-space-xs">
+                  <input type="checkbox" class="mt-1"/>
+                  <div class="flex flex-col">
+                    <span class="font-body-md text-xs font-semibold text-on-surface">Approve W03 Task Plan for Sprint 45</span>
+                    <span class="text-[10px] text-outline">Requires Human Gate: SecOps Enforced</span>
+                  </div>
+                </div>
+                <div class="p-space-sm bg-surface-container border border-outline-variant/60 flex items-start gap-space-xs">
+                  <input type="checkbox" class="mt-1"/>
+                  <div class="flex flex-col">
+                    <span class="font-body-md text-xs font-semibold text-on-surface">Ingest Research Papers into FalkorDB</span>
+                    <span class="text-[10px] text-outline">Memory partition: research-exp-01</span>
+                  </div>
+                </div>
+                <div class="p-space-sm bg-surface-container border border-outline-variant/60 flex items-start gap-space-xs">
+                  <input type="checkbox" class="mt-1"/>
+                  <div class="flex flex-col">
+                    <span class="font-body-md text-xs font-semibold text-on-surface">Review W24 Code Review Diagnostics</span>
+                    <span class="text-[10px] text-outline">Automated lint &amp; compliance passed</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 3. NOTION WORKSPACE VIEW ================= -->
+      <section id="view-notion" class="view-panel hidden flex flex-col w-full gap-space-md">
+        <!-- Notion Header -->
+        <div class="w-full bg-surface-container-low px-space-lg py-space-md border border-outline-variant flex items-center justify-between">
+          <div class="flex items-center gap-space-sm">
+            <span class="material-symbols-outlined text-2xl text-primary">description</span>
+            <div>
+              <h1 class="font-headline-lg text-headline-lg text-on-surface font-semibold tracking-tight">Notion Connected Knowledge</h1>
+              <p class="font-body-sm text-outline">Two-way sync with your connected Notion databases, documentation, and sprint specs.</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-space-sm">
+            <span class="px-space-sm py-1 bg-surface-container border border-outline-variant font-label-sm text-primary">SYNC: CONTINUOUS</span>
+            <button class="px-space-md py-1.5 bg-primary text-on-primary font-label-md text-label-md font-bold flex items-center gap-1">
+              <span class="material-symbols-outlined text-sm">sync</span>
+              <span>Sync Now</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Notion Dual Pane -->
+        <div class="grid grid-cols-12 gap-space-md items-start">
+          <!-- Document Tree (4 cols) -->
+          <div class="col-span-12 xl:col-span-4 bg-surface-container-low border border-outline-variant p-space-md flex flex-col gap-space-sm">
+            <span class="font-label-sm text-outline uppercase tracking-wider">WORKSPACE PAGES</span>
+            <div class="flex flex-col gap-1 font-body-sm text-xs">
+              <div class="p-space-sm bg-surface-container border-l-2 border-primary flex items-center justify-between cursor-pointer">
+                <span class="font-bold text-on-surface">📘 Architecture &amp; Memory Specs</span>
+                <span class="text-[10px] font-mono text-outline">Updated 10m ago</span>
+              </div>
+              <div class="p-space-sm bg-surface-container/60 hover:bg-surface-container flex items-center justify-between cursor-pointer">
+                <span class="text-on-surface-variant">📁 Sprint 44 Planning &amp; Tasks</span>
+                <span class="text-[10px] font-mono text-outline">1h ago</span>
+              </div>
+              <div class="p-space-sm bg-surface-container/60 hover:bg-surface-container flex items-center justify-between cursor-pointer">
+                <span class="text-on-surface-variant">📁 Agent Worker Contracts W01-W24</span>
+                <span class="text-[10px] font-mono text-outline">Yesterday</span>
+              </div>
+              <div class="p-space-sm bg-surface-container/60 hover:bg-surface-container flex items-center justify-between cursor-pointer">
+                <span class="text-on-surface-variant">📁 Weekly Executive Retrospective</span>
+                <span class="text-[10px] font-mono text-outline">3d ago</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Document Editor / Preview (8 cols) -->
+          <div class="col-span-12 xl:col-span-8 bg-surface-container-low border border-outline-variant p-space-lg flex flex-col gap-space-md">
+            <div class="border-b border-outline-variant/60 pb-space-sm flex items-center justify-between">
+              <div>
+                <h2 class="font-headline-md text-on-surface font-bold">Architecture &amp; Memory Specs</h2>
+                <p class="font-label-sm text-outline text-xs mt-0.5">Notion ID: not_98242a-99 | Synced to FalkorDB space: primary_core</p>
+              </div>
+              <div class="flex items-center gap-space-xs">
+                <button class="px-space-sm py-1 bg-surface-container border border-outline-variant font-label-sm text-xs hover:border-primary">Edit in Notion ↗</button>
+              </div>
+            </div>
+            <div class="prose prose-invert max-w-none text-xs text-on-surface-variant leading-relaxed flex flex-col gap-space-sm font-body-md">
+              <p>The Wayfinder AI desktop assistant utilizes a three-tier context and memory system:</p>
+              <ul class="list-disc pl-5 flex flex-col gap-1">
+                <li><strong class="text-on-surface">Tier 1: Hot Context</strong> — In-memory session buffers, agent instructions, and scope contracts.</li>
+                <li><strong class="text-on-surface">Tier 2: Context Cards</strong> — Evidence-backed task cards selected within a bounded token budget.</li>
+                <li><strong class="text-on-surface">Tier 3: Durable Evidence</strong> — FalkorDB knowledge graph (entities, claims, relations) + embedded Qdrant vectors for high-precision retrieval.</li>
+              </ul>
+              <p>All writes must pass through the Receipt Journal with SQLite state tracking and compensation rollback guarantees.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 4. WORKFLOWS VIEW ================= -->
+      <section id="view-workflows" class="view-panel hidden flex flex-col w-full gap-space-md">
+        <!-- Orchestrator Header -->
+        <div class="w-full flex items-center justify-between py-space-xs px-space-md bg-surface-container-low border border-outline-variant">
+          <div class="flex items-center gap-space-md min-w-0">
+            <div class="flex items-center gap-space-xs">
+              <span class="w-1.5 h-1.5 bg-primary animate-pulse"></span>
+              <span class="font-label-sm text-label-sm text-primary uppercase tracking-widest">ORCHESTRATOR::ENGINE</span>
+            </div>
+            <span class="text-outline-variant font-label-sm">/</span>
+            <div class="flex items-center gap-space-xs">
+              <span class="font-label-sm text-label-sm text-on-surface-variant">WORKFLOW_POOL:</span>
+              <span class="font-label-sm text-label-sm text-on-surface font-semibold">14 REGISTERED</span>
+            </div>
+            <span class="text-outline-variant font-label-sm">/</span>
+            <div class="flex items-center gap-space-xs">
+              <span class="font-label-sm text-label-sm text-outline">QUEUE_LATENCY:</span>
+              <span class="font-label-sm text-label-sm text-tertiary">3.4ms</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-space-sm">
+            <div class="flex items-center gap-1.5 px-space-sm py-0.5 bg-surface-container border border-outline-variant">
+              <span class="font-label-sm text-label-sm text-outline uppercase">EXEC_MODE:</span>
+              <span class="font-label-sm text-label-sm text-primary font-bold">STATE_MACHINE_STRICT</span>
+            </div>
+            <button class="px-space-md py-1 bg-primary text-on-primary font-label-md text-label-md font-bold flex items-center gap-1">
+              <span class="material-symbols-outlined text-sm">add</span>
+              <span>New Workflow</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Workflow Dual Pane -->
+        <div class="w-full grid grid-cols-12 gap-space-md items-start">
+          <!-- Left Catalog (4 cols) -->
+          <div class="col-span-12 xl:col-span-4 bg-surface-container-low border border-outline-variant p-space-md flex flex-col gap-space-sm">
+            <div class="flex items-center justify-between border-b border-outline-variant pb-2">
+              <span class="font-label-md text-on-surface font-bold uppercase tracking-wider">Catalog &amp; Triggers</span>
+              <span class="font-label-sm text-outline">POOL_ID: WF-9902</span>
+            </div>
+            <div class="flex flex-col gap-space-xs">
+              <div class="p-space-sm bg-surface-container border-l-2 border-primary flex flex-col gap-1 cursor-pointer">
+                <div class="flex justify-between items-center">
+                  <span class="font-headline-sm text-xs font-bold text-on-surface">Automated Research &amp; Synthesis</span>
+                  <span class="px-1 py-0.2 bg-primary/20 text-primary text-[9px] font-mono">ACTIVE</span>
+                </div>
+                <p class="text-[11px] text-on-surface-variant">Trigger: On new query or document. Workers: W01 -> W08 -> W09 -> W07</p>
+              </div>
+              <div class="p-space-sm bg-surface-container/60 hover:bg-surface-container flex flex-col gap-1 cursor-pointer">
+                <div class="flex justify-between items-center">
+                  <span class="font-headline-sm text-xs font-bold text-on-surface">Daily Calendar &amp; Meeting Brief</span>
+                  <span class="px-1 py-0.2 bg-secondary/20 text-secondary text-[9px] font-mono">READY</span>
+                </div>
+                <p class="text-[11px] text-on-surface-variant">Trigger: Daily at 08:00 UTC. Workers: W13 -> W18 -> W15</p>
+              </div>
+              <div class="p-space-sm bg-surface-container/60 hover:bg-surface-container flex flex-col gap-1 cursor-pointer">
+                <div class="flex justify-between items-center">
+                  <span class="font-headline-sm text-xs font-bold text-on-surface">Repository Code Quality Sentinel</span>
+                  <span class="px-1 py-0.2 bg-tertiary/20 text-tertiary text-[9px] font-mono">STANDBY</span>
+                </div>
+                <p class="text-[11px] text-on-surface-variant">Trigger: GitHub webhook PR push. Workers: W19 -> W24</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right DAG Canvas (8 cols) -->
+          <div class="col-span-12 xl:col-span-8 bg-surface-container-low border border-outline-variant p-space-md flex flex-col gap-space-md">
+            <div class="flex items-center justify-between border-b border-outline-variant pb-2">
+              <div class="flex items-center gap-space-sm">
+                <span class="font-headline-sm text-sm font-bold text-on-surface">DAG State Machine: Automated Research &amp; Synthesis</span>
+                <span class="px-1.5 py-0.5 bg-surface-container text-primary text-[10px] font-mono">4 NODES</span>
+              </div>
+              <button class="px-space-sm py-1 bg-surface-container border border-outline-variant text-xs hover:border-primary">Validate Graph</button>
+            </div>
+
+            <!-- Visual Node Canvas -->
+            <div class="p-space-lg bg-surface-container-lowest border border-outline-variant/60 flex flex-col md:flex-row items-center justify-between gap-space-md relative overflow-x-auto min-h-48">
+              <!-- Node 1 -->
+              <div class="p-space-sm bg-surface-container border-2 border-primary w-48 flex flex-col gap-1 shadow-sm shrink-0">
+                <div class="flex items-center justify-between">
+                  <span class="font-label-sm text-[10px] text-primary font-bold">NODE 01</span>
+                  <span class="material-symbols-outlined text-xs text-primary">psychology</span>
+                </div>
+                <span class="font-headline-sm text-xs font-bold text-on-surface">W01 Intent Analyst</span>
+                <span class="text-[10px] text-outline">Parse raw user goal</span>
+              </div>
+              <span class="material-symbols-outlined text-outline">arrow_forward</span>
+
+              <!-- Node 2 -->
+              <div class="p-space-sm bg-surface-container border-2 border-secondary w-48 flex flex-col gap-1 shadow-sm shrink-0">
+                <div class="flex items-center justify-between">
+                  <span class="font-label-sm text-[10px] text-secondary font-bold">NODE 02</span>
+                  <span class="material-symbols-outlined text-xs text-secondary">travel_explore</span>
+                </div>
+                <span class="font-headline-sm text-xs font-bold text-on-surface">W08 Web Researcher</span>
+                <span class="text-[10px] text-outline">Fetch cited sources</span>
+              </div>
+              <span class="material-symbols-outlined text-outline">arrow_forward</span>
+
+              <!-- Node 3 -->
+              <div class="p-space-sm bg-surface-container border-2 border-tertiary w-48 flex flex-col gap-1 shadow-sm shrink-0">
+                <div class="flex items-center justify-between">
+                  <span class="font-label-sm text-[10px] text-tertiary font-bold">NODE 03</span>
+                  <span class="material-symbols-outlined text-xs text-tertiary">verified</span>
+                </div>
+                <span class="font-headline-sm text-xs font-bold text-on-surface">W09 Source Verifier</span>
+                <span class="text-[10px] text-outline">Evidence validation</span>
+              </div>
+              <span class="material-symbols-outlined text-outline">arrow_forward</span>
+
+              <!-- Node 4 -->
+              <div class="p-space-sm bg-surface-container border-2 border-primary w-48 flex flex-col gap-1 shadow-sm shrink-0">
+                <div class="flex items-center justify-between">
+                  <span class="font-label-sm text-[10px] text-primary font-bold">NODE 04</span>
+                  <span class="material-symbols-outlined text-xs text-primary">auto_fix_high</span>
+                </div>
+                <span class="font-headline-sm text-xs font-bold text-on-surface">W07 Synthesis</span>
+                <span class="text-[10px] text-outline">Emit structured claim</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 5. ACTIVITY MONITOR VIEW ================= -->
+      <section id="view-activity" class="view-panel hidden flex flex-col w-full gap-space-md">
+        <!-- Header -->
+        <div class="w-full bg-surface-container-low px-space-lg py-space-md border border-outline-variant flex items-center justify-between">
+          <div class="flex items-center gap-space-sm">
+            <span class="material-symbols-outlined text-2xl text-primary">pulse_alert</span>
+            <div>
+              <h1 class="font-headline-lg text-headline-lg text-on-surface font-semibold tracking-tight">Wayfinder Worker Execution Monitor</h1>
+              <p class="font-body-sm text-outline">Real-time status of the 16 Wayfinder agent workers and active pipeline execution streams.</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-space-sm">
+            <button id="refresh-workers-btn" class="px-space-md py-1.5 bg-surface-container border border-outline-variant hover:border-primary font-label-md text-xs flex items-center gap-1">
+              <span class="material-symbols-outlined text-sm">refresh</span>
+              <span>Refresh Workers</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 16 Workers Live Grid -->
+        <div class="flex flex-col gap-space-sm">
+          <div class="flex items-center justify-between">
+            <span class="font-label-sm text-outline uppercase tracking-wider">REGISTERED WORKER AGENTS (16)</span>
+            <span id="workers-count-tag" class="font-mono text-xs text-primary">16 Loaded</span>
+          </div>
+          <div id="workers-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-space-sm">
+            <!-- Dynamic items rendered by app.js -->
+            <div class="p-space-sm bg-surface-container-low border border-outline-variant flex flex-col gap-1">
+              <div class="flex justify-between items-center">
+                <span class="font-mono text-xs font-bold text-primary">W01</span>
+                <span class="px-1.5 py-0.2 bg-primary/10 text-primary text-[10px]">READY</span>
+              </div>
+              <span class="font-headline-sm text-xs font-semibold text-on-surface">Intent Analyst</span>
+              <p class="text-[11px] text-outline line-clamp-2">Parse raw user request into structured intent record.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Execution Trace Log Stream -->
+        <div class="bg-surface-container-low border border-outline-variant p-space-md flex flex-col gap-space-sm">
+          <div class="flex items-center justify-between border-b border-outline-variant pb-2">
+            <span class="font-label-sm text-on-surface font-bold uppercase">LIVE EXECUTION LOG STREAM</span>
+            <span class="font-mono text-xs text-primary">REAL-TIME</span>
+          </div>
+          <div id="execution-logs" class="p-space-sm bg-surface-container-lowest border border-outline-variant/60 font-mono text-xs text-on-surface-variant flex flex-col gap-1 max-h-60 overflow-y-auto">
+            <div class="flex gap-2"><span class="text-outline">16:14:02.102</span> <span class="text-primary">[W01_INTENT]</span> <span>Intent parsed successfully: research_query (confidence: 0.94)</span></div>
+            <div class="flex gap-2"><span class="text-outline">16:14:02.340</span> <span class="text-secondary">[W03_PLANNER]</span> <span>TaskPlan created with 4 steps; external writes: false</span></div>
+            <div class="flex gap-2"><span class="text-outline">16:14:02.890</span> <span class="text-primary">[W08_RESEARCH]</span> <span>Dispatched 2 search queries; received 5 source citations</span></div>
+            <div class="flex gap-2"><span class="text-outline">16:14:03.110</span> <span class="text-tertiary">[W09_VERIFIER]</span> <span>Evidence verdict: SUPPORTED (all claims verified)</span></div>
+            <div class="flex gap-2"><span class="text-outline">16:14:03.450</span> <span class="text-primary">[W07_SYNTHESIS]</span> <span>Synthesis report finalized; stored in memory namespace</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 6. CONNECTIONS VIEW ================= -->
+      <section id="view-connections" class="view-panel hidden flex flex-col w-full gap-space-md">
+        <!-- Header -->
+        <div class="w-full bg-surface-container-low px-space-lg py-space-md border border-outline-variant flex items-center justify-between">
+          <div>
+            <h1 class="font-headline-lg text-headline-lg text-on-surface font-semibold tracking-tight">Connections &amp; Data Bridges</h1>
+            <p class="font-body-sm text-outline">Manage active connections to external knowledge bases, memory engines, and productivity services.</p>
+          </div>
+          <button class="px-space-md py-1.5 bg-primary text-on-primary font-label-md text-label-md font-bold flex items-center gap-1">
+            <span class="material-symbols-outlined text-sm">add</span>
+            <span>Add Connection</span>
+          </button>
+        </div>
+
+        <!-- Connections Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-space-md">
+          <!-- FalkorDB Graph -->
+          <div class="bg-surface-container-low border border-outline-variant p-space-md flex flex-col justify-between h-40">
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-headline-sm text-sm font-bold text-on-surface">FalkorDB Graph Engine</span>
+                <span class="px-1.5 py-0.5 bg-primary/20 text-primary text-[10px] font-mono font-bold">CONNECTED</span>
+              </div>
+              <p class="text-xs text-outline">Loopback 127.0.0.1:6381 · Graph: memory_core</p>
+              <p class="text-xs text-on-surface-variant mt-2">Durable evidence, entity relations, temporal claims.</p>
+            </div>
+            <div class="flex items-center justify-between border-t border-outline-variant/40 pt-2 text-[11px] font-mono">
+              <span class="text-outline">LATENCY: 0.8ms</span>
+              <span class="text-primary">PORT 6381</span>
+            </div>
+          </div>
+
+          <!-- Qdrant Vector -->
+          <div class="bg-surface-container-low border border-outline-variant p-space-md flex flex-col justify-between h-40">
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-headline-sm text-sm font-bold text-on-surface">Embedded Qdrant Vectors</span>
+                <span class="px-1.5 py-0.5 bg-primary/20 text-primary text-[10px] font-mono font-bold">CONNECTED</span>
+              </div>
+              <p class="text-xs text-outline">Local SQLite Journal + Bounded RAM vectors</p>
+              <p class="text-xs text-on-surface-variant mt-2">Semantic embedding search and context cards.</p>
+            </div>
+            <div class="flex items-center justify-between border-t border-outline-variant/40 pt-2 text-[11px] font-mono">
+              <span class="text-outline">MODE: LOCAL DISK</span>
+              <span class="text-primary">ACTIVE</span>
+            </div>
+          </div>
+
+          <!-- Notion -->
+          <div class="bg-surface-container-low border border-outline-variant p-space-md flex flex-col justify-between h-40">
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-headline-sm text-sm font-bold text-on-surface">Notion Workspace Bridge</span>
+                <span class="px-1.5 py-0.5 bg-secondary/20 text-secondary text-[10px] font-mono font-bold">SYNCED</span>
+              </div>
+              <p class="text-xs text-outline">Token: Configured via secrets vault</p>
+              <p class="text-xs text-on-surface-variant mt-2">Two-way page, database, and sprint sync.</p>
+            </div>
+            <div class="flex items-center justify-between border-t border-outline-variant/40 pt-2 text-[11px] font-mono">
+              <span class="text-outline">POLL: 5m</span>
+              <span class="text-secondary">READY</span>
+            </div>
+          </div>
+
+          <!-- GitHub -->
+          <div class="bg-surface-container-low border border-outline-variant p-space-md flex flex-col justify-between h-40">
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-headline-sm text-sm font-bold text-on-surface">GitHub Repositories</span>
+                <span class="px-1.5 py-0.5 bg-tertiary/20 text-tertiary text-[10px] font-mono font-bold">STANDBY</span>
+              </div>
+              <p class="text-xs text-outline">Read/write pull requests and issues</p>
+              <p class="text-xs text-on-surface-variant mt-2">Connected to W19 Repository &amp; W24 Reviewer.</p>
+            </div>
+            <div class="flex items-center justify-between border-t border-outline-variant/40 pt-2 text-[11px] font-mono">
+              <span class="text-outline">AUTH: GITHUB CLI</span>
+              <span class="text-tertiary">READY</span>
+            </div>
+          </div>
+
+          <!-- Google Calendar -->
+          <div class="bg-surface-container-low border border-outline-variant p-space-md flex flex-col justify-between h-40">
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-headline-sm text-sm font-bold text-on-surface">Google Calendar / Meet</span>
+                <span class="px-1.5 py-0.5 bg-secondary/20 text-secondary text-[10px] font-mono font-bold">INTEGRATED</span>
+              </div>
+              <p class="text-xs text-outline">Diurnal schedule sync</p>
+              <p class="text-xs text-on-surface-variant mt-2">Connected to W13 Calendar &amp; W15 Optimizer.</p>
+            </div>
+            <div class="flex items-center justify-between border-t border-outline-variant/40 pt-2 text-[11px] font-mono">
+              <span class="text-outline">OAUTH: GRANTED</span>
+              <span class="text-secondary">ACTIVE</span>
+            </div>
+          </div>
+
+          <!-- NVIDIA NIM -->
+          <div class="bg-surface-container-low border border-outline-variant p-space-md flex flex-col justify-between h-40">
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-headline-sm text-sm font-bold text-on-surface">NVIDIA NIM Nemotron</span>
+                <span class="px-1.5 py-0.5 bg-surface-container text-outline text-[10px] font-mono">OPTIONAL</span>
+              </div>
+              <p class="text-xs text-outline">Nemotron 70B / 8B hosted inference</p>
+              <p class="text-xs text-on-surface-variant mt-2">Used when --nvidia is passed to workbench_server.</p>
+            </div>
+            <div class="flex items-center justify-between border-t border-outline-variant/40 pt-2 text-[11px] font-mono">
+              <span class="text-outline">KEY: NVIDIA_API_KEY</span>
+              <span class="text-outline">STANDBY</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 7. PERMISSIONS & SECURITY VIEW ================= -->
+      <section id="view-permissions" class="view-panel hidden flex flex-col w-full gap-space-md">
+        <!-- Top Breadcrumb -->
+        <div class="bg-surface-container-low px-space-md py-space-sm border border-outline-variant flex items-center justify-between">
+          <div class="flex items-center gap-space-xs font-label-sm text-label-sm">
+            <span class="text-on-surface-variant font-bold">CONTROL</span>
+            <span class="text-outline">/</span>
+            <span class="text-on-surface-variant">PERMISSIONS &amp; SECOPS MATRIX</span>
+            <span class="text-outline">/</span>
+            <span class="text-primary font-bold">POLICY ENGINE: ENFORCED [SEC_v2.4]</span>
+          </div>
+          <div class="flex items-center gap-space-xs font-label-sm text-label-sm text-on-surface-variant">
+            <span class="material-symbols-outlined text-xs text-primary">verified_user</span>
+            <span>DAEMON_ID: ebpf-guard-0941</span>
+          </div>
+        </div>
+
+        <!-- Metrics Strip -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-space-sm">
+          <div class="bg-surface-container p-space-sm border border-outline-variant">
+            <span class="font-label-sm text-xs text-on-surface-variant">ENFORCED RULES</span>
+            <div class="font-headline-lg text-xl font-bold text-tertiary">18 ACTIVE</div>
+          </div>
+          <div class="bg-surface-container p-space-sm border border-outline-variant">
+            <span class="font-label-sm text-xs text-on-surface-variant">APPROVAL GATES</span>
+            <div class="font-headline-lg text-xl font-bold text-secondary">04 HUMAN SIGN-OFF</div>
+          </div>
+          <div class="bg-surface-container p-space-sm border border-outline-variant">
+            <span class="font-label-sm text-xs text-on-surface-variant">SANDBOX STATE</span>
+            <div class="font-headline-lg text-xl font-bold text-primary">STRICT ISOLATION</div>
+          </div>
+          <div class="bg-surface-container p-space-sm border border-outline-variant">
+            <span class="font-label-sm text-xs text-on-surface-variant">REVERT CAPABILITY</span>
+            <div class="font-headline-lg text-xl font-bold text-on-surface">JOURNAL REPLAY</div>
+          </div>
+        </div>
+
+        <!-- Enforced Rules Table -->
+        <div class="bg-surface-container-low border border-outline-variant p-space-md flex flex-col gap-space-sm">
+          <span class="font-label-md text-on-surface font-bold uppercase tracking-wider">Active Policy Rules</span>
+          <div class="flex flex-col gap-space-xs text-xs">
+            <div class="p-space-sm bg-surface-container border border-outline-variant/60 flex items-center justify-between">
+              <div>
+                <span class="font-bold text-on-surface">POL-01: External Writes Approval</span>
+                <p class="text-outline">Any worker action modifying remote repositories or publishing data requires explicit human sign-off.</p>
+              </div>
+              <span class="px-1.5 py-0.5 bg-primary/20 text-primary font-mono text-[10px]">ENFORCED</span>
+            </div>
+            <div class="p-space-sm bg-surface-container border border-outline-variant/60 flex items-center justify-between">
+              <div>
+                <span class="font-bold text-on-surface">POL-02: Loopback Memory Restriction</span>
+                <p class="text-outline">FalkorDB and Qdrant memory workbench APIs reject non-loopback network requests.</p>
+              </div>
+              <span class="px-1.5 py-0.5 bg-primary/20 text-primary font-mono text-[10px]">ENFORCED</span>
+            </div>
+            <div class="p-space-sm bg-surface-container border border-outline-variant/60 flex items-center justify-between">
+              <div>
+                <span class="font-bold text-on-surface">POL-03: Secret Masking In Logs</span>
+                <p class="text-outline">Credentials and bearer tokens are automatically stripped from server logs and diagnostics.</p>
+              </div>
+              <span class="px-1.5 py-0.5 bg-primary/20 text-primary font-mono text-[10px]">ENFORCED</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 8. MEMORY & KNOWLEDGE VIEW (THE WORKBENCH) ================= -->
+      <section id="view-memory" class="view-panel hidden flex flex-col w-full gap-space-lg">
+        <!-- Workbench Controls Header -->
+        <div class="w-full bg-surface-container-low px-space-lg py-space-md border border-outline-variant flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+          <div>
+            <div class="flex items-center gap-space-xs font-label-sm text-label-sm text-primary uppercase tracking-widest">
+              <span class="w-1.5 h-1.5 bg-primary inline-block"></span>
+              <span>MEMORY ENGINE // FALKORDB + QDRANT</span>
+            </div>
+            <h1 class="font-headline-lg text-headline-lg text-on-surface font-semibold tracking-tight mt-0.5">Memory Testing Workbench</h1>
+            <p class="font-body-sm text-outline">Three-tier context runtime, dual-store evidence, and isolated memory space validation.</p>
+          </div>
+          <div class="flex items-center gap-space-sm">
+            <button id="refresh" class="px-space-md py-1.5 bg-primary text-on-primary font-label-md text-label-md font-bold flex items-center gap-1">
+              <span class="material-symbols-outlined text-sm">refresh</span>
+              <span>Refresh Records</span>
+            </button>
+            <button id="stop" class="px-space-md py-1.5 bg-surface-container border border-outline-variant hover:border-error hover:text-error font-label-md text-label-md transition-colors">
+              Stop Workbench
+            </button>
+          </div>
+        </div>
+
+        <!-- Space Selection Card -->
+        <div class="bg-surface-container-low border border-outline-variant p-space-md flex flex-col gap-space-sm">
+          <div class="flex items-center justify-between">
+            <span class="font-label-md text-on-surface font-bold uppercase tracking-wider">Active Memory Space</span>
+            <span id="active-space" class="font-label-sm text-primary font-mono">Loading spaces…</span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-space-md items-end">
+            <div class="md:col-span-5 flex flex-col gap-1">
+              <label for="space-select" class="font-label-sm text-xs text-outline">Select Existing Memory Space</label>
+              <select id="space-select" class="w-full py-1.5 px-space-sm bg-surface-container border border-outline-variant text-on-surface font-body-sm focus:border-primary focus:outline-none"></select>
+            </div>
+            <div class="md:col-span-5 flex flex-col gap-1">
+              <label for="space-name" class="font-label-sm text-xs text-outline">Create Isolated Test Space</label>
+              <input id="space-name" maxlength="100" placeholder="e.g. Research Experiment 01" class="w-full py-1.5 px-space-sm bg-surface-container border border-outline-variant text-on-surface font-body-sm focus:border-primary focus:outline-none"/>
+            </div>
+            <div class="md:col-span-2">
+              <button id="new-space" type="button" class="w-full py-1.5 px-space-md bg-secondary text-on-secondary font-label-md text-label-md font-bold hover:brightness-110 transition-all">
+                Create Space
+              </button>
+            </div>
+          </div>
+          <p id="space-error" class="text-error font-label-sm text-xs"></p>
+        </div>
+
+        <!-- Storage & Config Details Dropdown -->
+        <details class="bg-surface-container-low border border-outline-variant p-space-sm">
+          <summary class="font-label-sm text-on-surface font-bold cursor-pointer hover:text-primary">Storage &amp; Execution Configuration (Click to Expand)</summary>
+          <pre id="status" class="mt-space-sm p-space-sm bg-surface-container font-mono text-xs text-on-surface-variant overflow-x-auto max-h-48">Loading configuration…</pre>
+        </details>
+
+        <!-- Prompt Form & Record Inventory Dual Column Grid -->
+        <div class="grid grid-cols-1 xl:grid-cols-12 gap-space-md items-start">
+          <!-- LEFT: Prompt Console & History (6 cols) -->
+          <div class="xl:col-span-6 flex flex-col gap-space-md">
+            <div class="bg-surface-container-low border border-outline-variant p-space-md flex flex-col gap-space-sm">
+              <div class="flex items-center justify-between border-b border-outline-variant pb-2">
+                <span class="font-headline-sm text-sm font-bold text-on-surface">Prompt &amp; Memory Operations</span>
+                <button id="fresh" type="button" class="px-space-sm py-0.5 bg-surface-container border border-outline-variant text-xs hover:border-primary">
+                  Fresh Conversation
+                </button>
+              </div>
+
+              <!-- Main Submission Form -->
+              <form id="prompt-form" class="flex flex-col gap-space-sm">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-space-sm">
+                  <div class="flex flex-col gap-1">
+                    <label for="model" class="font-label-sm text-xs text-outline">Response Model</label>
+                    <select id="model" class="w-full py-1.5 px-space-sm bg-surface-container border border-outline-variant text-on-surface font-body-sm focus:border-primary focus:outline-none">
+                      <option value="">Evidence only · no hosted calls</option>
+                    </select>
+                  </div>
+                  <div class="flex flex-col gap-1">
+                    <label for="mode" class="font-label-sm text-xs text-outline">Operation Mode</label>
+                    <select id="mode" class="w-full py-1.5 px-space-sm bg-surface-container border border-outline-variant text-on-surface font-body-sm focus:border-primary focus:outline-none">
+                      <option value="retrieve">Retrieve only</option>
+                      <option value="store">Store prompt + retrieve first</option>
+                      <option value="claim">Store explicit claims + retrieve first</option>
+                      <option value="recall">Recall a declared field</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="flex flex-col gap-1">
+                  <label for="prompt" class="font-label-sm text-xs text-outline">Prompt Content</label>
+                  <textarea id="prompt" rows="3" required placeholder="Enter manual prompt text..." class="w-full py-1.5 px-space-sm bg-surface-container border border-outline-variant text-on-surface font-body-sm focus:border-primary focus:outline-none"></textarea>
+                </div>
+
+                <div class="grid grid-cols-2 gap-space-sm">
+                  <div class="flex flex-col gap-1">
+                    <label for="subject" class="font-label-sm text-xs text-outline">Subject</label>
+                    <input id="subject" value="manual-user" maxlength="200" class="w-full py-1.5 px-space-sm bg-surface-container border border-outline-variant text-on-surface font-body-sm focus:border-primary focus:outline-none"/>
+                  </div>
+                  <div class="flex flex-col gap-1">
+                    <label for="predicate" class="font-label-sm text-xs text-outline">Predicate (for recall)</label>
+                    <input id="predicate" placeholder="e.g. project_label" maxlength="128" class="w-full py-1.5 px-space-sm bg-surface-container border border-outline-variant text-on-surface font-body-sm focus:border-primary focus:outline-none"/>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-space-sm">
+                  <div class="flex flex-col gap-1">
+                    <label for="top-k" class="font-label-sm text-xs text-outline">Top K</label>
+                    <input id="top-k" type="number" min="1" max="50" value="5" class="w-full py-1.5 px-space-sm bg-surface-container border border-outline-variant text-on-surface font-body-sm focus:border-primary focus:outline-none"/>
+                  </div>
+                  <div class="flex flex-col gap-1">
+                    <label for="temporal" class="font-label-sm text-xs text-outline">Temporal Mode</label>
+                    <select id="temporal" class="w-full py-1.5 px-space-sm bg-surface-container border border-outline-variant text-on-surface font-body-sm focus:border-primary focus:outline-none">
+                      <option value="now">Current</option>
+                      <option value="auto">All times</option>
+                      <option value="historical">Historical</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Explicit claims editor (hidden unless mode==claim) -->
+                <div id="claim-controls" hidden class="flex flex-col gap-1">
+                  <label for="claims" class="font-label-sm text-xs text-outline">Explicit claims · JSON array</label>
+                  <textarea id="claims" rows="4" spellcheck="false" placeholder='[{"subject":"manual-user","predicate":"project_label","value":"your value","kind":"fact","action":"assert"}]' class="w-full py-1.5 px-space-sm bg-surface-container font-mono text-xs border border-outline-variant text-on-surface focus:border-primary focus:outline-none"></textarea>
+                </div>
+
+                <label class="flex items-center gap-2 cursor-pointer font-body-sm text-xs text-on-surface-variant">
+                  <input id="confirmed" type="checkbox" class="rounded"/>
+                  <span>I confirm these manually submitted assertions or changes as a user source.</span>
+                </label>
+
+                <div class="flex items-center gap-space-md pt-1">
+                  <button id="send" type="submit" class="px-space-lg py-2 bg-primary text-on-primary font-label-md text-label-md font-bold hover:brightness-110 transition-all">
+                    Send to Engine
+                  </button>
+                  <span id="activity" role="status" class="font-label-sm text-xs text-primary font-mono"></span>
+                </div>
+                <p id="request-error" class="text-error font-label-sm text-xs" role="alert"></p>
+              </form>
+            </div>
+
+            <!-- Conversation History -->
+            <div class="bg-surface-container-low border border-outline-variant p-space-md flex flex-col gap-space-sm">
+              <span class="font-headline-sm text-sm font-bold text-on-surface">Conversation History</span>
+              <div id="history" class="flex flex-col gap-space-sm max-h-96 overflow-y-auto custom-scroll">
+                <p class="text-xs text-outline">No prompts submitted in this session.</p>
+              </div>
+            </div>
+
+            <!-- Retrieved Memories Inspector -->
+            <div class="bg-surface-container-low border border-outline-variant p-space-md flex flex-col gap-space-sm">
+              <span class="font-headline-sm text-sm font-bold text-on-surface">Retrieved For Selected Request</span>
+              <div id="retrieved" class="p-space-sm bg-surface-container text-xs font-mono max-h-60 overflow-y-auto">
+                Unavailable — send a prompt.
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT: Stored Records Inventory & Detail Inspector (6 cols) -->
+          <div class="xl:col-span-6 flex flex-col gap-space-md">
+            <div class="bg-surface-container-low border border-outline-variant p-space-md flex flex-col gap-space-sm">
+              <div class="flex items-center justify-between border-b border-outline-variant pb-2">
+                <span class="font-headline-sm text-sm font-bold text-on-surface">Stored Records Inventory</span>
+                <span id="inventory-count" class="font-label-sm text-xs text-outline font-mono">Loading…</span>
+              </div>
+
+              <!-- Search & Filters -->
+              <div class="flex flex-col gap-space-xs">
+                <input id="search" type="search" placeholder="Search stored content, IDs, or metadata..." class="w-full py-1.5 px-space-sm bg-surface-container border border-outline-variant text-on-surface font-body-sm text-xs focus:border-primary focus:outline-none"/>
+                <div class="grid grid-cols-3 gap-space-xs">
+                  <select id="sort" class="w-full py-1 px-space-xs bg-surface-container border border-outline-variant text-xs text-on-surface">
+                    <option value="created-desc">Created · newest</option>
+                    <option value="created-asc">Created · oldest</option>
+                    <option value="updated-desc">Updated · newest</option>
+                    <option value="updated-asc">Updated · oldest</option>
+                  </select>
+                  <select id="status-filter" class="w-full py-1 px-space-xs bg-surface-container border border-outline-variant text-xs text-on-surface">
+                    <option value="">All statuses</option>
+                  </select>
+                  <select id="type-filter" class="w-full py-1 px-space-xs bg-surface-container border border-outline-variant text-xs text-on-surface">
+                    <option value="">All types</option>
+                  </select>
+                </div>
+              </div>
+              <p id="inventory-error" class="text-error font-label-sm text-xs"></p>
+
+              <!-- Records List Container -->
+              <div id="records" class="flex flex-col gap-space-sm max-h-[32rem] overflow-y-auto custom-scroll">
+                <p class="text-xs text-outline">Loading backend records…</p>
+              </div>
+            </div>
+
+            <!-- Record Detail Inspector -->
+            <div class="bg-surface-container-low border border-outline-variant p-space-md flex flex-col gap-space-sm">
+              <span class="font-headline-sm text-sm font-bold text-on-surface">Record Detail (JSON Schema)</span>
+              <pre id="detail" class="p-space-sm bg-surface-container text-xs font-mono text-on-surface-variant overflow-x-auto max-h-72">Select a stored record above to inspect full claims, vectors, and graph properties.</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 9. SETTINGS & DIAGNOSTICS VIEW ================= -->
+      <section id="view-settings" class="view-panel hidden flex flex-col w-full gap-space-md">
+        <!-- Header -->
+        <div class="w-full bg-surface-container-low px-space-lg py-space-md border border-outline-variant flex items-center justify-between">
+          <div>
+            <h1 class="font-headline-lg text-headline-lg text-on-surface font-semibold tracking-tight">System Settings &amp; Diagnostics</h1>
+            <p class="font-body-sm text-outline">Configure host parameters, inspect active tokens, and monitor local service ports.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-space-md">
+          <!-- Configuration Info -->
+          <div class="bg-surface-container-low border border-outline-variant p-space-md flex flex-col gap-space-sm">
+            <span class="font-headline-sm text-sm font-bold text-on-surface">Runtime Services</span>
+            <div class="flex flex-col gap-space-xs text-xs">
+              <div class="p-space-sm bg-surface-container flex justify-between">
+                <span>Memory Workbench URL:</span>
+                <span class="font-mono text-primary">http://127.0.0.1:3352</span>
+              </div>
+              <div class="p-space-sm bg-surface-container flex justify-between">
+                <span>Shared Memory API URL:</span>
+                <span class="font-mono text-primary">http://127.0.0.1:3351</span>
+              </div>
+              <div class="p-space-sm bg-surface-container flex justify-between">
+                <span>FalkorDB Port:</span>
+                <span class="font-mono text-primary">6381 (memory_core)</span>
+              </div>
+              <div class="p-space-sm bg-surface-container flex justify-between">
+                <span>Vector Engine:</span>
+                <span class="font-mono text-primary">Embedded Qdrant (CPU matching)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- UI Preferences -->
+          <div class="bg-surface-container-low border border-outline-variant p-space-md flex flex-col gap-space-sm">
+            <span class="font-headline-sm text-sm font-bold text-on-surface">Interface Appearance</span>
+            <div class="flex items-center justify-between p-space-sm bg-surface-container">
+              <span>Theme Mode:</span>
+              <div class="flex items-center gap-space-xs">
+                <button id="theme-dark-btn" class="px-space-sm py-1 bg-surface-container-high border border-outline-variant text-xs font-bold">Dark</button>
+                <button id="theme-light-btn" class="px-space-sm py-1 bg-surface-container border border-outline-variant text-xs">Light</button>
+              </div>
+            </div>
+            <div class="flex items-center justify-between p-space-sm bg-surface-container">
+              <span>Telemetry Auto-Refresh:</span>
+              <span class="font-mono text-xs text-tertiary">ENABLED (3s)</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 10. PET & WIDGET VIEW ================= -->
+      <section id="view-pet" class="view-panel hidden flex flex-col w-full gap-space-md">
+        <div class="w-full bg-surface-container-low px-space-lg py-space-md border border-outline-variant flex items-center justify-between">
+          <div>
+            <h1 class="font-headline-lg text-headline-lg text-on-surface font-semibold tracking-tight">Wayfinder Pet &amp; Desktop Companion Widget</h1>
+            <p class="font-body-sm text-outline">Floating companion providing contextual assistance, reminders, and screen glanceability.</p>
+          </div>
+          <button id="toggle-floating-pet" class="px-space-md py-1.5 bg-primary text-on-primary font-label-md text-label-md font-bold flex items-center gap-1">
+            <span class="material-symbols-outlined text-sm">smart_toy</span>
+            <span>Launch Companion Widget</span>
+          </button>
+        </div>
+
+        <div class="p-space-xl bg-surface-container-low border border-outline-variant flex flex-col items-center justify-center text-center gap-space-md">
+          <div class="w-24 h-24 bg-surface-container border-2 border-primary flex items-center justify-center relative">
+            <span class="material-symbols-outlined text-5xl text-primary animate-bounce">pets</span>
+            <span class="absolute -top-1 -right-1 w-3 h-3 bg-tertiary rounded-full animate-ping"></span>
+          </div>
+          <h2 class="font-headline-md text-on-surface font-bold">Wayfinder Companion: Ready</h2>
+          <p class="text-xs text-on-surface-variant max-w-md">Press <kbd class="px-1.5 py-0.5 bg-surface-container border border-outline-variant font-mono text-primary font-bold">ƒ ⌥ SPACE</kbd> from anywhere in the application to summon the quick action overlay.</p>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ================= FLOATING SUMMON PET MODAL ================= -->
+  <div id="pet-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-surface-container-low border-2 border-primary w-full max-w-lg shadow-2xl p-space-lg flex flex-col gap-space-md relative">
+      <button id="close-pet-modal" class="absolute top-3 right-3 text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined">close</span></button>
+      <div class="flex items-center gap-space-sm">
+        <span class="material-symbols-outlined text-2xl text-primary">pets</span>
+        <h3 class="font-headline-md text-on-surface font-bold">Wayfinder Companion Summoned</h3>
+      </div>
+      <p class="text-xs text-on-surface-variant">How can I assist you right now?</p>
+      <div class="flex flex-col gap-space-xs">
+        <button class="pet-quick-action p-space-sm bg-surface-container border border-outline-variant hover:border-primary text-left text-xs font-medium text-on-surface flex items-center gap-space-sm" data-action="analyze">
+          <span class="material-symbols-outlined text-primary text-sm">crop</span>
+          <span>Analyze current screen snapshot for context</span>
+        </button>
+        <button class="pet-quick-action p-space-sm bg-surface-container border border-outline-variant hover:border-primary text-left text-xs font-medium text-on-surface flex items-center gap-space-sm" data-action="tasks">
+          <span class="material-symbols-outlined text-secondary text-sm">task_alt</span>
+          <span>Show me my top 3 priority tasks for today</span>
+        </button>
+        <button class="pet-quick-action p-space-sm bg-surface-container border border-outline-variant hover:border-primary text-left text-xs font-medium text-on-surface flex items-center gap-space-sm" data-action="memory">
+          <span class="material-symbols-outlined text-tertiary text-sm">neurology</span>
+          <span>Recall recent project decisions from FalkorDB</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= QUICK SEARCH (CTRL+K) MODAL ================= -->
+  <div id="search-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-start justify-center pt-24 p-4">
+    <div class="bg-surface-container-low border-2 border-primary w-full max-w-xl shadow-2xl p-space-md flex flex-col gap-space-sm relative">
+      <div class="flex items-center gap-space-sm border-b border-outline-variant pb-space-sm">
+        <span class="material-symbols-outlined text-primary">search</span>
+        <input id="modal-search-input" type="text" placeholder="Jump to screen, worker, or search memory..." class="w-full bg-transparent font-code-stream text-sm text-on-surface focus:outline-none"/>
+        <kbd class="px-1.5 py-0.5 bg-surface-container border border-outline-variant text-[10px] text-outline font-mono">ESC</kbd>
+      </div>
+      <div id="search-results" class="flex flex-col gap-1 max-h-72 overflow-y-auto custom-scroll text-xs">
+        <div class="px-2 py-1 text-[10px] text-outline uppercase font-mono">Navigation Shortcuts</div>
+        <a href="#home" class="search-result-item p-space-sm bg-surface-container/60 hover:bg-surface-container flex items-center justify-between text-on-surface">
+          <span>Home Command Station</span>
+          <span class="font-mono text-[10px] text-primary">#home</span>
+        </a>
+        <a href="#planner" class="search-result-item p-space-sm bg-surface-container/60 hover:bg-surface-container flex items-center justify-between text-on-surface">
+          <span>Planner Time &amp; Task Matrix</span>
+          <span class="font-mono text-[10px] text-primary">#planner</span>
+        </a>
+        <a href="#notion" class="search-result-item p-space-sm bg-surface-container/60 hover:bg-surface-container flex items-center justify-between text-on-surface">
+          <span>Notion Connected Knowledge</span>
+          <span class="font-mono text-[10px] text-primary">#notion</span>
+        </a>
+        <a href="#workflows" class="search-result-item p-space-sm bg-surface-container/60 hover:bg-surface-container flex items-center justify-between text-on-surface">
+          <span>Automation Engine &amp; DAG Editor</span>
+          <span class="font-mono text-[10px] text-primary">#workflows</span>
+        </a>
+        <a href="#activity" class="search-result-item p-space-sm bg-surface-container/60 hover:bg-surface-container flex items-center justify-between text-on-surface">
+          <span>Execution Monitor (16 Workers)</span>
+          <span class="font-mono text-[10px] text-primary">#activity</span>
+        </a>
+        <a href="#connections" class="search-result-item p-space-sm bg-surface-container/60 hover:bg-surface-container flex items-center justify-between text-on-surface">
+          <span>Connections &amp; Data Bridges</span>
+          <span class="font-mono text-[10px] text-primary">#connections</span>
+        </a>
+        <a href="#memory" class="search-result-item p-space-sm bg-surface-container/60 hover:bg-surface-container flex items-center justify-between text-on-surface">
+          <span>Memory &amp; Knowledge Workbench</span>
+          <span class="font-mono text-[10px] text-primary">#memory</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+
+<html class="" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=JetBrains+Mono:wght@100..900&amp;family=Space+Grotesk:wght@100..900&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"surface-bright": "#faf8ff", "inverse-primary": "#35d9ee", "on-error-container": "#93000a", "inverse-surface": "#2b3041", "on-tertiary-fixed-variant": "#00513a", "on-primary-container": "#005761", "tertiary-container": "#45d8a6", tertiary: "#006c4e", "on-error": "#ffffff", "inverse-on-surface": "#eff0ff", surface: "#faf8ff", "surface-container": "#ebedff", "on-secondary-fixed": "#001552", "on-primary": "#ffffff", "surface-dim": "#d5d9f0", error: "#ba1a1a", "surface-container-low": "#f3f3ff", "secondary-fixed-dim": "#b7c4ff", "on-tertiary": "#ffffff", "on-secondary-container": "#fffbff", "primary-container": "#29d3e8", background: "#faf8ff", "surface-container-high": "#e3e7fe", "on-surface": "#161b2b", "on-secondary-fixed-variant": "#0038b6", "secondary-fixed": "#dce1ff", "surface-tint": "#006874", "secondary-container": "#4269f0", "on-primary-fixed-variant": "#004f58", secondary: "#204ed6", "on-surface-variant": "#3c494b", "on-primary-fixed": "#001f24", "surface-variant": "#dee1f9", "surface-container-highest": "#dee1f9", "on-secondary": "#ffffff", "tertiary-fixed-dim": "#4cdeab", "primary-fixed": "#97f0ff", "primary-fixed-dim": "#35d9ee", "outline-variant": "#bbc9cc", "surface-container-lowest": "#ffffff", "on-tertiary-container": "#005a41", outline: "#6c797c", "tertiary-fixed": "#6dfbc6", "error-container": "#ffdad6", "on-tertiary-fixed": "#002115", primary: "#006874", "on-background": "#161b2b"}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}, spacing: {"space-xs": "0.25rem", "space-lg": "1rem", gutter: "0.75rem", "space-xl": "1.5rem", "space-sm": "0.5rem", "space-md": "0.75rem", margin: "1rem"}, fontFamily: {"headline-md": ["Space Grotesk"], "body-lg": ["Geist"], "headline-sm": ["Space Grotesk"], "headline-lg": ["Space Grotesk"], "body-sm": ["Geist"], "display-lg": ["Space Grotesk"], "body-md": ["Geist"], "label-lg": ["JetBrains Mono"], "label-md": ["JetBrains Mono"], "label-sm": ["JetBrains Mono"], "code-stream": ["JetBrains Mono"], headline: ["Space Grotesk"], display: ["Space Grotesk"], body: ["Geist"], label: ["JetBrains Mono"]}, fontSize: {"headline-md": ["18px", {lineHeight: "24px", letterSpacing: "-0.01em", fontWeight: "500"}], "body-lg": ["15px", {lineHeight: "24px", fontWeight: "400"}], "headline-sm": ["15px", {lineHeight: "20px", fontWeight: "500"}], "headline-lg": ["24px", {lineHeight: "32px", letterSpacing: "-0.015em", fontWeight: "600"}], "body-sm": ["12px", {lineHeight: "16px", fontWeight: "400"}], "display-lg": ["32px", {lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "600"}], "body-md": ["13px", {lineHeight: "20px", fontWeight: "400"}], "label-lg": ["13px", {lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "500"}], "label-md": ["11px", {lineHeight: "14px", letterSpacing: "0.04em", fontWeight: "500"}], "label-sm": ["10px", {lineHeight: "12px", letterSpacing: "0.06em", fontWeight: "500"}], "code-stream": ["12px", {lineHeight: "18px", fontWeight: "400"}]}}}};</script></head><body class="bg-background font-body-md text-on-surface antialiased min-h-screen selection:bg-primary-container selection:text-on-primary-container"><aside class="fixed left-0 top-0 h-full w-60 bg-surface-container-lowest border-r border-outline-variant z-50 flex flex-col justify-between select-none"><div class="flex flex-col h-full"><div class="h-8 px-space-md border-b border-outline-variant flex items-center justify-between bg-surface-container-lowest"><div class="flex items-center gap-space-xs"><span class="w-1.5 h-1.5 bg-primary rounded-none"></span><span class="font-label-sm text-label-sm text-primary uppercase tracking-widest">WAYFINDER.SYS</span></div><span class="font-label-sm text-label-sm text-on-surface-variant">v2.4</span></div><div class="p-space-md border-b border-outline-variant flex items-center gap-space-sm bg-surface-container-low"><img alt="Wayfinder Navigational Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1XKn2foPdfaOyEmEcyjibVQxTi6nb8pt4KhwacqsFWlGSWqtwz37bp7yxjZzLbtg8UPcCDI4M9O4Pkt-QZFL0gJN-4l651gmEMTlbCJ_bggddxY7uog2m60ZDybErC2kjei5_ERrh-ZayypS2pRcao3ilf71CWI_r1ClsC3VNG1c7i4xlygUFtuQyb-Zse36pJcuW3Zpbmwu5GXSfjaDgPzNJ80UQs4i9soEKSvMAlmPSbI1rWuhD9rOA"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm font-bold tracking-tight text-on-surface leading-none">WAYFINDER</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase mt-0.5">AI Workspace</span></div></div><div class="flex-1 overflow-y-auto px-space-sm py-space-md flex flex-col gap-space-md"><div class="flex flex-col"><span class="px-space-sm pb-space-xs font-label-sm text-label-sm text-outline uppercase tracking-wider">WORKSPACE</span><nav class="flex flex-col gap-0.5" data-active-classes="bg-surface-container border-l-2 border-primary text-on-surface font-headline-sm"><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded-none text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="home" href="#"><span class="material-symbols-outlined text-base">grid_view</span><span>Home</span></a><a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-1.5 rounded-none transition-colors bg-surface-container border-l-2 border-primary text-on-surface font-headline-sm" data-path="planner" href="#"><span class="material-symbols-outlined text-base">calendar_month</span><span>Planner</span></a><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded-none text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="notion" href="#"><span class="material-symbols-outlined text-base">description</span><span>Notion</span></a></nav></div><div class="flex flex-col"><span class="px-space-sm pb-space-xs font-label-sm text-label-sm text-outline uppercase tracking-wider">AUTOMATION</span><nav class="flex flex-col gap-0.5" data-active-classes="bg-surface-container border-l-2 border-primary text-on-surface font-headline-sm"><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded-none text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="workflows" href="#"><span class="material-symbols-outlined text-base">account_tree</span><span>Workflows</span></a><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded-none text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="activity" href="#"><span class="material-symbols-outlined text-base">pulse_alert</span><span>Activity</span></a></nav></div><div class="flex flex-col"><span class="px-space-sm pb-space-xs font-label-sm text-label-sm text-outline uppercase tracking-wider">INTEGRATIONS</span><nav class="flex flex-col gap-0.5" data-active-classes="bg-surface-container border-l-2 border-primary text-on-surface font-headline-sm"><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded-none text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="connections" href="#"><span class="material-symbols-outlined text-base">hub</span><span>Connections</span></a></nav></div><div class="flex flex-col"><span class="px-space-sm pb-space-xs font-label-sm text-label-sm text-outline uppercase tracking-wider">CONTROL</span><nav class="flex flex-col gap-0.5" data-active-classes="bg-surface-container border-l-2 border-primary text-on-surface font-headline-sm"><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded-none text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="permissions-and-security" href="#"><span class="material-symbols-outlined text-base">shield_lock</span><span>Permissions &amp; Security</span></a><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded-none text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="pet-and-widget" href="#"><span class="material-symbols-outlined text-base">smart_toy</span><span>Pet &amp; Widget</span></a></nav></div><div class="flex flex-col"><span class="px-space-sm pb-space-xs font-label-sm text-label-sm text-outline uppercase tracking-wider">SYSTEM</span><nav class="flex flex-col gap-0.5" data-active-classes="bg-surface-container border-l-2 border-primary text-on-surface font-headline-sm"><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded-none text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="memory-and-knowledge" href="#"><span class="material-symbols-outlined text-base">neurology</span><span>Memory &amp; Knowledge</span></a><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded-none text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="settings-and-diagnostics" href="#"><span class="material-symbols-outlined text-base">tune</span><span>Settings &amp; Diagnostics</span></a></nav></div></div><div class="p-space-md border-t border-outline-variant bg-surface-container-low"><div class="flex items-center justify-between mb-space-xs"><span class="font-label-sm text-label-sm text-outline uppercase">HOST STATUS</span><span class="w-1.5 h-1.5 bg-tertiary-fixed rounded-none animate-pulse"></span></div><div class="font-label-sm text-label-sm text-on-surface-variant flex flex-col gap-0.5"><div class="flex justify-between"><span>CPU LOAD</span><span class="text-primary font-bold">12%</span></div><div class="flex justify-between"><span>MEM ALLOC</span><span class="text-primary font-bold">1.4 GB</span></div><div class="flex justify-between"><span>ACTIVE NODES</span><span class="text-tertiary font-bold">8 ONLINE</span></div></div></div></div></aside><div class="pl-60 flex flex-col min-h-screen"><header class="fixed top-0 left-60 right-0 z-40 bg-surface-container-lowest border-b border-outline-variant flex flex-col"><div class="h-8 w-full border-b border-outline-variant/60 flex items-center justify-between px-space-md select-none bg-surface-container-lowest"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-sm text-primary">terminal</span><span class="font-label-sm text-label-sm tracking-wider text-on-surface-variant uppercase">WAYFINDER // AI WORKSPACE v2.4</span></div><div class="h-3 w-px bg-outline-variant"></div><div class="flex items-center gap-space-xs"><span class="w-1.5 h-1.5 bg-tertiary-fixed rounded-none"></span><span class="font-label-sm text-label-sm text-tertiary-fixed uppercase">SYSTEM ONLINE • 14ms latency</span></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs bg-surface-container-low px-space-sm py-0.5 border border-outline-variant"><span class="material-symbols-outlined text-xs text-outline">search</span><span class="font-label-sm text-label-sm text-outline">Quick Search</span><kbd class="font-label-sm text-label-sm text-primary bg-surface-container-high px-1 py-0 border border-outline-variant ml-space-xs">Ctrl+K</kbd></div><div class="flex items-center"><button aria-label="Minimize" class="w-6 h-6 flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-sm">remove</span></button><button aria-label="Maximize" class="w-6 h-6 flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-sm">crop_square</span></button><button aria-label="Close" class="w-6 h-6 flex items-center justify-center text-on-surface-variant hover:bg-error-container hover:text-on-error-container transition-colors" type="button"><span class="material-symbols-outlined text-sm">close</span></button></div></div></div><div class="h-12 w-full px-space-lg flex items-center justify-between bg-surface-container-low"><div class="flex items-center gap-space-md"><span class="font-label-md text-label-md text-outline uppercase tracking-wider">COMMAND PORTAL</span><div class="h-3 w-px bg-outline-variant"></div><span class="px-space-xs py-0.5 bg-surface-container border border-outline-variant font-label-sm text-label-sm text-on-surface-variant">ACTIVE RUNTIME: LOCAL-HOST-01</span></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-1 bg-surface-container border border-outline-variant"><span class="material-symbols-outlined text-xs text-primary">pets</span><span class="font-label-sm text-label-sm text-primary font-bold">ƒ ⌥ SPACE to Summon Pet</span></div><div class="flex items-center gap-space-xs"><div class="relative flex items-center"><img alt="Profile" class="w-7 h-7 rounded-none object-cover border border-outline-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBN4OyKPduiyWTLg52PaIwT-F7b-kZlw0xnLBPqFyGzUSV3CN4slvMWYX6aPgZUm9xUr4f0NIioSuvRvjBEVtfhzaELkw4Wk5aH6h9BM-gRRM7y1OACwIxAVlPg0Hs551ZLFk_tgMBKfTk7KE9MrZ_MTYqI56716eIzpD1xr90ZVsoLHhEmPzqzC4UsLjmgqXpYBz-KYpf5mlfcTJjApMESbERyaB53-zA7EG_QN6vzFgNqRNutRwEQ"/><span class="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-tertiary border border-surface-container-low"></span></div><div class="flex flex-col ml-space-xs"><span class="font-label-sm text-label-sm font-bold text-on-surface leading-tight">SYS_ADMIN</span><span class="font-label-sm text-label-sm text-tertiary leading-none">ACTIVE</span></div></div></div></div></header><main class="w-full pt-20 px-space-lg pb-space-xl flex-1 bg-background"><div class="flex flex-col w-full">
+<!-- Sub-Control Ribbon: Modes, Navigation & Primary Schedulers -->
+<div class="w-full bg-surface-container-low px-space-md py-space-sm mb-space-md flex flex-wrap items-center justify-between gap-space-md">
+<!-- View Selectors & Date Pager -->
+<div class="flex flex-wrap items-center gap-space-md">
+<!-- Mode Tabs -->
+<div class="flex items-center bg-surface-container-lowest p-0.5" role="tablist">
+<button class="px-space-md py-1 font-label-sm text-label-sm text-outline hover:text-on-surface transition-colors" role="tab" type="button">DAY</button>
+<button aria-selected="true" class="px-space-md py-1 font-label-sm text-label-sm bg-surface-container text-primary font-bold shadow-sm" role="tab" type="button">WEEK</button>
+<button class="px-space-md py-1 font-label-sm text-label-sm text-outline hover:text-on-surface transition-colors" role="tab" type="button">TIMELINE</button>
+<button class="px-space-md py-1 font-label-sm text-label-sm text-outline hover:text-on-surface transition-colors" role="tab" type="button">AGENDA</button>
+</div>
+<div class="h-4 w-px bg-outline-variant hidden sm:block"></div>
+<!-- Date Navigator -->
+<div class="flex items-center gap-space-xs">
+<button aria-label="Previous week" class="w-7 h-7 flex items-center justify-center bg-surface-container-lowest text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors" type="button">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<div class="flex items-center px-space-md h-7 bg-surface-container-lowest">
+<span class="material-symbols-outlined text-xs text-primary mr-1.5">calendar_month</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold tracking-wider">OCTOBER 21 – 27, 2024</span>
+</div>
+<button aria-label="Next week" class="w-7 h-7 flex items-center justify-center bg-surface-container-lowest text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors" type="button">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+<button class="h-7 px-space-md bg-surface-container text-primary font-label-sm text-label-sm font-semibold hover:bg-surface-bright transition-colors uppercase tracking-wider" type="button">
+          TODAY
+        </button>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex items-center gap-space-sm">
+<button class="h-8 px-space-md bg-surface-container text-on-surface font-label-sm text-label-sm font-medium hover:bg-surface-bright hover:text-primary transition-colors flex items-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-sm text-primary">add</span>
+<span>SCHEDULE TASK</span>
+</button>
+<button class="h-8 px-space-md bg-primary-container text-on-primary-container font-label-sm text-label-sm font-bold hover:brightness-110 transition-all flex items-center gap-1.5 shadow-sm" id="btn-auto-opt" type="button">
+<span class="material-symbols-outlined text-sm">auto_mode</span>
+<span>AUTO-OPTIMIZE (AI)</span>
+</button>
+</div>
+</div>
+<!-- Legend & Execution Filters Ribbon -->
+<div class="w-full bg-surface-container-lowest px-space-md py-2 mb-space-md flex flex-wrap items-center justify-between gap-space-sm text-on-surface-variant">
+<div class="flex flex-wrap items-center gap-space-lg text-label-sm font-label-sm">
+<span class="text-outline uppercase tracking-wider font-semibold">FILTER VIEW:</span>
+<div class="flex items-center gap-1.5 cursor-pointer hover:text-on-surface transition-colors">
+<span class="w-2 h-2 bg-primary"></span>
+<span class="text-on-surface">Wayfinder Autonomous</span>
+</div>
+<div class="flex items-center gap-1.5 cursor-pointer hover:text-on-surface transition-colors">
+<span class="w-2 h-2 bg-secondary-container"></span>
+<span>Meetings &amp; Collab</span>
+</div>
+<div class="flex items-center gap-1.5 cursor-pointer hover:text-on-surface transition-colors">
+<span class="w-2 h-2 bg-tertiary"></span>
+<span>Completed Tasks</span>
+</div>
+<div class="flex items-center gap-1.5 cursor-pointer hover:text-on-surface transition-colors">
+<span class="w-2 h-2 bg-secondary"></span>
+<span>Deadlines / Pending</span>
+</div>
+<div class="flex items-center gap-1.5 cursor-pointer hover:text-on-surface transition-colors">
+<span class="w-2 h-2 bg-error"></span>
+<span>Blocked / Overdue</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="font-label-sm text-label-sm text-outline">TIMEZONE: <span class="text-primary font-bold">UTC+00 (ZULU)</span></span>
+<span class="w-1.5 h-1.5 bg-tertiary animate-pulse"></span>
+</div>
+</div>
+<!-- Main Scheduler Workbench & Telemetry Column -->
+<div class="w-full grid grid-cols-1 xl:grid-cols-12 gap-space-md items-start">
+<!-- Left Calendar Matrix (Col 1-9) -->
+<div class="xl:col-span-9 bg-surface-container-lowest p-space-md flex flex-col overflow-hidden shadow-sm">
+<!-- Day Headers Bar -->
+<div class="grid grid-cols-8 gap-1 bg-surface-container-low p-1 mb-1 text-center select-none">
+<div class="p-1 font-label-sm text-label-sm text-outline uppercase flex items-center justify-center">
+          HR
+        </div>
+<div class="p-1.5 bg-surface-container-lowest flex flex-col items-center">
+<span class="font-label-sm text-label-sm text-outline">MON</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold leading-none mt-0.5">21</span>
+</div>
+<div class="p-1.5 bg-surface-container flex flex-col items-center">
+<span class="font-label-sm text-label-sm text-primary font-bold">TUE</span>
+<span class="font-headline-sm text-headline-sm text-primary font-bold leading-none mt-0.5">22</span>
+<span class="w-1 h-1 bg-primary mt-0.5"></span>
+</div>
+<div class="p-1.5 bg-surface-container-lowest flex flex-col items-center">
+<span class="font-label-sm text-label-sm text-outline">WED</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold leading-none mt-0.5">23</span>
+</div>
+<div class="p-1.5 bg-surface-container-lowest flex flex-col items-center">
+<span class="font-label-sm text-label-sm text-outline">THU</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold leading-none mt-0.5">24</span>
+</div>
+<div class="p-1.5 bg-surface-container-lowest flex flex-col items-center">
+<span class="font-label-sm text-label-sm text-outline">FRI</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold leading-none mt-0.5">25</span>
+</div>
+<div class="p-1.5 bg-surface-container-lowest flex flex-col items-center opacity-70">
+<span class="font-label-sm text-label-sm text-outline">SAT</span>
+<span class="font-headline-sm text-headline-sm text-on-surface-variant font-bold leading-none mt-0.5">26</span>
+</div>
+<div class="p-1.5 bg-surface-container-lowest flex flex-col items-center opacity-70">
+<span class="font-label-sm text-label-sm text-outline">SUN</span>
+<span class="font-headline-sm text-headline-sm text-on-surface-variant font-bold leading-none mt-0.5">27</span>
+</div>
+</div>
+<!-- Time Matrix Grid (08:00 to 18:00) -->
+<div class="relative w-full overflow-x-auto">
+<div class="min-w-[680px] flex flex-col relative">
+<!-- Current Time Indicator Line (e.g. Tue 14:15) -->
+<div class="absolute left-0 right-0 top-[375px] z-30 pointer-events-none flex items-center">
+<span class="w-16 text-right pr-2 font-label-sm text-label-sm text-primary font-bold bg-surface-container-lowest py-0.5">14:15</span>
+<div class="flex-1 h-px bg-primary opacity-80"></div>
+<div class="w-1.5 h-1.5 bg-primary -ml-0.5"></div>
+</div>
+<!-- Hour Row 08:00 -->
+<div class="grid grid-cols-8 gap-1 h-14 bg-surface-container-low/40 mb-1">
+<div class="flex items-center justify-end pr-2 font-label-sm text-label-sm text-outline">08:00</div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest opacity-40"></div>
+<div class="bg-surface-container-lowest opacity-40"></div>
+</div>
+<!-- Hour Row 09:00 -->
+<div class="grid grid-cols-8 gap-1 h-14 bg-surface-container-low/40 mb-1">
+<div class="flex items-center justify-end pr-2 font-label-sm text-label-sm text-outline">09:00</div>
+<!-- Mon 09:30 - 10:30 Meeting Anchor Container -->
+<div class="bg-surface-container-lowest relative p-1">
+<!-- Event: Architecture Sync (09:30 - 10:30 overlaps into 10:00) -->
+<div class="absolute top-5 left-1 right-1 h-20 z-20 bg-surface-container p-space-xs shadow-md cursor-pointer hover:brightness-125 transition-all flex flex-col justify-between" style="border-left: 3px solid #0441ca;">
+<div class="flex items-start justify-between">
+<span class="font-label-sm text-label-sm text-on-surface font-semibold truncate leading-tight">Architecture Sync</span>
+<span class="material-symbols-outlined text-xs text-secondary-fixed">videocam</span>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<span>09:30–10:30</span>
+<div class="flex items-center -space-x-1">
+<span class="w-4 h-4 bg-secondary-container text-on-secondary font-label-sm text-[9px] flex items-center justify-center font-bold">AK</span>
+<span class="w-4 h-4 bg-surface-bright text-on-surface font-label-sm text-[9px] flex items-center justify-center font-bold">MV</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest opacity-40"></div>
+<div class="bg-surface-container-lowest opacity-40"></div>
+</div>
+<!-- Hour Row 10:00 -->
+<div class="grid grid-cols-8 gap-1 h-14 bg-surface-container-low/40 mb-1">
+<div class="flex items-center justify-end pr-2 font-label-sm text-label-sm text-outline">10:00</div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest"></div>
+<!-- Wed 10:00 - 11:00 Mint Completed Task -->
+<div class="bg-surface-container-lowest relative p-1">
+<div class="w-full h-full bg-surface-container p-space-xs shadow-sm flex flex-col justify-between" style="border-left: 3px solid #67f5c1;">
+<div class="flex items-start justify-between">
+<span class="font-label-sm text-label-sm text-on-surface font-semibold truncate leading-tight">Model Benchmark Evaluation</span>
+<span class="material-symbols-outlined text-xs text-tertiary">check_circle</span>
+</div>
+<div class="flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-tertiary">COMPLETED • 60m</span>
+<span class="text-outline">#W-409</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest opacity-40"></div>
+<div class="bg-surface-container-lowest opacity-40"></div>
+</div>
+<!-- Hour Row 11:00 -->
+<div class="grid grid-cols-8 gap-1 h-14 bg-surface-container-low/40 mb-1">
+<div class="flex items-center justify-end pr-2 font-label-sm text-label-sm text-outline">11:00</div>
+<!-- Mon 11:00 - 12:00 Cyan Wayfinder Autonomous Block -->
+<div class="bg-surface-container-lowest relative p-1">
+<div class="w-full h-full bg-surface-container p-space-xs shadow-sm flex flex-col justify-between" style="border-left: 3px solid #77edff;">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-1 min-w-0">
+<span class="material-symbols-outlined text-xs text-primary animate-spin">smart_toy</span>
+<span class="font-label-sm text-label-sm text-primary font-bold truncate">Auto-Ingest Notion Specs</span>
+</div>
+<span class="px-1 py-0 bg-surface-container-highest text-primary font-label-sm text-[9px] uppercase">AI-RUN</span>
+</div>
+<div class="flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span>11:00–12:00</span>
+<span class="text-primary font-mono text-label-sm">TELEMETRY OK</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest opacity-40"></div>
+<div class="bg-surface-container-lowest opacity-40"></div>
+</div>
+<!-- Hour Row 12:00 -->
+<div class="grid grid-cols-8 gap-1 h-14 bg-surface-container-low/40 mb-1">
+<div class="flex items-center justify-end pr-2 font-label-sm text-label-sm text-outline">12:00</div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest opacity-40"></div>
+<div class="bg-surface-container-lowest opacity-40"></div>
+</div>
+<!-- Hour Row 13:00 -->
+<div class="grid grid-cols-8 gap-1 h-14 bg-surface-container-low/40 mb-1">
+<div class="flex items-center justify-end pr-2 font-label-sm text-label-sm text-outline">13:00</div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest opacity-40"></div>
+<div class="bg-surface-container-lowest opacity-40"></div>
+</div>
+<!-- Hour Row 14:00 -->
+<div class="grid grid-cols-8 gap-1 h-14 bg-surface-container-low/40 mb-1">
+<div class="flex items-center justify-end pr-2 font-label-sm text-label-sm text-outline">14:00</div>
+<div class="bg-surface-container-lowest"></div>
+<!-- Tue 14:00 - 15:30 Amber Deadline Block (1.5 hours) -->
+<div class="bg-surface-container-lowest relative p-1">
+<div class="absolute top-1 left-1 right-1 h-20 z-20 bg-surface-container p-space-xs shadow-md flex flex-col justify-between" style="border-left: 3px solid #b7c4ff;">
+<div class="flex items-start justify-between">
+<span class="font-label-sm text-label-sm text-on-surface font-semibold truncate leading-tight">K8s Cluster Maintenance</span>
+<span class="px-1 py-0 bg-surface-container-highest text-secondary font-label-sm text-[9px] uppercase font-bold">WARN</span>
+</div>
+<div class="flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-secondary font-bold">14:00–15:30</span>
+<span class="text-outline">INFRA-PROD</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest"></div>
+<!-- Fri 14:00 Conflict Zone Preview -->
+<div class="bg-surface-container-lowest relative p-1">
+<div class="w-full h-full bg-surface-container p-space-xs shadow-sm flex flex-col justify-between opacity-80" style="border-left: 3px solid #ffb4ab;">
+<div class="flex items-start justify-between">
+<span class="font-label-sm text-label-sm text-error font-semibold truncate">Overlap Warning (2)</span>
+<span class="material-symbols-outlined text-xs text-error">warning</span>
+</div>
+<span class="font-label-sm text-label-sm text-error">14:00 ARCH REVIEW</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest opacity-40"></div>
+<div class="bg-surface-container-lowest opacity-40"></div>
+</div>
+<!-- Hour Row 15:00 -->
+<div class="grid grid-cols-8 gap-1 h-14 bg-surface-container-low/40 mb-1">
+<div class="flex items-center justify-end pr-2 font-label-sm text-label-sm text-outline">15:00</div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest opacity-40"></div>
+<div class="bg-surface-container-lowest opacity-40"></div>
+</div>
+<!-- Hour Row 16:00 -->
+<div class="grid grid-cols-8 gap-1 h-14 bg-surface-container-low/40 mb-1">
+<div class="flex items-center justify-end pr-2 font-label-sm text-label-sm text-outline">16:00</div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest"></div>
+<!-- Thu 16:00 Coral Overdue Warning Block -->
+<div class="bg-surface-container-lowest relative p-1">
+<div class="w-full h-full bg-surface-container p-space-xs shadow-sm flex flex-col justify-between" style="border-left: 3px solid #ffb4ab;">
+<div class="flex items-start justify-between">
+<span class="font-label-sm text-label-sm text-error font-bold truncate">SLA Report Delivery</span>
+<span class="material-symbols-outlined text-xs text-error">priority_high</span>
+</div>
+<div class="flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-error font-bold tracking-tight">OVERDUE</span>
+<span class="text-on-surface-variant">REQ SIGNOFF</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest opacity-40"></div>
+<div class="bg-surface-container-lowest opacity-40"></div>
+</div>
+<!-- Hour Row 17:00 -->
+<div class="grid grid-cols-8 gap-1 h-14 bg-surface-container-low/40 mb-1">
+<div class="flex items-center justify-end pr-2 font-label-sm text-label-sm text-outline">17:00</div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest opacity-40"></div>
+<div class="bg-surface-container-lowest opacity-40"></div>
+</div>
+<!-- Hour Row 18:00 -->
+<div class="grid grid-cols-8 gap-1 h-14 bg-surface-container-low/40">
+<div class="flex items-center justify-end pr-2 font-label-sm text-label-sm text-outline">18:00</div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest"></div>
+<div class="bg-surface-container-lowest opacity-40"></div>
+<div class="bg-surface-container-lowest opacity-40"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Telemetry Sidebar & Scheduling Intelligence (Col 10-12) -->
+<div class="xl:col-span-3 flex flex-col gap-space-md">
+<!-- AI Conflict Resolution Engine Panel -->
+<div class="w-full bg-surface-container-lowest p-space-md shadow-sm">
+<div class="flex items-center justify-between pb-space-sm mb-space-sm bg-surface-container-low px-space-sm py-1">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-primary">psychology</span>
+<span class="font-label-sm text-label-sm text-on-surface font-bold uppercase tracking-wider">AI CONFLICT RESOLUTION</span>
+</div>
+<span class="w-1.5 h-1.5 bg-error animate-ping"></span>
+</div>
+<div class="p-space-sm bg-surface-container mb-space-sm">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-sm text-error">notification_important</span>
+<span class="font-label-sm text-label-sm text-error font-bold">2 OVERLAPPING EVENTS</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-sm leading-relaxed">
+            Friday at 14:00 presents a concurrent lock with <strong class="text-on-surface">Client Demo</strong> and <strong class="text-on-surface">Architecture Review</strong>.
+          </p>
+<div class="bg-surface-container-lowest p-space-xs mb-space-sm">
+<span class="font-label-sm text-label-sm text-primary uppercase block mb-0.5">SUGGESTION:</span>
+<p class="font-body-sm text-body-sm text-on-surface leading-tight">
+              Shift Architecture Review to <span class="text-tertiary font-mono font-bold">15:30</span> (Clean Free Slot).
+            </p>
+</div>
+<button class="w-full h-7 bg-primary text-on-primary font-label-sm text-label-sm font-bold hover:brightness-110 transition-colors uppercase tracking-wider flex items-center justify-center gap-1" id="btn-resolve" type="button">
+<span class="material-symbols-outlined text-xs">done_all</span>
+<span>APPLY RESOLUTION</span>
+</button>
+</div>
+<div class="flex justify-between items-center text-label-sm font-label-sm text-outline px-1">
+<span>OPTIMIZER CONFIDENCE</span>
+<span class="text-tertiary font-bold">99.4%</span>
+</div>
+</div>
+<!-- Upcoming Scheduled Autonomous Workflows -->
+<div class="w-full bg-surface-container-lowest p-space-md shadow-sm">
+<div class="flex items-center justify-between pb-space-sm mb-space-sm bg-surface-container-low px-space-sm py-1">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-primary">precision_manufacturing</span>
+<span class="font-label-sm text-label-sm text-on-surface font-bold uppercase tracking-wider">SCHEDULED WORKFLOWS</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline">AUTO</span>
+</div>
+<div class="flex flex-col gap-space-sm">
+<!-- Item 1 -->
+<div class="p-space-sm bg-surface-container flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-primary font-mono font-bold">18:00 UTC</span>
+<span class="px-1 py-0 bg-surface-container-highest text-tertiary font-label-sm text-[9px] uppercase">READY</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-medium leading-tight">Daily Standup Digest</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Synthesizes commit logs, Jira tickets, and Slack channels.</span>
+</div>
+<!-- Item 2 -->
+<div class="p-space-sm bg-surface-container flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-primary font-mono font-bold">22:00 UTC</span>
+<span class="px-1 py-0 bg-surface-container-highest text-outline font-label-sm text-[9px] uppercase">QUEUED</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-medium leading-tight">Nightly Vector Reindex</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Re-embeds Notion notes &amp; GitHub PR reviews into vector store.</span>
+</div>
+</div>
+</div>
+<!-- Task Completion Gauge & Health -->
+<div class="w-full bg-surface-container-lowest p-space-md shadow-sm">
+<div class="flex items-center justify-between pb-space-sm mb-space-sm bg-surface-container-low px-space-sm py-1">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-tertiary">analytics</span>
+<span class="font-label-sm text-label-sm text-on-surface font-bold uppercase tracking-wider">EXECUTION METRICS</span>
+</div>
+<span class="font-label-sm text-label-sm text-tertiary font-mono">CYCLE 24</span>
+</div>
+<div class="flex items-center justify-between mb-space-xs">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Daily Schedule Target</span>
+<span class="font-label-md text-label-md text-tertiary font-bold">78%</span>
+</div>
+<!-- Metric Bar -->
+<div class="w-full h-2 bg-surface-container-high overflow-hidden mb-space-sm flex">
+<div class="bg-tertiary h-full transition-all duration-500" style="width: 78%;"></div>
+</div>
+<div class="grid grid-cols-2 gap-space-xs pt-space-xs text-label-sm font-label-sm">
+<div class="bg-surface-container p-space-xs flex flex-col">
+<span class="text-outline">COMPLETED</span>
+<span class="text-on-surface font-bold text-headline-sm font-headline-sm mt-0.5">14</span>
+</div>
+<div class="bg-surface-container p-space-xs flex flex-col">
+<span class="text-outline">REMAINING</span>
+<span class="text-secondary font-bold text-headline-sm font-headline-sm mt-0.5">4</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Simple micro-interaction for schedule resolution
+  document.getElementById('btn-resolve')?.addEventListener('click', function() {
+    this.innerText = 'RESOLVED & APPLIED';
+    this.classList.remove('bg-primary', 'text-on-primary');
+    this.classList.add('bg-tertiary', 'text-on-tertiary');
+  });
+
+  document.getElementById('btn-auto-opt')?.addEventListener('click', function() {
+    const orig = this.innerHTML;
+    this.innerHTML = '<span class="material-symbols-outlined text-sm animate-spin">sync</span> RE-OPTIMIZING...';
+    setTimeout(() => {
+      this.innerHTML = '<span class="material-symbols-outlined text-sm">check</span> SCHEDULE OPTIMAL';
+      setTimeout(() => { this.innerHTML = orig; }, 2000);
+    }, 1200);
+  });
+</script></main></div></body></html>
