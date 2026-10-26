@@ -1,6 +1,6 @@
 {
   "name": "wayfinder-desktop",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "license": "UNLICENSED",
   "description": "Wayfinder GitHub interface connected to the existing scoped application backend",
@@ -10,7 +10,8 @@
     "start": "electron .",
     "check": "tsc --noEmit",
     "test": "vitest run",
-    "package": "npm run build && electron-builder --win --dir --publish never"
+    "package": "npm run build && electron-builder --win portable --x64 --publish never",
+    "backend": "python scripts/freeze-backend.py"
   },
   "build": {
     "appId": "local.wayfinder.desktop",
@@ -26,11 +27,29 @@
     ],
     "extraResources": [
       {
-        "from": "backend",
+        "from": ".cache/bundle/backend",
         "to": "backend",
         "filter": [
-          "host.py"
+          "**/*",
+          "!**/*.debug-original",
+          "!**/__pycache__/**"
         ]
+      },
+      {
+        "from": ".cache/bundle/backend-project",
+        "to": "backend-project",
+        "filter": [
+          "**/*.py",
+          "**/*.json",
+          "**/*.yaml",
+          "**/*.yml",
+          "**/*.toml",
+          "!**/snapshot_*.json"
+        ]
+      },
+      {
+        "from": ".cache/bundle/models",
+        "to": "models"
       },
       {
         "from": "resources/wayfinder.png",
@@ -39,18 +58,21 @@
       {
         "from": "resources/licenses",
         "to": "licenses"
-      },
-      {
-        "from": "FEATURES.json",
-        "to": "backend/FEATURES.json"
       }
     ],
     "win": {
-      "target": "dir",
+      "target": [
+        "portable"
+      ],
       "signExecutable": false,
       "icon": "resources/wayfinder.ico"
     },
-    "electronDist": "node_modules/electron/dist"
+    "electronDist": "node_modules/electron/dist",
+    "artifactName": "Wayfinder-${version}-Windows-x64.${ext}",
+    "portable": {
+      "artifactName": "Wayfinder-${version}-Windows-x64.exe",
+      "useZip": true
+    }
   },
   "dependencies": {
     "lucide-react": "1.61.0",

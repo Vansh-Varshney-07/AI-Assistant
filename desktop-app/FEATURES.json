@@ -1,6 +1,6 @@
 {
-  "build": "wayfinder-desktop/0.3.0",
-  "scope": "consolidated_task_profile_candidate_not_full_cross_app_acceptance",
+  "build": "wayfinder-desktop/0.4.0",
+  "scope": "onboarded_local_assistant_candidate",
   "connected": [
     {
       "feature": "spaces",
@@ -139,13 +139,23 @@
         "platform_profile_clear"
       ],
       "scope": "M00 routing, A01-A08/P01-P06 metadata; A01/A05/A06 selected UTF-8 file adapter only; app providers and Fitness unavailable"
+    },
+    {
+      "feature": "general_chat",
+      "backend": "wayfinder/chat.py",
+      "operations": [
+        "chat_list",
+        "chat_new",
+        "chat_get",
+        "chat_send",
+        "chat_cancel",
+        "chat_lookup",
+        "chat_delete"
+      ],
+      "scope": "Explicitly approved managed model; canonical bounded history; no automatic memory writes or tools."
     }
   ],
   "excluded": [
-    {
-      "feature": "general_chat",
-      "reason": "No completed inference/session service; transcript storage is not chat."
-    },
     {
       "feature": "google_live",
       "reason": "Live account read/write qualification unfinished; no account connector controls exposed."
@@ -193,11 +203,16 @@
   "native_testing_enabled": false,
   "schema": "wayfinder.desktop-inclusion/v1",
   "variant": "workspace-parity",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "navigation": [
     {
       "id": "home",
       "title": "Home",
+      "group": "WORKSPACE"
+    },
+    {
+      "id": "chat",
+      "title": "Chat",
       "group": "WORKSPACE"
     },
     {
@@ -293,7 +308,19 @@
     "profileTask",
     "profileTasks",
     "cancelProfileTask",
-    "clearProfileTask"
+    "clearProfileTask",
+    "setupStatus",
+    "setupDatabase",
+    "setupMemory",
+    "setupModel",
+    "setupFinish",
+    "chats",
+    "newChat",
+    "chat",
+    "sendChat",
+    "cancelChat",
+    "lookupChat",
+    "deleteChat"
   ],
   "backend_operations": [
     "status",
@@ -347,7 +374,14 @@
     "platform_profile_result",
     "platform_profile_runs",
     "platform_profile_cancel",
-    "platform_profile_clear"
+    "platform_profile_clear",
+    "chat_list",
+    "chat_new",
+    "chat_get",
+    "chat_send",
+    "chat_cancel",
+    "chat_lookup",
+    "chat_delete"
   ],
   "private_facades": [
     "boot",

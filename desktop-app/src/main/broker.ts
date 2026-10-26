@@ -51,7 +51,14 @@ export function createHandlers(transport: Transport, ui: NativeUI, lifecycle: { 
       return request(`${prefix}_decide`, sid, { id: aid, digest: proposal.digest, approve: approved });
     } finally { activeReviews.delete(key); }
   }
-  const handlers: { [K in keyof DesktopAPI]: (...args: any[]) => Promise<any> } = {
+  const handlers: { [K in Exclude<keyof DesktopAPI, `setup${string}`>]: (...args: any[]) => Promise<any> } = {
+    chats: space => transport.call('chat_list',{space:text(space)}),
+    newChat: space => transport.call('chat_new',{space:text(space)}),
+    chat: (space,conversation,before) => transport.call('chat_get',{space:text(space),conversation:text(conversation),...(before?{before:text(before)}:{})}),
+    sendChat: (space,conversation,request,message) => transport.call('chat_send',{space:text(space),conversation:text(conversation),request_id:text(request,100),message:text(message,4000)}),
+    cancelChat: (space,conversation,turn) => transport.call('chat_cancel',{space:text(space),conversation:text(conversation),turn:text(turn)}),
+    lookupChat: (space,conversation,request) => transport.call('chat_lookup',{space:text(space),conversation:text(conversation),request_id:text(request,100)}),
+    deleteChat: (space,conversation) => transport.call('chat_delete',{space:text(space),conversation:text(conversation)}),
     profiles: space => request('platform_profiles', space),
     startProfileTask: async (space, profile, reference, goal) => {
       const pid=kind(profile,['A01','A05','A06']);

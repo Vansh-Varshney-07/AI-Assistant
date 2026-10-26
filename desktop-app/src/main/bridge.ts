@@ -14,7 +14,12 @@ export class BackendBridge implements Transport {
   private pending = new Map<string, { resolve: (data: any) => void; reject: (error: Error) => void; timer: ReturnType<typeof setTimeout> }>();
   private connecting?: Promise<BackendState>;
   state: BackendState = { state: 'offline' };
+  private options: {executable?: string; environment?: NodeJS.ProcessEnv} = {};
   constructor(readonly project: string, readonly host: string, readonly runtime: string, private bootstrapError?: string) {}
+  configure(options: {executable: string; environment: NodeJS.ProcessEnv}) {
+    if (this.child) throw new Error('Close the current backend before changing its private connection.');
+    this.options=options;
+  }
   async connect(): Promise<BackendState> {
     if (this.connecting) return this.connecting;
     if (this.state.state === 'ready') return this.state;
@@ -37,11 +42,11 @@ export class BackendBridge implements Transport {
   }
   private launch() {
     const candidates = [process.env.WAYFINDER_PYTHON, path.join(this.project, '.venv', 'Scripts', 'python.exe'), path.resolve(this.project, '..', 'reserchpaper', '.venv', 'Scripts', 'python.exe')];
-    const python = candidates.find(p => p && existsSync(p));
+    const python = this.options.executable || candidates.find(p => p && existsSync(p));
     if (!python) throw new Error('Configured Python environment missing. Set WAYFINDER_PYTHON to the existing project environment; nothing was installed automatically.');
-    this.child = spawn(python, ['-B', '-u', this.host, '--project', this.project, '--runtime', this.runtime], {
+    this.child = spawn(python, [...(this.options.executable ? [] : ['-B', '-u', this.host]), '--project', this.project, '--runtime', this.runtime], {
       cwd: this.project, windowsHide: true, stdio: ['pipe', 'pipe', 'pipe'],
-      env: { ...process.env, WAYFINDER_HOST_SECRET: this.secret, PYTHONDONTWRITEBYTECODE: '1', HF_HUB_OFFLINE: '1', TRANSFORMERS_OFFLINE: '1' },
+      env: { ...process.env, ...this.options.environment, WAYFINDER_HOST_SECRET: this.secret, PYTHONDONTWRITEBYTECODE: '1', HF_HUB_OFFLINE: '1', TRANSFORMERS_OFFLINE: '1' },
     });
     this.child.stdout.setEncoding('utf8');
     this.child.stdout.on('data', (chunk: string) => this.receive(chunk));

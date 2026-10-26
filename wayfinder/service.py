@@ -98,6 +98,8 @@ class AppService:
         from wayfinder.platform.service import PlatformService
 
         self.platform = PlatformService(self)
+        from wayfinder.chat import ChatService
+        self.chat=ChatService(self)
 
     @contextmanager
     def db(self):
@@ -378,6 +380,8 @@ class AppService:
         self.authorize(who)
         if not isinstance(body, dict):
             raise ValueError("Request body must be an object.")
+        if operation.startswith("chat_"):
+            return self.chat.call(who,operation,body)
         if operation.startswith("worker_"):
             return self.worker_call(who, operation, body)
         if operation.startswith("platform_"):
@@ -414,7 +418,7 @@ class AppService:
                     contract="wayfinder_memory_v2",
                     graph=self.engine.graph_name,
                     revision=self.revision(),
-                    models="Hermes desktop analysis on request; general chat is local transcript only",
+                    models="Managed Hermes analysis and bounded conversation on request; actual runtime qualification required",
                     plugins="Scoped desktop workers available; other plugins not connected",
                 )
             if operation == "spaces":

@@ -81,7 +81,7 @@ class Session:
                 documents=bool(current.get("compatible")),
                 comparison=bool(current.get("compatible")),
                 git_branch=bool(self.service.platform.connectors.git.available),
-                general_chat=False, google_live=False, scheduler=False,
+                general_chat=bool(current.get("compatible") and self.service.chat.approved_model and current.get("isolation",{}).get("model_info")==self.service.chat.approved_model), google_live=False, scheduler=False,
                 workflow_builder=False, local_tasks=False, native_desktop=False,
             ),
             runtime_inspection=current,
@@ -181,8 +181,20 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--project", required=True)
     parser.add_argument("--runtime", required=True)
+    parser.add_argument('--diagnose',choices=['memory','hermes'])
     args = parser.parse_args()
     sys.path.insert(0, str(Path(args.project).resolve()))
+    if args.diagnose:
+        with redirect_stdout(sys.stderr):
+            if args.diagnose=='memory':
+                from memory.embeddings.embedder import get_embedder
+                vector=get_embedder(cache_dir=os.environ.get('WAYFINDER_MODELS_ROOT'),use_gpu=False).embed_single('Wayfinder first-run memory check')
+                report=dict(ready=len(vector)==384,model='BAAI/bge-small-en-v1.5',dimensions=len(vector))
+            else:
+                from wayfinder.platform.runtime import RuntimeInspector
+                result=RuntimeInspector().inspect()
+                report=dict(ready=bool(result.get('compatible') and result.get('isolation',{}).get('supports_history')),version=result.get('runtime',{}).get('version'),tools=result.get('isolation',{}).get('effective_tools'),memory=result.get('isolation',{}).get('memory'),model_info=result.get('isolation',{}).get('model_info'))
+        print('WAYFINDER_DIAGNOSTIC='+json.dumps(report));return
     secret = os.environ.pop("WAYFINDER_HOST_SECRET", "")
     if len(secret) < 32:
         raise SystemExit("Owned bootstrap required.")

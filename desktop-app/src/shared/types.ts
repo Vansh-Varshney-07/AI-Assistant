@@ -1,6 +1,6 @@
 export type Row = Record<string, any>;
 export interface BackendState {
-  state: 'starting' | 'ready' | 'offline';
+  state: 'starting' | 'ready' | 'offline' | 'setup';
   error?: string;
   runtime?: string;
   owner?: string;
@@ -11,6 +11,18 @@ export interface BackendState {
   instance_generation?: string;
 }
 export interface DesktopAPI {
+  setupStatus(): Promise<Row>;
+  setupDatabase(download: boolean): Promise<Row>;
+  setupMemory(): Promise<Row>;
+  setupModel(): Promise<Row>;
+  setupFinish(name: string, consent: boolean): Promise<BackendState>;
+  chats(space: string): Promise<Row[]>;
+  newChat(space: string): Promise<Row>;
+  chat(space: string, conversation: string, before?: string): Promise<Row>;
+  sendChat(space: string, conversation: string, request: string, message: string): Promise<Row>;
+  cancelChat(space: string, conversation: string, turn: string): Promise<Row>;
+  lookupChat(space: string, conversation: string, request: string): Promise<Row>;
+  deleteChat(space: string, conversation: string): Promise<Row>;
   profiles(space: string): Promise<Row>;
   startProfileTask(space: string, profile: string, reference: string, goal: string): Promise<Row>;
   profileTask(space: string, id: string): Promise<Row>;

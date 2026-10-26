@@ -1,0 +1,44 @@
+/** Static 0.4 standalone inspection; actual app checks must match this archive. */
+import fs from 'node:fs/promises';
+import {createReadStream} from 'node:fs';
+import path from 'node:path';
+import {createHash} from 'node:crypto';
+import {fileURLToPath} from 'node:url';
+import {listPackage,extractFile} from '@electron/asar';
+import assert from 'node:assert/strict';
+const root=fileURLToPath(new URL('..',import.meta.url)),pack=path.join(root,'release/win-unpacked'),resources=path.join(pack,'resources'),archive=path.join(resources,'app.asar');
+const hash=async p=>{const h=createHash('sha256');for await(const chunk of createReadStream(p))h.update(chunk);return h.digest('hex');};
+const files=listPackage(archive).map(p=>p.replaceAll('\\','/')),get=p=>extractFile(archive,path.normalize(p));
+const checks=[],check=(name,ok)=>{assert(ok,name);checks.push({name,passed:true});};
+const metadata=JSON.parse(get('package.json').toString()),release=JSON.parse(await fs.readFile(path.join(root,'FEATURES.json'),'utf8'));
+for(const name of ['main/index.js','preload/index.cjs','renderer/index.html'])check('included_'+name,files.includes('/dist/'+name));
+check('version_and_variant',metadata.version==='0.4.0'&&metadata.version===release.version&&release.variant==='workspace-parity');
+const main=get('dist/main/index.js').toString(),html=get('dist/renderer/index.html').toString();
+check('isolated_renderer',main.includes('contextIsolation: true')&&main.includes('nodeIntegration: false')&&main.includes('sandbox: true'));
+check('no_renderer_network_or_inline_script',html.includes("connect-src 'none'")&&html.includes("script-src 'self'"));
+const renderer=files.filter(p=>p.startsWith('/dist/renderer/')&&p.endsWith('.js')).map(p=>get(p.slice(1)).toString()).join('\n');
+check('private_bootstrap_not_in_renderer',!renderer.includes('WAYFINDER_HOST_SECRET')&&!renderer.includes('Bearer '));
+check('onboarding_and_chat_inclusion',release.preload_methods.includes('setupFinish')&&release.preload_methods.includes('sendChat')&&release.backend_operations.includes('chat_send'));
+check('no_generic_ipc_or_native_actions',!release.preload_methods.some(n=>['invoke','exec','call'].includes(n))&&!release.backend_operations.includes('worker_action_decide')&&release.native_testing_enabled===false);
+check('manifest_pairing',await hash(path.join(root,'FEATURES.json'))===await hash(path.join(resources,'backend/FEATURES.json'))&&JSON.stringify(JSON.parse(get('dist/release.json').toString()))===JSON.stringify(release));
+const staged=JSON.parse(await fs.readFile(path.join(root,'.cache/backend-manifest.json'),'utf8'));
+staged.files=Object.fromEntries(Object.entries(staged.files).map(([name,digest])=>[name.replaceAll('\\','/'),digest]));
+const backend=path.join(resources,'backend/WayfinderBackend.exe');
+check('bundled_python_executable_matches_stage',await hash(backend)===staged.files['backend/WayfinderBackend.exe']);
+check('python_interpreter_bundled',(await fs.stat(path.join(resources,'backend/_internal/python312.dll'))).isFile());
+check('installed_python_trust_policy_bundled',(await fs.stat(path.join(resources,'backend/_internal/codex-rejected-cas.pem'))).size===906);
+for(const file of ['wayfinder/chat.py','wayfinder/service.py','wayfinder/api.py','wayfinder/workers/hermes_runner.py','memory/engine.py'])check('source_identity_'+file,await hash(path.join(root,'..',file))===await hash(path.join(resources,'backend-project',file)));
+const model=path.join(resources,'models/models--qdrant--bge-small-en-v1.5-onnx-q/blobs/51f1bd');
+// Compare every staged model file, including the dereferenced snapshot contents.
+let modelCount=0;for(const [name,digest] of Object.entries(staged.files))if(name.startsWith('models/')){assert(await hash(path.join(resources,name))===digest,'Model checksum '+name);modelCount++;}
+check('bundled_public_model_checksums',modelCount>4);
+const forbidden=[];
+async function scan(folder){for(const entry of await fs.readdir(folder,{withFileTypes:true})){const full=path.join(folder,entry.name);if(entry.isDirectory())await scan(full);else if(/^\.env(?:\.|$)|^(?:credentials|token)\.json$|^app\.sqlite3(?:-wal|-shm)?$|^database\.key$|debug-original$/i.test(entry.name))forbidden.push(path.relative(resources,full));}}
+await scan(resources);check('no_private_state_credentials_or_debug_copies',!forbidden.length);
+for(const name of ['FlagEmbedding-LICENSE.txt','Python-LICENSE.txt','Qdrant-BGE-model-card.md','python-dependencies.json','javascript/react-LICENSE.txt','javascript/lucide-react-LICENSE.txt'])check('notice_'+name,(await fs.stat(path.join(resources,'licenses',name))).size>0);
+const actual=JSON.parse(await fs.readFile(path.join(root,'test-results/onboarding-packaged.json'),'utf8'));
+check('actual_fresh_profile_acceptance',actual.passed>=18&&actual.checks.every(c=>c.passed));
+check('acceptance_matches_current_archive',actual.asar_sha256===await hash(archive));
+const portable=path.join(root,'release/Wayfinder-0.4.0-Windows-x64.exe');const handle=await fs.open(portable),sig=Buffer.alloc(2);await handle.read(sig,0,2,0);await handle.close();check('portable_is_windows_executable',sig.toString()==='MZ');
+const evidence={build:release.build,checks,passed:checks.length,asar_sha256:await hash(archive),backend_sha256:await hash(backend),portable_sha256:await hash(portable),native_desktop_automation:false,google_live:false,actual_packaged_checks:actual.passed};
+await fs.writeFile(path.join(root,'test-results/onboarding-build-evidence.json'),JSON.stringify(evidence,null,2)+'\n');console.log(JSON.stringify(evidence));

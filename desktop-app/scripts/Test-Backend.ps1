@@ -1,4 +1,4 @@
-param([switch]$Live, [switch]$Neural, [switch]$NodeBridge, [switch]$ClientOnly, [switch]$Packaged)
+param([switch]$Live, [switch]$Neural, [switch]$NodeBridge, [switch]$ClientOnly, [switch]$Packaged, [switch]$Chat)
 $ErrorActionPreference = 'Stop'
 $appRoot = Split-Path $PSScriptRoot -Parent
 $projectRoot = Split-Path $appRoot -Parent
@@ -31,9 +31,10 @@ try {
     }
     if (-not $ready) { throw 'Isolated database not ready.' }
     $files = @('desktop-app/backend/test_host.py', 'tests/test_wayfinder_app.py', 'tests/test_desktop_workers.py', 'tests/test_platform_integration.py', 'tests/test_platform_git.py', 'tests/test_platform_memory.py', 'tests/test_platform_sources.py', 'tests/test_google_setup.py', 'tests/test_approval_service.py', 'tests/test_atlas_helpers.py', 'tests/test_integration_action_safety.py', 'wayfinder/workers')
-    $files += 'tests/test_task_profiles.py'
+    $files += @('tests/test_task_profiles.py','tests/test_chat.py')
     $selection = @('-k', 'not desktop_worker_controls_and_space_switch')
     $reportName = 'backend.xml'
+    if ($Chat) { $files = @('tests/test_chat.py'); $reportName = 'chat-contract.xml' }
     if ($ClientOnly) { $files = @('desktop-app/backend/test_host.py'); $reportName = 'client-adapter.xml' }
     if ($Live) { $env:WAYFINDER_PLATFORM_LIVE = '1'; $selection = @('-k', 'live_installed_hermes_read_workflow'); $reportName = 'live-hermes.xml' }
     if ($Packaged) {

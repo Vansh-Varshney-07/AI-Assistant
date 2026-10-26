@@ -17,7 +17,7 @@ async function mount() { const api = mockAPI(); render(<App />); await screen.fi
 describe('Actual React app with contract fixtures', () => {
   it('renders usable connected navigation without unfinished product tabs', async () => {
     await mount(); expect(screen.getByRole('heading', { name: 'Memory', level: 1 })).toBeTruthy();
-    expect(screen.queryByRole('button', { name: 'Scheduler' })).toBeNull(); expect(screen.queryByRole('button', { name: 'Chat' })).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Scheduler' })).toBeNull(); expect(screen.getByRole('button', { name: 'Chat' })).toBeTruthy();
     expect(screen.getByText('Backend connected')).toBeTruthy();
   });
   it('sends exact scoped recall and renders attributed evidence', async () => {

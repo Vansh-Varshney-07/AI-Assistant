@@ -145,8 +145,14 @@ class WorkerHub:
                 )
             return "data:image/png;base64," + base64.b64encode(image[2]).decode("ascii")
 
-    def start(self, scope, *, role, question, reference=None, image=None, context=""):
-        if role not in {"W33", "W35", "W36"}:
+    def start_chat(self, scope, message, history, model_pin):
+        if not isinstance(history,list) or len(history)>12 or any(not isinstance(m,dict) or set(m)!={'role','content'} or m['role'] not in {'user','assistant'} or not isinstance(m['content'],str) for m in history):
+            raise ValueError('Invalid canonical chat history.')
+        if len(json.dumps(history,ensure_ascii=True).encode())>20000:raise ValueError('Chat history exceeds its context budget.')
+        return self.start(scope,role='CHAT',question=message,_chat=(history,model_pin))
+
+    def start(self, scope, *, role, question, reference=None, image=None, context="", _chat=None):
+        if role not in {"W33", "W35", "W36"} and not (role=="CHAT" and _chat is not None):
             raise ValueError(
                 "Choose an analysis/planning worker; discovery and approved actions have separate routes."
             )
@@ -155,6 +161,7 @@ class WorkerHub:
         if not isinstance(context, str) or len(context) > 12000:
             raise ValueError("Observation context exceeds its limit.")
         payload = dict(role=role, question=question, context=context)
+        if role=="CHAT":payload.update(history=_chat[0],model_pin=_chat[1])
         evidence = None
         if role == "W35":
             selected = self.files.read(scope, reference)

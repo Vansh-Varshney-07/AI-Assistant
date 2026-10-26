@@ -9,10 +9,10 @@ const backend = { state: 'ready' as const, capabilities: { documents: false, git
 const snapshot = { observed_at: Date.now(), jobs: [{ id: 'read-one', status: 'running' }], workflows: [], actions: [{ id: 'review', status: 'pending' }, { id: 'uncertain', status: 'outcome_unknown' }] };
 
 describe('New GitHub command workspace with real-state projections', () => {
-  it('keeps ordinary conversation inert instead of silently storing a Home prompt', async () => {
+  it('routes the Home entry to the explicit conversation service', async () => {
     const go = vi.fn(); render(<WorkspaceHome backend={backend} snapshot={snapshot} spaceName="Synthetic space" go={go} />);
-    expect((screen.getByRole('textbox', { name: 'General conversation' }) as HTMLTextAreaElement).disabled).toBe(true);
-    expect((screen.getByRole('button', { name: 'Send conversation' }) as HTMLButtonElement).disabled).toBe(true);
+    await userEvent.click(screen.getByRole('button', { name: 'Open chat' })); expect(go).toHaveBeenCalledWith('chat');
+
     await userEvent.click(screen.getByRole('button', { name: /Analyze a document/ }));
     expect(go).toHaveBeenCalledWith('documents');
     expect(screen.queryByText(/8 Connected services/)).toBeNull();
