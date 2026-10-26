@@ -31,6 +31,11 @@ SCOPES = {
     "calendar": "https://www.googleapis.com/auth/calendar.readonly",
     "tasks": "https://www.googleapis.com/auth/tasks.readonly",
     "gmail": "https://www.googleapis.com/auth/gmail.readonly",
+    "gmail_headers": "https://www.googleapis.com/auth/gmail.readonly",
+    "drive": "https://www.googleapis.com/auth/drive.readonly",
+    "docs": "https://www.googleapis.com/auth/documents.readonly",
+    "sheets": "https://www.googleapis.com/auth/spreadsheets.readonly",
+    "contacts": "https://www.googleapis.com/auth/contacts.readonly",
 }
 
 
@@ -39,7 +44,7 @@ class ReadRefusal(Exception):
 
 
 class GoogleRead:
-    def __init__(self, app, *, clock=time.time, token_path=None, session_factory=None):
+    def __init__(self, app, *, clock=time.time, token_path=None, session_factory=None, credential_loader=None):
         self.app, self.clock, self.lock = app, clock, RLock()
         self.token_path = (
             Path(token_path)
@@ -47,6 +52,8 @@ class GoogleRead:
             else Path(__file__).resolve().parents[2] / "secrets" / "token.json"
         )
         self.session_factory = session_factory
+        self.credential_loader=credential_loader
+        self._credential_cache=None
         self.grants, self.closed = {}, False
 
     def session(self, service, expected=None):
@@ -61,15 +68,25 @@ class GoogleRead:
             from google.auth.transport.requests import AuthorizedSession
             from google.oauth2.credentials import Credentials
 
-            with open_checked(self.token_path, self.token_path.parent) as stream:
-                before = version(os.fstat(stream.fileno()))
-                raw = stream.read(65537)
-                if len(raw) > 65536 or version(os.fstat(stream.fileno())) != before:
-                    raise ValueError("Connection changed or exceeded its byte budget.")
+            if self.credential_loader is not None:
+                loaded=self.credential_loader()
+                if not isinstance(loaded,str) or not loaded or len(loaded.encode())>24000:raise ValueError('Import the Google connection first.')
+                raw=loaded.encode()
+            else:
+                with open_checked(self.token_path, self.token_path.parent) as stream:
+                    before = version(os.fstat(stream.fileno()))
+                    raw = stream.read(65537)
+                    if len(raw) > 65536 or version(os.fstat(stream.fileno())) != before:
+                        raise ValueError("Connection changed or exceeded its byte budget.")
             fingerprint = hashlib.sha256(raw).hexdigest()
             if expected is not None and fingerprint != expected:
                 raise ValueError("Connection changed after resource grant.")
-            credentials = Credentials.from_authorized_user_info(json.loads(raw))
+            info=json.loads(raw)
+            if info.get('token_uri','https://oauth2.googleapis.com/token')!='https://oauth2.googleapis.com/token':raise ValueError('Invalid Google endpoint.')
+            if self._credential_cache and self._credential_cache[0]==fingerprint:credentials=self._credential_cache[1]
+            else:
+                credentials=Credentials.from_authorized_user_info(info)
+                self._credential_cache=(fingerprint,credentials)
             # Do not relabel an existing token with scopes it has not been granted.
             if not credentials.has_scopes([SCOPES[service]]):
                 raise ValueError("Required read-only scope is missing.")
@@ -111,8 +128,8 @@ class GoogleRead:
                 return dict(
                     contract=VERSION,
                     provider="google",
-                    credential_file_present=self.token_path.is_file(),
-                    live_qualified=False,
+                    credential_file_present=bool(self.credential_loader()) if self.credential_loader else self.token_path.is_file(),
+                    live_qualified=bool(getattr(self.app.platform,'connections',None) and self.app.platform.connections.qualified('google')),
                     fixture_transport=self.session_factory is not None,
                     operations=[
                         "calendar.events.list",
@@ -189,6 +206,21 @@ class GoogleRead:
                 + quote(resource, safe="")
                 + "/events"
             )
+        elif service in {'drive','docs','sheets','contacts'}:
+            if 'time_min' in body or 'time_max' in body:raise ValueError('Time windows apply only to Calendar.')
+            if service=='drive':
+                url='https://www.googleapis.com/drive/v3/files'
+                params={'pageSize':limit,'q':"trashed = false and '"+resource+"' in parents",'fields':'files(id,name,mimeType,modifiedTime,webViewLink),nextPageToken'}
+            elif service=='docs':
+                url='https://docs.googleapis.com/v1/documents/'+quote(resource,safe='')
+                params={'fields':'documentId,title'}
+            elif service=='sheets':
+                url='https://sheets.googleapis.com/v4/spreadsheets/'+quote(resource,safe='')
+                params={'fields':'spreadsheetId,properties(title),sheets(properties(title,sheetId))'}
+            else:
+                if resource!='me':raise ValueError('Contacts reads are limited to the connected account.')
+                url='https://people.googleapis.com/v1/people/me/connections'
+                params={'pageSize':limit,'personFields':'names,emailAddresses','fields':'connections(resourceName,names(displayName),emailAddresses(value)),nextPageToken'}
         else:
             if "time_min" in body or "time_max" in body:
                 raise ValueError("Time-window fields apply only to calendar grants.")
@@ -238,32 +270,29 @@ class GoogleRead:
             external_writes=False,
         )
 
+    def fetch(self,session,url,params,grant,deadline):
+        self.live(grant)
+        with session.get(url,params=params,timeout=5,allow_redirects=False,stream=True) as response:
+            if response.status_code!=200:raise ReadRefusal('Google read unavailable. Check read-only scopes and API access.')
+            raw=bytearray()
+            for chunk in response.iter_content(chunk_size=8192):
+                self.live(grant);raw.extend(chunk)
+                if len(raw)>128000 or time.monotonic()>=deadline:raise ReadRefusal('Google response exceeds its read budget.')
+            data=json.loads(raw)
+            if not isinstance(data,dict):raise ReadRefusal('Invalid Google response.')
+            return data
+
     def read(self, grant):
         session = self.session(grant["service"], grant["connection"])
         deadline = time.monotonic() + 15
         try:
             self.live(grant)
-            with session.get(
-                grant["url"],
-                params=grant["params"],
-                timeout=5,
-                allow_redirects=False,
-                stream=True,
-            ) as response:
-                if response.status_code != 200:
-                    raise ReadRefusal(
-                        "Google read refused or unavailable; no account mutation was attempted."
-                    )
-                raw = bytearray()
-                for chunk in response.iter_content(chunk_size=8192):
-                    self.live(grant)
-                    if time.monotonic() >= deadline:
-                        raise ReadRefusal("Google read exceeded its time budget.")
-                    raw.extend(chunk)
-                    if len(raw) > 128000:
-                        raise ReadRefusal("Google response exceeds the read budget.")
-                data = json.loads(raw)
-            rows = data.get("messages" if grant["service"] == "gmail" else "items", [])
+            data=self.fetch(session,grant['url'],grant['params'],grant,deadline)
+            service=grant['service']
+            if service=='docs':rows=[{'id':data.get('documentId'),'title':data.get('title',''),'metadata_only':True}]
+            elif service=='sheets':rows=[{'id':data.get('spreadsheetId'),'title':data.get('properties',{}).get('title',''),'sheets':data.get('sheets',[]),'metadata_only':True}]
+            elif service=='contacts':rows=[{'id':r.get('resourceName'),'name':(r.get('names') or [{}])[0].get('displayName',''),'email':(r.get('emailAddresses') or [{}])[0].get('value','')} for r in data.get('connections',[])]
+            else:rows=data.get('messages' if service in {'gmail','gmail_headers'} else 'files' if service=='drive' else 'items',[])
             if not isinstance(rows, list) or len(rows) > grant["limit"]:
                 raise ReadRefusal("Google response exceeds the selected item limit.")
             result = []
@@ -294,7 +323,13 @@ class GoogleRead:
                         )
                     )
                 else:
-                    allowed = (
+                    if service=='gmail_headers':
+                        metadata=self.fetch(session,'https://gmail.googleapis.com/gmail/v1/users/me/messages/'+quote(row['id'],safe=''),{'format':'metadata','metadataHeaders':['Subject','From','Date'],'fields':'id,threadId,snippet,payload(headers(name,value))'},grant,deadline)
+                        if metadata.get('id')!=row['id']:raise ReadRefusal('Google returned a different message identity.')
+                        headers={h.get('name','').lower():h.get('value','') for h in metadata.get('payload',{}).get('headers',[])}
+                        row={**row,'subject':headers.get('subject',''),'from':headers.get('from',''),'date':headers.get('date',''),'snippet':metadata.get('snippet','')}
+                    if service in {'docs','sheets'} and row['id']!=grant['resource']:raise ReadRefusal('Google returned a different document identity.')
+                    allowed = {'id','subject','from','date','snippet','threadId'} if service=='gmail_headers' else {'id','name','mimeType','modifiedTime','webViewLink'} if service=='drive' else {'id','title','sheets','metadata_only'} if service in {'docs','sheets'} else {'id','name','email'} if service=='contacts' else (
                         {"id", "threadId"}
                         if grant["service"] == "gmail"
                         else {
@@ -338,3 +373,4 @@ class GoogleRead:
         with self.lock:
             self.closed = True
             self.grants.clear()
+            self._credential_cache=None

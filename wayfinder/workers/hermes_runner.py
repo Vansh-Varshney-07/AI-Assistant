@@ -12,10 +12,28 @@ import subprocess
 from urllib.parse import urlsplit
 
 STAGE = "request"
+ALLOWED_MODELS=('nvidia/nemotron-3.5-lightning-30b-a3b','nvidia/nemotron-3-ultra-550b-a55b')
+
+def tavily_search(request):
+    key,query,limit=request.get('api_key'),request.get('question'),request.get('limit')
+    if not isinstance(key,str) or not key or len(key)>2048 or not isinstance(query,str) or not 1<=len(query)<=400 or type(limit) is not int or not 1<=limit<=3:raise ValueError('Invalid bounded Tavily request.')
+    with tempfile.TemporaryDirectory(prefix='wayfinder-tavily-') as temporary:
+        os.environ.update(HERMES_HOME=temporary,HERMES_IGNORE_RULES='1',HERMES_SAFE_MODE='1',TAVILY_API_KEY=key,TAVILY_BASE_URL='https://api.tavily.com')
+        sys.path.insert(0,'/opt/hermes')
+        # Fresh profiles intentionally do not run global plugin discovery. Reuse
+        # the installed bundled provider directly, without enabling other plugins.
+        from plugins.web.tavily.provider import TavilyWebSearchProvider
+        provider=TavilyWebSearchProvider()
+        if provider is None or provider.NAME!='tavily':raise ValueError('Installed Hermes Tavily provider is unavailable.')
+        result=provider.search(query,limit=limit)
+        if not isinstance(result,dict) or result.get('success') is not True:raise ValueError('Tavily did not confirm a search result.')
+        return {'ok':True,'effective_tools':[],'data':result.get('data',{}),'provider':'tavily','model_invocations':0}
+
 
 
 def main(request):
     global STAGE
+    if request.get('role')=='TAVILY':return tavily_search(request)
     if request.get("role") not in {"probe", "CHAT", "W33", "W35", "W36"}:
         raise ValueError("Unsupported analysis role.")
     STAGE = "managed_provider"
@@ -58,10 +76,10 @@ print("WAYFINDER_ROUTE="+json.dumps({k:route.get(k) for k in ("base_url","api_ke
     model_pin=dict(model=route['model'],provider=route.get('provider') or 'custom',endpoint=urlsplit(route.get('base_url') or '').hostname)
     if request['role']=='CHAT' and request.get('model_pin')!=model_pin:
         raise ValueError('The managed provider/model changed after consent. Review setup again.')
-    if request["role"] == "W33":
-        # Lightning is text-only. Keep the main assistant unchanged and use a
-        # dedicated NVIDIA vision model on the same managed provider endpoint.
-        route["model"] = "nvidia/nemotron-3.5-super-vl-120b-a12b"
+    if route['model'] not in ALLOWED_MODELS or model_pin['endpoint']!='integrate.api.nvidia.com':
+        raise ValueError('Only NVIDIA Nemotron Lightning and Ultra are permitted. No provider fallback was made.')
+    if request['role']=='W33':
+        raise ValueError('Image analysis is unavailable under the Lightning/Ultra-only model policy.')
     with tempfile.TemporaryDirectory(prefix="wayfinder-worker-") as temporary:
         # No main profile, credentials, memories, project rules, plugins or session DB.
         os.chdir(temporary)

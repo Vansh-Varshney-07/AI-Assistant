@@ -8,12 +8,12 @@ it('every exposed preload intent has one actual privileged handler, with no gene
   expect(source).toContain('const methods = release.preload_methods');
   const names = release.preload_methods;
   const handlers = createHandlers({ call: vi.fn() }, { pick: vi.fn(), confirm: vi.fn() }, { status: vi.fn(), connect: vi.fn() });
-  expect(new Set(names.filter(n=>!n.startsWith('setup')))).toEqual(new Set(Object.keys(handlers)));
+  expect(new Set(names.filter(n=>!n.startsWith('setup')&&!['importConnections','disconnectConnection'].includes(n)))).toEqual(new Set(Object.keys(handlers)));
   expect(names).not.toContain('invoke'); expect(names).not.toContain('exec'); expect(names).not.toContain('call');
 });
 it('uses one declared set for routes and palette, excluding unfinished features', () => {
   expect(release.variant).toBe('workspace-parity');
   expect(new Set(release.navigation.map(p => p.id)).size).toBe(release.navigation.length);
   expect(release.navigation.map(p => p.id)).not.toContain('scheduler');
-  for (const route of ['chat_start','schedule_create','platform_google_read','worker_action_decide']) expect(release.backend_operations).not.toContain(route);
+  for (const route of ['chat_start','schedule_create','connections_configure','worker_action_decide']) expect(release.backend_operations).not.toContain(route);
 });

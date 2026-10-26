@@ -76,7 +76,7 @@ export class BackendBridge implements Transport {
     }
     if (Buffer.byteLength(this.buffer, 'utf8') > 65536) { this.child?.kill(); this.buffer = ''; this.stopped('Backend response exceeded the bounded transport.'); }
   }
-  call(operation: string, body: Row = {}, timeout = 40000): Promise<any> {
+  call(operation: string, body: Row = {}, timeout = ['platform_external_read','platform_connections_check'].includes(operation)?90000:40000): Promise<any> {
     const child = this.child; if (!child?.stdin.writable) return Promise.reject(new Error('Backend offline. Retry connection in Settings.'));
     if (this.pending.size >= 16) return Promise.reject(new Error('Too many pending requests. Wait for current work.'));
     const id = randomUUID();

@@ -1,6 +1,6 @@
 {
-  "build": "wayfinder-desktop/0.4.0",
-  "scope": "onboarded_local_assistant_candidate",
+  "build": "wayfinder-desktop/0.4.1",
+  "scope": "read_only_connections_candidate",
   "connected": [
     {
       "feature": "spaces",
@@ -153,13 +153,21 @@
         "chat_delete"
       ],
       "scope": "Explicitly approved managed model; canonical bounded history; no automatic memory writes or tools."
+    },
+    {
+      "feature": "read_only_connections",
+      "backend": "wayfinder/platform/connections.py",
+      "operations": [
+        "platform_connections_status",
+        "platform_connections_check",
+        "platform_external_grant",
+        "platform_external_read",
+        "platform_external_revoke"
+      ],
+      "scope": "Imported Windows-account-encrypted credentials; owner/space/task grants; no account writes, automatic memory or model disclosure."
     }
   ],
   "excluded": [
-    {
-      "feature": "google_live",
-      "reason": "Live account read/write qualification unfinished; no account connector controls exposed."
-    },
     {
       "feature": "tasks_and_sync",
       "reason": "No completed Wayfinder WorkItem/two-way synchronization service or qualified Hermes Kanban scope/approval adapter."
@@ -203,7 +211,7 @@
   "native_testing_enabled": false,
   "schema": "wayfinder.desktop-inclusion/v1",
   "variant": "workspace-parity",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "navigation": [
     {
       "id": "home",
@@ -320,7 +328,17 @@
     "sendChat",
     "cancelChat",
     "lookupChat",
-    "deleteChat"
+    "deleteChat",
+    "importConnections",
+    "disconnectConnection",
+    "connectionsStatus",
+    "checkConnection",
+    "googleGrant",
+    "googleRead",
+    "googleRevoke",
+    "externalGrant",
+    "externalRead",
+    "externalRevoke"
   ],
   "backend_operations": [
     "status",
@@ -381,13 +399,26 @@
     "chat_send",
     "chat_cancel",
     "chat_lookup",
-    "chat_delete"
+    "chat_delete",
+    "platform_google_grant",
+    "platform_google_read",
+    "platform_google_revoke",
+    "platform_connections_status",
+    "platform_connections_check",
+    "platform_external_grant",
+    "platform_external_read",
+    "platform_external_revoke"
   ],
   "private_facades": [
     "boot",
     "describe",
     "snapshot",
     "retry_details",
-    "shutdown"
+    "shutdown",
+    "connections_configure"
+  ],
+  "allowed_llm_models": [
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "nvidia/nemotron-3-ultra-550b-a55b"
   ]
 }

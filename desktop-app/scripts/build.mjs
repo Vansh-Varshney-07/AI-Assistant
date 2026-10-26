@@ -9,3 +9,5 @@ await build({ entryPoints: [path.join(root, 'src/main/index.ts')], outfile: path
 await build({ entryPoints: [path.join(root, 'src/preload/index.ts')], outfile: path.join(root, 'dist/preload/index.cjs'), bundle: true, platform: 'node', target: 'node22', format: 'cjs', external: ['electron'] });
 await copyFile(path.join(root, 'FEATURES.json'), path.join(root, 'dist/release.json'));
 console.log('Built renderer, isolated preload, main broker and build inclusion snapshot.');
+
+await build({entryPoints:[path.join(root,'scripts/import-local-connections.ts')],outfile:path.join(root,'.cache/import-local-connections.cjs'),bundle:true,platform:'node',target:'node22',format:'cjs',external:['electron']});

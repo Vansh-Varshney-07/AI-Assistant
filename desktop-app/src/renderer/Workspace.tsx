@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Activity, ArrowUp, ArrowUpRight, BrainCircuit, Check, Compass, Database, FileText, GitBranch, Link2, Radio, ShieldCheck } from 'lucide-react';
 import type { BackendState, DesktopAPI, Row } from '../shared/types';
+import {ConnectionsWorkspace} from './Connections';
 
 export type WorkspacePage = 'chat' | 'home' | 'agents' | 'memory' | 'documents' | 'runs' | 'repository' | 'capabilities' | 'connections' | 'permissions' | 'settings';
 interface Context { backend: BackendState; snapshot: Row; spaceName: string; go: (page: WorkspacePage) => void }
@@ -29,15 +30,7 @@ export function WorkspaceHome({ backend, snapshot, spaceName, go }: Context) {
 }
 
 interface ConnectionProps { backend: BackendState; space: string; api: DesktopAPI; busy: boolean; act: (job: () => Promise<any>, then?: (value: any) => void) => Promise<void>; go: (page: WorkspacePage) => void }
-export function ConnectionsPanel({ backend, space, api, busy, act, go }: ConnectionProps) {
-  const [google, setGoogle] = useState<Row | null>(null);
-  return <div className="connections-page"><p className="surface-intro">Configuration, operation qualification and permission are separate. These cards report the existing application, not sample connected accounts.</p><div className="connection-grid">
-    <section className="connection-card"><div className="connection-card-top"><span className="connector-symbol"><Database size={24} /></span><span className="badge good">{backend.state === 'ready' ? 'App connected' : backend.state}</span></div><h2>Iron Web</h2><p>Existing memory service and scoped evidence. Graph and vector utilization are not separately measured here.</p><button onClick={() => go('memory')}>Inspect memory <ArrowUpRight size={14} /></button></section>
-    <section className="connection-card"><div className="connection-card-top"><span className="connector-symbol"><Compass size={24} /></span><span className="badge">{backend.capabilities?.documents ? 'Binding inspected' : 'Inspection required'}</span></div><h2>Hermes / OpenShell</h2><p>Managed reasoning for selected document analysis. Registered tools do not imply permission to execute them.</p><button onClick={() => go('capabilities')}>Inspect actual runtime <ArrowUpRight size={14} /></button></section>
-    <section className="connection-card"><div className="connection-card-top"><span className="connector-symbol google-symbol">G</span><span className="badge">{google ? (google.credential_file_present ? 'Configured · unqualified' : 'Account setup required') : 'Setup not checked'}</span></div><h2>Google Workspace</h2><p>Calendar, Tasks and Gmail references are selected. This build exposes setup status; live account reads remain unqualified.</p><button disabled={busy || !space} onClick={() => void act(() => api.googleStatus(space), setGoogle)}>Check setup status</button>{google && <p className="connection-note" role="status">{google.setup}</p>}</section>
-    <section className="connection-card"><div className="connection-card-top"><span className="connector-symbol"><GitBranch size={24} /></span><span className="badge">{backend.capabilities?.git_branch ? 'Local connector configured' : 'Unavailable'}</span></div><h2>Local Git</h2><p>One reviewed new-branch operation in a selected ordinary repository. Hosted GitHub, commits and pushes are not connected.</p><button onClick={() => go('repository')}>Open local operation <ArrowUpRight size={14} /></button></section>
-  </div><div className="qualification-note"><Link2 size={20} /><div><strong>Only demonstrated operations become available.</strong><p>Notion, fitness, message sending and native desktop execution remain excluded. Their presence in a design or tool registry does not connect an account.</p></div></div></div>;
-}
+export function ConnectionsPanel({backend,space,api}:ConnectionProps){return <ConnectionsWorkspace backend={backend} space={space} api={api}/>;}
 
 export function PermissionsPanel({ snapshot, go }: Pick<Context, 'snapshot' | 'go'>) {
   const pending = list(snapshot.actions).filter(row => row.status === 'pending');

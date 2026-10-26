@@ -44,7 +44,7 @@ describe('Privileged broker boundaries', () => {
     const { handlers, call } = setup();
     expect(() => handlers.proposeMemory('space', { text: 'x', subject: 'me', predicate: 'field', value: 1, action: 'assert', approve: true })).toThrow('Unsupported');
     expect(call).not.toHaveBeenCalled();
-    expect(handlers).not.toHaveProperty('call'); expect(handlers).not.toHaveProperty('execute'); expect(handlers).not.toHaveProperty('googleRead');
+    expect(handlers).not.toHaveProperty('call'); expect(handlers).not.toHaveProperty('execute'); expect(handlers).not.toHaveProperty('connections_configure');
   });
   it('paths come only from the native picker and references remain space-bound', async () => {
     const { handlers, call } = setup();

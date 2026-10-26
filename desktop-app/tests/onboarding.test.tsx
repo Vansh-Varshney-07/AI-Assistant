@@ -9,8 +9,8 @@ import path from 'node:path';
 it('accepts only local engines and exact public provider fields',()=>{
   expect(localDocker('npipe:////./pipe/dockerDesktopLinuxEngine')).toBe(true);
   for(const v of ['tcp://example.com:2375','ssh://server','npipe:////x/pipe/test'])expect(localDocker(v)).toBe(false);
-  expect(validModel({model:'m',provider:'custom',endpoint:'inference.local'})).toBe(true);
-  expect(validModel({model:'m',provider:'custom',endpoint:'inference.local',token:'secret'})).toBe(false);
+  expect(validModel({model:'nvidia/nemotron-3.5-lightning-30b-a3b',provider:'custom',endpoint:'integrate.api.nvidia.com'})).toBe(true);
+  expect(validModel({model:'nvidia/nemotron-3.5-lightning-30b-a3b',provider:'custom',endpoint:'integrate.api.nvidia.com',token:'secret'})).toBe(false);
 });
 it('fresh onboarding cannot finish without actual checks and consent',async()=>{
   const root=await fs.mkdtemp(path.join(os.tmpdir(),'wayfinder-setup-unit-'));

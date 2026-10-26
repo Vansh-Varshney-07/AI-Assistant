@@ -13,10 +13,12 @@ type Runner=(file:string,args:string[],options?:{env?:NodeJS.ProcessEnv;timeout?
 const command:Runner=async(file,args,options={})=>{try{return (await execute(file,args,{windowsHide:true,timeout:options.timeout||30000,maxBuffer:2*1024*1024,env:options.env||process.env})).stdout.toString();}catch{throw new Error('The requested local service check failed. Check Docker or the managed environment and retry.');}};
 export interface ModelPin{model:string;provider:string;endpoint:string}
 interface Saved{version:1;complete:true;context:string;model:ModelPin;workspace:string;workspaceName:string}
-export function validModel(value:any):value is ModelPin{return !!value&&typeof value.model==='string'&&value.model.length>0&&value.model.length<250&&typeof value.provider==='string'&&value.provider.length<100&&['inference.local','integrate.api.nvidia.com'].includes(value.endpoint)&&Object.keys(value).sort().join(',')==='endpoint,model,provider';}
+export function validModel(value:any):value is ModelPin{return !!value&&['nvidia/nemotron-3.5-lightning-30b-a3b','nvidia/nemotron-3-ultra-550b-a55b'].includes(value.model)&&typeof value.provider==='string'&&value.provider.length<100&&value.endpoint==='integrate.api.nvidia.com'&&Object.keys(value).sort().join(',')==='endpoint,model,provider';}
 export function localDocker(endpoint:string){return /^npipe:\/\/\/\/\.\/pipe\/[A-Za-z0-9_.-]+$/.test(endpoint)||endpoint.startsWith('unix:///');}
 export class SetupManager{
   readonly id:string;readonly container:string;readonly volume:string;readonly configPath:string;
+  private connectionSource?:()=>Promise<any>;
+  setConnectionSource(source:()=>Promise<any>){this.connectionSource=source;}
   private saved?:Saved;private context?:string;private password?:string;private port?:string;
   private model?:ModelPin;private modelChecked=0;private memory=false;private busy=false;private error='';private phase='Welcome';private connecting?:Promise<BackendState>;
   constructor(readonly userData:string,readonly runtime:string,readonly project:string,readonly executable:string,readonly models:string,readonly bridge:BackendBridge,private run:Runner=command){
@@ -33,7 +35,7 @@ export class SetupManager{
   }
   private sameModel(a:any,b:any){return validModel(a)&&validModel(b)&&a.model===b.model&&a.provider===b.provider&&a.endpoint===b.endpoint;}
   ready(){return !!this.saved;}
-  status(){return {complete:!!this.saved,busy:this.busy,phase:this.phase,error:this.error,backendBundled:existsSync(this.executable),memoryReady:this.memory,databaseReady:!!this.port,modelReady:!!this.model&&Date.now()-this.modelChecked<300000,model:this.model||this.saved?.model,workspaceName:this.saved?.workspaceName,storage:this.runtime,requires:['Docker Desktop with Linux containers','Existing managed Hermes/OpenShell installation and configured provider'],integrations:'Google, Notion, GitHub and Fitness are not connected by setup.'};}
+  status(){return {complete:!!this.saved,busy:this.busy,phase:this.phase,error:this.error,backendBundled:existsSync(this.executable),memoryReady:this.memory,databaseReady:!!this.port,modelReady:!!this.model&&Date.now()-this.modelChecked<300000,model:this.model||this.saved?.model,workspaceName:this.saved?.workspaceName,storage:this.runtime,requires:['Docker Desktop with Linux containers','Existing managed Hermes/OpenShell installation and configured provider'],integrations:'Import Google, Tavily and Notion credentials in Connections after setup. Hosted GitHub and Fitness remain unavailable.'};}
   private async action<T>(phase:string,job:()=>Promise<T>):Promise<T>{
     if(this.busy)throw new Error('A setup check is already running.');this.busy=true;this.phase=phase;this.error='';
     try{return await job();}catch(e){this.error=e instanceof Error?e.message:'Setup could not confirm readiness.';throw new Error(this.error);}finally{this.busy=false;}
@@ -82,7 +84,7 @@ export class SetupManager{
   });}
   private async diagnostic(kind:'memory'|'hermes'){
     if(!existsSync(this.executable))throw new Error('The packaged backend is missing. Use the complete Windows build.');
-    let output:string;try{output=await this.run(this.executable,['--project',this.project,'--runtime',this.runtime,'--diagnose',kind],{timeout:125000,env:{...process.env,WAYFINDER_MODELS_ROOT:this.models,USE_GPU:'false',HF_HUB_OFFLINE:'1',TRANSFORMERS_OFFLINE:'1'}});}catch{throw new Error(kind==='memory'?'The bundled memory model could not run. Re-extract the complete app and retry.':'Hermes/OpenShell could not be verified. Start the existing managed environment and check its provider configuration, then retry.');}
+    let output:string;try{output=await this.run(this.executable,['--project',this.project,'--runtime',this.runtime,'--diagnose',kind],{timeout:125000,env:{...process.env,WAYFINDER_MODELS_ROOT:this.models,USE_GPU:'false',PYTHONDONTWRITEBYTECODE:'1',HF_HUB_OFFLINE:'1',TRANSFORMERS_OFFLINE:'1'}});}catch{throw new Error(kind==='memory'?'The bundled memory model could not run. Re-extract the complete app and retry.':'Hermes/OpenShell could not be verified. Start the existing managed environment and check its provider configuration, then retry.');}
     const lines=output.split(/\r?\n/).filter(line=>line.startsWith('WAYFINDER_DIAGNOSTIC='));if(lines.length!==1)throw new Error('The backend returned an invalid setup report.');return JSON.parse(lines[0].slice('WAYFINDER_DIAGNOSTIC='.length));
   }
   async memoryCheck(){return this.action('Checking the bundled memory model',async()=>{const report=await this.diagnostic('memory');if(!report.ready||report.dimensions!==384)throw new Error('The memory model did not pass its real inference check.');this.memory=true;return this.status();});}
@@ -90,7 +92,7 @@ export class SetupManager{
   private environment(model:ModelPin){if(!this.port||!this.password)throw new Error('Check the private database first.');return {FALKORDB_HOST:'127.0.0.1',FALKORDB_PORT:this.port,FALKORDB_PASSWORD:this.password,FALKORDB_USERNAME:'default',FALKORDB_GRAPH_NAME:'wayfinder_'+this.id,WAYFINDER_MODELS_ROOT:this.models,WAYFINDER_CHAT_PROVIDER_PIN:JSON.stringify(model),USE_GPU:'false'};}
   private async boot(model:ModelPin){
     this.bridge.configure({executable:this.executable,environment:this.environment(model)});
-    const backend=await this.bridge.connect();if(backend.state!=='ready')throw new Error(backend.error||'The packaged backend could not start.');return backend;
+    const backend=await this.bridge.connect();if(backend.state!=='ready')throw new Error(backend.error||'The packaged backend could not start.');if(this.connectionSource)await this.bridge.call('connections_configure',{connections:await this.connectionSource()});return backend;
   }
   async finish(name:unknown,consent:unknown){return this.action('Creating your workspace',async()=>{
     if(typeof name!=='string'||!name.trim()||name.length>100||consent!==true)throw new Error('Choose a workspace name and explicitly approve use of the displayed model connection.');

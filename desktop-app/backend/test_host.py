@@ -73,7 +73,7 @@ def test_selected_file_grant_revoke_and_foreign_scope(host, tmp_path):
         host.call("worker_search", dict(scope, grant=grant["id"]))
 
 
-@pytest.mark.parametrize("operation", ["worker_action_decide", "platform_google_read", "propose", "decide", "chat_start", "schedule_create"])
+@pytest.mark.parametrize("operation", ["worker_action_decide", "platform_google_write", "propose", "decide", "chat_start", "schedule_create"])
 def test_unqualified_or_legacy_approval_routes_excluded(host, operation):
     with pytest.raises(ValueError, match="not included"):
         host.call(operation, {})

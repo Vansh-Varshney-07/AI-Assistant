@@ -11,6 +11,16 @@ export interface BackendState {
   instance_generation?: string;
 }
 export interface DesktopAPI {
+  importConnections():Promise<Row|null>;
+  disconnectConnection(provider:'google'|'tavily'|'notion'):Promise<Row>;
+  connectionsStatus(space:string):Promise<Row>;
+  checkConnection(space:string,provider:'google'|'tavily'|'notion'):Promise<Row>;
+  googleGrant(space:string,request:Row):Promise<Row>;
+  googleRead(space:string,grant:string):Promise<Row>;
+  googleRevoke(space:string,grant:string):Promise<Row>;
+  externalGrant(space:string,request:Row):Promise<Row>;
+  externalRead(space:string,grant:string):Promise<Row>;
+  externalRevoke(space:string,grant:string):Promise<Row>;
   setupStatus(): Promise<Row>;
   setupDatabase(download: boolean): Promise<Row>;
   setupMemory(): Promise<Row>;

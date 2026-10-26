@@ -81,7 +81,7 @@ class Session:
                 documents=bool(current.get("compatible")),
                 comparison=bool(current.get("compatible")),
                 git_branch=bool(self.service.platform.connectors.git.available),
-                general_chat=bool(current.get("compatible") and self.service.chat.approved_model and current.get("isolation",{}).get("model_info")==self.service.chat.approved_model), google_live=False, scheduler=False,
+                general_chat=bool(current.get("compatible") and self.service.chat.approved_model and current.get("isolation",{}).get("model_info")==self.service.chat.approved_model), google_live=self.service.platform.connections.qualified('google'), tavily_search=self.service.platform.connections.qualified('tavily'), notion_read=self.service.platform.connections.qualified('notion'), scheduler=False,
                 workflow_builder=False, local_tasks=False, native_desktop=False,
             ),
             runtime_inspection=current,
@@ -125,6 +125,10 @@ class Session:
             if body:
                 raise ValueError("Boot has no caller-controlled configuration.")
             return self.start()
+        if operation == 'connections_configure':
+            self.require()
+            if set(body)!={'connections'}:raise ValueError('Invalid private connection bootstrap.')
+            return self.service.platform.connections.configure(body['connections'])
         if operation == "describe":
             if body:
                 raise ValueError("Status has no inputs.")

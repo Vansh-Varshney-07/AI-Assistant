@@ -30,15 +30,13 @@ describe('New GitHub command workspace with real-state projections', () => {
     expect(screen.getByRole('button', { name: /Active read runs/ }).textContent).toContain('—');
     expect(screen.getAllByText('Waiting for the first snapshot')).toHaveLength(4);
   });
-  it('reports Google configuration separately from live account qualification', async () => {
-    const googleStatus = vi.fn(async () => ({ credential_file_present: true, live_qualified: false, setup: 'Complete local account consent.' }));
-    const act = async (job: () => Promise<any>, then?: (value: any) => void) => then?.(await job());
-    render(<ConnectionsPanel backend={backend} space="owned-space" api={{ googleStatus } as unknown as DesktopAPI} busy={false} act={act} go={vi.fn()} />);
-    expect(screen.getByText('Setup not checked')).toBeTruthy();
-    await userEvent.click(screen.getByRole('button', { name: 'Check setup status' }));
-    expect(await screen.findByText('Configured · unqualified')).toBeTruthy();
-    expect(googleStatus).toHaveBeenCalledWith('owned-space');
-    expect(screen.queryByText('Google connected')).toBeNull();
+  it('separates imported Google credentials from a live check',async()=>{
+    const connectionsStatus=vi.fn(async()=>({configured:{google:true},checks:{}}));
+    const checkConnection=vi.fn(async()=>({configured:{google:true},checks:{google:{passed:true,label:'Read checks verified'}}}));
+    render(<ConnectionsPanel backend={backend} space="owned-space" api={{connectionsStatus,checkConnection} as unknown as DesktopAPI} busy={false} act={async()=>{}} go={vi.fn()}/>);
+    expect(await screen.findByText('Imported \u00b7 check pending')).toBeTruthy();
+    await userEvent.click(screen.getByRole('button',{name:'Check Google connection'}));
+    expect(await screen.findByText('Live check passed')).toBeTruthy();expect(checkConnection).toHaveBeenCalledWith('owned-space','google');
   });
   it('routes a review request to the actual review list rather than an inline approval', async () => {
     const go = vi.fn(); render(<PermissionsPanel snapshot={snapshot} go={go} />);
