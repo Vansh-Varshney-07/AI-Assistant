@@ -1,0 +1,157 @@
+{
+  "batch": 4,
+  "scope": "artifact consistency and finite design models only",
+  "original_files_unchanged": 23,
+  "findings_total": 36,
+  "findings_design_addressed": 29,
+  "contracts_present": 20,
+  "release_manifest": {
+    "features": 15,
+    "acyclic": true,
+    "cumulative_releases": 7
+  },
+  "original_safety_models": {
+    "action_guarded": {
+      "states": 240,
+      "edges": 875,
+      "bfs_dfs_same_reachable_states": true,
+      "dfs_edges": 875,
+      "violating_states": 0,
+      "shortest_counterexamples": {}
+    },
+    "chat_guarded": {
+      "states": 10,
+      "edges": 22,
+      "bfs_dfs_same_reachable_states": true,
+      "shortest_counterexamples": {}
+    },
+    "negative_control_action": {
+      "states": 1376,
+      "edges": 5632,
+      "bfs_dfs_same_reachable_states": true,
+      "dfs_edges": 5632,
+      "violating_states": 1024,
+      "shortest_counterexamples": {
+        "dispatch_requires_current_exact_authorization": [
+          "switch_active_account",
+          "approve_original_proposal",
+          "dispatch"
+        ],
+        "complete_requires_independent_verification": [
+          "approve_original_proposal",
+          "dispatch",
+          "provider_applies",
+          "receive_acknowledgement"
+        ],
+        "uncertain_write_is_not_redispatched": [
+          "approve_original_proposal",
+          "dispatch",
+          "lose_acknowledgement",
+          "ordinary_retry_same_action",
+          "dispatch"
+        ],
+        "same_action_id_has_at_most_one_effect": [
+          "approve_original_proposal",
+          "dispatch",
+          "provider_applies",
+          "lose_acknowledgement",
+          "ordinary_retry_same_action",
+          "dispatch",
+          "provider_applies"
+        ]
+      }
+    },
+    "negative_control_chat": {
+      "states": 30,
+      "edges": 86,
+      "bfs_dfs_same_reachable_states": true,
+      "shortest_counterexamples": {
+        "scope_safe_delivery": [
+          "switch_visible_space",
+          "submit_in_space_A",
+          "delta_1_for_space_A"
+        ],
+        "terminal_cancel_not_resurrected": [
+          "submit_in_space_A",
+          "server_confirms_cancel",
+          "complete_2_for_space_A"
+        ],
+        "duplicate_final_not_published": [
+          "submit_in_space_A",
+          "complete_2_for_space_A",
+          "complete_2_for_space_A"
+        ]
+      }
+    },
+    "orderings": {
+      "results": {
+        "deliberately_permissive": {
+          "orders": 288,
+          "violating_orders": 116
+        },
+        "guarded": {
+          "orders": 288,
+          "violating_orders": 0
+        }
+      },
+      "interpretation": "abstract event orderings; not concurrent threads or provider races"
+    },
+    "wire": {
+      "passed": 9,
+      "source_sha256": "b95abbd2c080756755a38c7b42f2bfaa05bc395f719312a0672cb627e852165e",
+      "interpretation": "existing Python wire function only; future TypeScript event contract is still unspecified"
+    },
+    "dates": {
+      "spring_local_time_nonexistent": true,
+      "autumn_local_time_ambiguous": true,
+      "date_only_task_can_shift_day_if_treated_as_timestamp": true,
+      "interpretation": "timezone arithmetic only; no schedule was created or tested"
+    }
+  },
+  "epoch_negative_control": {
+    "states": 23,
+    "edges": 57,
+    "bfs_dfs_agree": true,
+    "stale_delivery_counterexample": [
+      "submit_frozen_context",
+      "disconnect_or_replace_account",
+      "worker_finishes",
+      "publish_or_rehydrate_cached_result"
+    ],
+    "assumptions": "one input, one context revision, one account epoch; no real storage/provider"
+  },
+  "epoch_guarded": {
+    "states": 18,
+    "edges": 45,
+    "bfs_dfs_agree": true,
+    "stale_delivery_counterexample": null,
+    "assumptions": "one input, one context revision, one account epoch; no real storage/provider"
+  },
+  "unresolved_links": [
+    [
+      "README.md",
+      "PLAN.md"
+    ],
+    [
+      "README.md",
+      "review/REVIEW.md"
+    ],
+    [
+      "README.md",
+      "preview.html"
+    ],
+    [
+      "README.md",
+      "FLOWS.md"
+    ],
+    [
+      "README.md",
+      "ACCEPTANCE.csv"
+    ],
+    [
+      "README.md",
+      "WORKER-SURFACES.md"
+    ]
+  ],
+  "implementation_status": "Not run; no desktop app or live integration tested"
+}

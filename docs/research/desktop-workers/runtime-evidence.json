@@ -1,0 +1,30 @@
+{
+  "research_date": "2026-10-25",
+  "timezone": "Asia/Calcutta",
+  "evidence_type": "read_only_status_and_installed_source_inspection",
+  "sandbox": "ai-assistant",
+  "sandbox_phase": "Ready",
+  "hermes_version_reported": "0.21.3",
+  "hermes_agent_status_reported": "running",
+  "openshell_version_reported": "0.0.116",
+  "configured_model": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "configured_provider": "nvidia-prod",
+  "upstream_inference_invoked_for_this_research": false,
+  "desktop_capture_performed": false,
+  "source_root": "/opt/hermes",
+  "source_git_revision": null,
+  "source_git_revision_note": "Read-only git rev-parse could not recover a revision; file hashes identify inspected content instead.",
+  "tool_enablement_verified": false,
+  "driver_functionality_verified": false,
+  "vision_route_functionality_verified": false,
+  "files": [
+    {"path": "tools/delegate_tool.py", "sha256": "8d2d684eda36dfa2b8371da814522d9b08c686105969eef366d265ae6f9e50f2", "registered_tools": ["delegate_task"]},
+    {"path": "tools/delegate_tool_toolsets.py", "sha256": "a1967a15c535dbbd100a812bfa5d43dd26459f1775ded775d59716faa1acfbe2", "findings": ["Parent toolset inheritance", "MCP inheritance handling"]},
+    {"path": "tools/file_tools.py", "sha256": "3dfa1aa17b83641857b04634b7de7af77e0679719d9eb4a4f4bee689991ac433", "registered_tools": ["read_file", "write_file", "patch", "search_files"]},
+    {"path": "tools/vision_tools.py", "sha256": "a3c3c4c0da62b4e9c91b46fcfc572e3a9bbdeb3e2a7c65a81e9a9a66fda8955e", "registered_tools": ["vision_analyze", "video_analyze"]},
+    {"path": "tools/computer_use_tool.py", "sha256": "c403381c6ee19f09297740c1379ad9974e3e432a555d55ff5950e1fce078cc78", "registered_tools": ["computer_use"]},
+    {"path": "tools/computer_use/schema.py", "sha256": "e587dcd762a1f437dbd2047ca479a741899e0bead6987f89342079d4be559b22", "findings": ["capture", "list_windows", "click", "type"]},
+    {"path": "tools/computer_use/tool.py", "sha256": "1d8bf2f668cc5cd5aee2eb9bdbaf89d6f8e43afc2707f11440560e9cb9809407", "findings": ["Approval scope key cua:<action>:<mode>"]},
+    {"path": "agent/file_safety.py", "sha256": "e7aaf61a7c7be5f1af0b2947657caad99a1f5055b08acdb89f0601a24f7f6ea3", "findings": ["HERMES_WRITE_SAFE_ROOT is a write control; it is not evidence of an authorized-directory read boundary"]}
+  ]
+}

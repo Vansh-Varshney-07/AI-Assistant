@@ -1,0 +1,35 @@
+{
+  "prepared": "2026-10-24",
+  "scope": "pre-manuscript research for Iron Web; supplied format pending",
+  "supplied_pdf_count": 3,
+  "supplied_pdf_pages": 55,
+  "curated_reference_count": 21,
+  "reported_overall_rows": 46,
+  "reported_category_rows": 68,
+  "pdf_tables_visually_checked": [
+    "Mem0 Tables 1 and 2",
+    "Zep Tables 1, 2 and 3",
+    "MemPalace Tables 4, 5 and 6"
+  ],
+  "external_results_reproduced": false,
+  "iron_web_public_benchmark_results": "not measured",
+  "new_application_tests_run": false,
+  "application_code_modified": false,
+  "limitations": [
+    "Targeted reference expansion, not exhaustive systematic review",
+    "Additional papers mostly abstract/metadata screened, not full-text reviewed",
+    "PDF extraction warned about rotated text and overlapping layout",
+    "Historical and live primary reports may use different dataset/model versions",
+    "Gemini deep-research skill runtime unavailable: GEMINI_API_KEY not configured; used direct PDF and primary-source tools"
+  ],
+  "arithmetic_from_rounded_tables": {
+    "mem0_vs_chatgpt_relative_percent": 26.427221172022676,
+    "mem0_vs_chatgpt_percentage_points": 13.979999999999997,
+    "mem0g_vs_mem0_relative_percent": 2.332535885167464,
+    "mem0g_vs_mem0_percentage_points": 1.5600000000000023,
+    "mem0_p95_reduction_vs_fullcontext_percent": 91.58731086054799,
+    "mem0_context_token_reduction_percent": 93.22346433098997,
+    "zep_mini_relative_percent": 15.162454873646203,
+    "zep_4o_relative_percent": 18.272425249169434
+  }
+}

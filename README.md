@@ -7,6 +7,16 @@ This folder is self-contained source for the FalkorDB + embedded Qdrant memory s
 
 The canonical project folder is `D:\Opencode_\AI assistant`. See [ops/SETUP.md](ops/SETUP.md) for the dedicated Ubuntu environment, Hermes/NemoClaw/OpenShell installation steps, verified migration checks and remaining setup work.
 
+The native Wayfinder app now includes scoped file discovery, Hermes file analysis, explicit image sharing, and reviewable desktop planning. Launch `Start-Wayfinder.ps1` and open **Desktop workers**. See [desktop worker usage and limits](docs/desktop-workers/README.md). Windows action execution remains locked pending a verified host driver connection.
+
+The first trusted platform workflow connects Atlas selection, scoped Iron Web recall, and the existing Hermes W35 worker through the authenticated API. See the [platform results](docs/platform/RESULTS.md), [platform interfaces](docs/platform/INTERFACES.md), and [controlled local Git qualification](docs/platform/CONTROLLED-GIT.md). Platform testing defaults to terminal-only; native UI testing remains disabled.
+
+The [platform expansion](docs/platform/EXPANSION.md) adds scoped memory previews and approved change events, explicit read-only recovery, artifact evaluation/telemetry, local activity CSV access, and prepared Google read adapters. Real Google account qualification and W37 native execution remain pending.
+
+Google Calendar/Tasks and Gmail are selected. The [Google connection setup](docs/platform/GOOGLE-SETUP.md) explains the prepared OAuth helper and the account-consent steps still required from the user. Fitness remains deferred.
+
+The [consolidated agent and app plan](docs/platform/CONSOLIDATED-AGENT-PLAN.md) defines the main assistant, eight task-agent profiles, six app-focused presets, shared connections and researched implementation gates. These profiles are proposed, not activated.
+
 ## Architecture
 
 | Tier | Contents | Implementation |

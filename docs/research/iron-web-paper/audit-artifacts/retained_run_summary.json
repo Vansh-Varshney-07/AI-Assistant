@@ -1,0 +1,343 @@
+[
+  {
+    "folder": "live-validation",
+    "run_id": "live_1023_121339",
+    "csv_rows": 24,
+    "csv_outcomes": {
+      "Pass": 11,
+      "Unsupported": 3,
+      "Fail": 10
+    },
+    "json_rows": 24,
+    "json_outcomes": {
+      "Pass": 11,
+      "Unsupported": 3,
+      "Fail": 10
+    },
+    "event_count": 47,
+    "csv_json_counts_match": true,
+    "csv_json_case_records_match": true,
+    "csv_sha256": "eaf1681d4da5cbf7dc96b0e2cc2a8ca9d3eafae0b59e57068e1c9c271acde3f8",
+    "json_sha256": "6529039221f195f414fdad017d928cc1ed8b3f99817fc86edecfe168dc71b7b1",
+    "failed_checks": [
+      {
+        "model": null,
+        "test": "NVIDIA label_new",
+        "false_checks": [
+          "original_stored",
+          "change_stored",
+          "existing_claim_ended"
+        ]
+      },
+      {
+        "model": null,
+        "test": "NVIDIA review_new",
+        "false_checks": [
+          "original_stored",
+          "change_stored",
+          "existing_claim_ended"
+        ]
+      },
+      {
+        "model": null,
+        "test": "NVIDIA conflict extraction",
+        "false_checks": [
+          "disputed_state"
+        ]
+      },
+      {
+        "model": null,
+        "test": "NVIDIA project and preference extraction",
+        "false_checks": [
+          "project_stored",
+          "preference_stored",
+          "actual_preference_kind"
+        ]
+      },
+      {
+        "model": null,
+        "test": "NVIDIA project_answer",
+        "false_checks": [
+          "expected_evidence_present",
+          "expected_text_in_answer"
+        ]
+      },
+      {
+        "model": null,
+        "test": "NVIDIA label_answer",
+        "false_checks": [
+          "expected_evidence_present",
+          "cites_actual_returned_id",
+          "expected_text_in_answer"
+        ]
+      },
+      {
+        "model": null,
+        "test": "NVIDIA review_answer",
+        "false_checks": [
+          "expected_evidence_present",
+          "cites_actual_returned_id",
+          "expected_text_in_answer"
+        ]
+      },
+      {
+        "model": null,
+        "test": "NVIDIA conflict_answer",
+        "false_checks": [
+          "expected_evidence_present"
+        ]
+      },
+      {
+        "model": null,
+        "test": "Corrected label answer from accepted claims",
+        "false_checks": [
+          "exact_ids_in_answer"
+        ]
+      },
+      {
+        "model": null,
+        "test": "Conflict-aware answer from disputed claims",
+        "false_checks": [
+          "exact_ids_in_answer"
+        ]
+      }
+    ]
+  },
+  {
+    "folder": "nemotron-validation-before-schema",
+    "run_id": "nm_1023_124524",
+    "csv_rows": 18,
+    "csv_outcomes": {
+      "Pass": 13,
+      "Fail": 5
+    },
+    "json_rows": 18,
+    "json_outcomes": {
+      "Pass": 13,
+      "Fail": 5
+    },
+    "event_count": 42,
+    "csv_json_counts_match": true,
+    "csv_json_case_records_match": true,
+    "csv_sha256": "6601a35d1fcf5636dc61ca16ededfcf6145d0878f0b3bb7e3db01d00bd5db1be",
+    "json_sha256": "1bf398ffc1b01ad3152c7150d538dd50457a2e28eb136e925abe612f7f7dbe80",
+    "failed_checks": [
+      {
+        "model": "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "test": "2 Cross-session retrieval",
+        "false_checks": [
+          "ok",
+          "grounded_answer",
+          "citations"
+        ]
+      },
+      {
+        "model": "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "test": "3 Preference",
+        "false_checks": [
+          "preference_kind"
+        ]
+      },
+      {
+        "model": "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "test": "4 Automatic correction",
+        "false_checks": [
+          "writes_ok",
+          "old_claim_corrected",
+          "current_beta",
+          "grounded_answer"
+        ]
+      },
+      {
+        "model": "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "test": "7 Stale memory",
+        "false_checks": [
+          "prior_superseded"
+        ]
+      },
+      {
+        "model": "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "test": "8 Precision",
+        "false_checks": [
+          "ok",
+          "answer",
+          "orange_source_cited"
+        ]
+      }
+    ],
+    "grading_disagreements": [],
+    "observed_timings": {
+      "nvidia/nemotron-3.5-lightning-30b-a3b": {
+        "extraction_inference_ms": {
+          "n": 13,
+          "median": 1311.786
+        },
+        "generation_inference_ms": {
+          "n": 7,
+          "median": 1696.856
+        },
+        "query_adapter_total_ms": {
+          "n": 7,
+          "median": 3634.45
+        }
+      },
+      "nvidia/nemotron-3-ultra-550b-a55b": {
+        "extraction_inference_ms": {
+          "n": 13,
+          "median": 2894.184
+        },
+        "generation_inference_ms": {
+          "n": 7,
+          "median": 4989.94
+        },
+        "query_adapter_total_ms": {
+          "n": 7,
+          "median": 12346.847
+        }
+      }
+    },
+    "excluded_replayed_extraction_traces": {
+      "nvidia/nemotron-3.5-lightning-30b-a3b": 1,
+      "nvidia/nemotron-3-ultra-550b-a55b": 1
+    },
+    "timing_warning": "Historical event observations, not a controlled benchmark; inference traces include bounded retries; extraction replay traces excluded."
+  },
+  {
+    "folder": "nemotron-validation-schema-rejected",
+    "run_id": "nm_1023_125245",
+    "csv_rows": 18,
+    "csv_outcomes": {
+      "Pass": 13,
+      "Fail": 5
+    },
+    "json_rows": 8,
+    "json_outcomes": {
+      "Pass": 2,
+      "Fail": 6
+    },
+    "event_count": 18,
+    "csv_json_counts_match": false,
+    "csv_json_case_records_match": false,
+    "csv_sha256": "6601a35d1fcf5636dc61ca16ededfcf6145d0878f0b3bb7e3db01d00bd5db1be",
+    "json_sha256": "18d902eb25e5e18e423b0f9077dc0a6cea03d2548056b22c924f35d37aeba16d",
+    "failed_checks": [
+      {
+        "model": "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "test": "2 Cross-session retrieval",
+        "false_checks": [
+          "ok",
+          "grounded_answer",
+          "citations"
+        ]
+      },
+      {
+        "model": "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "test": "3 Preference",
+        "false_checks": [
+          "answer"
+        ]
+      },
+      {
+        "model": "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "test": "4 Automatic correction",
+        "false_checks": [
+          "grounded_answer",
+          "citations"
+        ]
+      },
+      {
+        "model": "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "test": "5 Conflict",
+        "false_checks": [
+          "answer_disputed",
+          "both_sides_cited"
+        ]
+      },
+      {
+        "model": "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "test": "6 Restart persistence",
+        "false_checks": [
+          "exact_phrase"
+        ]
+      },
+      {
+        "model": "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "test": "7 Stale memory",
+        "false_checks": [
+          "answer"
+        ]
+      }
+    ],
+    "grading_disagreements": [],
+    "observed_timings": {
+      "nvidia/nemotron-3.5-lightning-30b-a3b": {
+        "extraction_inference_ms": {
+          "n": 11,
+          "median": 1561.829
+        },
+        "query_adapter_total_ms": {
+          "n": 6,
+          "median": 3286.2055
+        }
+      }
+    },
+    "excluded_replayed_extraction_traces": {
+      "nvidia/nemotron-3.5-lightning-30b-a3b": 1
+    },
+    "timing_warning": "Historical event observations, not a controlled benchmark; inference traces include bounded retries; extraction replay traces excluded."
+  },
+  {
+    "folder": "nemotron-validation",
+    "run_id": "nm_1023_125909",
+    "csv_rows": 18,
+    "csv_outcomes": {
+      "Pass": 18
+    },
+    "json_rows": 18,
+    "json_outcomes": {
+      "Pass": 18
+    },
+    "event_count": 42,
+    "csv_json_counts_match": true,
+    "csv_json_case_records_match": true,
+    "csv_sha256": "320b40a986bcbe5031e5c0b2e212f9acd82344600a3b216f5ec922f71680fdac",
+    "json_sha256": "1a6f76f7a03b09188729cae11f01615b1c028fe7838b396eeaa7d01163ecc0f2",
+    "failed_checks": [],
+    "grading_disagreements": [],
+    "observed_timings": {
+      "nvidia/nemotron-3.5-lightning-30b-a3b": {
+        "extraction_inference_ms": {
+          "n": 13,
+          "median": 1709.398
+        },
+        "generation_inference_ms": {
+          "n": 7,
+          "median": 907.842
+        },
+        "query_adapter_total_ms": {
+          "n": 7,
+          "median": 2129.818
+        }
+      },
+      "nvidia/nemotron-3-ultra-550b-a55b": {
+        "extraction_inference_ms": {
+          "n": 13,
+          "median": 4776.2
+        },
+        "generation_inference_ms": {
+          "n": 7,
+          "median": 6543.537
+        },
+        "query_adapter_total_ms": {
+          "n": 7,
+          "median": 9600.997
+        }
+      }
+    },
+    "excluded_replayed_extraction_traces": {
+      "nvidia/nemotron-3.5-lightning-30b-a3b": 1,
+      "nvidia/nemotron-3-ultra-550b-a55b": 1
+    },
+    "timing_warning": "Historical event observations, not a controlled benchmark; inference traces include bounded retries; extraction replay traces excluded."
+  }
+]

@@ -1,0 +1,390 @@
+{
+  "paragraphs": [
+    {
+      "id": "I1",
+      "text": "Retrieval-augmented generation supplies external information to a language model [1], and memory hierarchies extend access beyond the active context window [2]. Persistent agent memory additionally accumulates assertions that may later be corrected, superseded, retracted, or disputed. Semantic relevance does not establish that a retrieved statement is currently applicable. A previously assembled prompt or recorded task can also become stale after its supporting evidence changes.",
+      "evidence": [
+        "rag",
+        "memgpt",
+        "analysis"
+      ]
+    },
+    {
+      "id": "I2",
+      "text": "Iron Web addresses this problem through explicit source and claim records, temporal eligibility, scoped retrieval, and guarded context/work use. We examine the implementation and retained records [3]. The contribution is an account of how these mechanisms interact and which behaviors the available evidence supports. It is not a new graph-search algorithm or a demonstrated improvement over existing systems.",
+      "evidence": [
+        "artifact",
+        "memory/engine.py",
+        "memory/lifecycle/service.py",
+        "memory/context/access.py"
+      ]
+    },
+    {
+      "id": "I3",
+      "text": "The study asks four questions. RQ1 concerns handling corrected, superseded, retracted, and conflicting evidence. RQ2 concerns stale-context detection and dependent-work revalidation. RQ3 asks whether hybrid retrieval and graph expansion provide measurable utility. RQ4 concerns their ingestion, retrieval, revalidation, and storage costs. The evidence partially addresses implementation and selected behaviors; it does not establish general superiority or resolve every question.",
+      "evidence": [
+        "analysis",
+        "audit-artifacts/retained_run_summary.json"
+      ]
+    },
+    {
+      "id": "RW1",
+      "text": "Mem0 extracts and updates compact memories; its graph variant adds relational representations [4]. Zep combines retained episodes, temporal facts, and hybrid retrieval [5]. Zep therefore provides prior art for preserving original evidence alongside derived relationships. Its paper describes provenance traversal but notes that the reported experiments do not directly examine those links. These precedents narrow Iron Web's contribution to the behavior and evaluation of its particular integration.",
+      "evidence": [
+        "2504.19413v1 pp.3-6",
+        "2501.13956v1 pp.2-5"
+      ]
+    },
+    {
+      "id": "RW2",
+      "text": "The MemPalace analysis motivates a strong raw-text retrieval baseline and warns against attributing retrieval gains to organizational metaphors [6]. Its retrieval-recall percentages cannot substitute for answer accuracy. Hindsight likewise distinguishes evidence, experience, and belief in its memory design [7]. Neither conceptual overlap nor an omitted evaluation establishes that a competing implementation lacks a feature.",
+      "evidence": [
+        "2604.21284v1 pp.9-10",
+        "hindsight primary abstract",
+        "analysis"
+      ]
+    },
+    {
+      "id": "RW3",
+      "text": "Event validity and system-recorded time are established temporal-database concerns [8]. Provenance models distinguish entities, activities, and responsible agents [9]. Conditional validation is also established: HTTP preconditions can reject an operation when a representation has changed [10]. These are conceptual precedents, not claims that Iron Web implements either standard. LoCoMo [11] and LongMemEval [12] evaluate conversational memory, but do not replace a direct experiment on stale context and dependent work.",
+      "evidence": [
+        "temporal primary abstract",
+        "prov official recommendation",
+        "http section 13.1.1",
+        "locomo",
+        "lme",
+        "analysis"
+      ]
+    },
+    {
+      "id": "PF1",
+      "text": "A source records text, origin, actor, confirmation state, recording time, and evidence group. A claim associates a subject, predicate, value, scope, validity interval, and supporting sources. Assertion introduces a candidate; confirmation changes its acceptance state. Correction identifies an earlier assertion as mistaken. Supersession represents a subsequent change. Retraction removes eligibility without requiring an invented replacement. Competing eligible values may remain disputed.",
+      "evidence": [
+        "memory/lifecycle/models.py:SourceInput",
+        "memory/lifecycle/models.py:ClaimInput",
+        "memory/lifecycle/service.py:ingest,views,recall"
+      ]
+    },
+    {
+      "id": "PF2",
+      "text": "Exact recall distinguishes event time from a system-known cut-off. Its temporal predicate checks the validity interval, acceptance time, recording time, and whether an ending was known at the requested cut-off. Eligibility is not proof of truth. A historical assertion corrected later must not automatically be reported as a historical fact. Scope constrains the subject/task context in which evidence is usable.",
+      "evidence": [
+        "memory/lifecycle/service.py:active",
+        "memory/lifecycle/service.py:views,recall",
+        "tests/test_memory_lifecycle.py:test_known_time_does_not_use_a_correction_that_was_not_yet_known"
+      ]
+    },
+    {
+      "id": "PF3",
+      "text": "A context proof identifies an assembled evidence state and its validity conditions. Work records identify supporting claims and prerequisite work. The reliability problem is to return an appropriate state and evidence, and to detect invalidated dependencies before accepting a response or completing recorded work. This definition is limited to represented requirements; it does not cover arbitrary unrecorded dependencies or external action atomicity.",
+      "evidence": [
+        "memory/context/access.py",
+        "memory/lifecycle/service.py:register_work,handoff,complete_work",
+        "analysis"
+      ]
+    },
+    {
+      "id": "A1",
+      "text": "Figure 1 separates four implemented entry paths. Direct calls reach the memory engine. The optional hosted workbench adds extraction, field routing, and answer generation. The shared context/work service adds receipts, context proofs, and dependency checks. Wayfinder uses a separate approval/proof boundary. Results from one path cannot establish the effectiveness of the others.",
+      "evidence": [
+        "memory/engine.py",
+        "memory/workbench.py",
+        "memory/shared/service.py",
+        "wayfinder/service.py"
+      ]
+    },
+    {
+      "id": "A2",
+      "text": "The engine coordinates a FalkorDB graph with embedded Qdrant vectors. Retrieval gathers vector candidates and bounded graph neighbors, reconciles temporal/lifecycle state, optionally reranks, and scores evidence. Source groups prevent repeated agent assertions from automatically counting as independent support. Ranking combines semantic, graph, recency, importance, entity, historical, contradiction, and reliability signals. The fuzzy reliability score is a heuristic, not a calibrated probability of truth.",
+      "evidence": [
+        "memory/storage.py",
+        "memory/retrieval/hybrid.py",
+        "memory/ranking/scorer.py",
+        "memory/lifecycle/models.py:support_group",
+        "memory/lifecycle/fuzzy.py"
+      ]
+    },
+    {
+      "id": "A3",
+      "text": "The shared runtime assembles essential fields and context cards within declared tokenizer budgets. Context stamps cover relevant source/claim data, scoped events, runtime identity, and process identity. Validation checks the stamp and expiry; the shared client can rebuild a response when evidence changes during generation. Claim updates can mark direct and transitive dependent work stale, while completion rechecks current requirements and ownership. These checks exist in code, but broad end-to-end effectiveness is not established by the retained live runs.",
+      "evidence": [
+        "memory/context/runtime.py",
+        "memory/context/access.py:_stamp,validate",
+        "memory/shared/client.py:generate_current",
+        "memory/lifecycle/service.py:invalidate_work,handoff",
+        "memory/shared/service.py:complete_work"
+      ]
+    },
+    {
+      "id": "A4",
+      "text": "SQLite supports shared-service receipts and replay. Cross-store operations use coordinated graph publication, vector snapshots, and compensation rather than one transaction spanning all stores. Cold backup/restore requires declared ownership and fresh targets. Recovery tests and historical repair metadata therefore support narrower claims than universal crash safety or complete deletion across caches, journals, and backups.",
+      "evidence": [
+        "memory/storage.py",
+        "memory/shared/journal.py",
+        "memory/shared/snapshot.py",
+        ".local/database-recovery/*/recovery-report.json"
+      ]
+    },
+    {
+      "id": "IM1",
+      "text": "The inspected default selects CPU execution, extraction policy none, BAAI/bge-small-en-v1.5 embeddings with 384 dimensions, up to 100 vector candidates, two graph hops, and a 50-node graph bound. BAAI/bge-reranker-base is configured but disabled. Shared-service defaults are constructed separately; environment overrides can change effective settings. These are inspected defaults, not resolved manifests for every historical run.",
+      "evidence": [
+        "config.yaml",
+        "memory/config.py",
+        "memory/engine.py:__init__",
+        "memory/shared/service.py:__init__"
+      ]
+    },
+    {
+      "id": "IM2",
+      "text": "The previously used environment contains FastEmbed 0.8.0, Qdrant client 1.18.0, FalkorDB client 1.7.1, and OpenAI client 1.60.0. CPU and GPU ONNX Runtime distributions coexist; installed packages do not prove active provider selection. The RTX 4050 Laptop GPU with 6 GB VRAM is user-reported, not independently verified by this study. No GPU inference result is inferred from an execution option.",
+      "evidence": [
+        "implementation_evidence_audit.md configuration section",
+        "package metadata audit",
+        "user-reported hardware"
+      ]
+    },
+    {
+      "id": "IM3",
+      "text": "With default extraction disabled, raw text need not yield structured facts. The hosted path instead validates model-derived claims, source quotes, scope, and citation identifiers. Quote membership does not prove entailment. Its exact-field routing may supply different answer evidence from the displayed semantic ranking. The context contract still requires travel-oriented scope/task fields; a general conversational benchmark adapter remains unfinished.",
+      "evidence": [
+        "memory/engine.py:add",
+        "memory/shared/hosted.py",
+        "memory/workbench.py:_run_hosted",
+        "memory/context/contracts.py:ContextRequest"
+      ]
+    },
+    {
+      "id": "M1",
+      "text": "We reanalyze retained files and inspect code/tests without rerunning the application or calling an inference provider. Implementation evidence, historical engineering checks, controlled experiments, external results, and future hypotheses remain separate. Eligibility requires identifiable inputs, conditions, scoring, and interpretable supporting artifacts. Unfavorable observations follow the same inclusion rule as favorable ones. No controlled public-benchmark comparison meets these requirements in the accessible collection.",
+      "evidence": [
+        "implementation_evidence_audit.md",
+        "benchmark_inventory.md",
+        "audit-artifacts/audit_manifest.json"
+      ]
+    },
+    {
+      "id": "M2",
+      "text": "The four engineering trace sets use selected synthetic prompts, not public datasets or a frozen held-out split. Table 1 identifies their recorded outcomes. The first mixes raw episodes, supplied claims, and a hosted Llama 3.2 extraction/answer path. Later sets use Nemotron Lightning and Ultra as both extractor and answerer. Requests record top-k 5 and fresh session identifiers. Real cached BGE embeddings are reported; full historical provider/configuration manifests, seeds, reader token budgets, and repeat policies are unavailable. There is no matched alternative architecture or independent answer judge.",
+      "evidence": [
+        "docs/live-validation/live-test-evidence.json",
+        "docs/nemotron-validation*/nemotron-evidence.json",
+        "scripts/validate_nemotron.py:send"
+      ]
+    },
+    {
+      "id": "M3",
+      "text": "For Nemotron checks, Pass means every stored check predicate is satisfied; JSON/CSV case identities and grades are reconciled. A count of such checks is not conversational accuracy. Component medians use recorded inference_ms and adapter total_ms fields. One replayed zero-time extraction trace per model is excluded from inference timing; bounded repair attempts remain included. HTTP duration is a different boundary. Missing token usage prevents retrospective cost calculation.",
+      "evidence": [
+        "scripts/validate_nemotron.py:check,send",
+        "memory/shared/hosted.py:ValidatedCompletion.complete",
+        "audit-artifacts/retained_run_summary.json"
+      ]
+    },
+    {
+      "id": "M4",
+      "text": "Regression source is inspected for precise assertions, not treated as a new execution. Default fixtures substitute deterministic embedding/ranking functions, and selected token-budget tests use a toy tokenizer. Aggregate historical pass counts establish neither neural relevance nor the success of every current test. Missing execution logs limit independent reproduction.",
+      "evidence": [
+        "tests/conftest.py",
+        "pytest.ini",
+        "tests/test_context_cache.py",
+        "benchmark_inventory.md"
+      ]
+    },
+    {
+      "id": "M5",
+      "text": "Proposed evaluations will separate exact current/historical state correctness from evidence hit rate, all-evidence coverage, answer correctness, and stale acceptance. Each rate needs a predefined eligible denominator; timeouts remain visible. Lifecycle comparisons require identical claim inputs and a credible simple event-log resolver. Retrieval comparisons require matched candidates, reader context, routing, and models. Revalidation needs both stale interventions and valid controls. Public LoCoMo/LongMemEval evaluation must freeze extraction and dataset revisions; uncertainty should account for shared histories. These evaluations have not run.",
+      "evidence": [
+        "research_experiment_plan.md",
+        "proposal"
+      ]
+    },
+    {
+      "id": "R1",
+      "text": "Retained records show selected storage, correction, conflict, and supersession successes, alongside material extraction and citation failures. Table 1 preserves the progression without interpreting repaired repeated scenarios as generalization. The partial R3 JSON contains eight checks; its accompanying eighteen-row CSV is identical to R2's CSV and is excluded as an attribution of R3. These observations partially inform RQ1 but provide no controlled reliability effect size.",
+      "evidence": [
+        "audit-artifacts/retained_run_summary.json",
+        "docs/nemotron-validation-schema-rejected/nemotron-evidence.json"
+      ]
+    },
+    {
+      "id": "R2",
+      "text": "For RQ2, executing invalidation/completion paths and targeted regression assertions exist, including a callback interrupted by a memory change. Accessible named execution logs are incomplete, and the retained hosted runs bypass the shared context/work service. End-to-end stale acceptance is therefore Not measured. For RQ3, no matched ablation establishes graph utility. Vector mode already reconciles lifecycle evidence; no-temporal and no-graph modes retain other temporal or graph-dependent processing. Default candidate pools also differ.",
+      "evidence": [
+        "tests/test_context_service.py:test_http_client_discards_response_generated_during_a_change",
+        "memory/lifecycle/service.py:invalidate_work,complete_work",
+        "memory/engine.py:search",
+        "memory/retrieval/vector.py",
+        "memory/retrieval/hybrid.py"
+      ]
+    },
+    {
+      "id": "R3",
+      "text": "For RQ4, Table 2 reports descriptive component timings from run R4's hosted path. There are thirteen non-replay extraction traces and seven generation/query traces per model. No matched architecture baseline, stable tail-latency estimate, ingestion/storage scale curve, or complete token/cost accounting is available. Component medians are not additive. The measurements answer a narrow observation question, not whether Iron Web is operationally preferable.",
+      "evidence": [
+        "audit-artifacts/retained_run_summary.json"
+      ]
+    },
+    {
+      "id": "D1",
+      "text": "Explicit lifecycles make a distinction that similarity ranking alone cannot express: a relevant source can remain historically traceable while being ineligible for current use. The implementation operationalizes that distinction. The retained successes support its feasibility on selected examples, while earlier failures show that extraction and field consistency can prevent downstream correctness. Multiple repairs and repeated scenarios confound causal interpretations of the final passing record.",
+      "evidence": [
+        "memory/lifecycle/service.py",
+        "audit-artifacts/retained_run_summary.json",
+        "interpretation"
+      ]
+    },
+    {
+      "id": "D2",
+      "text": "Revalidation is implemented beyond a dependency field: updates traverse claim users and dependent work, and completion reevaluates readiness. Nevertheless, source inspection is weaker evidence than a held-out intervention study. Always rejecting work could trivially reduce stale acceptance; valid-completion and false-block rates are also necessary. A generation-time proof check does not make external side effects transactional.",
+      "evidence": [
+        "memory/lifecycle/service.py:invalidate_work,handoff",
+        "memory/shared/client.py:generate_current",
+        "interpretation"
+      ]
+    },
+    {
+      "id": "D3",
+      "text": "The evidence does not justify retaining graph expansion or fuzzy scoring on performance grounds. A simple event-log policy could achieve similar state correctness with lower cost. Conversely, bounded relational retrieval may help particular queries, but that is a hypothesis. Accurate condition labels and matched budgets are prerequisites to deciding whether to retain, simplify, or redesign these components.",
+      "evidence": [
+        "benchmark_inventory.md",
+        "research_experiment_plan.md",
+        "interpretation"
+      ]
+    },
+    {
+      "id": "L1",
+      "text": "The live scenarios are small, synthetic, selected during engineering, and reused after repair. Checks sharing prompts, sources, or upstream failures are dependent. There is no independent annotation study, randomized controlled comparison, confidence interval, or demonstrated statistical significance. Hosted model identity, extraction quality, field routing, provider behavior, and network conditions can affect both answers and timings. Structured-claim behavior must not be generalized to unrestricted natural-language ingestion.",
+      "evidence": [
+        "retained evidence",
+        "benchmark_inventory.md",
+        "analysis"
+      ]
+    },
+    {
+      "id": "L2",
+      "text": "Historical source backups are partial, resolved manifests are missing, and some referenced XML/JSON execution artifacts are unavailable. One audit subtree was inaccessible. Thus current content hashes identify the inspected snapshot but do not recreate every historical runtime. No complete public benchmark or independently comparable head-to-head result exists. The current context adapter is domain-specific, and historical database repair records limit broad persistence claims.",
+      "evidence": [
+        "audit-artifacts/audit_manifest.json",
+        "benchmark_inventory.md",
+        "memory/context/contracts.py"
+      ]
+    },
+    {
+      "id": "L3",
+      "text": "Represented source authority depends on trusted callers; evidence groups do not independently prove source independence. Citation-ID checks do not establish entailment, and fuzzy scores are uncalibrated. Revalidation may add latency, false blocking, or bypass risks that remain unquantified. The study establishes neither universal contradiction detection, perfect historical recall, complete deletion, cross-store atomicity, adversarial isolation, nor lower token cost.",
+      "evidence": [
+        "implementation_evidence_audit.md",
+        "memory/lifecycle/fuzzy.py",
+        "memory/shared/hosted.py",
+        "analysis"
+      ]
+    },
+    {
+      "id": "C1",
+      "text": "Iron Web implements temporal claim handling and source-linked memory with distinct retrieval, hosted, context/work, and application boundaries. Reanalysis supports selected engineering behaviors and preserves failed and inconsistent records. It does not establish comparative accuracy, graph utility, or overall efficiency. Context/work guards are implemented but lack retained end-to-end validation on the hosted trace sets.",
+      "evidence": [
+        "artifact",
+        "synthesis"
+      ]
+    },
+    {
+      "id": "C2",
+      "text": "The highest-priority evidence is a controlled lifecycle comparison against a simple event-log policy, followed by stale-context/work interventions with valid controls and matched retrieval/cost ablations. Frozen conversational evaluation should follow, not substitute for those mechanism tests. Null or negative results should justify narrower claims or a simpler design rather than be discarded.",
+      "evidence": [
+        "research_experiment_plan.md",
+        "future work"
+      ]
+    },
+    {
+      "id": "AP1",
+      "text": "The audited base commit is dc96f3550767e30059293cdc639d900331ab385a. Pre-existing working-tree changes make that commit insufficient on its own. The accompanying artifact_hashes.csv identifies 202 source/configuration/evidence files; source_index.json records symbol locations. audit_manifest.json documents access limits, while retained_run_summary.json records reconciled checks, exclusions, timing sample counts, and medians [3]. No new benchmark, application test, inference call, or database operation was executed for this manuscript.",
+      "evidence": [
+        "audit-artifacts/audit_manifest.json",
+        "audit-artifacts/artifact_hashes.csv"
+      ]
+    },
+    {
+      "id": "AP2",
+      "text": "R1–R4 map respectively to live_1023_121339, nm_1023_124524, nm_1023_125245, and nm_1023_125909. The retained records date to 23 October 2026 in their reports. Current validation scripts record the workbench protocol, but should not be rerun against existing memory stores merely to reproduce this paper. Offline aggregation can be regenerated with build_audit_manifest.py from the repository root using the recorded dependency environment. This reproduces artifact summaries, not the historical provider outputs. A sanitized public artifact release and author metadata remain author responsibilities.",
+      "evidence": [
+        "benchmark_inventory.md",
+        "build_audit_manifest.py",
+        "metadata limitation"
+      ]
+    }
+  ],
+  "tables": [
+    {
+      "table": "T1",
+      "headers": [
+        "Run",
+        "Pass",
+        "Fail",
+        "Unsupported",
+        "Disposition"
+      ],
+      "rows": [
+        [
+          "R1",
+          11,
+          10,
+          3,
+          "Mixed direct/hosted checks"
+        ],
+        [
+          "R2",
+          13,
+          5,
+          0,
+          "Repeated development scenarios"
+        ],
+        [
+          "R3",
+          2,
+          6,
+          0,
+          "Partial JSON; copied CSV excluded"
+        ],
+        [
+          "R4",
+          18,
+          0,
+          0,
+          "Repeated final scenarios"
+        ]
+      ],
+      "source": "audit-artifacts/retained_run_summary.json",
+      "interpretation": "Engineering checks; not benchmark accuracy."
+    },
+    {
+      "table": "T2",
+      "headers": [
+        "Model",
+        "Extraction (ms), n=13",
+        "Generation (ms), n=7",
+        "Adapter query (ms), n=7"
+      ],
+      "rows": [
+        [
+          "Lightning",
+          "1709.398",
+          "907.842",
+          "2129.818"
+        ],
+        [
+          "Ultra",
+          "4776.200",
+          "6543.537",
+          "9600.997"
+        ]
+      ],
+      "model_ids": [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "nvidia/nemotron-3-ultra-550b-a55b"
+      ],
+      "source": "audit-artifacts/retained_run_summary.json",
+      "interpretation": "Descriptive medians in milliseconds, not controlled comparative effects."
+    }
+  ]
+}

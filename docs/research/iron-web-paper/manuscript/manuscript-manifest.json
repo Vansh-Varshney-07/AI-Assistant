@@ -1,0 +1,17 @@
+{
+  "docx": "D:\\Opencode_\\AI assistant\\docs\\research\\iron-web-paper\\manuscript\\Iron_Web_Research_Paper_9_Page_Editing_Draft.docx",
+  "target_pages": 9,
+  "layout": "single-column enlarged editing draft",
+  "body_font_points": 15,
+  "body_scale_vs_10pt": 1.5,
+  "reference_font_points": 12,
+  "abstract_word_count": 200,
+  "keywords": [
+    "agent memory",
+    "temporal knowledge graphs",
+    "evidence provenance"
+  ],
+  "reference_count": 20,
+  "author_fields": "placeholders",
+  "public_iron_web_results": "not measured"
+}

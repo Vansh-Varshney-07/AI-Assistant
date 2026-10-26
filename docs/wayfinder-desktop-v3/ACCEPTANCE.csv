@@ -1,0 +1,43 @@
+id,release,scenario,expected_result,evidence_tier,status
+R1-01,R1,Launch from a Windows shortcut,Real desktop app opens and shows accurate backend state,Packaged Windows app,Not run
+R1-02,R1,Ask a new question,Actual bounded Hermes inference returns an answer; no canned echo,Live model,Not run
+R1-03,R1,Stop a pending reply,One run stops or reports cancellation limits honestly; no duplicate publication,Integration and live model,Not run
+R1-04,R1,Quit and relaunch,Conversation and completed outcomes survive in their original scope,Packaged Windows app,Not run
+R1-05,R1,Backend unavailable,Actionable disconnected state instead of fake online status,Fault injection,Not run
+R1-06,R1,Keyboard and narrow-window use,Composer navigation and text remain usable at declared widths and DPI,Manual accessibility,Not run
+R2-01,R2,Remember an explicit synthetic fact,Preview then approval produces a real scoped memory receipt,Disposable storage,Not run
+R2-02,R2,Reject then approve a correction,Rejected change has no effect; approved new event affects fresh recall,Disposable storage,Not run
+R2-03,R2,Compare selected document with memory,Actual authorized sources and a visible discrepancy are returned,Live model and selected fixture,Not run
+R2-04,R2,Switch memory spaces,No cross-space result or pending-run retargeting,Boundary test,Not run
+R2-05,R2,Changed or revoked file,Stale evidence is withheld and a fresh selection is requested,Fault injection,Not run
+R2-06,R2,Observe streaming,Only actual provider deltas appear; unsupported streaming is disclosed,Live model,Not run
+R3-01,R3,Connect and revoke Google,Selected account and exact granted resources remain understandable,Test account,Not run
+R3-02,R3,Compare calendar and task reads,UI matches actual source resources and labels pagination limits,Live provider,Not run
+R3-03,R3,Use Gmail references,Read capability matches its supported fields; no implied body or send access,Live provider,Not run
+R3-04,R3,Create a local task,Task persists as a work item distinct from an agent run,Application storage,Not run
+R3-05,R3,Review a qualified Google write,Rejection has zero effect; fresh approval has a verified provider receipt,Test account controlled write,Not run
+R3-06,R3,Earlier releases regression,R1 and R2 mandatory scenarios still pass after migration,Regression,Not run
+R4-01,R4,Save and manually run a step-list workflow,Versioned template produces a scoped inspectable run,Integration,Not run
+R4-02,R4,Invalid dependency or unknown tool,Validation prevents execution and identifies the invalid step,Boundary test,Not run
+R4-03,R4,Cancel and restart workflow,Interrupted state is retained without blind effect replay,Fault injection,Not run
+R4-04,R4,Provider failure after a successful read,Partial outcome identifies evidence retained and work not completed,Fault injection,Not run
+R4-05,R4,Open run from chat,Inspector shows actual step outcomes and verified receipts,Packaged Windows app,Not run
+R4-06,R4,Earlier releases regression,R1 through R3 mandatory scenarios still pass,Regression,Not run
+R5-01,R5,Schedule one harmless read-only brief,One durable occurrence maps to one actual run,Installed Hermes scheduler,Not run
+R5-02,R5,Pause then observe future occurrence,No future dispatch occurs under the paused schedule,Scheduler integration,Not run
+R5-03,R5,Restart across missed occurrence,Declared missed-run policy and occurrence identities are respected,Fault injection,Not run
+R5-04,R5,Use main and quick-chat windows,Shared run identity and conversation stay consistent without duplicate effects,Packaged Windows app,Not run
+R5-05,R5,Close main window then Quit,Documented background choice is respected and explicit Quit cleans up,Lifecycle test,Not run
+R5-06,R5,Earlier releases regression,R1 through R4 mandatory scenarios still pass,Regression,Not run
+R6-01,R6,Inspect a worker role,Effective tested binding and permissions are distinct from metadata,Installed runtime evidence,Not run
+R6-02,R6,Reject and approve a skill revision,Only approved version publishes and rollback is inspectable,Fixture and integration,Not run
+R6-03,R6,Disable a required role or connection,Dependent workflow cannot silently use an alternate unrestricted route,Boundary test,Not run
+R6-04,R6,Attempt permission expansion in a preset,Trusted handler rejects rights beyond policy,Boundary test,Not run
+R6-05,R6,Earlier releases regression,R1 through R5 mandatory scenarios still pass,Regression,Not run
+R7-01,R7,Review a supported repository operation,Exact reviewed operation produces an independently checked effect,Disposable repository,Not run
+R7-02,R7,Send a qualified test message,Exact recipient and content require approval and a provider receipt,Explicit test account write,Not run
+R7-03,R7,Lost effect acknowledgement,Uncertain state offers read-only reconciliation without ordinary write retry,Fault injection,Not run
+R7-04,R7,Attempt W37 while unavailable,UI clearly refuses execution; native pass is not inferred from a mock,Boundary test,Not run
+R7-05,R7,Optional native W37 qualification,Only after separate user re-enablement; independent host result required,Real native driver,Not run
+R7-06,R7,Upgrade and supported rollback,Prior records and deduplication identities remain valid with a tested backup path,Packaged migration,Not run
+R7-07,R7,Earlier releases regression,R1 through R6 mandatory scenarios still pass,Regression,Not run

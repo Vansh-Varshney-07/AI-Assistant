@@ -1,0 +1,1337 @@
+=== PDF PAGE 1 ===
+Mem0:BuildingProduction-ReadyAIAgentswith
+                     ScalableLong-TermMemory
+
+         PrateekChhikara,DevKhant,SaketAryan,TaranjeetSingh,andDeshrajYadav
+
+                                            research@mem0.ai
+
+
+
+
+LargeLanguageModels(LLMs)havedemonstratedremarkableprowessingeneratingcontextuallycoherent
+responses,yettheirfixedcontextwindowsposefundamentalchallengesformaintainingconsistencyover
+prolongedmulti-sessiondialogues.WeintroduceMem0,ascalablememory-centricarchitecturethataddresses
+thisissuebydynamicallyextracting,consolidating,andretrievingsalientinformationfromongoingconver-
+sations.Buildingonthisfoundation,wefurtherproposeanenhancedvariantthatleveragesgraph-based1.Introduction
+memoryrepresentationstocapturecomplexrelationalstructuresamongconversationalelements.ThroughHumanmemoryisafoundationofintelligence—itshapesouridentity,guidesdecision-making,andenables
+comprehensiveevaluationsontheLOCOMObenchmark,wesystematicallycompareourapproachesagainstsixustolearn,adapt,andformmeaningfulrelationships(CraikandJennings,1992).Amongitsmanyroles,
+baselinecategories:(i)establishedmemory-augmentedsystems,(ii)retrieval-augmentedgeneration(RAG)
+withvaryingchunksizesand k-values,(iii)afull-contextapproachthatprocessestheentireconversationmemoryisessentialforcommunication:werecallpastinteractions,inferpreferences,andconstructevolving
+history,(iv)anopen-sourcememorysolution,(v)aproprietarymodelsystem,and(vi)adedicatedmemorymentalmodelsofthoseweengagewith(Assmann,2011).Thisabilitytoretainandretrieveinformation
+managementplatform.Empiricalresultsdemonstratethatourmethodsconsistentlyoutperformallexistingoverextendedperiodsenablescoherent,contextuallyrichexchangesthatspandays,weeks,orevenmonths.
+memorysystemsacrossfourquestioncategories:single-hop,temporal,multi-hop,andopen-domain.No-AIagents,poweredbylargelanguagemodels(LLMs),havemaderemarkableprogressingeneratingfluent,
+tably,Mem0achieves26%relativeimprovementsintheLLM-as-a-JudgemetricoverOpenAI,whileMem0withcontextuallyappropriateresponses(Yuetal.,2024,Zhangetal.,2024). However,thesesystemsare
+graphmemoryachievesaround2%higheroverallscorethanthebaseMem0configuration.Beyondaccuracyfundamentallylimitedbytheirrelianceonfixedcontextwindows,whichseverelyrestricttheirabilityto
+gains,wealsomarkedlyreducecomputationaloverheadcomparedtothefull-contextapproach.Inparticular,maintaincoherenceoverextendedinteractions(Bulatovetal.,2022,Liuetal.,2023).Thislimitationstems
+Mem0attainsa91%lowerp95latencyandsavesmorethan90%tokencost,therebyofferingacompellingfromLLMs’lackofpersistentmemorymechanismsthatcanextendbeyondtheirfinitecontextwindows.
+balancebetweenadvancedreasoningcapabilitiesandpracticaldeploymentconstraints.OurfindingshighlightWhilehumansnaturallyaccumulateandorganizeexperiencesovertime,formingacontinuousnarrative
+thecriticalroleofstructured,persistentmemorymechanismsforlong-termconversationalcoherence,paving
+thewayformorereliableandefficientLLM-drivenAIagents.
+
+Codecanbefoundat:https://mem0.ai/research
+
+=== PDF PAGE 2 ===
+                        Mem0:BuildingProduction-ReadyAIAgentswithScalableLong-TermMemory
+
+
+
+                                                                                Figure1:Illustrationofmemoryim-
+                                                                                portanceinAIagents.Left:Without
+                                                                                persistentmemory,thesystemforgets
+                                                                                criticaluserinformation(vegetarian,
+                                                                                dairy-freepreferences)betweenses-
+                                                                                sions,resultingininappropriaterec-
+                                                                                ommendations.Right:Witheffective
+                                                                                memory,thesystemmaintainsthese
+                                                                                dietarypreferencesacrossinteractions,
+                                                                                enablingcontextuallyappropriatesug-
+                                                                                gestionsthatalignwithpreviouslyes-
+                                                                                tablishedconstraints.
+
+
+
+ofinteractions,AIsystemscannotinherentlypersistinformationacrossseparatesessionsoraftercontext
+overflow. Theabsenceofpersistentmemorycreatesafundamentaldisconnectinhuman-AIinteraction.
+Withoutmemory,AIagentsforgetuserpreferences,repeatquestions,andcontradictpreviouslyestablished
+facts. ConsiderasimpleexampleillustratedinFigure1,whereausermentionsbeingvegetarianand
+avoidingdairyproductsinaninitialconversation.Inasubsequentsession,whentheuserasksaboutdinner
+recommendations,asystemwithoutpersistentmemorymightsuggestchicken,completelycontradicting
+theestablisheddietarypreferences. Incontrast,asystemwithpersistentmemorywouldmaintainthis
+criticaluserinformationacrosssessionsandsuggestappropriatevegetarian,dairy-freeoptions.Thiscommon
+scenariohighlightshowmemoryfailurescanfundamentallyundermineuserexperienceandtrust.
+    Beyondconversationalsettings,memorymechanismshavebeenshowntodramaticallyenhanceagent
+performanceininteractiveenvironments(Majumderetal.,Shinnetal.,2023). Agentsequippedwith
+memoryofpastexperiencescanbetteranticipateuserneeds,learnfrompreviousmistakes,andgeneralize
+knowledgeacrosstasks(Chhikaraetal.,2023).Researchdemonstratesthatmemory-augmentedagents
+improvedecision-makingbyleveragingcausalrelationshipsbetweenactionsandoutcomes,leadingtomore
+effectiveadaptationindynamicscenarios(Rasmussenetal.,2025). Hierarchicalmemoryarchitectures
+(Packeretal.,2023,Sarthietal.,2024)andagenticmemorysystemscapableofautonomousevolution(Xu
+etal.,2025)havefurthershownthatmemoryenablesmorecoherent,long-termreasoningacrossmultiple
+dialoguesessions.
+    Unlikehumans,whodynamicallyintegratenewinformationandreviseoutdatedbeliefs,LLMseffectively
+“reset"onceinformationfallsoutsidetheircontextwindow(Zhang,2024,TimonedaandVera,2025).Even
+asmodelslikeOpenAI’sGPT-4(128Ktokens)(Hurstetal.,2024),o1(200Kcontext)(Jaechetal.,2024),
+Anthropic’sClaude3.7Sonnet(200Ktokens)(Anthropic,2025),andGoogle’sGemini(atleast10Mtokens)
+(Teametal.,2024)pushtheboundariesofcontextlength,theseimprovementsmerelydelayratherthan
+solvethefundamentallimitation.Inpracticalapplications,eventheseextendedcontextwindowsprove
+insufficientfortwocriticalreasons. First,asmeaningfulhuman-AIrelationshipsdevelopoverweeksor
+months,conversationhistoryinevitablyexceedseventhemostgenerouscontextlimits.Second,andperhaps
+moreimportantly,real-worldconversationsrarelymaintainthematiccontinuity.Ausermightmentiondietary
+preferences(beingvegetarian),thenengageinhoursofunrelateddiscussionaboutprogrammingtasks,
+beforereturningtofood-relatedqueriesaboutdinneroptions.Insuchscenarios,afull-contextapproach
+wouldneedtoreasonthroughmountainsofirrelevantinformation,withthecriticaldietarypreferences
+potentiallyburiedamongthousandsoftokensofcodingdiscussions.Moreover,simplypresentinglonger
+contextsdoesnotensureeffectiveretrievalorutilizationofpastinformation,asattentionmechanisms
+
+
+                                                          2
+
+=== PDF PAGE 3 ===
+                        Mem0:BuildingProduction-ReadyAIAgentswithScalableLong-TermMemory
+
+
+degradeoverdistanttokens(Guoetal.,2024,Nelsonetal.,2024).Thislimitationisparticularlyproblematic
+inhigh-stakesdomainssuchashealthcare,education,andenterprisesupport,wheremaintainingcontinuity
+andtrustiscrucial(Hatalisetal.,2023).Toaddressthesechallenges,AIagentsmustadoptmemorysystems
+thatgobeyondstaticcontextextension.ArobustAImemoryshouldselectivelystoreimportantinformation,
+consolidaterelatedconcepts,andretrieverelevantdetailswhenneeded—mirroringhumancognitiveprocesses
+(Heetal.,2024). Byintegratingsuchmechanisms,wecandevelopAIagentsthatmaintainconsistent
+personas,trackevolvinguserpreferences,andbuilduponpriorexchanges.ThisshiftwilltransformAIfrom
+transient,forgetfulrespondersintoreliable,long-termcollaborators,fundamentallyredefiningthefutureof
+conversationalintelligence.
+    Inthispaper,weaddressafundamentallimitationinAIsystems: theirinabilitytomaintaincoher-
+entreasoningacrossextendedconversationsacrossdifferentsessions,whichseverelyrestrictsmeaningful
+long-terminteractionswithusers.WeintroduceMem0(pronouncedasmem-zero),anovelmemoryarchi-
+tecturethatdynamicallycaptures,organizes,andretrievessalientinformationfromongoingconversations.
+Buildingonthisfoundation,wedevelop Mem0g,whichenhancesthebasearchitecturewithgraph-based
+memoryrepresentationstobettermodelcomplexrelationshipsbetweenconversationalelements. Our
+experimentalresultsontheLOCOMObenchmarkdemonstratethatourapproachesconsistentlyoutperform
+existingmemorysystems—includingmemory-augmentedarchitectures,retrieval-augmentedgeneration
+(RAG)methods,andbothopen-sourceandproprietarysolutions—acrossdiversequestiontypes,while
+simultaneouslyrequiringsignificantlylowercomputationalresources.Latencymeasurementsfurtherreveal
+thatMem0operateswith91%lowerresponsetimesthanfull-contextapproaches,strikinganoptimalbalance
+betweensophisticatedreasoningcapabilitiesandpracticaldeploymentconstraints. Thesecontributions
+representameaningfulsteptowardAIsystemsthatcanmaintaincoherent,context-awareconversationsover
+extendeddurations—mirroringhumancommunicationpatternsandopeningnewpossibilitiesforapplications
+inpersonaltutoring,healthcare,andpersonalizedassistance.
+
+2.ProposedMethods
+
+WeintroducetwomemoryarchitecturesforAIagents.(1)Mem0implementsanovelparadigmthatextracts,
+evaluates,andmanagessalientinformationfromconversationsthroughdedicatedmodulesformemory
+extractionandupdation.Thesystemprocessesapairofmessagesbetweeneithertwouserparticipantsora
+userandanassistant.(2)Mem0gextendsthisfoundationbyincorporatinggraph-basedmemoryrepresenta-
+tions,wherememoriesarestoredasdirectedlabeledgraphswithentitiesasnodesandrelationshipsasedges.
+Thisstructureenablesadeeperunderstandingoftheconnectionsbetweenentities.Byexplicitlymodeling
+bothentitiesandtheirrelationships,Mem0gsupportsmoreadvancedreasoningacrossinterconnectedfacts,
+especiallyforqueriesthatrequirenavigatingcomplexrelationalpathsacrossmultiplememories.
+
+
+2.1. Mem0
+
+Ourarchitecturefollowsanincrementalprocessingparadigm,enablingittooperateseamlesslywithin
+ongoingconversations.AsillustratedinFigure2,thecompletepipelinearchitectureconsistsoftwophases:
+extractionandupdate.
+    Theextractionphaseinitiatesuponingestionofanewmessagepair(mt−1,mt),wheremtrepresentsthe
+currentmessageand mt−1theprecedingone.Thispairtypicallyconsistsofausermessageandanassistant
+response,capturingacompleteinteractionunit.Toestablishappropriatecontextformemoryextraction,the
+systememploystwocomplementarysources: (1)aconversationsummarySretrievedfromthedatabasethat
+
+
+                                                         3
+
+=== PDF PAGE 4 ===
+                       Mem0:BuildingProduction-ReadyAIAgentswithScalableLong-TermMemory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure2:Architecturaloverviewofthe Mem0systemshowingextractionandupdatephase.Theextractionphase
+processesmessagesandhistoricalcontexttocreatenewmemories. Theupdatephaseevaluatestheseextracted
+memoriesagainstsimilarexistingones,applyingappropriateoperationsthroughaToolCallmechanism.Thedatabase
+servesasthecentralrepository,providingcontextforprocessingandstoringupdatedmemories.
+
+
+encapsulatesthesemanticcontentoftheentireconversationhistory,and(2)asequenceofrecentmessages
+{mt−m,mt−m+1,...,mt−2}fromtheconversationhistory,where misahyperparametercontrollingtherecency
+window.Tosupportcontext-awarememoryextraction,weimplementanasynchronoussummarygeneration
+modulethatperiodicallyrefreshestheconversationsummary.Thiscomponentoperatesindependentlyofthe
+mainprocessingpipeline,ensuringthatmemoryextractionconsistentlybenefitsfromup-to-datecontextual
+informationwithoutintroducingprocessingdelays.While Sprovidesglobalthematicunderstandingacross
+theentireconversation,therecentmessagesequenceoffersgranulartemporalcontextthatmaycontain
+relevantdetailsnotconsolidatedinthesummary.Thisdualcontextualinformation,combinedwiththenew
+messagepair,formsacomprehensiveprompt P=(S,{mt−m,...,mt−2},mt−1,mt)foranextractionfunction
+ϕimplementedviaanLLM.Thefunction ϕ(P)thenextractsasetofsalientmemoriesΩ={ω1,ω2,...,ωn}
+specificallyfromthenewexchangewhilemaintainingawarenessoftheconversation’sbroadercontext,
+resultingincandidatefactsforpotentialinclusionintheknowledgebase.
+   Followingextraction,theupdatephaseevaluateseachcandidatefactagainstexistingmemoriesto
+maintainconsistencyandavoidredundancy.Thisphasedeterminestheappropriatememorymanagement
+operationforeachextractedfact ωi ∈Ω.Algorithm1,mentionedinAppendixB,illustratesthisprocess.For
+eachfact,thesystemfirstretrievesthetopssemanticallysimilarmemoriesusingvectorembeddingsfromthe
+database.Theseretrievedmemories,alongwiththecandidatefact,arethenpresentedtotheLLMthrough
+afunction-callinginterfacewerefertoasa‘toolcall.’ TheLLMitselfdetermineswhichoffourdistinct
+operationstoexecute: ADDforcreationofnewmemorieswhennosemanticallyequivalentmemoryexists;
+UPDATEforaugmentationofexistingmemorieswithcomplementaryinformation;DELETEforremovalof
+memoriescontradictedbynewinformation;andNOOPwhenthecandidatefactrequiresnomodificationto
+theknowledgebase.Ratherthanusingaseparateclassifier,weleveragetheLLM’sreasoningcapabilities
+todirectlyselecttheappropriateoperationbasedonthesemanticrelationshipbetweenthecandidatefact
+andexistingmemories.Followingthisdetermination,thesystemexecutestheprovidedoperations,thereby
+maintainingknowledgebasecoherenceandtemporalconsistency.
+
+
+                                                        4
+
+=== PDF PAGE 5 ===
+                        Mem0:BuildingProduction-ReadyAIAgentswithScalableLong-TermMemory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure3:Graph-basedmemoryarchitectureofMem0gillustratingentityextractionandupdatephase.Theextraction
+phaseusesLLMstoconvertconversationmessagesintoentitiesandrelationtriplets.Theupdatephaseemploysconflict
+detectionandresolutionmechanismswhenintegratingnewinformationintotheexistingknowledgegraph.
+
+
+    Inourexperimentalevaluation,weconfiguredthesystemwith‘m’=10previousmessagesforcontextual
+referenceand‘s’=10similarmemoriesforcomparativeanalysis.Alllanguagemodeloperationsutilized
+GPT-4o-miniastheinferenceengine.Thevectordatabaseemploysdenseembeddingstofacilitateefficient
+similaritysearchduringtheupdatephase.
+
+
+2.2. Mem0g
+
+The Mem0gpipeline,illustratedinFigure3,implementsagraph-basedmemoryapproachthateffectively
+captures,stores,andretrievescontextualinformationfromnaturallanguageinteractions(Zhangetal.,
+2022).Inthisframework,memoriesarerepresentedasadirectedlabeledgraph         G=(V,E,L),where:
+
+   •Nodes Vrepresententities(e.g., Alice, San_Francisco)
+   •Edges Erepresentrelationshipsbetweenentities(e.g., lives_in)
+   •Labels Lassignsemantictypestonodes(e.g., Alice-Person,    San_Francisco-City)
+
+
+    Eachentitynode v ∈ Vcontainsthreecomponents:(1)anentitytypeclassificationthatcategorizes
+theentity(e.g.,Person,Location,Event),(2)anembeddingvector evthatcapturestheentity’ssemantic
+meaning,and(3)metadataincludingacreationtimestamp tv.Relationshipsinoursystemarestructuredas
+tripletsintheform(vs,r,vd),where vsand vdaresourceanddestinationentitynodes,respectively,and ris
+thelabelededgeconnectingthem.
+    Theextractionprocessemploysatwo-stagepipelineleveragingLLMstotransformunstructuredtextinto
+structuredgraphrepresentations.First,anentityextractormoduleprocessestheinputtexttoidentifyaset
+ofentitiesalongwiththeircorrespondingtypes.Inourframework,entitiesrepresentthekeyinformation
+elementsinconversations—includingpeople,locations,objects,concepts,events,andattributesthatmerit
+representationinthememorygraph. Theentityextractoridentifiesthesediverseinformationunitsby
+analyzingthesemanticimportance,uniqueness,andpersistenceofelementsintheconversation.Forinstance,
+inaconversationabouttravelplans,entitiesmightincludedestinations(cities,countries),transportation
+modes,dates,activities,andparticipantpreferences—essentiallyanydiscreteinformationthatcouldbe
+relevantforfuturereferenceorreasoning.
+
+
+                                                          5
+
+=== PDF PAGE 6 ===
+                       Mem0:BuildingProduction-ReadyAIAgentswithScalableLong-TermMemory
+
+
+    Next,arelationshipgeneratorcomponentderivesmeaningfulconnectionsbetweentheseentities,
+establishingasetofrelationshiptripletsthatcapturethesemanticstructureoftheinformation.ThisLLM-
+basedmoduleanalyzestheextractedentitiesandtheircontextwithintheconversationtoidentifysemantically
+significantconnections.Itworksbyexamininglinguisticpatterns,contextualcues,anddomainknowledgeto
+determinehowentitiesrelatetooneanother.Foreachpotentialentitypair,thegeneratorevaluateswhether
+ameaningfulrelationshipexistsand,ifso,classifiesthisrelationshipwithanappropriatelabel(e.g.,‘lives_in’,
+‘prefers’,‘owns’,‘happened_on’).ThemoduleemployspromptengineeringtechniquesthatguidetheLLM
+toreasonaboutbothexplicitstatementsandimplicitinformationinthedialogue,resultinginrelationship
+tripletsthatformtheedgesinourmemorygraphandenablecomplexreasoningacrossinterconnected
+information.Whenintegratingnewinformation,Mem0gemploysasophisticatedstorageandupdatestrategy.
+Foreachnewrelationshiptriple,wecomputeembeddingsforbothsourceanddestinationentities,then
+searchforexistingnodeswithsemanticsimilarityaboveadefinedthreshold‘t’.Basedonnodeexistence,
+thesystemmaycreatebothnodes,createonlyonenode,oruseexistingnodesbeforeestablishingthe
+relationshipwithappropriatemetadata.Tomaintainaconsistentknowledgegraph,weimplementaconflict
+detectionmechanismthatidentifiespotentiallyconflictingexistingrelationshipswhennewinformation
+arrives.AnLLM-basedupdateresolverdeterminesifcertainrelationshipsshouldbeobsolete,markingthem
+asinvalidratherthanphysicallyremovingthemtoenabletemporalreasoning.
+    ThememoryretrievalfunctionalityinMem0gimplementsadual-approachstrategyforoptimalinformation
+access.Theentity-centricmethodfirstidentifieskeyentitieswithinaquery,thenleveragessemanticsimilarity
+tolocatecorrespondingnodesintheknowledgegraph.Itsystematicallyexploresbothincomingandoutgoing
+relationshipsfromtheseanchornodes,constructingacomprehensivesubgraphthatcapturesrelevant
+contextualinformation.Complementingthis,thesemantictripletapproachtakesamoreholisticviewby
+encodingtheentirequeryasadenseembeddingvector.Thisqueryrepresentationisthenmatchedagainst
+textualencodingsofeachrelationshiptripletintheknowledgegraph.Thesystemcalculatesfine-grained
+similarityscoresbetweenthequeryandallavailabletriplets,returningonlythosethatexceedaconfigurable
+relevancethreshold,rankedinorderofdecreasingsimilarity.ThisdualretrievalmechanismenablesMem0gto
+handlebothtargetedentity-focusedquestionsandbroaderconceptualquerieswithequaleffectiveness.
+    Fromanimplementationperspective,thesystemutilizesNeo4j1astheunderlyinggraphdatabase.LLM-
+basedextractorsandupdatemoduleleverageGPT-4o-miniwithfunctioncallingcapabilities,allowingfor
+structuredextractionofinformationfromunstructuredtext.Bycombininggraph-basedrepresentationswith
+semanticembeddingsandLLM-basedinformationextraction,Mem0gachievesboththestructuralrichness
+neededforcomplexreasoningandthesemanticflexibilityrequiredfornaturallanguageunderstanding.
+
+3.ExperimentalSetup
+
+3.1.Dataset
+
+TheLOCOMO(Maharanaetal.,2024)datasetisdesignedtoevaluatelong-termconversationalmemoryin
+dialoguesystems.Itcomprises10extendedconversations,eachcontainingapproximately600dialoguesand
+26000tokensonaverage,distributedacrossmultiplesessions.Eachconversationcapturestwoindividuals
+discussingdailyexperiencesorpastevents.Followingthesemulti-sessiondialogues,eachconversationis
+accompaniedby200questionsonanaveragewithcorrespondinggroundtruthanswers.Thesequestions
+arecategorizedintomultipletypes: single-hop,multi-hop,temporal,andopen-domain. Thedataset
+originallyincludedanadversarialquestioncategory,whichwasdesignedtotestsystems’abilitytorecognize
+
+  1https://neo4j.com/
+
+
+                                                         6
+
+=== PDF PAGE 7 ===
+                       Mem0:BuildingProduction-ReadyAIAgentswithScalableLong-TermMemory
+
+
+unanswerablequestions.However,thiscategorywasexcludedfromourevaluationbecausegroundtruth
+answerswereunavailable,andtheexpectedbehaviorforthisquestiontypeisthattheagentshouldrecognize
+themasunanswerable.
+
+
+3.2.EvaluationMetrics
+
+Ourevaluationframeworkimplementsacomprehensiveapproachtoassesslong-termmemorycapabilities
+indialoguesystems,consideringbothresponsequalityandoperationalefficiency.Wecategorizeourmetrics
+intotwodistinctgroupsthattogetherprovideaholisticunderstandingofsystemperformance.
+
+
+(1)PerformanceMetrics  PreviousresearchinconversationalAI(Goswami,2025,Sonietal.,2024,Singh
+etal.,2020)haspredominantlyreliedonlexicalsimilaritymetricssuchas      F1Score(F1)andBLEU-1(B1).
+However,thesemetricsexhibitsignificantlimitationswhenevaluatingfactualaccuracyinconversational
+contexts. Considerascenariowherethegroundtruthansweris‘AlicewasborninMarch’andasystem
+generates‘AliceisborninJuly.’Despitecontainingacriticalfactualerrorregardingthebirthmonth,traditional
+metricswouldassignrelativelyhighscoresduetolexicaloverlapintheremainingtokens(‘Alice,’‘born,’etc.).
+Thisfundamentallimitationcanleadtomisleadingevaluationsthatfailtocapturesemanticcorrectness.
+Toaddresstheseshortcomings,weuseLLM-as-a-Judge(J)asacomplementaryevaluationmetric.This
+approachleveragesaseparate,morecapableLLMtoassessresponsequalityacrossmultipledimensions,
+includingfactualaccuracy,relevance,completeness,andcontextualappropriateness. Thejudgemodel
+analyzesthequestion,groundtruthanswerandthegeneratedanswer,providingamorenuancedevaluation
+thatalignsbetterwithhumanjudgment.DuetothestochasticnatureofJevaluations,weconducted10
+independentrunsforeachmethodontheentiredatasetandreportthemeanscoresalongwith±1standard
+deviation.MoredetailsabouttheJispresentinAppendixA.
+
+
+(2)DeploymentMetrics  Beyondresponsequality,practicaldeploymentconsiderationsarecrucialforreal-
+worldapplicationsoflong-termmemoryinAIagents.WesystematicallytrackTokenConsumption,using
+‘cl100k_base’encodingfromtiktoken,measuringthenumberoftokensextractedduringretrievalthat
+serveascontextforansweringqueries.Forourmemory-basedmodels,thesetokensrepresentthememories
+retrievedfromtheknowledgebase,whileforRAG-basedmodels,theycorrespondtothetotalnumberof
+tokensintheretrievedtextchunks.Thisdistinctionisimportantasitdirectlyaffectsoperationalcostsand
+systemefficiency—whetherprocessingconcisememoryfactsorlargerrawtextsegments.Wefurthermonitor
+Latency,(i)searchlatency:whichcapturesthetotaltimerequiredtosearchthememory(inmemory-based
+solutions)orchunk(inRAG-basedsolutions)and(ii)totallatency:timetogenerateappropriateresponses,
+consistingofbothretrievaltime(accessingmemoriesorchunks)andanswergenerationtimeusingtheLLM.
+    Therelationshipbetweenthesemetricsrevealsimportanttrade-offsinsystemdesign. Forinstance,
+moresophisticatedmemoryarchitecturesmightachievehigherfactualaccuracybutatthecostofincreased
+tokenconsumptionandlatency.Ourmulti-dimensionalevaluationmethodologyenablesresearchersand
+practitionerstomakeinformeddecisionsbasedontheirspecificrequirements,whetherprioritizingresponse
+qualityforcriticalapplicationsorcomputationalefficiencyforreal-timedeploymentscenarios.
+
+
+3.3.Baselines
+
+Tocomprehensivelyevaluateourapproach,wecompareagainstsixdistinctcategoriesofbaselinesthat
+representthecurrentstateofconversationalmemorysystems.Thesediversebaselinescollectivelyprovidea
+
+                                                         7
+
+=== PDF PAGE 8 ===
+                       Mem0:BuildingProduction-ReadyAIAgentswithScalableLong-TermMemory
+
+
+robustframeworkforevaluatingtheeffectivenessofdifferentmemoryarchitecturesacrossvariousdimensions,
+includingfactualaccuracy,computationalefficiency,andscalabilitytoextendedconversations. Where
+applicable,unlessotherwisespecified,wesetthetemperatureto0toensuretherunsareasreproducibleas
+possible.
+
+
+Established LOCOMOBenchmarks  Wefirstestablishacomparativefoundationbyevaluatingpreviously
+benchmarkedmethodsontheLOCOMOdataset.Theseincludefiveestablishedapproaches:LoCoMo(Maha-
+ranaetal.,2024),ReadAgent(Leeetal.,2024),MemoryBank(Zhongetal.,2024),MemGPT(Packeretal.,
+2023),andA-Mem(Xuetal.,2025).Theseestablishedbenchmarksnotonlyprovidedirectcomparison
+pointswithpublishedresultsbutalsorepresenttheevolutionofconversationalmemoryarchitecturesacross
+differentalgorithmicparadigms.Forourevaluation,weselectthemetricswheregpt-4o-miniwasused
+fortheevaluation.MoredetailsaboutthesebenchmarksarementionedinAppendixC.
+
+
+Open-SourceMemorySolutions  Oursecondcategoryconsistsofpromisingopen-sourcememoryarchitec-
+turessuchasLangMem2(HotPath)thathavedemonstratedeffectivenessinrelatedconversationaltasksbut
+havenotyetbeenevaluatedontheLOCOMOdataset.Byadaptingthesesystemstoourevaluationframework,
+webroadenthecomparativelandscapeandidentifypotentialalternativeapproachesthatmayoffercompeti-
+tiveperformance.WeinitializedtheLLMwithgpt-4o-miniandusedtext-embedding-small-3asthe
+embeddingmodel.
+
+
+Retrieval-AugmentedGeneration(RAG)  Asabaseline,wetreattheentireconversationhistoryasa
+documentcollectionandapplyastandardRAGpipeline.Wefirstsegmenteachconversationintofixed-length
+chunks(128,256,512,1024,2048,4096,and8192tokens),where8192isthemaximumchunksize
+supportedbyourembeddingmodel.AllchunksareembeddedusingOpenAI’stext-embedding-small-3
+toensureconsistentvectorqualityacrossconfigurations.Atquerytime,weretrievethetop kchunksby
+semanticsimilarityandconcatenatethemascontextforanswergeneration.Throughoutourexperimentswe
+set k∈{1,2}:with k=1onlythesinglemostrelevantchunkisused,andwith k=2thetwomostrelevant
+chunks(upto16384tokens)areconcatenated.Weavoid k> 2sincetheaverageconversationlength(26000
+tokens)wouldbefullycovered,negatingthebenefitsofselectiveretrieval.Byvaryingchunksizeandk,we
+systematicallyevaluateRAGperformanceonlong-termconversationalmemorytasks.
+
+
+Full-ContextProcessing  Weadoptastraightforwardapproachbypassingtheentireconversationhistory
+withinthecontextwindowoftheLLM.Thismethodleveragesthemodel’sinherentabilitytoprocess
+sequentialinformationwithoutadditionalarchitecturalcomponents.Whileconceptuallysimple,thisapproach
+facespracticallimitationsasconversationlengthincreases,eventuallyincreasingtokencostandlatency.
+Nevertheless,itestablishesanimportantreferencepointforunderstandingthevalueofmoresophisticated
+memorymechanismscomparedtodirectprocessingofavailablecontext.
+
+
+ProprietaryModels  WeevaluateOpenAI’smemory3featureavailableintheirChatGPTinterface,specifically
+usinggpt-4o-miniforconsistency.WeingestentireLOCOMOconversationswithaprompt(seeAppendixA)
+intosinglechatsessions,promptingmemorygenerationwithtimestamps,participantnames,andconversation
+
+  2https://langchain-ai.github.io/langmem/
+  3https://openai.com/index/memory-and-new-controls-for-chatgpt/
+
+
+                                                        8
+
+=== PDF PAGE 9 ===
+                                    Mem0:BuildingProduction-ReadyAIAgentswithScalableLong-TermMemory
+
+
+           Table1:Performancecomparisonofmemory-enabledsystemsacrossdifferentquestiontypesintheLOCOMOdataset.
+           EvaluationmetricsincludeF1score(F1),BLEU-1(B1),andLLM-as-a-Judgescore(J),withhighervaluesindicating
+           betterperformance.A-Mem∗representsresultsfromourre-runofA-MemtogenerateLLM-as-a-Judgescoresbysetting
+           temperatureas0. Mem0gindicatesourproposedarchitectureenhancedwithgraphmemory.Bolddenotesthebest
+           performanceforeachmetricacrossallmethods.(↑)representshigherscoreisbetter.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+           text. Thesegeneratedmemoriesarethenusedascompletecontextforansweringquestionsabouteach
+           conversation,intentionallygrantingtheOpenAIapproachprivilegedaccesstoallmemoriesratherthan
+           onlyquestion-relevantones.ThismethodologyaccommodatesthelackofexternalAPIaccessforselective
+           memoryretrievalinOpenAI’ssystemforbenchmarking.
+
+
+           MemoryProviders  WeincorporateZep(Rasmussenetal.,2025),amemorymanagementplatformdesigned
+           forAIagents.Usingtheirplatformversion,weconductsystematicevaluationsacrosstheLOCOMOdataset,
+           maintainingtemporalfidelitybypreservingtimestampinformationalongsideconversationalcontent.This
+           temporalanchoringensuresthattime-sensitivequeriescanbeaddressedthroughappropriatelycontextualized
+           memoryretrieval,particularlyimportantforevaluatingquestionsthatrequirechronologicalawareness.
+           Thisbaselinerepresentsanimportantcommercialimplementationofmemorymanagementspecifically
+           engineeredforAIagents.
+
+           4.EvaluationResults,AnalysisandDiscussion.
+
+           4.1.PerformanceComparisonAcrossMemory-EnabledSystems
+
+           Table1reportsF   1,B1andJscoresforourtwoarchitectures—Mem0andMem0g—againstasuiteofcompetitive
+           baselines,asmentionedinSection3,onsingle  -hop,multi-hop,open-domain,andtemporalquestions.Overall,
+           bothofourmodelssetnewstate-of-the-artmarksinallthethreeevaluationmetricsformostquestiontypes.
+
+
+           Single-HopQuestionPerformance  Single-hopqueriesinvolvelocatingasinglefactualspancontained
+           withinonedialogueturn.Leveragingitsdensememoriesinnaturallanguagetext,Mem0securesthestrongest
+           results:F1=38.72,B1=27.13,andJ=67.13.Augmentingthenaturallanguagememorieswithgraphmemory
+           (Mem0g)yieldsmarginalperformancedropcomparedtoMem0,indicatingthatrelationalstructureprovides
+           limitedutilitywhentheretrievaltargetoccupiesasingleturn.Amongtheexistingbaselines,thefull-context
+           OpenAIrunattainsthenext-bestJscore,reflectingthebenefitsofretainingtheentireconversationincontext,
+           whileLangMemandZepbothscorearound8%relativelylessagainstourmodelsonJscore.PreviousLOCOMO
+
+Method              SingleHop                  Multi-Hop                 OpenDomain                   Temporal
+             F1↑  B1↑     J↑            F1↑  B1↑     J↑            F1↑  B1↑     J↑            F1↑  B1↑     J↑
+LoCoMo      25.02 19.75      –         12.04 11.16      –          40.36 29.05      –9        18.41 14.77      –
+ReadAgent    9.15  6.48      –          5.31  5.12      –          9.67  7.66      –          12.60  8.87      –
+MemoryBank   5.00  4.77      –          5.56  5.94      –          6.61  5.16      –          9.68  6.99      –
+MemGPT      26.65 17.72      –          9.15  7.44      –          41.04 34.34      –         25.52 19.44      –
+A-Mem       27.02 20.09      –         12.14 12.00      –          44.65 37.06      –         45.85 36.67      –
+A-Mem*      20.76 14.90 39.79±0.38      9.22  8.81  18.85±0.31     33.34 27.58 54.05±0.22     35.40 31.08 49.91±0.31
+LangMem     35.51 26.86 62.23±0.75     26.04 22.32 47.92±0.47      40.91 33.63 71.12±0.20     30.75 25.84 23.43±0.39
+Zep         35.74 23.30 61.70±0.32     19.37 14.82 41.35±0.48     49.56 38.92 76.60±0.13      42.00 34.53 49.31±0.50
+OpenAI      34.30 23.72 63.79±0.46     20.09 15.42 42.92±0.63      39.31 31.16 62.29±0.12     14.04 11.25 21.71±0.20
+Mem0        38.72 27.13 67.13±0.65     28.64 21.58 51.15±0.31      47.65 38.72 72.93±0.11     48.93 40.51 55.51±0.34
+Mem0g       38.09 26.03 65.71±0.45     24.32 18.82 47.19±0.67      49.27 40.30 75.71±0.21    51.55 40.28 58.13±0.44
+
+=== PDF PAGE 10 ===
+                       Mem0:BuildingProduction-ReadyAIAgentswithScalableLong-TermMemory
+
+
+benchmarkssuchasA-memlagbymorethan25pointsinJ,underscoringthenecessityoffine-grained,
+structuredmemoryindexingevenforsimpleretrievaltasks.
+
+
+Multi-HopQuestionPerformance  Multi-hopqueriesrequiresynthesizinginformationdispersedacross
+multipleconversationsessions,posingsignificantchallengesinmemoryintegrationandretrieval.Mem0clearly
+outperformsothermethodswithanF1scoreof28.64andaJscoreof51.15,reflectingitscapabilityto
+efficientlyretrieveandintegratedisparateinformationstoredacrosssessions.Interestingly,theaddition
+ofgraphmemoryin Mem0gdoesnotprovideperformancegainshere,indicatingpotentialinefficiencies
+orredundanciesinstructuredgraphrepresentationsforcomplexintegrativetaskscomparedtodense
+naturallanguagememoryalone.BaselineslikeLangMemshowcompetitiveperformances,buttheirscores
+substantiallytrailthoseof Mem0,emphasizingtheadvantageofourrefinedmemoryindexingandretrieval
+mechanismsforcomplexqueryprocessing.
+
+
+Open-DomainPerformance  Inopen-domainsettings,thebaselineZepachievesthehighestF1(49.56)and
+J(76.60)scores,edgingoutourmethodsbyanarrowmargin.Inparticular,Zep’sJscoreof76.60surpasses
+Mem0g’s75.71byjust0.89percentagepointsandoutperformsMem0’s72.93by3.67points,highlightinga
+consistent,ifslight,advantageinintegratingconversationalmemorywithexternalknowledge. Mem0gremains
+astrongrunner-up,withaJof75.71reflectinghighfactualretrievalprecision,whileMem0followswith72.93,
+demonstratingrobustcoherence.Theseresultsunderscorethatalthoughstructuredrelationalmemories(as
+inMem0andMem0g)substantiallyimproveopen-domainretrieval,Zepmaintainsasmallbutmeaningful
+lead.
+
+
+TemporalReasoningPerformance  Temporalreasoningtaskshingeonaccuratemodelingofeventse-
+quences,theirrelativeordering,anddurationswithinconversationalhistory.Ourarchitecturesdemonstrate
+substantialimprovementsacrossallmetrics,with Mem0gachievingthehighestF1(51.55)andJ(58.13),
+suggestingthatstructuredrelationalrepresentationsinadditiontonaturallanguagememoriessignificantly
+aidintemporallygroundedjudgments.Notably,thebasevariant,Mem0,alsoprovideadecentJscore(55.51),
+suggestingthatnaturallanguagealonecanaidintemporallygroundedjudgments.Amongbaselines,OpenAI
+notablyunderperforms,withscoresbelow15%,primarilyduetomissingtimestampsinmostgenerated
+memoriesdespiteexplicitpromptingintheOpenAIChatGPTtoextractmemorieswithtimestamps.Other
+baselinessuchasA-Memachieverespectableresults,yetourmodelsclearlyadvancethestate-of-the-art,
+emphasizingthecriticaladvantageofaccuratelyleveragingbothnaturallanguagecontextualizationand
+structuredgraphrepresentationsfortemporalreasoning.
+
+
+4.2.Cross-CategoryAnalysis
+
+Thecomprehensiveevaluationacrossdiversequestioncategoriesrevealsthatourproposedarchitectures,
+Mem0andMem0g,consistentlyachievesuperiorperformancecomparedtobaselinesystems.Forsingle-hop
+queries, Mem0demonstratesparticularlystrongperformance,benefitingfromitsefficientdensenatural
+languagememorystructure.Althoughgraph-basedrepresentationsinMem0gslightlylagbehindinlexical
+overlapmetricsforthesesimplerqueries,theysignificantlyenhancesemanticcoherence,asdemonstrated
+bycompetitiveJscores. Thisindicatesthatgraphstructuresaremorebeneficialinscenariosinvolving
+nuancedrelationalcontextratherthanstraightforwardretrieval.Formulti-hopquestions,Mem0exhibitsclear
+advantagesbyeffectivelysynthesizingdispersedinformationacrossmultiplesessions,confirmingthatnatural
+languagememoriesprovidesufficientrepresentationalrichnessfortheseintegrativetasks.Surprisingly,the
+
+                                                        10
+
+=== PDF PAGE 11 ===
+                       Mem0:BuildingProduction-ReadyAIAgentswithScalableLong-TermMemory
+
+
+Table2:Performancecomparisonofvariousbaselineswithproposedmethods. Latencymeasurementsshowp50
+(median)andp95(95thpercentile)valuesinsecondsforbothsearchtime(timetakentofetchmemories/chunks)and
+totaltime(timetogeneratethecompleteresponse).OverallLLM-as-a-Judgescore(J)representsthequalitymetricof
+thegeneratedresponsesontheentireLOCOMOdataset.
+
+                                                          Latency(seconds)                Overall
+Method                                              Search             Total                         J
+
+                 K     chunksize/memorytokens    p50     p95     p50      p95
+
+                               128          0.281    0.823    0.774     1.825     47.77±0.23%
+                               256          0.251    0.710    0.745     1.628     50.15±0.16%
+                               512          0.240    0.639    0.772     1.710     46.05±0.14%
+                  1           1024         0.240    0.723    0.821     1.957     40.74±0.17%
+                              2048         0.255    0.752    0.996     2.182     37.93±0.12%
+                              4096         0.254    0.719    1.093     2.711     36.84±0.17%
+RAG                           8192         0.279    0.838    1.396     4.416     44.53±0.13%
+                               128          0.267    0.624    0.766     1.829     59.56±0.19%
+                               256          0.255    0.699    0.802     1.907     60.97±0.20%
+                               512          0.247    0.746    0.829     1.729     58.19±0.18%
+                  2           1024         0.238    0.702    0.860     1.850     50.68±0.13%
+                              2048         0.261    0.829    1.101     2.791     48.57±0.22%
+                              4096         0.266    0.944    1.451     4.822     51.79±0.15%
+                              8192         0.288    1.124    2.312     9.942     60.53±0.16%
+Full-context              26031           -         -      9.870    17.117    72.90±0.19%
+A-Mem                   2520         0.668    1.485    1.410     4.374     48.38±0.15%
+LangMem                127          17.99    59.82    18.53     60.40     58.10±0.21%
+Zep                       3911         0.513    0.778    1.292     2.926     65.99±0.16%
+OpenAI                   4437            -         -      0.466     0.889     52.90±0.14%
+Mem0                     1764        0.148    0.200    0.708    1.440     66.88±0.15%
+Mem0g                    3616         0.476    0.657    1.091     2.590     68.44±0.17%
+
+
+expectedrelationaladvantagesofMem0gdonottranslateintobetteroutcomeshere,suggestingpotential
+overheadorredundancywhennavigatingmoreintricategraphstructuresinmulti-stepreasoningscenarios.
+    Intemporalreasoning, Mem0g substantiallyoutperformsothermethods,validatingthatstructured
+relationalgraphsexcelincapturingchronologicalrelationshipsandeventsequences.Thepresenceofexplicit
+relationalcontextsignificantlyenhancesMem0g’stemporalcoherence,outperformingMem0’sdensememory
+storageandhighlightingtheimportanceofpreciserelationalrepresentationswhentrackingtemporally
+sensitiveinformation.Open-domainperformancefurtherreinforcesthevalueofrelationalmodeling. Mem0g,
+benefitingfromtherelationalclarityofgraph-basedmemory,closelycompeteswiththetop-performing
+baseline(Zep).ThiscompetitiveresultunderscoresMem0g’srobustnessinintegratingexternalknowledge
+throughrelationalclarity,suggestinganoptimalsynergybetweenstructuredmemoryandopen-domain
+informationsynthesis.
+
+
+
+                                                       11
+
+=== PDF PAGE 12 ===
+                          Mem0:BuildingProduction-ReadyAIAgentswithScalableLong-TermMemory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(a)Comparisonofsearchlatencyatp50(median)andp95(95thpercentile)acrossdifferentmemorymethods(Mem0,Mem0g,best
+RAGvariant,Zep,LangMem,andA-Mem).ThebarheightsrepresentJscores(leftaxis),whilethelineplotsshowsearchlatencyin
+seconds(rightaxisscaledinlog).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(b)Comparisonoftotalresponselatencyatp50andp95acrossdifferentmemorymethods(Mem0,Mem0g,bestRAGvariant,Zep,
+LangMem,OpenAI,full-context,andA-Mem).ThebarheightsrepresentJscores(leftaxis),andthelineplotscaptureend-to-end
+latencyinseconds(rightaxisscaledinlog).
+
+Figure4:LatencyAnalysisofDifferentMemoryApproaches.ThesesubfiguresillustratetheJscoresandlatency
+comparisonofvariousselectedmethodsfromTable2.Subfigure(a)highlightsthe  search/retrievallatencypriorto
+answergeneration,whileSubfigure(b)showsthetotallatency(includingLLMinference).Bothplotsoverlayeach
+method’sJscoreforaholisticviewoftheiraccuracyandefficiency.
+
+
+    Overall,ouranalysisindicatescomplementarystrengthsof Mem0andMem0gacrossvarioustaskdemands:
+dense,natural-language-basedmemoryofferssignificantefficiencyforsimplerqueries,whileexplicitrela-
+tionalmodelingbecomesessentialfortasksdemandingnuancedtemporalandcontextualintegration.These
+findingsreinforcetheimportanceofadaptablememorystructurestailoredtospecificreasoningcontextsin
+AIagentdeployments.
+
+
+                                                             12
+
+=== PDF PAGE 13 ===
+                       Mem0:BuildingProduction-ReadyAIAgentswithScalableLong-TermMemory
+
+
+4.3.PerformanceComparisonof       Mem0and Mem0gAgainstRAGApproachesandFull-ContextModel
+
+ComparisonsinTable2,focusingonthe‘OverallJ’column,revealthatbothMem0andMem0gconsistently
+outperformallRAGconfigurations,whichvarychunksizes(128–8192tokens)andretrieveeitherone(k=1)
+ortwo(k=2)chunks. EventhestrongestRAGapproachpeaksataround61%intheJmetric,whereas
+Mem0reaches67%—abouta10%relativeimprovement—and Mem0greachesover68%,achievingaround
+a12%relativegain.Theseadvancesunderscoretheadvantageofcapturingonlythemostsalientfactsin
+memory,ratherthanretrievinglargechunkoforiginaltext.Byconvertingtheconversationhistoryinto
+concise,structuredrepresentations,Mem0andMem0gmitigatenoiseandsurfacemoreprecisecuestothe
+LLM,leadingtobetteranswersasevaluatedbyanexternalLLM(J).
+    Despitetheseimprovements,afull-contextmethodthatingestsachunkofroughly26,000tokensstill
+achievesthehighestJscore(approximately73%).However,asshowninFigure4b,italsoincursavery
+hightotalp95latency—around17seconds—sincethemodelmustreadtheentireconversationonevery
+query.Bycontrast,Mem0andMem0gsignificantlyreducetokenusageandthusachievelowerp95latenciesof
+around1.44seconds(a92%reduction)and2.6seconds(a85%reduction),respectivelyoverfull-context
+approach.Althoughthefull-contextapproachcanprovideaslightaccuracyedge,thememory-basedsystems
+offeramorepracticaltrade-off,maintainingnear-competitivequalitywhileimposingonlyafractionofthe
+tokenandlatencycost.Asconversationlengthincreases,full-contextapproachessufferfromexponential
+growthincomputationaloverhead(evidentinTable2wheretotalp95latencyincreasessignificantlywith
+larger kvaluesorchunksizes).Thisincreaseininputchunksleadstolongerresponsetimesandhigher
+tokenconsumptioncosts.Incontrast,memory-focusedapproacheslikeMem0andMem0gmaintainconsistent
+performanceregardlessofconversationlength,makingthemsubstantiallymoreviableforproduction-scale
+deploymentswhereefficiencyandresponsivenessarecritical.
+
+
+4.4.LatencyAnalysis
+
+Table2providesacomprehensiveperformancecomparisonofvariousretrievalandmemorymethodologies,
+presentingmedian(p50)andtail(p95)latenciesforboththesearchphaseandtotalresponsegeneration
+acrossthe LOCOMOdataset.Ouranalysisrevealsdistinctperformancepatternsgovernedbyarchitectural
+choices.Memory-centricarchitecturesdemonstratedifferentperformancecharacteristics.A-Mem,despiteits
+largermemorystore,incurssubstantialsearchoverhead(p50:0.668s),resultingintotalmedianlatenciesof
+1.410s.LangMemexhibitsevenhighersearchlatencies(p50:17.99s,p95:59.82s),renderingitimpractical
+forinteractiveapplications. Zepachievesmoderateperformance(p50total: 1.292s). Thefull-context
+baseline,whichprocessestheentireconversationhistorywithoutretrieval,fundamentallydiffersfrom
+retrieval-basedapproaches.Bypassingtheentireconversationcontext(26000tokens)directlytotheLLM,it
+eliminatessearchoverheadbutincursextremetotallatencies(p50:9.870s,p95:17.117s).Similarly,the
+OpenAIimplementationdoesnotperformmemorysearch,asitprocessesmanuallyextractedmemoriesfrom
+theirplayground.Whilethisapproachachievesimpressiveresponsegenerationtimes(p50:0.466s,p95:
+0.889s),itrequirespre-extractionofrelevantcontext,whichisnotreflectedinthereportedmetrics.
+    OurproposedMem0approachachievesthelowestsearchlatencyamongallmethods(p50:0.148s,p95:
+0.200s)asillustratedinFigure4a.Thisefficiencystemsfromourselectivememoryretrievalmechanism
+andinfraimprovementsthatdynamicallyidentifiesandretrievesonlythemostsalientinformationrather
+thanfixed-sizechunks. Consequently, Mem0maintainsthelowesttotalmedianlatency(0.708s)with
+remarkablycontainedp95values(1.440s),makingitparticularlysuitableforlatency-sensitiveapplications
+suchasinteractiveAIagents.Thegraph-enhancedMem0gvariantintroducesadditionalrelationalmodeling
+capabilitiesatamoderatelatencycost,withsearchtimes(0.476s)stilloutperformingallexistingmemory
+
+
+                                                       13
+
+=== PDF PAGE 14 ===
+                       Mem0:BuildingProduction-ReadyAIAgentswithScalableLong-TermMemory
+
+
+solutionsandbaselines.Despitethisincrease,Mem0gmaintainscompetitivetotallatencies(p50:1.091s,p95:
+2.590s)whileachievingthehighestJscore(68.44%)acrossallmethods—trailingonlythecomputationally
+prohibitivefull-contextapproach.Thisperformanceprofiledemonstratesourmethods’abilitytobalance
+responsequalityandcomputationalefficiency,offeringacompellingsolutionforproductionAIagentswhere
+bothfactorsarecriticalconstraints.
+
+
+4.5.MemorySystemOverhead:TokenAnalysisandConstructionTime
+
+Wemeasuretheaveragetokenbudgetrequiredtomaterialiseeachsystem’slong-termmemorystore.
+Mem0encodescompletedialogueturnsinanaturallanguagerepresentationandthereforeoccupiesonly7k
+tokensperconversationonanaverage.WhereasMem0groughlydoublesthefootprintto14ktokens,dueto
+theintroductionofgraphmemorieswhichincludesnodesandcorrespondingrelationships.Instarkcontrast,
+Zep’smemorygraphconsumesinexcessof600ktokens.TheinflationarisesfromZep’sdesignchoiceto
+cacheafullabstractivesummaryateverynodewhilealsostoringfactsontheconnectingedges,leading
+toextensiveredundancyacrossthegraph.Forperspective,supplyingtheentirerawconversationcontext
+tothelanguagemodel—withoutanymemoryabstraction—amountstoroughly26ktokensonaverage,20
+timeslessrelativetoZep’sgraph.Beyondtokeninefficiency,ourexperimentsrevealedsignificantoperational
+bottleneckswithZep.AfteraddingmemoriestoZep’ssystem,weobservedthatimmediatememoryretrieval
+attemptsoftenfailedtoanswerourqueriescorrectly.Interestingly,re-runningidenticalsearchesaftera
+delayofseveralhoursyieldedconsiderablybetterresults.ThislatencysuggeststhatZep’sgraphconstruction
+involvesmultipleasynchronousLLMcallsandextensivebackgroundprocessing,makingthememorysystem
+impracticalforreal-timeapplications.Incontrast,Mem0graphconstructioncompletesinunderaminuteeven
+inworst-casescenarios,allowinguserstoimmediatelyleveragenewlyaddedmemoriesforqueryresponses.
+   ThesefindingshighlightthatZepnotonlyreplicatesidenticalknowledgefragmentsacrossmultiple
+nodes,butalsointroducessignificantoperationaldelays.Ourarchitectures—Mem0andMem0g—preservethe
+sameinformationatafractionofthetokencostandwithsubstantiallyfastermemoryavailability,offeringa
+morememory-efficientandoperationallyresponsiverepresentation.
+
+5.ConclusionandFutureWork
+
+WehaveintroducedMem0andMem0g,twocomplementarymemoryarchitecturesthatovercometheintrinsic
+limitationsoffixedcontextwindowsinLLMs. Bydynamicallyextracting,consolidating,andretrieving
+compactmemoryrepresentations,Mem0achievesstate-of-the-artperformanceacrosssingle-hopandmulti-hop
+reasoning,whileMem0g’sgraph-basedextensionsunlocksignificantgainsintemporalandopen-domaintasks.
+Onthe LOCOMObenchmark,ourmethodsdeliver5%,11%,and7%relativeimprovementsinsingle-hop,
+temporal,andmulti-hopreasoningquestiontypesoverbestperformingmethodsinrespectivequestion
+typeandreducep95latencybyover91%comparedtofull-contextbaselines—demonstratingapowerful
+balancebetweenprecisionandresponsiveness. Mem0’sdensememorypipelineexcelsatrapidretrieval
+forstraightforwardqueries,minimizingtokenusageandcomputationaloverhead. Incontrast, Mem0g’s
+structuredgraphrepresentationsprovidenuancedrelationalclarity,enablingcomplexeventsequencing
+andrichcontextintegrationwithoutsacrificingpracticalefficiency.Together,theyformaversatilememory
+toolkitthatadaptstodiverseconversationaldemandswhileremainingdeployableatscale.
+   FutureresearchdirectionsincludeoptimizinggraphoperationstoreducethelatencyoverheadinMem0g,
+exploringhierarchicalmemoryarchitecturesthatblendefficiencywithrelationalrepresentation,andde-
+velopingmoresophisticatedmemoryconsolidationmechanismsinspiredbyhumancognitiveprocesses.
+
+
+                                                       14
+
+=== PDF PAGE 15 ===
+                       Mem0:BuildingProduction-ReadyAIAgentswithScalableLong-TermMemory
+
+
+Additionally,extendingourmemoryframeworkstodomainsbeyondconversationalscenarios,suchasproce-
+duralreasoningandmultimodalinteractions,wouldfurthervalidatetheirbroaderapplicability.Byaddressing
+thefundamentallimitationsoffixedcontextwindows,ourworkrepresentsasignificantadvancementtoward
+conversationalAIsystemscapableofmaintainingcoherent,contextuallyrichinteractionsoverextended
+periods,muchliketheirhumancounterparts.
+
+6.Acknowledgments
+
+WewouldliketoexpressoursinceregratitudetoHarshAgarwal,ShyamalAnadkat,PrithvijitChattopadhyay,
+SiddeshChoudhary,RishabhJain,andVaibhavPandeyfortheirinvaluableinsightsandthoroughreviewsof
+earlydrafts.Theirconstructivecommentsanddetailedsuggestionshelpedrefinethemanuscript,enhancing
+bothitsclarityandoverallquality.Wedeeplyappreciatetheirgenerosityindedicatingtimeandexpertiseto
+thiswork.
+
+References
+
+Anthropic.Modelcardandevaluationsforclaudemodels.Technicalreport,Anthropic,February2025.URL
+  https://www.anthropic.com/news/claude-3-7-sonnet.
+
+JanAssmann.Communicativeandculturalmemory.InCulturalmemories:Thegeographicalpointofview,
+  pages15–27.Springer,2011.
+
+AydarBulatov,YuryKuratov,andMikhailBurtsev. Recurrentmemorytransformer. AdvancesinNeural
+  InformationProcessingSystems,35:11079–11091,2022.
+
+PrateekChhikara,JiaruiZhang,FilipIlievski,JonathanFrancis,andKaixinMa.Knowledge-enhancedagents
+  forinteractivetextgames.InProceedingsofthe12thKnowledgeCaptureConference2023,pages157–165,
+  2023.
+
+FergusIMCraikandJanineMJennings.Humanmemory.1992.
+
+GauravGoswami. Dissectingthemetrics:Howdifferentevaluationapproachesyielddiverseresultsfor
+  conversationalai.AuthoreaPreprints,2025.
+
+TianyuGuo,DruvPai,YuBai,JiantaoJiao,MichaelJordan,andSongMei. Active-dormantattention
+  heads:Mechanisticallydemystifyingextreme-tokenphenomenainllms.InNeurIPS2024Workshopon
+  MathematicsofModernMachineLearning,2024.
+
+KostasHatalis,DespinaChristou,JoshuaMyers,StevenJones,KeithLambert,AdamAmos-Binks,Zohreh
+  Dannenhauer,andDustinDannenhauer. Memorymatters:Theneedtoimprovelong-termmemoryin
+  llm-agents.InProceedingsoftheAAAISymposiumSeries,volume2,pages277–280,2023.
+
+ZihongHe,WeizheLin,HaoZheng,FanZhang,MattWJones,LaurenceAitchison,XuhaiXu,MiaoLiu,
+  PerOlaKristensson,andJunxiaoShen.Human-inspiredperspectives:Asurveyonailong-termmemory.
+  arXivpreprintarXiv:2411.00489,2024.
+
+AaronHurst,AdamLerer,AdamPGoucher,AdamPerelman,AdityaRamesh,AidanClark,AJOstrow,Akila
+  Welihinda,AlanHayes,AlecRadford,etal.Gpt-4osystemcard.arXivpreprintarXiv:2410.21276,2024.
+
+
+
+                                                      15
+
+=== PDF PAGE 16 ===
+                       Mem0:BuildingProduction-ReadyAIAgentswithScalableLong-TermMemory
+
+
+AaronJaech,AdamKalai,AdamLerer,AdamRichardson,AhmedEl-Kishky,AidenLow,AlecHelyar,Alek-
+  sanderMadry,AlexBeutel,AlexCarney,etal.Openaio1systemcard.arXivpreprintarXiv:2412.16720,
+  2024.
+
+Kuang-HueiLee,XinyunChen,HirokiFuruta,JohnCanny,andIanFischer. Ahuman-inspiredreading
+  agentwithgistmemoryofverylongcontexts. InInternationalConferenceonMachineLearning,pages
+  26396–26415.PMLR,2024.
+
+LeiLiu,XiaoyanYang,YueShen,BinbinHu,ZhiqiangZhang,JinjieGu,andGuannanZhang. Think-in-
+  memory:Recallingandpost-thinkingenablellmswithlong-termmemory.arXivpreprintarXiv:2311.08719,
+  2023.
+
+AdyashaMaharana,Dong-HoLee,SergeyTulyakov,MohitBansal,FrancescoBarbieri,andYuweiFang.
+  Evaluatingverylong-termconversationalmemoryofllmagents.InProceedingsofthe62ndAnnualMeeting
+  oftheAssociationforComputationalLinguistics(Volume1:LongPapers),pages13851–13870,2024.
+
+BodhisattwaPrasadMajumder,BhavanaDalviMishra,PeterJansen,OyvindTafjord,NiketTandon,LiZhang,
+  ChrisCallison-Burch,andPeterClark.Clin:Acontinuallylearninglanguageagentforrapidtaskadaptation
+  andgeneralization.InFirstConferenceonLanguageModeling.
+
+ElliotNelson,GeorgiosKollias,PayelDas,SubhajitChaudhury,andSohamDan.Needleinthehaystackfor
+  memorybasedlargelanguagemodels.arXivpreprintarXiv:2407.01437,2024.
+
+CharlesPacker,VivianFang,Shishir_GPatil,KevinLin,SarahWooders,andJoseph_EGonzalez.Memgpt:
+  Towardsllmsasoperatingsystems.2023.
+
+PrestonRasmussen,PavloPaliychuk,TravisBeauvais,JackRyan,andDanielChalef. Zep: Atemporal
+  knowledgegrapharchitectureforagentmemory.arXivpreprintarXiv:2501.13956,2025.
+
+ParthSarthi,SalmanAbdullah,AditiTuli,ShubhKhanna,AnnaGoldie,andChristopherDManning.Raptor:
+  Recursiveabstractiveprocessingfortree-organizedretrieval.InTheTwelfthInternationalConferenceon
+  LearningRepresentations,2024.
+
+NoahShinn,FedericoCassano,AshwinGopinath,KarthikNarasimhan,andShunyuYao.Reflexion:Language
+  agentswithverbalreinforcementlearning.AdvancesinNeuralInformationProcessingSystems,36:8634–
+  8652,2023.
+
+PrabhjotSingh,PrateekChhikara,andJasmeetSingh.Anensembleapproachforextractivetextsumma-
+  rization.In2020InternationalConferenceonEmergingTrendsinInformationTechnologyandEngineering
+  (ic-ETITE),pages1–7.IEEE,2020.
+
+ArpitaSoni,RajeevArora,AnoopKumar,andDheerendraPanwar. Evaluatingdomaincoverageinlow-
+  resourcegenerativechatbots:Acomparativestudyofopen-domainandclosed-domainapproachesusing
+  bleuscores.In2024InternationalConferenceonElectricalElectronicsandComputingTechnologies(ICEECT),
+  volume1,pages1–6.IEEE,2024.
+
+GeminiTeam,PetkoGeorgiev,VingIanLei,RyanBurnell,LibinBai,AnmolGulati,GarrettTanzer,Damien
+  Vincent,ZhufengPan,ShiboWang,etal.Gemini1.5:Unlockingmultimodalunderstandingacrossmillions
+  oftokensofcontext.arXivpreprintarXiv:2403.05530,2024.
+
+JoanCTimonedaandSebastiánVallejoVera.Memoryisallyouneed:Testinghowmodelmemoryaffects
+  llmperformanceinannotationtasks.arXivpreprintarXiv:2503.04874,2025.
+
+                                                      16
+
+=== PDF PAGE 17 ===
+                      Mem0:BuildingProduction-ReadyAIAgentswithScalableLong-TermMemory
+
+
+WujiangXu,ZujieLiang,KaiMei,HangGao,JuntaoTan,andYongfengZhang.A-mem:Agenticmemoryfor
+  llmagents.arXivpreprintarXiv:2502.12110,2025.
+
+YangyangYu,HaohangLi,ZhiChen,YuechenJiang,YangLi,DenghuiZhang,RongLiu,JordanWSuchow,
+  andKhaldounKhashanah.Finmem:Aperformance-enhancedllmtradingagentwithlayeredmemoryand
+  characterdesign.InProceedingsoftheAAAISymposiumSeries,volume3,pages595–597,2024.
+
+JiaruiZhang.Guidedprofilegenerationimprovespersonalizationwithlargelanguagemodels.InFindingsof
+  theAssociationforComputationalLinguistics:EMNLP2024,pages4005–4016,2024.
+
+JiaruiZhang,FilipIlievski,KaixinMa,JonathanFrancis,andAlessandroOltramari.Astudyofzero-shot
+  adaptationwithcommonsenseknowledge.InAKBC,2022.
+
+ZeyuZhang,XiaoheBo,ChenMa,RuiLi,XuChen,QuanyuDai,JiemingZhu,ZhenhuaDong,andJi-
+  RongWen.Asurveyonthememorymechanismoflargelanguagemodelbasedagents.arXivpreprint
+  arXiv:2404.13501,2024.
+
+WanjunZhong,LianghongGuo,QiqiGao,HeYe,andYanlinWang.Memorybank:Enhancinglargelanguage
+  modelswithlong-termmemory.InProceedingsoftheAAAIConferenceonArtificialIntelligence,volume38,
+  pages19724–19731,2024.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                     17
+
+=== PDF PAGE 18 ===
+                                       Mem0:BuildingProduction-ReadyAIAgentswithScalableLong-TermMemory
+
+
+
+                                                                      Appendix
+
+
+           A.Prompts
+
+           IndevelopingourLLM-as-a-Judgeprompt,weadaptelementsfromthepromptreleasedbyPackeretal.
+          (2023).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Prompt Template for LLM as a Judge
+
+Your  task  is  to  label  an  answer  to  a  question  as  "CORRECT"  or  "WRONG".    You  will  be  given
+the  following  data:    (1)  a  question  (posed  by  one  user  to  another  user),  (2)  a  ‘gold’
+(ground  truth)  answer,  (3)  a  generated  answer  which  you  will  score  as  CORRECT/WRONG.
+
+The  point  of  the  question  is  to  ask  about  something  one  user  should  know  about  the  other
+user  based  on  their  prior  conversations.    The  gold  answer  will  usually  be  a  concise  and
+short  answer  that  includes  the  referenced  topic,  for  example:
+Question:    Do  you  remember  what  I  got  the  last  time  I  went  to  Hawaii?
+Gold  answer:    A  shell  necklace
+The  generated  answer  might  be  much  longer,  but  you  should  be  generous  with  your  grading
+-  as  long  as  it  touches  on  the  same  topic  as  the  gold  answer,  it  should  be  counted  as
+CORRECT.
+
+For  time  related  questions,  the  gold  answer  will  be  a  specific  date,  month,  year,  etc.    The
+generated  answer  might  be  much  longer  or  use  relative  time  references  (like  ‘last  Tuesday’
+or  ‘next  month’),  but  you  should  be  generous  with  your  grading  -  as  long  as  it  refers  to
+the  same  date  or  time  period  as  the  gold  answer,  it  should  be  counted  as  CORRECT.  Even  if
+the  format  differs  (e.g.,  ‘May  7th’  vs  ‘7  May’),  consider  it  CORRECT  if  it’s  the  same  date.
+
+Now  it’s  time  for  the  real  question:
+Question:    {question}
+Gold  answer:    {gold_answer}
+Generated  answer:    {generated_answer}
+
+First,  provide  a  short  (one  sentence)  explanation  of  your  reasoning,  then  finish  with
+CORRECT  or  WRONG.  Do  NOT  include  both  CORRECT  and  WRONG  in  your  response,  or  it  will  break
+the  evaluation  script.                                                      18
+
+Just  return  the  label  CORRECT  or  WRONG  in  a  json  format  with  the  key  as  "label".
+
+=== PDF PAGE 19 ===
+                                       Mem0:BuildingProduction-ReadyAIAgentswithScalableLong-TermMemory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Prompt Template for Results Generation (Mem0)
+
+You  are  an  intelligent  memory  assistant  tasked  with  retrieving  accurate  information  from
+conversation  memories.
+
+#  CONTEXT:
+
+You  have  access  to  memories  from  two  speakers  in  a  conversation.    These  memories  contain
+timestamped  information  that  may  be  relevant  to  answering  the  question.
+
+#  INSTRUCTIONS:
+
+1.    Carefully  analyze  all  provided  memories  from  both  speakers
+2.    Pay  special  attention  to  the  timestamps  to  determine  the  answer
+3.    If  the  question  asks  about  a  specific  event  or  fact,  look  for  direct  evidence  in  the
+memories
+4.    If  the  memories  contain  contradictory  information,  prioritize  the  most  recent  memory
+5.    If  there  is  a  question  about  time  references  (like  "last  year",  "two  months  ago",
+etc.),  calculate  the  actual  date  based  on  the  memory  timestamp.    For  example,  if  a  memory
+from  4  May  2022  mentions  "went  to  India  last  year,"  then  the  trip  occurred  in  2021.
+6.    Always  convert  relative  time  references  to  specific  dates,  months,  or  years.    For
+example,  convert  "last  year"  to  "2022"  or  "two  months  ago"  to  "March  2023"  based  on  the
+memory  timestamp.    Ignore  the  reference  while  answering  the  question.
+7.    Focus  only  on  the  content  of  the  memories  from  both  speakers.    Do  not  confuse  character
+names  mentioned  in  memories  with  the  actual  users  who  created  those  memories.
+8.    The  answer  should  be  less  than  5-6  words.
+
+#  APPROACH  (Think  step  by  step):
+
+1.    First,  examine  all  memories  that  contain  information  related  to  the  question
+2.    Examine  the  timestamps  and  content  of  these  memories  carefully
+3.    Look  for  explicit  mentions  of  dates,  times,  locations,  or  events  that  answer  the
+question
+4.    If  the  answer  requires  calculation  (e.g.,  converting  relative  time  references),  show
+your  work
+5.    Formulate  a  precise,  concise  answer  based  solely  on  the  evidence  in  the  memories
+6.    Double-check  that  your  answer  directly  addresses  the  question  asked
+7.    Ensure  your  final  answer  is  specific  and  avoids  vague  time  references
+
+Memories  for  user  {speaker_1_user_id}:
+{speaker_1_memories}
+
+Memories  for  user  {speaker_2_user_id}:
+{speaker_2_memories}
+
+Question:    {question}                                                       19
+
+
+Answer:
+
+=== PDF PAGE 20 ===
+                                      Mem0:BuildingProduction-ReadyAIAgentswithScalableLong-TermMemory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Prompt Template for Results Generation (Mem0g)
+
+(same  as  previous)
+
+#  APPROACH  (Think  step  by  step):
+
+1.    First,  examine  all  memories  that  contain  information  related  to  the  question
+2.    Examine  the  timestamps  and  content  of  these  memories  carefully
+3.    Look  for  explicit  mentions  of  dates,  times,  locations,  or  events  that  answer  the
+question
+4.    If  the  answer  requires  calculation  (e.g.,  converting  relative  time  references),  show
+your  work
+5.    Analyze  the  knowledge  graph  relations  to  understand  the  user’s  knowledge  context
+6.    Formulate  a  precise,  concise  answer  based  solely  on  the  evidence  in  the  memories
+7.    Double-check  that  your  answer  directly  addresses  the  question  asked
+8.    Ensure  your  final  answer  is  specific  and  avoids  vague  time  references
+
+Memories  for  user  {speaker_1_user_id}:
+{speaker_1_memories}
+
+Relations  for  user  {speaker_1_user_id}:
+{speaker_1_graph_memories}Prompt Template for OpenAI ChatGPT
+
+Can  you  please  extract  relevant  information  from  this  conversation  and  create  memory
+Memories  for  user  {speaker_2_user_id}:
+{speaker_2_memories}entries  for  each  user  mentioned?    Please  store  these  memories  in  your  knowledge  base  in
+addition  to  the  timestamp  provided  for  future  reference  and  personalized  interactions.
+(1:56  pm  on  8  May,  2023)  Caroline:    Hey  Mel!    Good  to  see  you!    How  have  you  been?Relations  for  user  {speaker_2_user_id}:
+{speaker_2_graph_memories}(1:56  pm  on  8  May,  2023)  Melanie:    Hey  Caroline!    Good  to  see  you!    I’m  swamped  with  the
+kids  &  work.    What’s  up  with  you?    Anything  new?                   20
+(1:56  pm  on  8  May,  2023)  Caroline:    I  went  to  a  LGBTQ  support  group  yesterday  and  it  was  soQuestion:    {question}
+powerful.
+Answer:...
+
+=== PDF PAGE 21 ===
+                        Mem0:BuildingProduction-ReadyAIAgentswithScalableLong-TermMemory
+
+B.Algorithm
+
+
+Algorithm1MemoryManagementSystem:UpdateOperations
+
+ 1:Input:Setofretrievedmemories F,Existingmemorystore M={m1,m2,...,mn}
+ 2:Output:Updatedmemorystore M′
+ 3:procedure UpdateMemory(F,M)
+ 4:   foreachfact f ∈ Fdo
+ 5:            operation← ClassifyOperation(f,M)          ▷Executeappropriateoperationbasedon
+    classification
+ 6:      if operation=ADDthen
+ 7:                  id←GenerateUniqueID()
+ 8:                  M← M∪{(id, f,"ADD")}                               ▷Addnewfactwithuniqueidentifier
+ 9:      elseif operation=UPDATEthen
+10:                  mi←FindRelatedMemory(f,M)
+11:         ifInformationContent(f)>InformationContent(mi)then
+12:                        M←(M\{mi})∪{(idi, f,"UPDATE")}                ▷Replacewithricherinformation
+13:         endif
+14:      elseif operation=DELETEthen
+15:                  mi←FindContradictedMemory(f,M)
+16:                  M← M\{mi}                                              ▷Removecontradictedinformation
+17:      elseif operation=NOOPthen
+18:          Nooperationperformed                                    ▷Factalreadyexistsorisirrelevant
+19:      endif
+20:   endfor
+21:   return M
+22:endprocedure
+23:function ClassifyOperation(f,M)
+24:   if¬SemanticallySimilar(f,M)then
+25:      returnADD                                              ▷Newinformationnotpresentinmemory
+26:   elseifContradicts(f,M)then
+27:      returnDELETE                                       ▷Informationconflictswithexistingmemory
+28:   elseifAugments(f,M)then
+29:      returnUPDATE                                        ▷Enhancesexistinginformationinmemory
+30:   else
+31:      returnNOOP                                                                   ▷Nochangerequired
+32:   endif
+33:endfunction
+
+
+C.SelectedBaselines
+
+LoCoMo  TheLoCoMoframeworkimplementsasophisticatedmemorypipelinethatenablesLLMagentsto
+maintaincoherent,long-termconversations.Atitscore,thesystemdividesmemoryintoshort-termand
+long-termcomponents.Aftereachconversationsession,agentsgeneratesummaries(storedasshort-term
+memory)thatdistillkeyinformationfromthatinteraction.Simultaneously,individualconversationturnsare
+
+
+                                                         21
+
+=== PDF PAGE 22 ===
+                       Mem0:BuildingProduction-ReadyAIAgentswithScalableLong-TermMemory
+
+
+transformedinto‘observations’-factualstatementsabouteachspeaker’spersonaandlifeeventsthatare
+storedinlong-termmemorywithreferencestothespecificdialogturnsthatproducedthem.Whengenerating
+newresponses,agentsleverageboththemostrecentsessionsummaryandselectivelyretrieverelevant
+observationsfromtheirlong-termmemory.Thisdual-memoryapproachisfurtherenhancedbyincorporating
+atemporaleventgraphthattrackscausallyconnectedlifeeventsoccurringbetweenconversationsessions.
+Byconditioningresponsesonretrievedmemories,currentconversationcontext,personainformation,and
+interveninglifeevents,thesystemenablesagentstomaintainconsistentpersonalitiesandrecallimportant
+detailsacrossconversationsspanninghundredsofturnsanddozensofsessions.
+
+
+ReadAgent  ReadAgentaddressesthefundamentallimitationsofLLMsbyemulatinghowhumansprocess
+lengthytextsthroughasophisticatedthree-stagepipeline.First,inEpisodePagination,thesystemintelligently
+segmentstextatnaturalcognitiveboundariesratherthanarbitrarycutoffs.Next,duringMemoryGisting,
+itdistillseachsegmentintoconcisesummariesthatpreserveessentialmeaningwhiledrasticallyreducing
+tokencount—similartohowhumanmemoryretainsthesubstanceofinformationwithoutverbatimrecall.
+Finally,whentaskedwithansweringquestions,theInteractiveLookupmechanismexaminesthesegists
+andstrategicallyretrievesonlythemostrelevantoriginaltextsegmentsfordetailedprocessing. This
+human-inspiredapproachenablesLLMstoeffectivelymanagedocumentsupto20timeslongerthantheir
+normalcontextwindows. Bybalancingglobalunderstandingthroughgistswithselectiveattentionto
+details,ReadAgentachievesbothcomputationalefficiencyandimprovedcomprehension,demonstratingthat
+mimickinghumancognitiveprocessescansignificantlyenhanceAItextprocessingcapabilities.
+
+
+MemoryBank  TheMemoryBanksystemenhancesLLMswithlong-termmemorythroughasophisticated
+three-partpipeline. Atitscore,theMemoryStoragecomponentwarehousesdetailedconversationlogs,
+hierarchicaleventsummaries,andevolvinguserpersonalityprofiles.Whenanewinteractionoccurs,the
+MemoryRetrievalmechanismemploysadual-towerdenseretrievalmodeltoextractcontextuallyrelevant
+pastinformation.TheMemoryUpdatingcomponent,providesahuman-likeforgettingmechanismwhere
+memoriesstrengthenwhenrecalledandnaturallydecayovertimeifunused.Thiscomprehensiveapproach
+enablesAIcompanionstorecallpertinentinformation,maintaincontextualawarenessacrossextended
+interactions,anddevelopincreasinglyaccurateuserportraits,resultinginmorepersonalizedandnatural
+long-termconversations.
+
+
+MemGPT  TheMemGPTsystemintroducesanoperatingsystem-inspiredapproachtoovercomethecontext
+windowlimitationsinherentinLLMs.Atitscore,MemGPTemploysasophisticatedmemorymanagement
+pipelineconsistingofthreekeycomponents:ahierarchicalmemorysystem,self-directedmemoryoperations,
+andanevent-basedcontrolflowmechanism. Thesystemdividesavailablememoryinto‘maincontext’
+(analogoustoRAMintraditionaloperatingsystems)and‘externalcontext’(analogoustodiskstorage).
+Themaincontext—whichisboundbytheLLM’scontextwindow—containssysteminstructions,recent
+conversationhistory,andworkingmemorythatcanbemodifiedbythemodel.Theexternalcontextstores
+unlimitedinformationoutsidethemodel’simmediatecontextwindow,includingcompleteconversation
+historiesandarchivaldata.WhentheLLMneedsinformationnotpresentinmaincontext,itcaninitiate
+functioncallstosearch,retrieve,ormodifycontentacrossthesememorytiers,effectively‘paging’relevant
+informationinandoutofitslimitedcontextwindow.ThisOS-inspiredarchitectureenablesMemGPTto
+maintainconversationalcoherenceoverextendedinteractions,managedocumentsthatexceedstandard
+contextlimits,andperformmulti-hopinformationretrievaltasks—allwhileoperatingwithfixed-context
+
+
+                                                       22
+
+=== PDF PAGE 23 ===
+                       Mem0:BuildingProduction-ReadyAIAgentswithScalableLong-TermMemory
+
+
+models. Thesystem’sabilitytointelligentlymanageitsownmemoryresourcesprovidestheillusionof
+infinitecontext,significantlyextendingwhat’spossiblewithcurrentLLMtechnology.
+
+
+A-Mem  TheA-MemmodelintroducesanagenticmemorysystemdesignedforLLMagents.Thissystem
+dynamicallystructuresandevolvesmemoriesthroughinterconnectednotes.Eachnotecapturesinteractions
+enrichedwithstructuredattributeslikekeywords,contextualdescriptions,andtagsgeneratedbythe
+LLM.Uponcreatinganewmemory,A-MEMusessemanticembeddingstoretrieverelevantexistingnotes,
+thenemploysanLLM-drivenapproachtoestablishmeaningfullinksbasedonsimilaritiesandshared
+attributes.Crucially,thememoryevolutionmechanismupdatesexistingnotesdynamically,refiningtheir
+contextualinformationandattributeswhenevernewrelevantmemoriesareintegrated. Thus,memory
+structurecontinuallyevolves,allowingricherandcontextuallydeeperconnectionsamongmemories.Retrieval
+frommemoryisconductedthroughsemanticsimilarity,providingrelevanthistoricalcontextduringagent
+interactions
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                       23

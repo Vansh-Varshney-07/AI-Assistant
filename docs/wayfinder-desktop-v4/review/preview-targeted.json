@@ -1,0 +1,176 @@
+{
+  "scope": "actual offline preview JS in fake DOM; CSS source observations only",
+  "graph_executed": false,
+  "reachable_states": null,
+  "transitions": null,
+  "bfs_dfs_agree": null,
+  "exhaustive_invariants": "valid release route/tab, one overlay, wide visibility, no R1 later evidence",
+  "checks": [
+    {
+      "id": "P01-manifest-one-source",
+      "pass": true,
+      "detail": "Generated preview manifest equals authoritative JSON."
+    },
+    {
+      "id": "P02-default-r1",
+      "pass": true,
+      "detail": "The smallest release is the initial example."
+    },
+    {
+      "id": "P03-r1-navigation",
+      "pass": true,
+      "detail": "R1 only exposes core destinations."
+    },
+    {
+      "id": "P04-r1-inspector",
+      "pass": true,
+      "detail": "No later-release review/evidence in R1."
+    },
+    {
+      "id": "P05-r2-example",
+      "pass": true,
+      "detail": "R2 chat uses selected memory/documents."
+    },
+    {
+      "id": "P06-deny-hidden-tab",
+      "pass": true,
+      "detail": "A direct hidden-tab intent cannot expose R2 review."
+    },
+    {
+      "id": "P07-deny-hidden-route",
+      "pass": true,
+      "detail": "Hidden later route remains unavailable."
+    },
+    {
+      "id": "P08-downgrade-route-tab",
+      "pass": true,
+      "detail": "Lower release normalizes both route and detail tab."
+    },
+    {
+      "id": "P09-wide-inspector-open",
+      "pass": true,
+      "detail": "Wide visibility and control agree."
+    },
+    {
+      "id": "P10-wide-inspector-close",
+      "pass": true,
+      "detail": "Wide details close."
+    },
+    {
+      "id": "P11-drawer-open",
+      "pass": true,
+      "detail": "Narrow navigation exposes every enabled destination."
+    },
+    {
+      "id": "P12-drawer-escape-focus",
+      "pass": true,
+      "detail": "Escape closes drawer and requests trigger focus restore."
+    },
+    {
+      "id": "P13-single-overlay",
+      "pass": true,
+      "detail": "Opening inspector replaces navigation modal."
+    },
+    {
+      "id": "P14-resize-clears-overlay",
+      "pass": true,
+      "detail": "Crossing breakpoint closes modal without losing route/tab."
+    },
+    {
+      "id": "P15-drawer-route-close",
+      "pass": true,
+      "detail": "Navigation selects route and closes drawer."
+    },
+    {
+      "id": "P16-ime-flag",
+      "pass": true,
+      "detail": "IME flag is respected."
+    },
+    {
+      "id": "P17-ime-latch",
+      "pass": true,
+      "detail": "Composition latch protects missing event flag."
+    },
+    {
+      "id": "P18-ime-key229",
+      "pass": true,
+      "detail": "Composition key code is respected."
+    },
+    {
+      "id": "P19-shift-enter",
+      "pass": true,
+      "detail": "Shift+Enter remains newline."
+    },
+    {
+      "id": "P20-normal-enter",
+      "pass": true,
+      "detail": "Normal Enter is inert preview submission."
+    },
+    {
+      "id": "P21-r1-no-attachment",
+      "pass": true,
+      "detail": "R1 composer does not expose files."
+    },
+    {
+      "id": "P22-r2-attachment",
+      "pass": true,
+      "detail": "Supported-file example appears from R2."
+    },
+    {
+      "id": "P23-visible-focus-source",
+      "pass": true,
+      "detail": "Source includes visible/forced-colour focus rules; actual rendering untested."
+    },
+    {
+      "id": "P24-wide-toggle-css",
+      "pass": true,
+      "detail": "Wide inspector has a visibility rule."
+    },
+    {
+      "id": "P25-modal-primitives",
+      "pass": true,
+      "detail": "Native modal elements used; browser behaviour untested."
+    },
+    {
+      "id": "P26-no-connection",
+      "pass": true,
+      "detail": "Offline prototype has no request/storage calls."
+    },
+    {
+      "id": "P27-no-optional-effect-example",
+      "pass": true,
+      "detail": "Optional effect modules remain absent from core."
+    },
+    {
+      "id": "P28-invalid-release",
+      "pass": true,
+      "detail": "Out-of-range design release is rejected."
+    },
+    {
+      "id": "P29-detached-trigger-fallback",
+      "pass": true,
+      "detail": "A removed trigger needs a live fallback focus target."
+    },
+    {
+      "id": "P30-tab-rerender-focus",
+      "pass": true,
+      "detail": "Rebuilt inspector buttons need selected-button focus, rather than body focus loss."
+    },
+    {
+      "id": "P31-resize-preserves-context",
+      "pass": true,
+      "detail": "Responsive modal close preserves route and selected detail."
+    }
+  ],
+  "passed": 31,
+  "failed": 0,
+  "excluded": [
+    "real browser rendering",
+    "screen reader",
+    "OS focus/IME",
+    "Electron IPC",
+    "backend",
+    "model/provider",
+    "native desktop"
+  ]
+}
