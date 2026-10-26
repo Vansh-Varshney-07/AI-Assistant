@@ -11,6 +11,12 @@ export interface BackendState {
   instance_generation?: string;
 }
 export interface DesktopAPI {
+  profiles(space: string): Promise<Row>;
+  startProfileTask(space: string, profile: string, reference: string, goal: string): Promise<Row>;
+  profileTask(space: string, id: string): Promise<Row>;
+  profileTasks(space: string): Promise<Row[]>;
+  cancelProfileTask(space: string, id: string): Promise<Row>;
+  clearProfileTask(space: string, id: string): Promise<Row>;
   status(): Promise<BackendState>;
   connect(): Promise<BackendState>;
   listSpaces(): Promise<Row[]>;

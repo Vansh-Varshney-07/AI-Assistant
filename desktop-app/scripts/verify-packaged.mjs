@@ -37,6 +37,11 @@ try{
   await page.getByRole('heading',{name:'Good day, Operator.'}).waitFor();
   const sid=await page.getByLabel('Memory space').inputValue();
   check('actual_space_created',!!sid);
+  const profiles=await page.evaluate(s=>window.wayfinder.profiles(s),sid);
+  check('actual_profile_inventory_and_unqualified_presets',profiles.main.id==='M00'&&profiles.profiles.length===8&&profiles.presets.length===6&&profiles.presets.every(p=>!p.available));
+  await page.getByRole('button',{name:'Agents & apps',exact:true}).first().click();
+  await page.getByRole('heading',{name:'Task profiles',exact:true}).waitFor();
+  check('actual_agents_screen_requires_selection_and_qualification',await page.getByRole('button',{name:'Run selected-file task'}).isDisabled());
   await page.getByRole('button',{name:'Memory',exact:true}).first().click();
   await page.getByLabel('Memory field').fill('retention_days');
   await page.getByRole('button',{name:'Recall memory',exact:true}).click();

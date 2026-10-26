@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Activity, ArrowUp, ArrowUpRight, BrainCircuit, Check, Compass, Database, FileText, GitBranch, Link2, Radio, ShieldCheck } from 'lucide-react';
 import type { BackendState, DesktopAPI, Row } from '../shared/types';
 
-export type WorkspacePage = 'home' | 'memory' | 'documents' | 'runs' | 'repository' | 'capabilities' | 'connections' | 'permissions' | 'settings';
+export type WorkspacePage = 'home' | 'agents' | 'memory' | 'documents' | 'runs' | 'repository' | 'capabilities' | 'connections' | 'permissions' | 'settings';
 interface Context { backend: BackendState; snapshot: Row; spaceName: string; go: (page: WorkspacePage) => void }
 const running = new Set(['queued', 'running', 'stopping', 'worker_running', 'planned', 'context', 'validated', 'executing']);
 const list = (value: unknown): Row[] => Array.isArray(value) ? value : [];

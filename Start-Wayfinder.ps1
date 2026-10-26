@@ -1,6 +1,12 @@
-param([string]$Runtime = (Join-Path $PSScriptRoot '.local\wayfinder'))
-$ErrorActionPreference = 'Stop'
-$candidates = @((Join-Path $PSScriptRoot '.venv\Scripts\pythonw.exe'), 'D:\Opencode_\reserchpaper\.venv\Scripts\pythonw.exe')
-$python = $candidates | Where-Object { Test-Path -LiteralPath $_ } | Select-Object -First 1
-if (-not $python) { throw 'Create a Python environment with requirements.txt first. See docs/wayfinder-phase-0-2/README.md.' }
-Start-Process -FilePath $python -ArgumentList @('"' + (Join-Path $PSScriptRoot 'wayfinder_app.py') + '"', '--runtime', '"' + $Runtime + '"') -WorkingDirectory $PSScriptRoot -WindowStyle Hidden
+param([string]$Runtime,[string]$Python,[switch]$Demo,[switch]$Check)
+$ErrorActionPreference='Stop'
+$appRoot=Join-Path $PSScriptRoot 'desktop-app'
+if($Check){
+    [pscustomobject]@{executable_present=(Test-Path -LiteralPath (Join-Path $appRoot 'release/win-unpacked/Wayfinder.exe'));project=$PSScriptRoot;interface='GitHub Wayfinder Electron UI';native_driver_enabled=$false;requires='Existing Python, FalkorDB, cached embeddings; managed Hermes for tasks'}|Format-List
+    exit 0
+}
+if($Demo){& (Join-Path $appRoot 'scripts/Start-Demo.ps1') -Python $Python;exit $LASTEXITCODE}
+$options=@{}
+if($Runtime){$options.Runtime=$Runtime}
+if($Python){$options.Python=$Python}
+& (Join-Path $appRoot 'Start.ps1') @options

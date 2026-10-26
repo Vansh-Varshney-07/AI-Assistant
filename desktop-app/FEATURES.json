@@ -1,6 +1,6 @@
 {
-  "build": "wayfinder-desktop/0.2.0",
-  "scope": "completed_backend_workspace_not_full_R1_R7_acceptance",
+  "build": "wayfinder-desktop/0.3.0",
+  "scope": "consolidated_task_profile_candidate_not_full_cross_app_acceptance",
   "connected": [
     {
       "feature": "spaces",
@@ -126,6 +126,19 @@
         "platform_google_status"
       ],
       "scope": "configuration presence only; live_qualified remains false"
+    },
+    {
+      "feature": "task_profiles",
+      "backend": "wayfinder/platform/task_profiles.py",
+      "operations": [
+        "platform_profiles",
+        "platform_profile_start",
+        "platform_profile_result",
+        "platform_profile_runs",
+        "platform_profile_cancel",
+        "platform_profile_clear"
+      ],
+      "scope": "M00 routing, A01-A08/P01-P06 metadata; A01/A05/A06 selected UTF-8 file adapter only; app providers and Fitness unavailable"
     }
   ],
   "excluded": [
@@ -180,11 +193,16 @@
   "native_testing_enabled": false,
   "schema": "wayfinder.desktop-inclusion/v1",
   "variant": "workspace-parity",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "navigation": [
     {
       "id": "home",
       "title": "Home",
+      "group": "WORKSPACE"
+    },
+    {
+      "id": "agents",
+      "title": "Agents & apps",
       "group": "WORKSPACE"
     },
     {
@@ -269,7 +287,13 @@
     "revokeBranch",
     "googleStatus",
     "getSettings",
-    "setFontSize"
+    "setFontSize",
+    "profiles",
+    "startProfileTask",
+    "profileTask",
+    "profileTasks",
+    "cancelProfileTask",
+    "clearProfileTask"
   ],
   "backend_operations": [
     "status",
@@ -317,7 +341,13 @@
     "platform_action_reconcile",
     "platform_action_audit",
     "platform_activity_read",
-    "platform_google_status"
+    "platform_google_status",
+    "platform_profiles",
+    "platform_profile_start",
+    "platform_profile_result",
+    "platform_profile_runs",
+    "platform_profile_cancel",
+    "platform_profile_clear"
   ],
   "private_facades": [
     "boot",

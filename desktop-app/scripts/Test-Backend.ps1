@@ -31,6 +31,7 @@ try {
     }
     if (-not $ready) { throw 'Isolated database not ready.' }
     $files = @('desktop-app/backend/test_host.py', 'tests/test_wayfinder_app.py', 'tests/test_desktop_workers.py', 'tests/test_platform_integration.py', 'tests/test_platform_git.py', 'tests/test_platform_memory.py', 'tests/test_platform_sources.py', 'tests/test_google_setup.py', 'tests/test_approval_service.py', 'tests/test_atlas_helpers.py', 'tests/test_integration_action_safety.py', 'wayfinder/workers')
+    $files += 'tests/test_task_profiles.py'
     $selection = @('-k', 'not desktop_worker_controls_and_space_switch')
     $reportName = 'backend.xml'
     if ($ClientOnly) { $files = @('desktop-app/backend/test_host.py'); $reportName = 'client-adapter.xml' }

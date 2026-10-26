@@ -52,6 +52,16 @@ export function createHandlers(transport: Transport, ui: NativeUI, lifecycle: { 
     } finally { activeReviews.delete(key); }
   }
   const handlers: { [K in keyof DesktopAPI]: (...args: any[]) => Promise<any> } = {
+    profiles: space => request('platform_profiles', space),
+    startProfileTask: async (space, profile, reference, goal) => {
+      const pid=kind(profile,['A01','A05','A06']);
+      await disclose(space,reference,text(goal,1000));
+      return request('platform_profile_start',space,{request:{request_id:randomUUID(),profile_id:pid,profile_version:'1',reference:text(reference),goal:text(goal,1000)}});
+    },
+    profileTask: (space,id) => request('platform_profile_result',space,{id:text(id)}),
+    profileTasks: space => request('platform_profile_runs',space),
+    cancelProfileTask: (space,id) => request('platform_profile_cancel',space,{id:text(id)}),
+    clearProfileTask: (space,id) => request('platform_profile_clear',space,{id:text(id)}),
     status: () => lifecycle.status(), connect: () => lifecycle.connect(),
     listSpaces: () => transport.call('spaces'),
     createSpace: name => transport.call('create_space', { name: text(name, 100) }),

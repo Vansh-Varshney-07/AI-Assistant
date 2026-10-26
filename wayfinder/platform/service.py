@@ -16,6 +16,7 @@ from wayfinder.platform.connectors import ConnectorService, SCHEMAS as CONNECTOR
 from wayfinder.platform.memory_control import MemoryControl, SCHEMAS as MEMORY_SCHEMAS
 from wayfinder.platform.evaluation import WorkflowReview, SCHEMAS as REVIEW_SCHEMAS
 from wayfinder.platform.contracts import ContextQuery, ReadRequest, Scope, VERSION
+from wayfinder.platform.task_profiles import TaskProfiles, SCHEMAS as PROFILE_SCHEMAS
 from wayfinder.platform.runtime import RuntimeInspector
 from wayfinder.platform.activity import read_activity
 from wayfinder.platform.google_read import GoogleRead, SCHEMAS as GOOGLE_SCHEMAS
@@ -81,6 +82,7 @@ class PlatformService:
                 )
 
         self.review = WorkflowReview(self)
+        self.profiles = TaskProfiles(self)
 
     def _scope(self, who, body):
         self.app.authorize(who)
@@ -126,11 +128,14 @@ class PlatformService:
                 for name, fields in GOOGLE_SCHEMAS.items()
             }
         )
+        schemas.update({name:fields | {"space","task"} for name,fields in PROFILE_SCHEMAS.items()})
         if operation not in schemas or set(body) - schemas[operation]:
             raise ValueError("Unknown platform operation or fields.")
         scope = self._scope(who, body)
         if self.closed or self.app.closed:
             raise ValueError("Platform is stopped.")
+        if operation in PROFILE_SCHEMAS:
+            return self.profiles.call(who,scope,operation,body)
         if operation in CONNECTOR_SCHEMAS:
             return self.connectors.call(who, scope, operation, body)
         if operation in MEMORY_SCHEMAS:

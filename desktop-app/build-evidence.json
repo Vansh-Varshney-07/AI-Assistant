@@ -1,7 +1,7 @@
 {
-  "build": "wayfinder-desktop/0.2.0",
+  "build": "wayfinder-desktop/0.3.0",
   "variant": "workspace-parity",
-  "generated": "2026-10-26T14:30:27.440Z",
+  "generated": "2026-10-26T15:11:55.320Z",
   "scope": "static package inspection plus separately reported hidden packaged application, rendered fixture, Node bridge and live synthetic tiers",
   "checks": [
     {
@@ -99,17 +99,17 @@
   ],
   "passed": 23,
   "frontend": {
-    "passed": 38,
+    "passed": 40,
     "failed": 0
   },
-  "real_neural_hermes_checks": 13,
+  "real_neural_hermes_checks": 18,
   "production_node_bridge_checks": 7,
-  "hidden_packaged_checks": 14,
+  "hidden_packaged_checks": 16,
   "rendered_configurations": 6,
   "packaged_host_sha256": "0aed49e867b0e21e25d7df4a9a0533dad5421879624451cc2bd7326599655cb8",
-  "asar_sha256": "7dc0a33a8a556d5eb1d183240f5c43989850afbdba396ec629939f937f327342",
-  "executable_sha256": "673488b0ad53336f07ea9bc185146d53de943e5619056095f0b9042aba502705",
-  "application_version": "0.2.0",
+  "asar_sha256": "ab0e50b7440ac839da04f7cc3c3b1277c3c6ce66425d7cfced1a8f87f0a78248",
+  "executable_sha256": "14684cb28194a548882ad864aeb5aa08b40e5977725ced780137450d98002f8d",
+  "application_version": "0.3.0",
   "native_desktop_tests_run": false,
   "manual_accessibility_tests_run": false,
   "google_account_tests_run": false

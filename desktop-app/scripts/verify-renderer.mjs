@@ -25,10 +25,12 @@ await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
 const origin = `http://127.0.0.1:${server.address().port}`;
 const browser = await chromium.launch({ executablePath: process.env.WAYFINDER_CHROME, headless: true });
 const results = [], blocked = [], faults = [];
-async function fixture() {
+async function fixture(manifest) {
   const ready = { state: 'ready', capabilities: { memory: true, documents: false }, runtime: 'Synthetic UI fixture — not a live runtime' };
   const api = {
     connect: async () => ready, status: async () => ready,
+    profiles: async () => ({...manifest,profiles:manifest.profiles.map(p=>({...p,execution:{included:['A01','A05','A06'].includes(p.id),available:false,status:p.id==='A08'?'deferred':'inspection_required',note:p.limitation}})),presets:manifest.presets.map(p=>({...p,available:false}))}),
+    profileTasks: async () => [],
     listSpaces: async () => [{ id: 'synthetic-a', name: 'Synthetic UI fixture' }],
     getSettings: async () => ({ font_size: 14, background: false }),
     setFontSize: async size => ({ font_size: size, background: false }),
@@ -45,7 +47,7 @@ async function fixture() {
 try {
   for (const [width, height, scale] of [[1440,1000,1],[1280,800,1],[600,920,1],[1920,1080,1],[1280,800,1.25],[1280,800,1.5]]) {
     const context = await browser.newContext({ viewport: { width, height }, deviceScaleFactor: scale, reducedMotion: 'reduce' });
-    await context.addInitScript(fixture);
+    await context.addInitScript(fixture,JSON.parse(await fs.readFile(path.join(root,'../wayfinder/platform/task-profiles.json'),'utf8')));
     const page = await context.newPage();
     page.on('pageerror', error => faults.push(error.message));
     await page.route('**/*', route => { if (new URL(route.request().url()).origin !== origin) { blocked.push(route.request().url()); return route.abort(); } return route.continue(); });
@@ -115,6 +117,16 @@ try {
     await page.getByRole('button', { name: 'Inspect source' }).click();
     assert.equal(await page.locator('.source-copy').evaluate(element => getComputedStyle(element).fontSize), '20px');
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth+1), true);
+    await page.keyboard.press('Control+k');
+    await palette.getByRole('textbox', {name:'Search destinations'}).fill('Agents');
+    await palette.getByRole('button', {name:'Agents & apps'}).click();
+    await page.getByRole('heading',{name:'Task profiles',exact:true}).waitFor();
+    assert.equal(await page.locator('.profile-card').count(),8);
+    assert.equal(await page.locator('.agents-page .connection-card').count(),6);
+    await page.getByRole('button',{name:'Select A08 Fitness & Habits'}).click();
+    assert.equal(await page.getByRole('button',{name:'Run selected-file task'}).count(),0);
+    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),true);
+    await page.screenshot({path:path.join(output,`agents-${width}-${scale}.png`),fullPage:true});
     results.push({ width, height, scale, tier: 'rendered-synthetic-fixture', passed: true, checks: ['local fonts','disabled unimplemented chat','theme','palette','scoped recall','long inert source','reading size applied','no overflow','setup state',...(width<=900?['drawer focus trap','Escape focus restoration','single modal','resize recovery']:[])] });
     await context.close();
   }
