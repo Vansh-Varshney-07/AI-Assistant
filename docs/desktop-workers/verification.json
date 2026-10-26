@@ -1,0 +1,53 @@
+{
+  "verified_at": "2026-10-25T21:47:07.886288+05:30",
+  "tests": {
+    "tests": 38,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "database": "Disposable pinned FalkorDB container; no live persistent database used",
+  "live_hermes_fixtures": [
+    {
+      "name": "file_md",
+      "role": "W35",
+      "status": "completed",
+      "grounded": true
+    },
+    {
+      "name": "file_docx",
+      "role": "W35",
+      "status": "completed",
+      "grounded": true
+    },
+    {
+      "name": "shared_image",
+      "role": "W33",
+      "status": "completed",
+      "grounded": true
+    },
+    {
+      "name": "planner_missing_target",
+      "role": "W36",
+      "status": "completed",
+      "grounded": true
+    }
+  ],
+  "isolation": {
+    "ok": true,
+    "runtime": "Hermes",
+    "effective_tools": [],
+    "memory": false,
+    "inference": "not invoked",
+    "desktop": "not connected"
+  },
+  "windows_execution": "Not connected; W37 remains locked",
+  "source_sha256": {
+    "wayfinder/workers/actions.py": "d7c17a9650800ec2c38cb6b4ce23957f9ecaa098d3a60a5e560f516413aeda46",
+    "wayfinder/workers/files.py": "d37e38d1d0ebd3244eb11ddec88a49aadc4680a35ebee64260ecbd13adf59c5d",
+    "wayfinder/workers/hermes.py": "5db6977bd963f92d30531ffc3bfa63f784c5019838326a8b7637f1d15c83c00d",
+    "wayfinder/workers/hermes_runner.py": "0694865188ab6bcc126264e393c8963493764ed7c2f21d6cbdfa956bd5cf1e36",
+    "wayfinder/workers/hub.py": "08aea77c5861b38ce4ffb5eed7b12614222737d0cf0ff6f208cc8908c7ab56e7",
+    "wayfinder/workers/__init__.py": "3e7cff650bbc120568ab31e40f1e08ac49d428825b72c68d349b62c5bd426ae7"
+  }
+}

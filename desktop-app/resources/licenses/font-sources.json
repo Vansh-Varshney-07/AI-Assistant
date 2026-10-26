@@ -1,0 +1,44 @@
+[
+  {
+    "path": "resources/licenses/spacegrotesk-OFL.txt",
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/spacegrotesk/OFL.txt",
+    "git_blob": "cb512b9af44ff61e75e1aad387b7424cdfab36a3",
+    "sha256": "564ce565c371c5e5bbf286006565a7c9aa55a9f56e7ca58d56e05d649dd61a72",
+    "bytes": 4495
+  },
+  {
+    "path": "src/renderer/fonts/spacegrotesk.ttf",
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/spacegrotesk/SpaceGrotesk%5Bwght%5D.ttf",
+    "git_blob": "a1b2e6c26093066510a31147e7aec9abdc8d6c5e",
+    "sha256": "acad6de1fc93436f5c0f1f4137751ef04f1aea3063e7036535970ffcfbd79f72",
+    "bytes": 136676
+  },
+  {
+    "path": "src/renderer/fonts/geist.ttf",
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/geist/Geist%5Bwght%5D.ttf",
+    "git_blob": "f63f0afc6390323715972b6645115485f37cc9f4",
+    "sha256": "73894e0448cae90a92b6c2f8732b7bb9acb7b94c418bff559dad4a18e1de9659",
+    "bytes": 169056
+  },
+  {
+    "path": "resources/licenses/geist-OFL.txt",
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/geist/OFL.txt",
+    "git_blob": "61f6f4b7853081236aec6407f2dd3c7170997f84",
+    "sha256": "1781d2806a07d91c4edf4740b88449fab7d0eadad53f7c351b94cd4d4eb8c00f",
+    "bytes": 4387
+  },
+  {
+    "path": "src/renderer/fonts/jetbrainsmono.ttf",
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/jetbrainsmono/JetBrainsMono%5Bwght%5D.ttf",
+    "git_blob": "aa310be8b717fe3774f9444dd89d5f4101cc6d10",
+    "sha256": "48715a42ec242c21e9f02692891e147d022299a52e48d5e413e1a942193ffeda",
+    "bytes": 187208
+  },
+  {
+    "path": "resources/licenses/jetbrainsmono-OFL.txt",
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/jetbrainsmono/OFL.txt",
+    "git_blob": "821a3dac22aff15a1f1c9689a1d79c45bb58ca39",
+    "sha256": "b2fe5e8987594e9ffd1d2ca52a2f5d73eb8335243893c5d6254b5ad69269591d",
+    "bytes": 4399
+  }
+]

@@ -1,0 +1,116 @@
+{
+  "build": "wayfinder-desktop/0.2.0",
+  "variant": "workspace-parity",
+  "generated": "2026-10-26T14:30:27.440Z",
+  "scope": "static package inspection plus separately reported hidden packaged application, rendered fixture, Node bridge and live synthetic tiers",
+  "checks": [
+    {
+      "name": "packaged:/dist/main/index.js",
+      "passed": true
+    },
+    {
+      "name": "packaged:/dist/preload/index.cjs",
+      "passed": true
+    },
+    {
+      "name": "packaged:/dist/renderer/index.html",
+      "passed": true
+    },
+    {
+      "name": "esm_main_entry",
+      "passed": true
+    },
+    {
+      "name": "no_private_runtime_or_fixture_in_archive",
+      "passed": true
+    },
+    {
+      "name": "renderer_isolation_flags",
+      "passed": true
+    },
+    {
+      "name": "production_csp_no_network_or_inline_script",
+      "passed": true
+    },
+    {
+      "name": "no_renderer_bootstrap_secret_or_bearer",
+      "passed": true
+    },
+    {
+      "name": "packaged_backend_matches_source",
+      "passed": true
+    },
+    {
+      "name": "only_host_and_build_manifest_packaged",
+      "passed": true
+    },
+    {
+      "name": "matching_manifest_in_renderer_host_and_package",
+      "passed": true
+    },
+    {
+      "name": "declared_variant_and_version",
+      "passed": true
+    },
+    {
+      "name": "local_font_assets_present",
+      "passed": true
+    },
+    {
+      "name": "font_license:geist",
+      "passed": true
+    },
+    {
+      "name": "font_license:spacegrotesk",
+      "passed": true
+    },
+    {
+      "name": "font_license:jetbrainsmono",
+      "passed": true
+    },
+    {
+      "name": "windows_pe_executable",
+      "passed": true
+    },
+    {
+      "name": "frontend_test_report_passed",
+      "passed": true
+    },
+    {
+      "name": "real_neural_and_hermes_evidence",
+      "passed": true
+    },
+    {
+      "name": "production_node_bridge_evidence",
+      "passed": true
+    },
+    {
+      "name": "actual_hidden_packaged_test_passed",
+      "passed": true
+    },
+    {
+      "name": "hidden_test_matches_this_archive",
+      "passed": true
+    },
+    {
+      "name": "rendered_matrix_without_remote_requests",
+      "passed": true
+    }
+  ],
+  "passed": 23,
+  "frontend": {
+    "passed": 38,
+    "failed": 0
+  },
+  "real_neural_hermes_checks": 13,
+  "production_node_bridge_checks": 7,
+  "hidden_packaged_checks": 14,
+  "rendered_configurations": 6,
+  "packaged_host_sha256": "0aed49e867b0e21e25d7df4a9a0533dad5421879624451cc2bd7326599655cb8",
+  "asar_sha256": "7dc0a33a8a556d5eb1d183240f5c43989850afbdba396ec629939f937f327342",
+  "executable_sha256": "673488b0ad53336f07ea9bc185146d53de943e5619056095f0b9042aba502705",
+  "application_version": "0.2.0",
+  "native_desktop_tests_run": false,
+  "manual_accessibility_tests_run": false,
+  "google_account_tests_run": false
+}

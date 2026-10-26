@@ -1,0 +1,56 @@
+export type Row = Record<string, any>;
+export interface BackendState {
+  state: 'starting' | 'ready' | 'offline';
+  error?: string;
+  runtime?: string;
+  owner?: string;
+  backend?: Row;
+  capabilities?: Record<string, boolean>;
+  runtime_inspection?: Row;
+  release?: { schema: string; variant: string; sha256: string };
+  instance_generation?: string;
+}
+export interface DesktopAPI {
+  status(): Promise<BackendState>;
+  connect(): Promise<BackendState>;
+  listSpaces(): Promise<Row[]>;
+  createSpace(name: string): Promise<Row>;
+  inventory(space: string): Promise<Row>;
+  source(space: string, id: string): Promise<Row>;
+  recall(space: string, subject: string, predicate: string, temporal: 'now' | 'historical'): Promise<Row>;
+  context(space: string, subject: string, predicate: string): Promise<Row>;
+  proposeMemory(space: string, body: Row): Promise<Row>;
+  reviewMemory(space: string, id: string): Promise<Row>;
+  rejectMemory(space: string, id: string): Promise<Row>;
+  reconcileMemory(space: string, id: string): Promise<Row>;
+  revokeMemory(space: string, id: string): Promise<Row>;
+  inspectRuntime(space: string): Promise<Row>;
+  capabilities(space: string, query: string): Promise<Row>;
+  selectFiles(space: string, kind: 'document' | 'folder' | 'activity'): Promise<Row | null>;
+  fileSelection(space: string): Promise<Row | null>;
+  searchFiles(space: string, grant: string, pattern: string): Promise<Row>;
+  revokeFiles(space: string, grant: string): Promise<Row>;
+  analyze(space: string, reference: string, question: string): Promise<Row>;
+  compare(space: string, reference: string, question: string, subject: string, predicate: string): Promise<Row>;
+  snapshot(space: string): Promise<Row>;
+  run(space: string, kind: 'worker' | 'workflow', id: string): Promise<Row>;
+  cancel(space: string, kind: 'worker' | 'workflow', id: string): Promise<Row>;
+  clearRun(space: string, kind: 'worker' | 'workflow', id: string): Promise<Row>;
+  audit(space: string, kind: 'workflow' | 'memory' | 'git', id: string): Promise<Row[]>;
+  evaluate(space: string, id: string, phrases: string[]): Promise<Row>;
+  retryRead(space: string, id: string, reference: string): Promise<Row>;
+  readActivity(space: string, reference: string): Promise<Row>;
+  selectRepository(space: string): Promise<Row | null>;
+  repositorySelection(space: string): Promise<Row | null>;
+  observeRepository(space: string, grant: string, branch: string): Promise<Row>;
+  proposeBranch(space: string, grant: string, branch: string, expectedHead: string): Promise<Row>;
+  reviewBranch(space: string, id: string): Promise<Row>;
+  rejectBranch(space: string, id: string): Promise<Row>;
+  reconcileBranch(space: string, id: string, grant: string): Promise<Row>;
+  revokeRepository(space: string, grant: string): Promise<Row>;
+  revokeBranch(space: string, id: string): Promise<Row>;
+  googleStatus(space: string): Promise<Row>;
+  getSettings(): Promise<Row>;
+  setFontSize(size: number): Promise<Row>;
+}
+declare global { interface Window { wayfinder: DesktopAPI } }

@@ -1,0 +1,63 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "contract": {
+      "const": "wayfinder.platform/1",
+      "default": "wayfinder.platform/1",
+      "title": "Contract",
+      "type": "string"
+    },
+    "context_ref": {
+      "title": "Context Ref",
+      "type": "string"
+    },
+    "status": {
+      "title": "Status",
+      "type": "string"
+    },
+    "subject": {
+      "title": "Subject",
+      "type": "string"
+    },
+    "predicate": {
+      "title": "Predicate",
+      "type": "string"
+    },
+    "evidence": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "maxItems": 8,
+      "title": "Evidence",
+      "type": "array"
+    },
+    "warnings": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Warnings",
+      "type": "array"
+    },
+    "revision": {
+      "title": "Revision",
+      "type": "string"
+    },
+    "expires": {
+      "title": "Expires",
+      "type": "number"
+    }
+  },
+  "required": [
+    "context_ref",
+    "status",
+    "subject",
+    "predicate",
+    "evidence",
+    "warnings",
+    "revision",
+    "expires"
+  ],
+  "title": "ContextPacket",
+  "type": "object"
+}

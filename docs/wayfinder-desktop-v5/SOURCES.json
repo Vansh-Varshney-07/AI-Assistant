@@ -1,0 +1,419 @@
+{
+  "date": "2026-10-26",
+  "timezone": "Asia/Calcutta",
+  "kind": "planning_source_inspection_not_runtime_qualification",
+  "upstream_commit": "7b59c06d817a08b53d1f139764a757ac9acfdbd9",
+  "integration_branch": "codex/ui-backend-integration",
+  "original_branch": "codex/platform-integration",
+  "local_sources_uncommitted": true,
+  "coherent_implementation_import_completed": false,
+  "attachment_status": "checkout_created; side-chat registration failed; explicit path required",
+  "files": [
+    {
+      "origin": "user_reference",
+      "path": "C:\\Users\\User\\.codex\\attachments\\12eb81db-5afe-4477-9721-9639a1e928d3\\Pasted text.txt",
+      "bytes": 14471,
+      "sha256": "6d6b1c8182ea328f33dd740e867cb23ae6e440615ee53da8ca1fe9a899e21fbf",
+      "stable_during_read": true
+    },
+    {
+      "origin": "reference",
+      "path": "D:\\Opencode_\\AI assistant\\docs\\wayfinder-desktop-v4\\PLAN.md",
+      "bytes": 14471,
+      "sha256": "6d6b1c8182ea328f33dd740e867cb23ae6e440615ee53da8ca1fe9a899e21fbf",
+      "stable_during_read": true
+    },
+    {
+      "origin": "reference",
+      "path": "D:\\Opencode_\\AI assistant\\docs\\wayfinder-desktop-v4\\CONTRACTS.md",
+      "bytes": 50983,
+      "sha256": "a7e9c9b6cd7754d99f67ee8450ea6892b81f99401fe10430dc4f4bf6cc3b1fa0",
+      "stable_during_read": true
+    },
+    {
+      "origin": "reference",
+      "path": "D:\\Opencode_\\AI assistant\\docs\\wayfinder-desktop-v4\\WORKER-COVERAGE.csv",
+      "bytes": 9936,
+      "sha256": "5d7a6cdf2296b614b321e6dc21c4c1b9cbf363afd305d5fc1e74fd5999be2de8",
+      "stable_during_read": true
+    },
+    {
+      "origin": "reference",
+      "path": "D:\\Opencode_\\AI assistant\\docs\\wayfinder-desktop-v4\\SECOND-ORDER.md",
+      "bytes": 8422,
+      "sha256": "cc7d8608b6a83faaf9d315cb082d9521b3ec38600261342654bb974874aa6bbb",
+      "stable_during_read": true
+    },
+    {
+      "origin": "upstream",
+      "path": "C:\\Users\\User\\.codex\\worktrees\\ui-backend-integration\\AI assistant\\workbench\\index.html",
+      "bytes": 104334,
+      "sha256": "2c411a049b1f7a6349936bb26ed7b78404a925ad19cfb3ea32e30fb5322c07c1",
+      "stable_during_read": true
+    },
+    {
+      "origin": "upstream",
+      "path": "C:\\Users\\User\\.codex\\worktrees\\ui-backend-integration\\AI assistant\\workbench\\app.js",
+      "bytes": 28847,
+      "sha256": "b63ba95bca983a5c124b2fa72bff72be16931dfd1edbfc036e8c40460921a3ac",
+      "stable_during_read": true
+    },
+    {
+      "origin": "upstream",
+      "path": "C:\\Users\\User\\.codex\\worktrees\\ui-backend-integration\\AI assistant\\workbench\\style.css",
+      "bytes": 2144,
+      "sha256": "52661c1223e6c451109cb59b2ee0be41064027017538f35092c52d2d9e0a991e",
+      "stable_during_read": true
+    },
+    {
+      "origin": "upstream",
+      "path": "C:\\Users\\User\\.codex\\worktrees\\ui-backend-integration\\AI assistant\\workbench_server.py",
+      "bytes": 20544,
+      "sha256": "d63308c041c3588fee4f627df97a8f16a656a0d448d6e5641d2bfb8fe17dab4c",
+      "stable_during_read": true
+    },
+    {
+      "origin": "upstream",
+      "path": "C:\\Users\\User\\.codex\\worktrees\\ui-backend-integration\\AI assistant\\stitch_wayfinder_ai_desktop_interface\\aerospace_telemetry_ai_console\\DESIGN.md",
+      "bytes": 12072,
+      "sha256": "b249294524ac50f95aa3c5cf47c1c4d9b8bc4738168cd26cb4530aeb4fc21019",
+      "stable_during_read": true
+    },
+    {
+      "origin": "upstream",
+      "path": "C:\\Users\\User\\.codex\\worktrees\\ui-backend-integration\\AI assistant\\wayfinder\\workers\\schemas.py",
+      "bytes": 13621,
+      "sha256": "579089c8906d9c1b437b607635b0a6e923f8cd54ebe4f8d0ee7fa95c1ffd00c8",
+      "stable_during_read": true
+    },
+    {
+      "origin": "upstream",
+      "path": "C:\\Users\\User\\.codex\\worktrees\\ui-backend-integration\\AI assistant\\wayfinder\\atlas\\harness\\envelope.py",
+      "bytes": 5314,
+      "sha256": "ef511c750807b29fb2f603e3decd4d483ccc998592a0f55803bcfe268f671454",
+      "stable_during_read": true
+    },
+    {
+      "origin": "upstream",
+      "path": "C:\\Users\\User\\.codex\\worktrees\\ui-backend-integration\\AI assistant\\wayfinder\\atlas\\harness\\approval_service.py",
+      "bytes": 8071,
+      "sha256": "b7e8d5de50b4bfd232d5e6d3255ff12288c2620e0e7c0d28d1b57204402d087c",
+      "stable_during_read": true
+    },
+    {
+      "origin": "local_uncommitted",
+      "path": "D:\\Opencode_\\AI assistant\\wayfinder\\service.py",
+      "bytes": 28391,
+      "sha256": "a7aee70f4e2176f8392066c374adb78b294bef6f846806c63c93e30be9419a18",
+      "stable_during_read": true
+    },
+    {
+      "origin": "local_uncommitted",
+      "path": "D:\\Opencode_\\AI assistant\\wayfinder\\api.py",
+      "bytes": 5075,
+      "sha256": "b95abbd2c080756755a38c7b42f2bfaa05bc395f719312a0672cb627e852165e",
+      "stable_during_read": true
+    },
+    {
+      "origin": "local_uncommitted",
+      "path": "D:\\Opencode_\\AI assistant\\wayfinder\\runtime.py",
+      "bytes": 8328,
+      "sha256": "c0947ce4689bfc91b3d7dd3936cfcc040c6a102f6c21c78439679e6e85cb9394",
+      "stable_during_read": true
+    },
+    {
+      "origin": "local_uncommitted",
+      "path": "D:\\Opencode_\\AI assistant\\wayfinder\\workers\\actions.py",
+      "bytes": 8648,
+      "sha256": "fc06e0384ff966a31bd48f61d4bc1f922fd3c00893ef343ab4cb8da725fbbcaf",
+      "stable_during_read": true
+    },
+    {
+      "origin": "local_uncommitted",
+      "path": "D:\\Opencode_\\AI assistant\\wayfinder\\workers\\files.py",
+      "bytes": 13039,
+      "sha256": "d37e38d1d0ebd3244eb11ddec88a49aadc4680a35ebee64260ecbd13adf59c5d",
+      "stable_during_read": true
+    },
+    {
+      "origin": "local_uncommitted",
+      "path": "D:\\Opencode_\\AI assistant\\wayfinder\\workers\\hub.py",
+      "bytes": 14751,
+      "sha256": "08aea77c5861b38ce4ffb5eed7b12614222737d0cf0ff6f208cc8908c7ab56e7",
+      "stable_during_read": true
+    },
+    {
+      "origin": "local_uncommitted",
+      "path": "D:\\Opencode_\\AI assistant\\wayfinder\\workers\\hermes.py",
+      "bytes": 3548,
+      "sha256": "5db6977bd963f92d30531ffc3bfa63f784c5019838326a8b7637f1d15c83c00d",
+      "stable_during_read": true
+    },
+    {
+      "origin": "local_uncommitted",
+      "path": "D:\\Opencode_\\AI assistant\\desktop-app\\package.json",
+      "bytes": 1541,
+      "sha256": "fa7159887ff074960582282d3c7cbb90e9dc59557014406e1bbb36f0af9ed507",
+      "stable_during_read": true
+    },
+    {
+      "origin": "local_uncommitted",
+      "path": "D:\\Opencode_\\AI assistant\\desktop-app\\FEATURES.json",
+      "bytes": 4570,
+      "sha256": "fbddfbe207fc8208d98641c37cb5ebadd83a0aeb31cbb3215dbd9f3590157f70",
+      "stable_during_read": true
+    },
+    {
+      "origin": "local_uncommitted",
+      "path": "D:\\Opencode_\\AI assistant\\desktop-app\\VERIFICATION.md",
+      "bytes": 4187,
+      "sha256": "8c175529da451a3249c96b67d8af4c48848084dcc3b9ca390f8810f806a4a30e",
+      "stable_during_read": true
+    },
+    {
+      "origin": "local_uncommitted",
+      "path": "D:\\Opencode_\\AI assistant\\desktop-app\\src\\renderer\\App.tsx",
+      "bytes": 41222,
+      "sha256": "2c9ba05e160f45235f565af33f0aff812b977c999b5bdca08410b52460c384c0",
+      "stable_during_read": true
+    },
+    {
+      "origin": "local_uncommitted",
+      "path": "D:\\Opencode_\\AI assistant\\desktop-app\\src\\main\\index.ts",
+      "bytes": 5047,
+      "sha256": "d239c9c9864c9c5948283636d29e8fff8162d1117075d66b83485b81c172391d",
+      "stable_during_read": true
+    },
+    {
+      "origin": "local_uncommitted",
+      "path": "D:\\Opencode_\\AI assistant\\desktop-app\\src\\main\\broker.ts",
+      "bytes": 12920,
+      "sha256": "b84e0aed34811f0d0b92245d4cb802790e87d98715d5746f4a72657e23430e41",
+      "stable_during_read": true
+    },
+    {
+      "origin": "local_uncommitted",
+      "path": "D:\\Opencode_\\AI assistant\\desktop-app\\src\\preload\\index.ts",
+      "bytes": 1185,
+      "sha256": "1ad599a0e14f80667c8ea0e7a6e02e5935125f01b5c167e72979280999eabbb8",
+      "stable_during_read": true
+    },
+    {
+      "origin": "local_uncommitted",
+      "path": "D:\\Opencode_\\AI assistant\\desktop-app\\src\\shared\\types.ts",
+      "bytes": 2943,
+      "sha256": "83ab969a45d2f1e30df8eeafff3cd549febcc55aa76056bfc8d7c85b9c16a15d",
+      "stable_during_read": true
+    },
+    {
+      "origin": "local_uncommitted",
+      "path": "D:\\Opencode_\\AI assistant\\desktop-app\\backend\\host.py",
+      "bytes": 12537,
+      "sha256": "774518d4a25fd2cfec52a8a81714a9ecc62e966909e8c2c9332b34b93116df7c",
+      "stable_during_read": true
+    },
+    {
+      "origin": "local_uncommitted",
+      "path": "D:\\Opencode_\\AI assistant\\wayfinder\\platform\\__init__.py",
+      "bytes": 79,
+      "sha256": "b3ea377a90ad14d7b353cec527ef770b1042804e25618c0f6f585a36ae02cf70",
+      "stable_during_read": true
+    },
+    {
+      "origin": "local_uncommitted",
+      "path": "D:\\Opencode_\\AI assistant\\wayfinder\\platform\\activity.py",
+      "bytes": 6014,
+      "sha256": "a7ce47587924e3a78cc4dc0ce3702b2b4c5d278b137b44ed11cf9a57d863dad1",
+      "stable_during_read": true
+    },
+    {
+      "origin": "local_uncommitted",
+      "path": "D:\\Opencode_\\AI assistant\\wayfinder\\platform\\catalog.py",
+      "bytes": 2175,
+      "sha256": "fc62caba7f578668f107bed916b779220fc39cec2747463fbd6d286fd421282b",
+      "stable_during_read": true
+    },
+    {
+      "origin": "local_uncommitted",
+      "path": "D:\\Opencode_\\AI assistant\\wayfinder\\platform\\connectors.py",
+      "bytes": 11169,
+      "sha256": "6a15b4db2179dafb10cbd64943e56a5b0ee2d555389776197e7bae9e4a6bb5ce",
+      "stable_during_read": true
+    },
+    {
+      "origin": "local_uncommitted",
+      "path": "D:\\Opencode_\\AI assistant\\wayfinder\\platform\\context.py",
+      "bytes": 3665,
+      "sha256": "ad6324770d62430c0ef72f8fe8e1b2241d9e125f457f7c27a275eccd4999b3aa",
+      "stable_during_read": true
+    },
+    {
+      "origin": "local_uncommitted",
+      "path": "D:\\Opencode_\\AI assistant\\wayfinder\\platform\\contracts.py",
+      "bytes": 1816,
+      "sha256": "16bd9f722d308852868d5666c9c799b4f2b1257cbb548d8628e3866e4f578812",
+      "stable_during_read": true
+    },
+    {
+      "origin": "local_uncommitted",
+      "path": "D:\\Opencode_\\AI assistant\\wayfinder\\platform\\evaluation.py",
+      "bytes": 10772,
+      "sha256": "babdb835228f09adad9aa6f4c9310f70c4819e1a24274dabec66ddbca88f9b0e",
+      "stable_during_read": true
+    },
+    {
+      "origin": "local_uncommitted",
+      "path": "D:\\Opencode_\\AI assistant\\wayfinder\\platform\\git_connector.py",
+      "bytes": 14147,
+      "sha256": "c928f0b241beaa899a4f9a956d6d33923f5a39dee575378b497555bd9dc87366",
+      "stable_during_read": true
+    },
+    {
+      "origin": "local_uncommitted",
+      "path": "D:\\Opencode_\\AI assistant\\wayfinder\\platform\\google_read.py",
+      "bytes": 14228,
+      "sha256": "7e7f65a58f156519c98e8454448a291b205df2d9d784b32823c7903e2f67aeec",
+      "stable_during_read": true
+    },
+    {
+      "origin": "local_uncommitted",
+      "path": "D:\\Opencode_\\AI assistant\\wayfinder\\platform\\memory_control.py",
+      "bytes": 13947,
+      "sha256": "392630954132e1ce3a7cf7f44adcd42ef75dae5dc285254d6c964b80fce93d41",
+      "stable_during_read": true
+    },
+    {
+      "origin": "local_uncommitted",
+      "path": "D:\\Opencode_\\AI assistant\\wayfinder\\platform\\runtime.py",
+      "bytes": 3317,
+      "sha256": "0948c495446687d8c43b7c8fdfa084ada0a36f0ea7c3a81b35882e9700658dde",
+      "stable_during_read": true
+    },
+    {
+      "origin": "local_uncommitted",
+      "path": "D:\\Opencode_\\AI assistant\\wayfinder\\platform\\runtime_probe.py",
+      "bytes": 1421,
+      "sha256": "82bf02a0bf23602b271f3485f817a20f977664806430fb7aa341b2677df5a95f",
+      "stable_during_read": true
+    },
+    {
+      "origin": "local_uncommitted",
+      "path": "D:\\Opencode_\\AI assistant\\wayfinder\\platform\\service.py",
+      "bytes": 22753,
+      "sha256": "c2fac0ceabb98d0bf16a7d9c8419f6fbc70c780a301fe28e5370ebce888c9de2",
+      "stable_during_read": true
+    },
+    {
+      "origin": "upstream_worker_definition",
+      "path": "C:\\Users\\User\\.codex\\worktrees\\ui-backend-integration\\AI assistant\\wayfinder\\workers\\W01_intent_analyst\\definition.yaml",
+      "bytes": 1713,
+      "sha256": "bbc457f0fce7594510ed68abaca8a3c0da7c893af81e288661e78fbda3d44f05",
+      "stable_during_read": true
+    },
+    {
+      "origin": "upstream_worker_definition",
+      "path": "C:\\Users\\User\\.codex\\worktrees\\ui-backend-integration\\AI assistant\\wayfinder\\workers\\W03_task_planner\\definition.yaml",
+      "bytes": 1169,
+      "sha256": "f108364713d0db7b9e99b12e861c7564c6d8cbe13c44bfc8bc2c34227f3cf3e0",
+      "stable_during_read": true
+    },
+    {
+      "origin": "upstream_worker_definition",
+      "path": "C:\\Users\\User\\.codex\\worktrees\\ui-backend-integration\\AI assistant\\wayfinder\\workers\\W06_result_validator\\definition.yaml",
+      "bytes": 1009,
+      "sha256": "6f20756816206a9485c376ee14b5b7507bdb383b6e3a1e2be02be0f0c4e866ca",
+      "stable_during_read": true
+    },
+    {
+      "origin": "upstream_worker_definition",
+      "path": "C:\\Users\\User\\.codex\\worktrees\\ui-backend-integration\\AI assistant\\wayfinder\\workers\\W07_synthesis_worker\\definition.yaml",
+      "bytes": 1111,
+      "sha256": "56f76a31f441a4b970150394ba6bac9ec268d53e791d6c9282ba43f44e48b865",
+      "stable_during_read": true
+    },
+    {
+      "origin": "upstream_worker_definition",
+      "path": "C:\\Users\\User\\.codex\\worktrees\\ui-backend-integration\\AI assistant\\wayfinder\\workers\\W08_web_researcher\\definition.yaml",
+      "bytes": 1672,
+      "sha256": "901fcbb9928104ead3f59a53931e354a08c69c689e4415c9dab49e62b28c41f3",
+      "stable_during_read": true
+    },
+    {
+      "origin": "upstream_worker_definition",
+      "path": "C:\\Users\\User\\.codex\\worktrees\\ui-backend-integration\\AI assistant\\wayfinder\\workers\\W09_source_verifier\\definition.yaml",
+      "bytes": 1941,
+      "sha256": "6ae6c5253fb3525bb9ece3adf0f8a26d52398ba63effb78f9dda83b003cb2d6a",
+      "stable_during_read": true
+    },
+    {
+      "origin": "upstream_worker_definition",
+      "path": "C:\\Users\\User\\.codex\\worktrees\\ui-backend-integration\\AI assistant\\wayfinder\\workers\\W10_document_analyst\\definition.yaml",
+      "bytes": 2168,
+      "sha256": "0063965e375a9f1567c08f8dad10fe003c7164489734d01d90dab006d655176e",
+      "stable_during_read": true
+    },
+    {
+      "origin": "upstream_worker_definition",
+      "path": "C:\\Users\\User\\.codex\\worktrees\\ui-backend-integration\\AI assistant\\wayfinder\\workers\\W11_data_analyst\\definition.yaml",
+      "bytes": 1707,
+      "sha256": "6b06687f03cc0aabf812a0e1243de7c110b3ab705f7b28160cb2fd6e676f98cb",
+      "stable_during_read": true
+    },
+    {
+      "origin": "upstream_worker_definition",
+      "path": "C:\\Users\\User\\.codex\\worktrees\\ui-backend-integration\\AI assistant\\wayfinder\\workers\\W12_knowledge_synthesizer\\definition.yaml",
+      "bytes": 1473,
+      "sha256": "b0e2cf14122d05901364cb3d2094bf8291240cafbcca9bb3c94133e249855269",
+      "stable_during_read": true
+    },
+    {
+      "origin": "upstream_worker_definition",
+      "path": "C:\\Users\\User\\.codex\\worktrees\\ui-backend-integration\\AI assistant\\wayfinder\\workers\\W13_calendar_analyst\\definition.yaml",
+      "bytes": 1517,
+      "sha256": "14e86031c2390370f5737f3614d726fc84f4a01e1be5339dce162c3cd0781893",
+      "stable_during_read": true
+    },
+    {
+      "origin": "upstream_worker_definition",
+      "path": "C:\\Users\\User\\.codex\\worktrees\\ui-backend-integration\\AI assistant\\wayfinder\\workers\\W14_task_manager\\definition.yaml",
+      "bytes": 1477,
+      "sha256": "858e7dfac4d50d1aa2b90fd58fb31fcef59bf03389d97bd83c302713a908cb36",
+      "stable_during_read": true
+    },
+    {
+      "origin": "upstream_worker_definition",
+      "path": "C:\\Users\\User\\.codex\\worktrees\\ui-backend-integration\\AI assistant\\wayfinder\\workers\\W15_schedule_optimizer\\definition.yaml",
+      "bytes": 1795,
+      "sha256": "d3728f60e4a534f6b6e447df2e122c794595f53574faeb7c9f24491aab7bb541",
+      "stable_during_read": true
+    },
+    {
+      "origin": "upstream_worker_definition",
+      "path": "C:\\Users\\User\\.codex\\worktrees\\ui-backend-integration\\AI assistant\\wayfinder\\workers\\W16_commitment_tracker\\definition.yaml",
+      "bytes": 2132,
+      "sha256": "728f3df32242110302176274a475a520088eb6415eb1e2ed680d6ae6f5bd530a",
+      "stable_during_read": true
+    },
+    {
+      "origin": "upstream_worker_definition",
+      "path": "C:\\Users\\User\\.codex\\worktrees\\ui-backend-integration\\AI assistant\\wayfinder\\workers\\W18_meeting_prep_worker\\definition.yaml",
+      "bytes": 2121,
+      "sha256": "36f94508042730bc91d80977eedb78307537122d7e6dbcbab016f6b2b35288c7",
+      "stable_during_read": true
+    },
+    {
+      "origin": "upstream_worker_definition",
+      "path": "C:\\Users\\User\\.codex\\worktrees\\ui-backend-integration\\AI assistant\\wayfinder\\workers\\W19_repository_analyst\\definition.yaml",
+      "bytes": 1696,
+      "sha256": "39a4d0f2c3408a9d0a2100002dd17c76fb54025be8db547f4c2953332e170448",
+      "stable_during_read": true
+    },
+    {
+      "origin": "upstream_worker_definition",
+      "path": "C:\\Users\\User\\.codex\\worktrees\\ui-backend-integration\\AI assistant\\wayfinder\\workers\\W24_code_reviewer\\definition.yaml",
+      "bytes": 1830,
+      "sha256": "b1afa7139936f456465b8c4614b30c1031f2e7d508c35b1b58cfded85dd7ee7c",
+      "stable_during_read": true
+    }
+  ]
+}

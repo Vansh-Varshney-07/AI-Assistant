@@ -26,3 +26,9 @@ client_secret*.json
 # Wayfinder Atlas generated index
 wayfinder/atlas/_index/
 wayfinder/atlas/registry/snapshot_*.json
+
+# Isolated desktop integration build products
+desktop-app/node_modules/
+desktop-app/dist/
+desktop-app/release/
+desktop-app/test-results/

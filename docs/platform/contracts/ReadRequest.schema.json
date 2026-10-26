@@ -1,0 +1,73 @@
+{
+  "$defs": {
+    "ContextQuery": {
+      "additionalProperties": false,
+      "properties": {
+        "subject": {
+          "default": "me",
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Subject",
+          "type": "string"
+        },
+        "predicate": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Predicate",
+          "type": "string"
+        }
+      },
+      "required": [
+        "predicate"
+      ],
+      "title": "ContextQuery",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "One fixed read-only workflow; no arbitrary tool, worker or DAG dispatch.",
+  "properties": {
+    "contract": {
+      "const": "wayfinder.platform/1",
+      "default": "wayfinder.platform/1",
+      "title": "Contract",
+      "type": "string"
+    },
+    "request_id": {
+      "maxLength": 100,
+      "minLength": 1,
+      "title": "Request Id",
+      "type": "string"
+    },
+    "question": {
+      "maxLength": 1000,
+      "minLength": 1,
+      "title": "Question",
+      "type": "string"
+    },
+    "reference": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Reference",
+      "type": "string"
+    },
+    "context": {
+      "$ref": "#/$defs/ContextQuery"
+    },
+    "deadline_seconds": {
+      "default": 110,
+      "maximum": 110,
+      "minimum": 5,
+      "title": "Deadline Seconds",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "request_id",
+    "question",
+    "reference",
+    "context"
+  ],
+  "title": "ReadRequest",
+  "type": "object"
+}

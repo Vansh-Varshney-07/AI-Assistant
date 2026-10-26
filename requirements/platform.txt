@@ -1,0 +1,4 @@
+# Optional read-only Google account integration and IANA timezones on Windows.
+# Versions inspected in the existing environment; no installation is automatic.
+google-auth[requests]==2.62.0
+tzdata==2026.5

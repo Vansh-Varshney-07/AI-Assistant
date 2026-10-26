@@ -1,0 +1,23 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "subject": {
+      "default": "me",
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Subject",
+      "type": "string"
+    },
+    "predicate": {
+      "maxLength": 128,
+      "minLength": 1,
+      "title": "Predicate",
+      "type": "string"
+    }
+  },
+  "required": [
+    "predicate"
+  ],
+  "title": "ContextQuery",
+  "type": "object"
+}

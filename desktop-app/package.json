@@ -1,0 +1,76 @@
+{
+  "name": "wayfinder-desktop",
+  "version": "0.2.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "description": "Wayfinder GitHub interface connected to the existing scoped application backend",
+  "main": "dist/main/index.js",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "start": "electron .",
+    "check": "tsc --noEmit",
+    "test": "vitest run",
+    "package": "npm run build && electron-builder --win --dir --publish never"
+  },
+  "build": {
+    "appId": "local.wayfinder.desktop",
+    "productName": "Wayfinder",
+    "asar": true,
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "package.json",
+      "FEATURES.json"
+    ],
+    "extraResources": [
+      {
+        "from": "backend",
+        "to": "backend",
+        "filter": [
+          "host.py"
+        ]
+      },
+      {
+        "from": "resources/wayfinder.png",
+        "to": "wayfinder.png"
+      },
+      {
+        "from": "resources/licenses",
+        "to": "licenses"
+      },
+      {
+        "from": "FEATURES.json",
+        "to": "backend/FEATURES.json"
+      }
+    ],
+    "win": {
+      "target": "dir",
+      "signExecutable": false,
+      "icon": "resources/wayfinder.ico"
+    },
+    "electronDist": "node_modules/electron/dist"
+  },
+  "dependencies": {
+    "lucide-react": "1.61.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@testing-library/react": "16.3.3",
+    "@testing-library/user-event": "14.6.8",
+    "@types/node": "26.6.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.2",
+    "electron": "45.0.0",
+    "electron-builder": "26.18.0",
+    "esbuild": "0.28.2",
+    "jsdom": "29.1.1",
+    "typescript": "5.9.3",
+    "vite": "8.3.5",
+    "vitest": "5.0.5"
+  },
+  "type": "module"
+}
