@@ -1,7 +1,7 @@
-﻿phase,status,required_checks_passed,blockers,user_acceptance,build,return_path
-00,Not run,,,Pending,,
-01,Not run,,,Pending,,
-02,Not run,,,Pending,,
+phase,status,required_checks_passed,blockers,user_acceptance,build,return_path
+00,Implemented; automated verified,Automated mapped checks passed,Human visual/accessibility review not performed,Pending manual review,wayfinder-0.2.0,Quit; existing workbench preserved; tested fresh-runtime restore
+01,Implemented; automated verified,Automated mapped checks passed,Human visual/accessibility review not performed,Pending manual review,wayfinder-0.2.0,Quit; existing workbench preserved; tested fresh-runtime restore
+02,Implemented; automated verified,Automated mapped checks passed,Human visual/accessibility review not performed,Pending manual review,wayfinder-0.2.0,Quit; existing workbench preserved; tested fresh-runtime restore
 03,Not run,,,Pending,,
 04,Not run,,,Pending,,
 05,Not run,,,Pending,,

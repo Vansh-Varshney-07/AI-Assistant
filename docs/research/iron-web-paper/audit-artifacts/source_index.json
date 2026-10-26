@@ -1,0 +1,5000 @@
+[
+  {
+    "path": "memory/__init__.py",
+    "symbol": "__getattr__",
+    "line": 30,
+    "end_line": 36
+  },
+  {
+    "path": "memory/cache/cards.py",
+    "symbol": "normalized",
+    "line": 9,
+    "end_line": 14
+  },
+  {
+    "path": "memory/cache/cards.py",
+    "symbol": "CardIndex",
+    "line": 17,
+    "end_line": 231
+  },
+  {
+    "path": "memory/cache/cards.py",
+    "symbol": "CardRouter",
+    "line": 234,
+    "end_line": 271
+  },
+  {
+    "path": "memory/cache/cards.py",
+    "symbol": "__init__",
+    "line": 18,
+    "end_line": 38
+  },
+  {
+    "path": "memory/cache/cards.py",
+    "symbol": "_free_bytes",
+    "line": 41,
+    "end_line": 45
+  },
+  {
+    "path": "memory/cache/cards.py",
+    "symbol": "_cuda_session",
+    "line": 47,
+    "end_line": 92
+  },
+  {
+    "path": "memory/cache/cards.py",
+    "symbol": "replace",
+    "line": 94,
+    "end_line": 144
+  },
+  {
+    "path": "memory/cache/cards.py",
+    "symbol": "rank",
+    "line": 146,
+    "end_line": 200
+  },
+  {
+    "path": "memory/cache/cards.py",
+    "symbol": "_clear_device",
+    "line": 202,
+    "end_line": 208
+  },
+  {
+    "path": "memory/cache/cards.py",
+    "symbol": "clear",
+    "line": 210,
+    "end_line": 213
+  },
+  {
+    "path": "memory/cache/cards.py",
+    "symbol": "invalidate",
+    "line": 215,
+    "end_line": 218
+  },
+  {
+    "path": "memory/cache/cards.py",
+    "symbol": "status",
+    "line": 220,
+    "end_line": 231
+  },
+  {
+    "path": "memory/cache/cards.py",
+    "symbol": "__init__",
+    "line": 235,
+    "end_line": 237
+  },
+  {
+    "path": "memory/cache/cards.py",
+    "symbol": "select",
+    "line": 239,
+    "end_line": 260
+  },
+  {
+    "path": "memory/cache/cards.py",
+    "symbol": "invalidate",
+    "line": 262,
+    "end_line": 266
+  },
+  {
+    "path": "memory/cache/cards.py",
+    "symbol": "clear",
+    "line": 268,
+    "end_line": 271
+  },
+  {
+    "path": "memory/cache/ram.py",
+    "symbol": "PayloadCache",
+    "line": 9,
+    "end_line": 53
+  },
+  {
+    "path": "memory/cache/ram.py",
+    "symbol": "__init__",
+    "line": 10,
+    "end_line": 14
+  },
+  {
+    "path": "memory/cache/ram.py",
+    "symbol": "_remove",
+    "line": 16,
+    "end_line": 18
+  },
+  {
+    "path": "memory/cache/ram.py",
+    "symbol": "get",
+    "line": 20,
+    "end_line": 29
+  },
+  {
+    "path": "memory/cache/ram.py",
+    "symbol": "put",
+    "line": 31,
+    "end_line": 47
+  },
+  {
+    "path": "memory/cache/ram.py",
+    "symbol": "invalidate",
+    "line": 49,
+    "end_line": 53
+  },
+  {
+    "path": "memory/config.py",
+    "symbol": "Settings",
+    "line": 8,
+    "end_line": 9
+  },
+  {
+    "path": "memory/config.py",
+    "symbol": "VectorSettings",
+    "line": 12,
+    "end_line": 15
+  },
+  {
+    "path": "memory/config.py",
+    "symbol": "GraphSettings",
+    "line": 18,
+    "end_line": 24
+  },
+  {
+    "path": "memory/config.py",
+    "symbol": "EmbeddingSettings",
+    "line": 27,
+    "end_line": 30
+  },
+  {
+    "path": "memory/config.py",
+    "symbol": "RerankerSettings",
+    "line": 33,
+    "end_line": 38
+  },
+  {
+    "path": "memory/config.py",
+    "symbol": "RetrievalSettings",
+    "line": 41,
+    "end_line": 47
+  },
+  {
+    "path": "memory/config.py",
+    "symbol": "NIMSettings",
+    "line": 50,
+    "end_line": 53
+  },
+  {
+    "path": "memory/config.py",
+    "symbol": "LifecycleSettings",
+    "line": 56,
+    "end_line": 61
+  },
+  {
+    "path": "memory/config.py",
+    "symbol": "EngineSettings",
+    "line": 64,
+    "end_line": 73
+  },
+  {
+    "path": "memory/context/access.py",
+    "symbol": "ContextAccess",
+    "line": 15,
+    "end_line": 330
+  },
+  {
+    "path": "memory/context/access.py",
+    "symbol": "__init__",
+    "line": 16,
+    "end_line": 20
+  },
+  {
+    "path": "memory/context/access.py",
+    "symbol": "purge",
+    "line": 22,
+    "end_line": 30
+  },
+  {
+    "path": "memory/context/access.py",
+    "symbol": "_allowed",
+    "line": 32,
+    "end_line": 36
+  },
+  {
+    "path": "memory/context/access.py",
+    "symbol": "source_rows",
+    "line": 39,
+    "end_line": 57
+  },
+  {
+    "path": "memory/context/access.py",
+    "symbol": "_stamp",
+    "line": 59,
+    "end_line": 78
+  },
+  {
+    "path": "memory/context/access.py",
+    "symbol": "trip_rules",
+    "line": 81,
+    "end_line": 129
+  },
+  {
+    "path": "memory/context/access.py",
+    "symbol": "next_boundary",
+    "line": 132,
+    "end_line": 146
+  },
+  {
+    "path": "memory/context/access.py",
+    "symbol": "_encode",
+    "line": 148,
+    "end_line": 154
+  },
+  {
+    "path": "memory/context/access.py",
+    "symbol": "_decode",
+    "line": 156,
+    "end_line": 171
+  },
+  {
+    "path": "memory/context/access.py",
+    "symbol": "context",
+    "line": 173,
+    "end_line": 292
+  },
+  {
+    "path": "memory/context/access.py",
+    "symbol": "renew",
+    "line": 294,
+    "end_line": 310
+  },
+  {
+    "path": "memory/context/access.py",
+    "symbol": "validate",
+    "line": 312,
+    "end_line": 330
+  },
+  {
+    "path": "memory/context/access.py",
+    "symbol": "matches",
+    "line": 23,
+    "end_line": 24
+  },
+  {
+    "path": "memory/context/access.py",
+    "symbol": "read",
+    "line": 203,
+    "end_line": 225
+  },
+  {
+    "path": "memory/context/compiler.py",
+    "symbol": "compile_field",
+    "line": 9,
+    "end_line": 54
+  },
+  {
+    "path": "memory/context/compiler.py",
+    "symbol": "render_card",
+    "line": 57,
+    "end_line": 73
+  },
+  {
+    "path": "memory/context/contracts.py",
+    "symbol": "Contract",
+    "line": 6,
+    "end_line": 7
+  },
+  {
+    "path": "memory/context/contracts.py",
+    "symbol": "AgentProfile",
+    "line": 10,
+    "end_line": 20
+  },
+  {
+    "path": "memory/context/contracts.py",
+    "symbol": "FieldRule",
+    "line": 23,
+    "end_line": 38
+  },
+  {
+    "path": "memory/context/contracts.py",
+    "symbol": "CardTemplate",
+    "line": 41,
+    "end_line": 47
+  },
+  {
+    "path": "memory/context/contracts.py",
+    "symbol": "ContextPolicy",
+    "line": 50,
+    "end_line": 67
+  },
+  {
+    "path": "memory/context/contracts.py",
+    "symbol": "ContextRequest",
+    "line": 70,
+    "end_line": 91
+  },
+  {
+    "path": "memory/context/contracts.py",
+    "symbol": "nonempty",
+    "line": 17,
+    "end_line": 20
+  },
+  {
+    "path": "memory/context/contracts.py",
+    "symbol": "safe_fallback",
+    "line": 33,
+    "end_line": 38
+  },
+  {
+    "path": "memory/context/contracts.py",
+    "symbol": "output_fits",
+    "line": 64,
+    "end_line": 67
+  },
+  {
+    "path": "memory/context/contracts.py",
+    "symbol": "explicit_trip",
+    "line": 78,
+    "end_line": 91
+  },
+  {
+    "path": "memory/context/runtime.py",
+    "symbol": "task_fields",
+    "line": 22,
+    "end_line": 51
+  },
+  {
+    "path": "memory/context/runtime.py",
+    "symbol": "ContextRuntime",
+    "line": 54,
+    "end_line": 325
+  },
+  {
+    "path": "memory/context/runtime.py",
+    "symbol": "RuntimeConfiguration",
+    "line": 328,
+    "end_line": 336
+  },
+  {
+    "path": "memory/context/runtime.py",
+    "symbol": "runtime_from_config",
+    "line": 339,
+    "end_line": 363
+  },
+  {
+    "path": "memory/context/runtime.py",
+    "symbol": "__init__",
+    "line": 55,
+    "end_line": 115
+  },
+  {
+    "path": "memory/context/runtime.py",
+    "symbol": "compile",
+    "line": 117,
+    "end_line": 230
+  },
+  {
+    "path": "memory/context/runtime.py",
+    "symbol": "assemble",
+    "line": 232,
+    "end_line": 325
+  },
+  {
+    "path": "memory/context/tokens.py",
+    "symbol": "ContextCapacity",
+    "line": 4,
+    "end_line": 5
+  },
+  {
+    "path": "memory/context/tokens.py",
+    "symbol": "TokenBudget",
+    "line": 8,
+    "end_line": 51
+  },
+  {
+    "path": "memory/context/tokens.py",
+    "symbol": "__init__",
+    "line": 9,
+    "end_line": 22
+  },
+  {
+    "path": "memory/context/tokens.py",
+    "symbol": "from_file",
+    "line": 25,
+    "end_line": 33
+  },
+  {
+    "path": "memory/context/tokens.py",
+    "symbol": "wrap",
+    "line": 35,
+    "end_line": 36
+  },
+  {
+    "path": "memory/context/tokens.py",
+    "symbol": "count",
+    "line": 38,
+    "end_line": 40
+  },
+  {
+    "path": "memory/context/tokens.py",
+    "symbol": "require",
+    "line": 42,
+    "end_line": 48
+  },
+  {
+    "path": "memory/context/tokens.py",
+    "symbol": "prompt",
+    "line": 50,
+    "end_line": 51
+  },
+  {
+    "path": "memory/contradiction/detector.py",
+    "symbol": "ContradictionDetector",
+    "line": 12,
+    "end_line": 314
+  },
+  {
+    "path": "memory/contradiction/detector.py",
+    "symbol": "SupersessionResolver",
+    "line": 317,
+    "end_line": 356
+  },
+  {
+    "path": "memory/contradiction/detector.py",
+    "symbol": "__init__",
+    "line": 20,
+    "end_line": 36
+  },
+  {
+    "path": "memory/contradiction/detector.py",
+    "symbol": "detect_contradictions",
+    "line": 38,
+    "end_line": 104
+  },
+  {
+    "path": "memory/contradiction/detector.py",
+    "symbol": "_compute_similarity",
+    "line": 106,
+    "end_line": 113
+  },
+  {
+    "path": "memory/contradiction/detector.py",
+    "symbol": "_get_observation",
+    "line": 115,
+    "end_line": 123
+  },
+  {
+    "path": "memory/contradiction/detector.py",
+    "symbol": "_llm_judge_contradiction",
+    "line": 125,
+    "end_line": 132
+  },
+  {
+    "path": "memory/contradiction/detector.py",
+    "symbol": "_llm_judge_supersession",
+    "line": 134,
+    "end_line": 139
+  },
+  {
+    "path": "memory/contradiction/detector.py",
+    "symbol": "store_contradiction",
+    "line": 141,
+    "end_line": 155
+  },
+  {
+    "path": "memory/contradiction/detector.py",
+    "symbol": "detect_all_contradictions",
+    "line": 157,
+    "end_line": 234
+  },
+  {
+    "path": "memory/contradiction/detector.py",
+    "symbol": "detect_all_supersessions",
+    "line": 236,
+    "end_line": 314
+  },
+  {
+    "path": "memory/contradiction/detector.py",
+    "symbol": "__init__",
+    "line": 322,
+    "end_line": 323
+  },
+  {
+    "path": "memory/contradiction/detector.py",
+    "symbol": "get_current_version",
+    "line": 325,
+    "end_line": 352
+  },
+  {
+    "path": "memory/contradiction/detector.py",
+    "symbol": "get_version_chain",
+    "line": 354,
+    "end_line": 356
+  },
+  {
+    "path": "memory/device.py",
+    "symbol": "ensure_cuda_dlls_loaded",
+    "line": 17,
+    "end_line": 64
+  },
+  {
+    "path": "memory/device.py",
+    "symbol": "configure_tensorrt_cache",
+    "line": 67,
+    "end_line": 77
+  },
+  {
+    "path": "memory/device.py",
+    "symbol": "query_vram_telemetry",
+    "line": 88,
+    "end_line": 113
+  },
+  {
+    "path": "memory/device.py",
+    "symbol": "get_available_onnx_providers",
+    "line": 116,
+    "end_line": 123
+  },
+  {
+    "path": "memory/device.py",
+    "symbol": "inspect_device_status",
+    "line": 126,
+    "end_line": 202
+  },
+  {
+    "path": "memory/device.py",
+    "symbol": "active_component_provider",
+    "line": 140,
+    "end_line": 151
+  },
+  {
+    "path": "memory/embeddings/embedder.py",
+    "symbol": "Embedder",
+    "line": 20,
+    "end_line": 147
+  },
+  {
+    "path": "memory/embeddings/embedder.py",
+    "symbol": "get_embedder",
+    "line": 150,
+    "end_line": 177
+  },
+  {
+    "path": "memory/embeddings/embedder.py",
+    "symbol": "__init__",
+    "line": 28,
+    "end_line": 72
+  },
+  {
+    "path": "memory/embeddings/embedder.py",
+    "symbol": "_get_providers",
+    "line": 74,
+    "end_line": 91
+  },
+  {
+    "path": "memory/embeddings/embedder.py",
+    "symbol": "_init_model",
+    "line": 93,
+    "end_line": 121
+  },
+  {
+    "path": "memory/embeddings/embedder.py",
+    "symbol": "embed",
+    "line": 123,
+    "end_line": 139
+  },
+  {
+    "path": "memory/embeddings/embedder.py",
+    "symbol": "embed_single",
+    "line": 141,
+    "end_line": 143
+  },
+  {
+    "path": "memory/embeddings/embedder.py",
+    "symbol": "__call__",
+    "line": 145,
+    "end_line": 147
+  },
+  {
+    "path": "memory/engine.py",
+    "symbol": "serialized",
+    "line": 53,
+    "end_line": 61
+  },
+  {
+    "path": "memory/engine.py",
+    "symbol": "LegacyMemoryEngine",
+    "line": 64,
+    "end_line": 1192
+  },
+  {
+    "path": "memory/engine.py",
+    "symbol": "call",
+    "line": 55,
+    "end_line": 59
+  },
+  {
+    "path": "memory/engine.py",
+    "symbol": "__init__",
+    "line": 91,
+    "end_line": 174
+  },
+  {
+    "path": "memory/engine.py",
+    "symbol": "lifecycle",
+    "line": 177,
+    "end_line": 184
+  },
+  {
+    "path": "memory/engine.py",
+    "symbol": "_load_config",
+    "line": 186,
+    "end_line": 223
+  },
+  {
+    "path": "memory/engine.py",
+    "symbol": "embedder",
+    "line": 226,
+    "end_line": 239
+  },
+  {
+    "path": "memory/engine.py",
+    "symbol": "reranker",
+    "line": 242,
+    "end_line": 255
+  },
+  {
+    "path": "memory/engine.py",
+    "symbol": "extractor",
+    "line": 258,
+    "end_line": 273
+  },
+  {
+    "path": "memory/engine.py",
+    "symbol": "_init_vector_store",
+    "line": 275,
+    "end_line": 287
+  },
+  {
+    "path": "memory/engine.py",
+    "symbol": "_init_graph_store",
+    "line": 289,
+    "end_line": 295
+  },
+  {
+    "path": "memory/engine.py",
+    "symbol": "add",
+    "line": 302,
+    "end_line": 549
+  },
+  {
+    "path": "memory/engine.py",
+    "symbol": "add_batch",
+    "line": 552,
+    "end_line": 615
+  },
+  {
+    "path": "memory/engine.py",
+    "symbol": "_validate_id",
+    "line": 618,
+    "end_line": 620
+  },
+  {
+    "path": "memory/engine.py",
+    "symbol": "get",
+    "line": 623,
+    "end_line": 690
+  },
+  {
+    "path": "memory/engine.py",
+    "symbol": "search",
+    "line": 693,
+    "end_line": 768
+  },
+  {
+    "path": "memory/engine.py",
+    "symbol": "_search_result",
+    "line": 771,
+    "end_line": 790
+  },
+  {
+    "path": "memory/engine.py",
+    "symbol": "update",
+    "line": 793,
+    "end_line": 936
+  },
+  {
+    "path": "memory/engine.py",
+    "symbol": "delete",
+    "line": 939,
+    "end_line": 969
+  },
+  {
+    "path": "memory/engine.py",
+    "symbol": "inspect_claim",
+    "line": 972,
+    "end_line": 991
+  },
+  {
+    "path": "memory/engine.py",
+    "symbol": "recall",
+    "line": 994,
+    "end_line": 1006
+  },
+  {
+    "path": "memory/engine.py",
+    "symbol": "recall_path",
+    "line": 1009,
+    "end_line": 1012
+  },
+  {
+    "path": "memory/engine.py",
+    "symbol": "record_work",
+    "line": 1015,
+    "end_line": 1032
+  },
+  {
+    "path": "memory/engine.py",
+    "symbol": "handoff",
+    "line": 1035,
+    "end_line": 1036
+  },
+  {
+    "path": "memory/engine.py",
+    "symbol": "complete_work",
+    "line": 1039,
+    "end_line": 1041
+  },
+  {
+    "path": "memory/engine.py",
+    "symbol": "decay_memories",
+    "line": 1048,
+    "end_line": 1069
+  },
+  {
+    "path": "memory/engine.py",
+    "symbol": "deduplicate_memories",
+    "line": 1072,
+    "end_line": 1088
+  },
+  {
+    "path": "memory/engine.py",
+    "symbol": "consolidate_memories",
+    "line": 1091,
+    "end_line": 1117
+  },
+  {
+    "path": "memory/engine.py",
+    "symbol": "run_maintenance",
+    "line": 1120,
+    "end_line": 1140
+  },
+  {
+    "path": "memory/engine.py",
+    "symbol": "get_device_status",
+    "line": 1142,
+    "end_line": 1150
+  },
+  {
+    "path": "memory/engine.py",
+    "symbol": "storage_status",
+    "line": 1153,
+    "end_line": 1158
+  },
+  {
+    "path": "memory/engine.py",
+    "symbol": "memory_ids",
+    "line": 1161,
+    "end_line": 1168
+  },
+  {
+    "path": "memory/engine.py",
+    "symbol": "close",
+    "line": 1171,
+    "end_line": 1186
+  },
+  {
+    "path": "memory/engine.py",
+    "symbol": "__enter__",
+    "line": 1188,
+    "end_line": 1189
+  },
+  {
+    "path": "memory/engine.py",
+    "symbol": "__exit__",
+    "line": 1191,
+    "end_line": 1192
+  },
+  {
+    "path": "memory/graph/connection.py",
+    "symbol": "cypher_value",
+    "line": 8,
+    "end_line": 34
+  },
+  {
+    "path": "memory/graph/connection.py",
+    "symbol": "parameterized",
+    "line": 37,
+    "end_line": 49
+  },
+  {
+    "path": "memory/graph/connection.py",
+    "symbol": "GraphResult",
+    "line": 52,
+    "end_line": 69
+  },
+  {
+    "path": "memory/graph/connection.py",
+    "symbol": "GraphConnection",
+    "line": 72,
+    "end_line": 77
+  },
+  {
+    "path": "memory/graph/connection.py",
+    "symbol": "GraphLease",
+    "line": 80,
+    "end_line": 150
+  },
+  {
+    "path": "memory/graph/connection.py",
+    "symbol": "__init__",
+    "line": 53,
+    "end_line": 56
+  },
+  {
+    "path": "memory/graph/connection.py",
+    "symbol": "has_next",
+    "line": 58,
+    "end_line": 59
+  },
+  {
+    "path": "memory/graph/connection.py",
+    "symbol": "get_next",
+    "line": 61,
+    "end_line": 66
+  },
+  {
+    "path": "memory/graph/connection.py",
+    "symbol": "get_column_names",
+    "line": 68,
+    "end_line": 69
+  },
+  {
+    "path": "memory/graph/connection.py",
+    "symbol": "__init__",
+    "line": 73,
+    "end_line": 74
+  },
+  {
+    "path": "memory/graph/connection.py",
+    "symbol": "execute",
+    "line": 76,
+    "end_line": 77
+  },
+  {
+    "path": "memory/graph/connection.py",
+    "symbol": "__init__",
+    "line": 87,
+    "end_line": 99
+  },
+  {
+    "path": "memory/graph/connection.py",
+    "symbol": "_renew",
+    "line": 101,
+    "end_line": 107
+  },
+  {
+    "path": "memory/graph/connection.py",
+    "symbol": "assert_owned",
+    "line": 109,
+    "end_line": 113
+  },
+  {
+    "path": "memory/graph/connection.py",
+    "symbol": "token",
+    "line": 116,
+    "end_line": 118
+  },
+  {
+    "path": "memory/graph/connection.py",
+    "symbol": "__enter__",
+    "line": 120,
+    "end_line": 136
+  },
+  {
+    "path": "memory/graph/connection.py",
+    "symbol": "__exit__",
+    "line": 138,
+    "end_line": 150
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "synchronized",
+    "line": 11,
+    "end_line": 17
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "FalkorDBGraphStore",
+    "line": 20,
+    "end_line": 1338
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "RelationType",
+    "line": 1342,
+    "end_line": 1351
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "call",
+    "line": 13,
+    "end_line": 15
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "__init__",
+    "line": 26,
+    "end_line": 85
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "invalidate_entity_name_index",
+    "line": 87,
+    "end_line": 91
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "get_entity_name_index",
+    "line": 94,
+    "end_line": 102
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "_create_schema",
+    "line": 104,
+    "end_line": 159
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "upsert_entity",
+    "line": 164,
+    "end_line": 221
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "get_entity",
+    "line": 224,
+    "end_line": 241
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "get_entities",
+    "line": 244,
+    "end_line": 265
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "find_entities_by_name",
+    "line": 268,
+    "end_line": 295
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "delete_entity",
+    "line": 298,
+    "end_line": 329
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "upsert_relation",
+    "line": 334,
+    "end_line": 399
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "get_relations",
+    "line": 402,
+    "end_line": 456
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "upsert_observation",
+    "line": 461,
+    "end_line": 565
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "get_observations",
+    "line": 568,
+    "end_line": 633
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "get_observation",
+    "line": 636,
+    "end_line": 677
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "delete_observation",
+    "line": 680,
+    "end_line": 699
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "get_memory_observations",
+    "line": 702,
+    "end_line": 718
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "get_memory_relations",
+    "line": 721,
+    "end_line": 751
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "delete_memory",
+    "line": 754,
+    "end_line": 813
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "expand_graph",
+    "line": 818,
+    "end_line": 907
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "observation_memory_id",
+    "line": 912,
+    "end_line": 920
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "_resolve_obs_id",
+    "line": 922,
+    "end_line": 928
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "get_relationship_conflicts_batch",
+    "line": 931,
+    "end_line": 986
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "add_contradiction",
+    "line": 989,
+    "end_line": 1019
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "add_supersession",
+    "line": 1024,
+    "end_line": 1052
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "get_contradictions",
+    "line": 1055,
+    "end_line": 1079
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "get_supersessions",
+    "line": 1082,
+    "end_line": 1112
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "get_node_counts",
+    "line": 1117,
+    "end_line": 1133
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "get_edge_counts",
+    "line": 1136,
+    "end_line": 1161
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "execute",
+    "line": 1163,
+    "end_line": 1185
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "begin",
+    "line": 1187,
+    "end_line": 1217
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "commit",
+    "line": 1219,
+    "end_line": 1259
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "rollback",
+    "line": 1261,
+    "end_line": 1302
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "finish",
+    "line": 1304,
+    "end_line": 1320
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "close",
+    "line": 1322,
+    "end_line": 1332
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "__enter__",
+    "line": 1334,
+    "end_line": 1335
+  },
+  {
+    "path": "memory/graph/falkordb_store.py",
+    "symbol": "__exit__",
+    "line": 1337,
+    "end_line": 1338
+  },
+  {
+    "path": "memory/ingestion/__init__.py",
+    "symbol": "__getattr__",
+    "line": 22,
+    "end_line": 28
+  },
+  {
+    "path": "memory/ingestion/cached_nim_extractor.py",
+    "symbol": "CachedNIMExtractor",
+    "line": 16,
+    "end_line": 104
+  },
+  {
+    "path": "memory/ingestion/cached_nim_extractor.py",
+    "symbol": "__init__",
+    "line": 17,
+    "end_line": 24
+  },
+  {
+    "path": "memory/ingestion/cached_nim_extractor.py",
+    "symbol": "is_mock",
+    "line": 27,
+    "end_line": 28
+  },
+  {
+    "path": "memory/ingestion/cached_nim_extractor.py",
+    "symbol": "_cache_path",
+    "line": 30,
+    "end_line": 39
+  },
+  {
+    "path": "memory/ingestion/cached_nim_extractor.py",
+    "symbol": "_validated",
+    "line": 41,
+    "end_line": 50
+  },
+  {
+    "path": "memory/ingestion/cached_nim_extractor.py",
+    "symbol": "_write",
+    "line": 52,
+    "end_line": 70
+  },
+  {
+    "path": "memory/ingestion/cached_nim_extractor.py",
+    "symbol": "extract_entities_and_relations",
+    "line": 72,
+    "end_line": 92
+  },
+  {
+    "path": "memory/ingestion/cached_nim_extractor.py",
+    "symbol": "judge_answer_quality",
+    "line": 94,
+    "end_line": 95
+  },
+  {
+    "path": "memory/ingestion/cached_nim_extractor.py",
+    "symbol": "detect_contradiction",
+    "line": 97,
+    "end_line": 98
+  },
+  {
+    "path": "memory/ingestion/cached_nim_extractor.py",
+    "symbol": "detect_supersession",
+    "line": 100,
+    "end_line": 101
+  },
+  {
+    "path": "memory/ingestion/cached_nim_extractor.py",
+    "symbol": "extract_skills",
+    "line": 103,
+    "end_line": 104
+  },
+  {
+    "path": "memory/ingestion/extractor.py",
+    "symbol": "canonicalize_entities",
+    "line": 13,
+    "end_line": 41
+  },
+  {
+    "path": "memory/ingestion/extractor.py",
+    "symbol": "ExtractedEntity",
+    "line": 44,
+    "end_line": 56
+  },
+  {
+    "path": "memory/ingestion/extractor.py",
+    "symbol": "ExtractedRelation",
+    "line": 59,
+    "end_line": 65
+  },
+  {
+    "path": "memory/ingestion/extractor.py",
+    "symbol": "ExtractedTemporal",
+    "line": 68,
+    "end_line": 79
+  },
+  {
+    "path": "memory/ingestion/extractor.py",
+    "symbol": "ExtractionResult",
+    "line": 82,
+    "end_line": 115
+  },
+  {
+    "path": "memory/ingestion/extractor.py",
+    "symbol": "validate_extraction",
+    "line": 118,
+    "end_line": 190
+  },
+  {
+    "path": "memory/ingestion/extractor.py",
+    "symbol": "BaseExtractor",
+    "line": 193,
+    "end_line": 224
+  },
+  {
+    "path": "memory/ingestion/extractor.py",
+    "symbol": "clean_id",
+    "line": 54,
+    "end_line": 56
+  },
+  {
+    "path": "memory/ingestion/extractor.py",
+    "symbol": "check_bounds",
+    "line": 76,
+    "end_line": 79
+  },
+  {
+    "path": "memory/ingestion/extractor.py",
+    "symbol": "to_dict",
+    "line": 95,
+    "end_line": 115
+  },
+  {
+    "path": "memory/ingestion/extractor.py",
+    "symbol": "is_mock",
+    "line": 198,
+    "end_line": 200
+  },
+  {
+    "path": "memory/ingestion/extractor.py",
+    "symbol": "extract_entities_and_relations",
+    "line": 203,
+    "end_line": 207
+  },
+  {
+    "path": "memory/ingestion/extractor.py",
+    "symbol": "detect_contradiction",
+    "line": 210,
+    "end_line": 212
+  },
+  {
+    "path": "memory/ingestion/extractor.py",
+    "symbol": "detect_supersession",
+    "line": 215,
+    "end_line": 217
+  },
+  {
+    "path": "memory/ingestion/extractor.py",
+    "symbol": "judge_answer_quality",
+    "line": 220,
+    "end_line": 224
+  },
+  {
+    "path": "memory/ingestion/nim_extractor.py",
+    "symbol": "NIMExtractor",
+    "line": 21,
+    "end_line": 271
+  },
+  {
+    "path": "memory/ingestion/nim_extractor.py",
+    "symbol": "__init__",
+    "line": 28,
+    "end_line": 55
+  },
+  {
+    "path": "memory/ingestion/nim_extractor.py",
+    "symbol": "is_mock",
+    "line": 58,
+    "end_line": 59
+  },
+  {
+    "path": "memory/ingestion/nim_extractor.py",
+    "symbol": "extract_entities_and_relations",
+    "line": 64,
+    "end_line": 95
+  },
+  {
+    "path": "memory/ingestion/nim_extractor.py",
+    "symbol": "_build_extraction_prompt",
+    "line": 97,
+    "end_line": 122
+  },
+  {
+    "path": "memory/ingestion/nim_extractor.py",
+    "symbol": "_parse_json_from_response",
+    "line": 124,
+    "end_line": 150
+  },
+  {
+    "path": "memory/ingestion/nim_extractor.py",
+    "symbol": "_normalize_extraction",
+    "line": 152,
+    "end_line": 154
+  },
+  {
+    "path": "memory/ingestion/nim_extractor.py",
+    "symbol": "judge_answer_quality",
+    "line": 159,
+    "end_line": 195
+  },
+  {
+    "path": "memory/ingestion/nim_extractor.py",
+    "symbol": "detect_contradiction",
+    "line": 200,
+    "end_line": 220
+  },
+  {
+    "path": "memory/ingestion/nim_extractor.py",
+    "symbol": "detect_supersession",
+    "line": 225,
+    "end_line": 246
+  },
+  {
+    "path": "memory/ingestion/nim_extractor.py",
+    "symbol": "extract_skills",
+    "line": 251,
+    "end_line": 271
+  },
+  {
+    "path": "memory/ingestion/pipeline.py",
+    "symbol": "IngestionPipeline",
+    "line": 6,
+    "end_line": 88
+  },
+  {
+    "path": "memory/ingestion/pipeline.py",
+    "symbol": "__init__",
+    "line": 7,
+    "end_line": 26
+  },
+  {
+    "path": "memory/ingestion/pipeline.py",
+    "symbol": "ingest_text",
+    "line": 28,
+    "end_line": 29
+  },
+  {
+    "path": "memory/ingestion/pipeline.py",
+    "symbol": "ingest_text_with_extraction",
+    "line": 31,
+    "end_line": 57
+  },
+  {
+    "path": "memory/ingestion/pipeline.py",
+    "symbol": "ingest_batch",
+    "line": 59,
+    "end_line": 64
+  },
+  {
+    "path": "memory/ingestion/pipeline.py",
+    "symbol": "ingest_from_file",
+    "line": 66,
+    "end_line": 71
+  },
+  {
+    "path": "memory/ingestion/pipeline.py",
+    "symbol": "_chunk_text",
+    "line": 74,
+    "end_line": 88
+  },
+  {
+    "path": "memory/ingestion/pipeline.py",
+    "symbol": "enrich",
+    "line": 34,
+    "end_line": 48
+  },
+  {
+    "path": "memory/lifecycle/fuzzy.py",
+    "symbol": "memberships",
+    "line": 13,
+    "end_line": 19
+  },
+  {
+    "path": "memory/lifecycle/fuzzy.py",
+    "symbol": "score_memory",
+    "line": 22,
+    "end_line": 80
+  },
+  {
+    "path": "memory/lifecycle/models.py",
+    "symbol": "canonical_json",
+    "line": 8,
+    "end_line": 24
+  },
+  {
+    "path": "memory/lifecycle/models.py",
+    "symbol": "SourceInput",
+    "line": 27,
+    "end_line": 51
+  },
+  {
+    "path": "memory/lifecycle/models.py",
+    "symbol": "ClaimInput",
+    "line": 54,
+    "end_line": 112
+  },
+  {
+    "path": "memory/lifecycle/models.py",
+    "symbol": "normalize",
+    "line": 9,
+    "end_line": 16
+  },
+  {
+    "path": "memory/lifecycle/models.py",
+    "symbol": "authority",
+    "line": 38,
+    "end_line": 43
+  },
+  {
+    "path": "memory/lifecycle/models.py",
+    "symbol": "support_group",
+    "line": 45,
+    "end_line": 51
+  },
+  {
+    "path": "memory/lifecycle/models.py",
+    "symbol": "nonempty",
+    "line": 79,
+    "end_line": 82
+  },
+  {
+    "path": "memory/lifecycle/models.py",
+    "symbol": "validate_claim",
+    "line": 85,
+    "end_line": 112
+  },
+  {
+    "path": "memory/lifecycle/service.py",
+    "symbol": "identifier",
+    "line": 22,
+    "end_line": 23
+  },
+  {
+    "path": "memory/lifecycle/service.py",
+    "symbol": "subject_id",
+    "line": 26,
+    "end_line": 27
+  },
+  {
+    "path": "memory/lifecycle/service.py",
+    "symbol": "MemoryLifecycle",
+    "line": 30,
+    "end_line": 1586
+  },
+  {
+    "path": "memory/lifecycle/service.py",
+    "symbol": "__init__",
+    "line": 31,
+    "end_line": 35
+  },
+  {
+    "path": "memory/lifecycle/service.py",
+    "symbol": "_rows",
+    "line": 37,
+    "end_line": 38
+  },
+  {
+    "path": "memory/lifecycle/service.py",
+    "symbol": "_bounded",
+    "line": 40,
+    "end_line": 45
+  },
+  {
+    "path": "memory/lifecycle/service.py",
+    "symbol": "ensure_schema",
+    "line": 47,
+    "end_line": 103
+  },
+  {
+    "path": "memory/lifecycle/service.py",
+    "symbol": "prepare",
+    "line": 105,
+    "end_line": 201
+  },
+  {
+    "path": "memory/lifecycle/service.py",
+    "symbol": "_canonical_subject",
+    "line": 203,
+    "end_line": 220
+  },
+  {
+    "path": "memory/lifecycle/service.py",
+    "symbol": "equivalent_subjects",
+    "line": 222,
+    "end_line": 239
+  },
+  {
+    "path": "memory/lifecycle/service.py",
+    "symbol": "group",
+    "line": 241,
+    "end_line": 268
+  },
+  {
+    "path": "memory/lifecycle/service.py",
+    "symbol": "active",
+    "line": 271,
+    "end_line": 282
+  },
+  {
+    "path": "memory/lifecycle/service.py",
+    "symbol": "overlaps",
+    "line": 285,
+    "end_line": 288
+  },
+  {
+    "path": "memory/lifecycle/service.py",
+    "symbol": "ingest",
+    "line": 290,
+    "end_line": 546
+  },
+  {
+    "path": "memory/lifecycle/service.py",
+    "symbol": "link",
+    "line": 548,
+    "end_line": 558
+  },
+  {
+    "path": "memory/lifecycle/service.py",
+    "symbol": "claim",
+    "line": 560,
+    "end_line": 564
+  },
+  {
+    "path": "memory/lifecycle/service.py",
+    "symbol": "views",
+    "line": 566,
+    "end_line": 652
+  },
+  {
+    "path": "memory/lifecycle/service.py",
+    "symbol": "view",
+    "line": 654,
+    "end_line": 817
+  },
+  {
+    "path": "memory/lifecycle/service.py",
+    "symbol": "selected",
+    "line": 819,
+    "end_line": 833
+  },
+  {
+    "path": "memory/lifecycle/service.py",
+    "symbol": "infer_predicate",
+    "line": 835,
+    "end_line": 862
+  },
+  {
+    "path": "memory/lifecycle/service.py",
+    "symbol": "fetch_field",
+    "line": 864,
+    "end_line": 883
+  },
+  {
+    "path": "memory/lifecycle/service.py",
+    "symbol": "recall",
+    "line": 885,
+    "end_line": 973
+  },
+  {
+    "path": "memory/lifecycle/service.py",
+    "symbol": "recall_path",
+    "line": 975,
+    "end_line": 1027
+  },
+  {
+    "path": "memory/lifecycle/service.py",
+    "symbol": "reconcile",
+    "line": 1029,
+    "end_line": 1211
+  },
+  {
+    "path": "memory/lifecycle/service.py",
+    "symbol": "graph_candidates",
+    "line": 1213,
+    "end_line": 1251
+  },
+  {
+    "path": "memory/lifecycle/service.py",
+    "symbol": "_work_watches",
+    "line": 1253,
+    "end_line": 1262
+  },
+  {
+    "path": "memory/lifecycle/service.py",
+    "symbol": "_work_requirements",
+    "line": 1264,
+    "end_line": 1301
+  },
+  {
+    "path": "memory/lifecycle/service.py",
+    "symbol": "register_work",
+    "line": 1303,
+    "end_line": 1399
+  },
+  {
+    "path": "memory/lifecycle/service.py",
+    "symbol": "work",
+    "line": 1401,
+    "end_line": 1405
+  },
+  {
+    "path": "memory/lifecycle/service.py",
+    "symbol": "complete_work",
+    "line": 1407,
+    "end_line": 1424
+  },
+  {
+    "path": "memory/lifecycle/service.py",
+    "symbol": "invalidate_work",
+    "line": 1426,
+    "end_line": 1456
+  },
+  {
+    "path": "memory/lifecycle/service.py",
+    "symbol": "handoff",
+    "line": 1458,
+    "end_line": 1554
+  },
+  {
+    "path": "memory/lifecycle/service.py",
+    "symbol": "remove_source",
+    "line": 1556,
+    "end_line": 1574
+  },
+  {
+    "path": "memory/lifecycle/service.py",
+    "symbol": "counts",
+    "line": 1576,
+    "end_line": 1586
+  },
+  {
+    "path": "memory/lifecycle/service.py",
+    "symbol": "evaluate",
+    "line": 1468,
+    "end_line": 1545
+  },
+  {
+    "path": "memory/maintenance/maintenance.py",
+    "symbol": "MemoryDecay",
+    "line": 22,
+    "end_line": 179
+  },
+  {
+    "path": "memory/maintenance/maintenance.py",
+    "symbol": "MemoryDeduplication",
+    "line": 182,
+    "end_line": 435
+  },
+  {
+    "path": "memory/maintenance/maintenance.py",
+    "symbol": "MemoryConsolidation",
+    "line": 438,
+    "end_line": 604
+  },
+  {
+    "path": "memory/maintenance/maintenance.py",
+    "symbol": "MaintenanceScheduler",
+    "line": 607,
+    "end_line": 645
+  },
+  {
+    "path": "memory/maintenance/maintenance.py",
+    "symbol": "__init__",
+    "line": 29,
+    "end_line": 41
+  },
+  {
+    "path": "memory/maintenance/maintenance.py",
+    "symbol": "compute_decayed_importance",
+    "line": 43,
+    "end_line": 61
+  },
+  {
+    "path": "memory/maintenance/maintenance.py",
+    "symbol": "apply_decay",
+    "line": 63,
+    "end_line": 179
+  },
+  {
+    "path": "memory/maintenance/maintenance.py",
+    "symbol": "__init__",
+    "line": 187,
+    "end_line": 199
+  },
+  {
+    "path": "memory/maintenance/maintenance.py",
+    "symbol": "find_duplicates",
+    "line": 201,
+    "end_line": 257
+  },
+  {
+    "path": "memory/maintenance/maintenance.py",
+    "symbol": "merge_duplicates",
+    "line": 259,
+    "end_line": 380
+  },
+  {
+    "path": "memory/maintenance/maintenance.py",
+    "symbol": "run_deduplication",
+    "line": 382,
+    "end_line": 435
+  },
+  {
+    "path": "memory/maintenance/maintenance.py",
+    "symbol": "__init__",
+    "line": 444,
+    "end_line": 458
+  },
+  {
+    "path": "memory/maintenance/maintenance.py",
+    "symbol": "consolidate_window",
+    "line": 460,
+    "end_line": 523
+  },
+  {
+    "path": "memory/maintenance/maintenance.py",
+    "symbol": "extract_skill_patterns",
+    "line": 525,
+    "end_line": 539
+  },
+  {
+    "path": "memory/maintenance/maintenance.py",
+    "symbol": "_skill_id",
+    "line": 542,
+    "end_line": 554
+  },
+  {
+    "path": "memory/maintenance/maintenance.py",
+    "symbol": "store_skill",
+    "line": 556,
+    "end_line": 604
+  },
+  {
+    "path": "memory/maintenance/maintenance.py",
+    "symbol": "__init__",
+    "line": 610,
+    "end_line": 621
+  },
+  {
+    "path": "memory/maintenance/maintenance.py",
+    "symbol": "run_all",
+    "line": 623,
+    "end_line": 645
+  },
+  {
+    "path": "memory/models.py",
+    "symbol": "MemoryRecord",
+    "line": 11,
+    "end_line": 26
+  },
+  {
+    "path": "memory/models.py",
+    "symbol": "MemorySearchResult",
+    "line": 29,
+    "end_line": 46
+  },
+  {
+    "path": "memory/models.py",
+    "symbol": "DeviceStatus",
+    "line": 49,
+    "end_line": 66
+  },
+  {
+    "path": "memory/models.py",
+    "symbol": "EngineStorageError",
+    "line": 69,
+    "end_line": 75
+  },
+  {
+    "path": "memory/models.py",
+    "symbol": "__init__",
+    "line": 72,
+    "end_line": 75
+  },
+  {
+    "path": "memory/ranking/reranker.py",
+    "symbol": "Reranker",
+    "line": 17,
+    "end_line": 173
+  },
+  {
+    "path": "memory/ranking/reranker.py",
+    "symbol": "get_reranker",
+    "line": 176,
+    "end_line": 203
+  },
+  {
+    "path": "memory/ranking/reranker.py",
+    "symbol": "__init__",
+    "line": 25,
+    "end_line": 68
+  },
+  {
+    "path": "memory/ranking/reranker.py",
+    "symbol": "_get_providers",
+    "line": 70,
+    "end_line": 90
+  },
+  {
+    "path": "memory/ranking/reranker.py",
+    "symbol": "accelerated",
+    "line": 93,
+    "end_line": 103
+  },
+  {
+    "path": "memory/ranking/reranker.py",
+    "symbol": "_init_model",
+    "line": 105,
+    "end_line": 136
+  },
+  {
+    "path": "memory/ranking/reranker.py",
+    "symbol": "rerank",
+    "line": 138,
+    "end_line": 173
+  },
+  {
+    "path": "memory/ranking/scorer.py",
+    "symbol": "ScoringWeights",
+    "line": 9,
+    "end_line": 31
+  },
+  {
+    "path": "memory/ranking/scorer.py",
+    "symbol": "RetrievalConfig",
+    "line": 35,
+    "end_line": 52
+  },
+  {
+    "path": "memory/ranking/scorer.py",
+    "symbol": "HybridScorer",
+    "line": 55,
+    "end_line": 98
+  },
+  {
+    "path": "memory/ranking/scorer.py",
+    "symbol": "__post_init__",
+    "line": 18,
+    "end_line": 20
+  },
+  {
+    "path": "memory/ranking/scorer.py",
+    "symbol": "to_dict",
+    "line": 22,
+    "end_line": 23
+  },
+  {
+    "path": "memory/ranking/scorer.py",
+    "symbol": "uniform",
+    "line": 26,
+    "end_line": 27
+  },
+  {
+    "path": "memory/ranking/scorer.py",
+    "symbol": "defaults",
+    "line": 30,
+    "end_line": 31
+  },
+  {
+    "path": "memory/ranking/scorer.py",
+    "symbol": "__post_init__",
+    "line": 48,
+    "end_line": 52
+  },
+  {
+    "path": "memory/ranking/scorer.py",
+    "symbol": "__init__",
+    "line": 56,
+    "end_line": 57
+  },
+  {
+    "path": "memory/ranking/scorer.py",
+    "symbol": "score",
+    "line": 59,
+    "end_line": 83
+  },
+  {
+    "path": "memory/ranking/scorer.py",
+    "symbol": "score_batch",
+    "line": 85,
+    "end_line": 98
+  },
+  {
+    "path": "memory/retrieval/hybrid.py",
+    "symbol": "HybridRetriever",
+    "line": 11,
+    "end_line": 293
+  },
+  {
+    "path": "memory/retrieval/hybrid.py",
+    "symbol": "__init__",
+    "line": 12,
+    "end_line": 29
+  },
+  {
+    "path": "memory/retrieval/hybrid.py",
+    "symbol": "retrieve",
+    "line": 31,
+    "end_line": 129
+  },
+  {
+    "path": "memory/retrieval/hybrid.py",
+    "symbol": "_extract_entities",
+    "line": 131,
+    "end_line": 156
+  },
+  {
+    "path": "memory/retrieval/hybrid.py",
+    "symbol": "_graph_expansion",
+    "line": 158,
+    "end_line": 243
+  },
+  {
+    "path": "memory/retrieval/hybrid.py",
+    "symbol": "_combine_candidates",
+    "line": 246,
+    "end_line": 263
+  },
+  {
+    "path": "memory/retrieval/hybrid.py",
+    "symbol": "_resolve_contradictions",
+    "line": 265,
+    "end_line": 293
+  },
+  {
+    "path": "memory/retrieval/hybrid.py",
+    "symbol": "normalize",
+    "line": 132,
+    "end_line": 137
+  },
+  {
+    "path": "memory/retrieval/vector.py",
+    "symbol": "VectorRetriever",
+    "line": 16,
+    "end_line": 179
+  },
+  {
+    "path": "memory/retrieval/vector.py",
+    "symbol": "BaselineA_Retriever",
+    "line": 182,
+    "end_line": 185
+  },
+  {
+    "path": "memory/retrieval/vector.py",
+    "symbol": "__init__",
+    "line": 22,
+    "end_line": 43
+  },
+  {
+    "path": "memory/retrieval/vector.py",
+    "symbol": "retrieve",
+    "line": 45,
+    "end_line": 124
+  },
+  {
+    "path": "memory/retrieval/vector.py",
+    "symbol": "retrieve_with_embedding",
+    "line": 126,
+    "end_line": 179
+  },
+  {
+    "path": "memory/schema.py",
+    "symbol": "validate_metadata",
+    "line": 14,
+    "end_line": 21
+  },
+  {
+    "path": "memory/shared/client.py",
+    "symbol": "SharedRequestError",
+    "line": 10,
+    "end_line": 13
+  },
+  {
+    "path": "memory/shared/client.py",
+    "symbol": "SharedMemoryClient",
+    "line": 16,
+    "end_line": 99
+  },
+  {
+    "path": "memory/shared/client.py",
+    "symbol": "__init__",
+    "line": 11,
+    "end_line": 13
+  },
+  {
+    "path": "memory/shared/client.py",
+    "symbol": "__init__",
+    "line": 17,
+    "end_line": 28
+  },
+  {
+    "path": "memory/shared/client.py",
+    "symbol": "call",
+    "line": 30,
+    "end_line": 47
+  },
+  {
+    "path": "memory/shared/client.py",
+    "symbol": "add_event",
+    "line": 49,
+    "end_line": 50
+  },
+  {
+    "path": "memory/shared/client.py",
+    "symbol": "wait_ready",
+    "line": 52,
+    "end_line": 64
+  },
+  {
+    "path": "memory/shared/client.py",
+    "symbol": "recall",
+    "line": 66,
+    "end_line": 73
+  },
+  {
+    "path": "memory/shared/client.py",
+    "symbol": "handoff",
+    "line": 75,
+    "end_line": 76
+  },
+  {
+    "path": "memory/shared/client.py",
+    "symbol": "context",
+    "line": 78,
+    "end_line": 79
+  },
+  {
+    "path": "memory/shared/client.py",
+    "symbol": "validate_context",
+    "line": 81,
+    "end_line": 82
+  },
+  {
+    "path": "memory/shared/client.py",
+    "symbol": "generate_current",
+    "line": 84,
+    "end_line": 99
+  },
+  {
+    "path": "memory/shared/hosted.py",
+    "symbol": "HostedOutputError",
+    "line": 16,
+    "end_line": 21
+  },
+  {
+    "path": "memory/shared/hosted.py",
+    "symbol": "parse_object",
+    "line": 24,
+    "end_line": 49
+  },
+  {
+    "path": "memory/shared/hosted.py",
+    "symbol": "JsonCompletion",
+    "line": 52,
+    "end_line": 114
+  },
+  {
+    "path": "memory/shared/hosted.py",
+    "symbol": "field_catalog",
+    "line": 117,
+    "end_line": 139
+  },
+  {
+    "path": "memory/shared/hosted.py",
+    "symbol": "interpret_claims",
+    "line": 142,
+    "end_line": 265
+  },
+  {
+    "path": "memory/shared/hosted.py",
+    "symbol": "HostedEvidenceAnswerer",
+    "line": 268,
+    "end_line": 380
+  },
+  {
+    "path": "memory/shared/hosted.py",
+    "symbol": "route_fields",
+    "line": 383,
+    "end_line": 419
+  },
+  {
+    "path": "memory/shared/hosted.py",
+    "symbol": "__init__",
+    "line": 17,
+    "end_line": 21
+  },
+  {
+    "path": "memory/shared/hosted.py",
+    "symbol": "pairs",
+    "line": 35,
+    "end_line": 41
+  },
+  {
+    "path": "memory/shared/hosted.py",
+    "symbol": "invalid",
+    "line": 43,
+    "end_line": 44
+  },
+  {
+    "path": "memory/shared/hosted.py",
+    "symbol": "__init__",
+    "line": 53,
+    "end_line": 54
+  },
+  {
+    "path": "memory/shared/hosted.py",
+    "symbol": "complete",
+    "line": 56,
+    "end_line": 114
+  },
+  {
+    "path": "memory/shared/hosted.py",
+    "symbol": "validate",
+    "line": 147,
+    "end_line": 194
+  },
+  {
+    "path": "memory/shared/hosted.py",
+    "symbol": "__init__",
+    "line": 269,
+    "end_line": 270
+  },
+  {
+    "path": "memory/shared/hosted.py",
+    "symbol": "answer",
+    "line": 272,
+    "end_line": 380
+  },
+  {
+    "path": "memory/shared/hosted.py",
+    "symbol": "validate",
+    "line": 387,
+    "end_line": 396
+  },
+  {
+    "path": "memory/shared/hosted.py",
+    "symbol": "validate",
+    "line": 296,
+    "end_line": 322
+  },
+  {
+    "path": "memory/shared/interpreter.py",
+    "symbol": "TravelInterpreter",
+    "line": 12,
+    "end_line": 234
+  },
+  {
+    "path": "memory/shared/interpreter.py",
+    "symbol": "HostedClaimInterpreter",
+    "line": 237,
+    "end_line": 251
+  },
+  {
+    "path": "memory/shared/interpreter.py",
+    "symbol": "__call__",
+    "line": 15,
+    "end_line": 41
+  },
+  {
+    "path": "memory/shared/interpreter.py",
+    "symbol": "_clause",
+    "line": 43,
+    "end_line": 138
+  },
+  {
+    "path": "memory/shared/interpreter.py",
+    "symbol": "_single",
+    "line": 140,
+    "end_line": 234
+  },
+  {
+    "path": "memory/shared/interpreter.py",
+    "symbol": "__init__",
+    "line": 240,
+    "end_line": 243
+  },
+  {
+    "path": "memory/shared/interpreter.py",
+    "symbol": "__call__",
+    "line": 245,
+    "end_line": 246
+  },
+  {
+    "path": "memory/shared/interpreter.py",
+    "symbol": "interpret",
+    "line": 248,
+    "end_line": 251
+  },
+  {
+    "path": "memory/shared/interpreter.py",
+    "symbol": "claim",
+    "line": 44,
+    "end_line": 53
+  },
+  {
+    "path": "memory/shared/journal.py",
+    "symbol": "EventJournal",
+    "line": 14,
+    "end_line": 340
+  },
+  {
+    "path": "memory/shared/journal.py",
+    "symbol": "__init__",
+    "line": 15,
+    "end_line": 64
+  },
+  {
+    "path": "memory/shared/journal.py",
+    "symbol": "generation",
+    "line": 66,
+    "end_line": 72
+  },
+  {
+    "path": "memory/shared/journal.py",
+    "symbol": "public",
+    "line": 75,
+    "end_line": 99
+  },
+  {
+    "path": "memory/shared/journal.py",
+    "symbol": "get",
+    "line": 101,
+    "end_line": 105
+  },
+  {
+    "path": "memory/shared/journal.py",
+    "symbol": "submit",
+    "line": 107,
+    "end_line": 129
+  },
+  {
+    "path": "memory/shared/journal.py",
+    "symbol": "take",
+    "line": 131,
+    "end_line": 144
+  },
+  {
+    "path": "memory/shared/journal.py",
+    "symbol": "prepared",
+    "line": 146,
+    "end_line": 151
+  },
+  {
+    "path": "memory/shared/journal.py",
+    "symbol": "finish",
+    "line": 153,
+    "end_line": 168
+  },
+  {
+    "path": "memory/shared/journal.py",
+    "symbol": "fail",
+    "line": 170,
+    "end_line": 175
+  },
+  {
+    "path": "memory/shared/journal.py",
+    "symbol": "affects_scope",
+    "line": 178,
+    "end_line": 197
+  },
+  {
+    "path": "memory/shared/journal.py",
+    "symbol": "scope_fingerprint",
+    "line": 199,
+    "end_line": 217
+  },
+  {
+    "path": "memory/shared/journal.py",
+    "symbol": "pending",
+    "line": 219,
+    "end_line": 228
+  },
+  {
+    "path": "memory/shared/journal.py",
+    "symbol": "retry",
+    "line": 230,
+    "end_line": 239
+  },
+  {
+    "path": "memory/shared/journal.py",
+    "symbol": "notices",
+    "line": 241,
+    "end_line": 254
+  },
+  {
+    "path": "memory/shared/journal.py",
+    "symbol": "acknowledge",
+    "line": 256,
+    "end_line": 265
+  },
+  {
+    "path": "memory/shared/journal.py",
+    "symbol": "export",
+    "line": 267,
+    "end_line": 274
+  },
+  {
+    "path": "memory/shared/journal.py",
+    "symbol": "close",
+    "line": 276,
+    "end_line": 278
+  },
+  {
+    "path": "memory/shared/journal.py",
+    "symbol": "history",
+    "line": 280,
+    "end_line": 316
+  },
+  {
+    "path": "memory/shared/journal.py",
+    "symbol": "redact",
+    "line": 318,
+    "end_line": 340
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "Principal",
+    "line": 22,
+    "end_line": 32
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "EventInput",
+    "line": 35,
+    "end_line": 43
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "PendingMemory",
+    "line": 46,
+    "end_line": 51
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "RuntimeLock",
+    "line": 54,
+    "end_line": 80
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "SharedMemoryService",
+    "line": 83,
+    "end_line": 757
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "__post_init__",
+    "line": 27,
+    "end_line": 32
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "__init__",
+    "line": 47,
+    "end_line": 51
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "__init__",
+    "line": 57,
+    "end_line": 77
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "close",
+    "line": 79,
+    "end_line": 80
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "__init__",
+    "line": 84,
+    "end_line": 154
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "authenticate",
+    "line": 156,
+    "end_line": 163
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "_gate",
+    "line": 165,
+    "end_line": 168
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "engine",
+    "line": 170,
+    "end_line": 184
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "submit",
+    "line": 186,
+    "end_line": 233
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "receipt",
+    "line": 235,
+    "end_line": 239
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "_ready",
+    "line": 241,
+    "end_line": 247
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "_invalidate_context",
+    "line": 249,
+    "end_line": 251
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "_ready_for_claims",
+    "line": 253,
+    "end_line": 277
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "_ready_for_work",
+    "line": 279,
+    "end_line": 302
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "context",
+    "line": 304,
+    "end_line": 309
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "validate_context",
+    "line": 311,
+    "end_line": 314
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "renew_context",
+    "line": 316,
+    "end_line": 319
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "_loop",
+    "line": 321,
+    "end_line": 325
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "process_one",
+    "line": 327,
+    "end_line": 453
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "_repair_orphan",
+    "line": 455,
+    "end_line": 504
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "_affected",
+    "line": 507,
+    "end_line": 517
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "recall",
+    "line": 519,
+    "end_line": 522
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "recall_path",
+    "line": 524,
+    "end_line": 527
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "search",
+    "line": 529,
+    "end_line": 534
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "record_work",
+    "line": 536,
+    "end_line": 583
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "claim_work",
+    "line": 585,
+    "end_line": 628
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "complete_work",
+    "line": 630,
+    "end_line": 652
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "handoff",
+    "line": 654,
+    "end_line": 664
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "retry",
+    "line": 666,
+    "end_line": 674
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "history",
+    "line": 676,
+    "end_line": 677
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "identity",
+    "line": 679,
+    "end_line": 680
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "work_list",
+    "line": 682,
+    "end_line": 699
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "forget",
+    "line": 701,
+    "end_line": 722
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "withdraw",
+    "line": 724,
+    "end_line": 739
+  },
+  {
+    "path": "memory/shared/service.py",
+    "symbol": "close",
+    "line": 741,
+    "end_line": 757
+  },
+  {
+    "path": "memory/shared/snapshot.py",
+    "symbol": "tenant_key",
+    "line": 19,
+    "end_line": 22
+  },
+  {
+    "path": "memory/shared/snapshot.py",
+    "symbol": "cold_backup",
+    "line": 25,
+    "end_line": 90
+  },
+  {
+    "path": "memory/shared/snapshot.py",
+    "symbol": "restore_fresh",
+    "line": 93,
+    "end_line": 221
+  },
+  {
+    "path": "memory/spaces.py",
+    "symbol": "validate_space_id",
+    "line": 11,
+    "end_line": 16
+  },
+  {
+    "path": "memory/spaces.py",
+    "symbol": "SpaceDirectory",
+    "line": 19,
+    "end_line": 83
+  },
+  {
+    "path": "memory/spaces.py",
+    "symbol": "__init__",
+    "line": 20,
+    "end_line": 26
+  },
+  {
+    "path": "memory/spaces.py",
+    "symbol": "connect",
+    "line": 29,
+    "end_line": 35
+  },
+  {
+    "path": "memory/spaces.py",
+    "symbol": "ensure",
+    "line": 37,
+    "end_line": 55
+  },
+  {
+    "path": "memory/spaces.py",
+    "symbol": "create",
+    "line": 57,
+    "end_line": 64
+  },
+  {
+    "path": "memory/spaces.py",
+    "symbol": "require",
+    "line": 66,
+    "end_line": 74
+  },
+  {
+    "path": "memory/spaces.py",
+    "symbol": "list",
+    "line": 76,
+    "end_line": 83
+  },
+  {
+    "path": "memory/storage.py",
+    "symbol": "coordinated_write",
+    "line": 12,
+    "end_line": 44
+  },
+  {
+    "path": "memory/temporal/filter.py",
+    "symbol": "filter_by_time",
+    "line": 9,
+    "end_line": 43
+  },
+  {
+    "path": "memory/temporal/filter.py",
+    "symbol": "get_temporal_weight",
+    "line": 46,
+    "end_line": 64
+  },
+  {
+    "path": "memory/temporal/filter.py",
+    "symbol": "get_historical_relevance",
+    "line": 67,
+    "end_line": 89
+  },
+  {
+    "path": "memory/temporal/filter.py",
+    "symbol": "resolve_temporal_conflicts",
+    "line": 92,
+    "end_line": 106
+  },
+  {
+    "path": "memory/temporal/filter.py",
+    "symbol": "TemporalFilter",
+    "line": 109,
+    "end_line": 139
+  },
+  {
+    "path": "memory/temporal/filter.py",
+    "symbol": "__init__",
+    "line": 115,
+    "end_line": 117
+  },
+  {
+    "path": "memory/temporal/filter.py",
+    "symbol": "filter",
+    "line": 119,
+    "end_line": 123
+  },
+  {
+    "path": "memory/temporal/filter.py",
+    "symbol": "weight",
+    "line": 125,
+    "end_line": 127
+  },
+  {
+    "path": "memory/temporal/filter.py",
+    "symbol": "historical_relevance",
+    "line": 129,
+    "end_line": 133
+  },
+  {
+    "path": "memory/temporal/filter.py",
+    "symbol": "resolve_conflicts",
+    "line": 135,
+    "end_line": 139
+  },
+  {
+    "path": "memory/tool_adapter.py",
+    "symbol": "MemoryToolAdapter",
+    "line": 7,
+    "end_line": 208
+  },
+  {
+    "path": "memory/tool_adapter.py",
+    "symbol": "__init__",
+    "line": 8,
+    "end_line": 12
+  },
+  {
+    "path": "memory/tool_adapter.py",
+    "symbol": "get_tool_definitions",
+    "line": 14,
+    "end_line": 138
+  },
+  {
+    "path": "memory/tool_adapter.py",
+    "symbol": "call_tool",
+    "line": 140,
+    "end_line": 208
+  },
+  {
+    "path": "memory/validation.py",
+    "symbol": "MemoryInput",
+    "line": 9,
+    "end_line": 70
+  },
+  {
+    "path": "memory/validation.py",
+    "symbol": "nonempty",
+    "line": 24,
+    "end_line": 27
+  },
+  {
+    "path": "memory/validation.py",
+    "symbol": "entity_identifiers",
+    "line": 31,
+    "end_line": 34
+  },
+  {
+    "path": "memory/validation.py",
+    "symbol": "check_record",
+    "line": 37,
+    "end_line": 70
+  },
+  {
+    "path": "memory/vector_store/qdrant_store.py",
+    "symbol": "QdrantVectorStore",
+    "line": 28,
+    "end_line": 309
+  },
+  {
+    "path": "memory/vector_store/qdrant_store.py",
+    "symbol": "create_temporal_filter",
+    "line": 312,
+    "end_line": 340
+  },
+  {
+    "path": "memory/vector_store/qdrant_store.py",
+    "symbol": "create_search_filter",
+    "line": 343,
+    "end_line": 364
+  },
+  {
+    "path": "memory/vector_store/qdrant_store.py",
+    "symbol": "__init__",
+    "line": 34,
+    "end_line": 69
+  },
+  {
+    "path": "memory/vector_store/qdrant_store.py",
+    "symbol": "embedder",
+    "line": 72,
+    "end_line": 75
+  },
+  {
+    "path": "memory/vector_store/qdrant_store.py",
+    "symbol": "_create_collection",
+    "line": 77,
+    "end_line": 98
+  },
+  {
+    "path": "memory/vector_store/qdrant_store.py",
+    "symbol": "_memory_id_to_uuid",
+    "line": 100,
+    "end_line": 102
+  },
+  {
+    "path": "memory/vector_store/qdrant_store.py",
+    "symbol": "upsert_memory",
+    "line": 104,
+    "end_line": 176
+  },
+  {
+    "path": "memory/vector_store/qdrant_store.py",
+    "symbol": "search",
+    "line": 178,
+    "end_line": 216
+  },
+  {
+    "path": "memory/vector_store/qdrant_store.py",
+    "symbol": "search_with_text",
+    "line": 218,
+    "end_line": 227
+  },
+  {
+    "path": "memory/vector_store/qdrant_store.py",
+    "symbol": "delete_memory",
+    "line": 229,
+    "end_line": 236
+  },
+  {
+    "path": "memory/vector_store/qdrant_store.py",
+    "symbol": "restore_memory",
+    "line": 238,
+    "end_line": 265
+  },
+  {
+    "path": "memory/vector_store/qdrant_store.py",
+    "symbol": "get_memory",
+    "line": 267,
+    "end_line": 278
+  },
+  {
+    "path": "memory/vector_store/qdrant_store.py",
+    "symbol": "count",
+    "line": 280,
+    "end_line": 283
+  },
+  {
+    "path": "memory/vector_store/qdrant_store.py",
+    "symbol": "scroll",
+    "line": 285,
+    "end_line": 299
+  },
+  {
+    "path": "memory/vector_store/qdrant_store.py",
+    "symbol": "close",
+    "line": 301,
+    "end_line": 303
+  },
+  {
+    "path": "memory/vector_store/qdrant_store.py",
+    "symbol": "__enter__",
+    "line": 305,
+    "end_line": 306
+  },
+  {
+    "path": "memory/vector_store/qdrant_store.py",
+    "symbol": "__exit__",
+    "line": 308,
+    "end_line": 309
+  },
+  {
+    "path": "memory/workbench.py",
+    "symbol": "Inspection",
+    "line": 14,
+    "end_line": 137
+  },
+  {
+    "path": "memory/workbench.py",
+    "symbol": "Workbench",
+    "line": 140,
+    "end_line": 629
+  },
+  {
+    "path": "memory/workbench.py",
+    "symbol": "__init__",
+    "line": 15,
+    "end_line": 16
+  },
+  {
+    "path": "memory/workbench.py",
+    "symbol": "_rows",
+    "line": 18,
+    "end_line": 19
+  },
+  {
+    "path": "memory/workbench.py",
+    "symbol": "inventory",
+    "line": 21,
+    "end_line": 70
+  },
+  {
+    "path": "memory/workbench.py",
+    "symbol": "detail",
+    "line": 72,
+    "end_line": 137
+  },
+  {
+    "path": "memory/workbench.py",
+    "symbol": "__init__",
+    "line": 141,
+    "end_line": 149
+  },
+  {
+    "path": "memory/workbench.py",
+    "symbol": "list_spaces",
+    "line": 151,
+    "end_line": 167
+  },
+  {
+    "path": "memory/workbench.py",
+    "symbol": "inventory",
+    "line": 169,
+    "end_line": 173
+  },
+  {
+    "path": "memory/workbench.py",
+    "symbol": "_memory_id",
+    "line": 175,
+    "end_line": 184
+  },
+  {
+    "path": "memory/workbench.py",
+    "symbol": "status",
+    "line": 186,
+    "end_line": 203
+  },
+  {
+    "path": "memory/workbench.py",
+    "symbol": "validate",
+    "line": 206,
+    "end_line": 292
+  },
+  {
+    "path": "memory/workbench.py",
+    "symbol": "run",
+    "line": 294,
+    "end_line": 318
+  },
+  {
+    "path": "memory/workbench.py",
+    "symbol": "_run_hosted",
+    "line": 320,
+    "end_line": 492
+  },
+  {
+    "path": "memory/workbench.py",
+    "symbol": "_run_local",
+    "line": 494,
+    "end_line": 629
+  },
+  {
+    "path": "tests/conftest.py",
+    "symbol": "isolated_graphs",
+    "line": 11,
+    "end_line": 46
+  },
+  {
+    "path": "tests/conftest.py",
+    "symbol": "FixtureEmbedder",
+    "line": 49,
+    "end_line": 65
+  },
+  {
+    "path": "tests/conftest.py",
+    "symbol": "FixtureReranker",
+    "line": 68,
+    "end_line": 79
+  },
+  {
+    "path": "tests/conftest.py",
+    "symbol": "offline_models",
+    "line": 83,
+    "end_line": 112
+  },
+  {
+    "path": "tests/conftest.py",
+    "symbol": "init",
+    "line": 18,
+    "end_line": 23
+  },
+  {
+    "path": "tests/conftest.py",
+    "symbol": "embed_single",
+    "line": 53,
+    "end_line": 62
+  },
+  {
+    "path": "tests/conftest.py",
+    "symbol": "embed",
+    "line": 64,
+    "end_line": 65
+  },
+  {
+    "path": "tests/conftest.py",
+    "symbol": "rerank",
+    "line": 72,
+    "end_line": 79
+  },
+  {
+    "path": "tests/conftest.py",
+    "symbol": "init",
+    "line": 101,
+    "end_line": 110
+  },
+  {
+    "path": "tests/fixtures/extractor.py",
+    "symbol": "MockNIMExtractor",
+    "line": 6,
+    "end_line": 205
+  },
+  {
+    "path": "tests/fixtures/extractor.py",
+    "symbol": "__init__",
+    "line": 13,
+    "end_line": 20
+  },
+  {
+    "path": "tests/fixtures/extractor.py",
+    "symbol": "is_mock",
+    "line": 23,
+    "end_line": 24
+  },
+  {
+    "path": "tests/fixtures/extractor.py",
+    "symbol": "extract_entities_and_relations",
+    "line": 26,
+    "end_line": 179
+  },
+  {
+    "path": "tests/fixtures/extractor.py",
+    "symbol": "judge_answer_quality",
+    "line": 181,
+    "end_line": 185
+  },
+  {
+    "path": "tests/fixtures/extractor.py",
+    "symbol": "detect_contradiction",
+    "line": 187,
+    "end_line": 193
+  },
+  {
+    "path": "tests/fixtures/extractor.py",
+    "symbol": "detect_supersession",
+    "line": 195,
+    "end_line": 201
+  },
+  {
+    "path": "tests/fixtures/extractor.py",
+    "symbol": "extract_skills",
+    "line": 203,
+    "end_line": 205
+  },
+  {
+    "path": "tests/fixtures/graph.py",
+    "symbol": "graph_name_for",
+    "line": 6,
+    "end_line": 7
+  },
+  {
+    "path": "tests/fixtures/shared_crash.py",
+    "symbol": "factory",
+    "line": 19,
+    "end_line": 34
+  },
+  {
+    "path": "tests/fixtures/shared_crash.py",
+    "symbol": "fault",
+    "line": 37,
+    "end_line": 57
+  },
+  {
+    "path": "tests/fixtures/shared_crash.py",
+    "symbol": "insert",
+    "line": 43,
+    "end_line": 45
+  },
+  {
+    "path": "tests/fixtures/shared_crash.py",
+    "symbol": "publish",
+    "line": 51,
+    "end_line": 55
+  },
+  {
+    "path": "tests/test_card_residency.py",
+    "symbol": "test_index_replacement_revokes_handles_and_keeps_owners_separate",
+    "line": 10,
+    "end_line": 24
+  },
+  {
+    "path": "tests/test_card_residency.py",
+    "symbol": "test_admission_pressure_falls_back_without_changing_selection",
+    "line": 27,
+    "end_line": 34
+  },
+  {
+    "path": "tests/test_card_residency.py",
+    "symbol": "test_router_filters_ranking_priority_and_returns_source_text",
+    "line": 37,
+    "end_line": 46
+  },
+  {
+    "path": "tests/test_card_residency.py",
+    "symbol": "test_invalid_vectors_cannot_enter_a_catalog",
+    "line": 49,
+    "end_line": 54
+  },
+  {
+    "path": "tests/test_card_residency.py",
+    "symbol": "test_allocation_failure_uses_verified_cpu_matrix",
+    "line": 57,
+    "end_line": 66
+  },
+  {
+    "path": "tests/test_card_residency.py",
+    "symbol": "test_actual_cuda_residency_selection_and_clear",
+    "line": 70,
+    "end_line": 86
+  },
+  {
+    "path": "tests/test_card_residency.py",
+    "symbol": "unavailable",
+    "line": 60,
+    "end_line": 61
+  },
+  {
+    "path": "tests/test_context_assembly.py",
+    "symbol": "runtime",
+    "line": 16,
+    "end_line": 27
+  },
+  {
+    "path": "tests/test_context_assembly.py",
+    "symbol": "request",
+    "line": 30,
+    "end_line": 33
+  },
+  {
+    "path": "tests/test_context_assembly.py",
+    "symbol": "answer",
+    "line": 36,
+    "end_line": 50
+  },
+  {
+    "path": "tests/test_context_assembly.py",
+    "symbol": "reader",
+    "line": 53,
+    "end_line": 64
+  },
+  {
+    "path": "tests/test_context_assembly.py",
+    "symbol": "test_required_fields_are_current_and_unknown_task_or_actor_is_rejected",
+    "line": 67,
+    "end_line": 84
+  },
+  {
+    "path": "tests/test_context_assembly.py",
+    "symbol": "test_required_missing_and_disputed_fields_never_fall_back",
+    "line": 87,
+    "end_line": 99
+  },
+  {
+    "path": "tests/test_context_assembly.py",
+    "symbol": "test_optional_profile_preference_does_not_hide_trip_dispute",
+    "line": 102,
+    "end_line": 120
+  },
+  {
+    "path": "tests/test_context_assembly.py",
+    "symbol": "test_mood_expires_from_source_time_without_reads_renewing_it",
+    "line": 123,
+    "end_line": 137
+  },
+  {
+    "path": "tests/test_context_assembly.py",
+    "symbol": "test_session_inherits_trip_mood_only_when_session_has_no_mood",
+    "line": 140,
+    "end_line": 173
+  },
+  {
+    "path": "tests/test_context_assembly.py",
+    "symbol": "test_mandatory_half_overflow_is_visible",
+    "line": 176,
+    "end_line": 178
+  },
+  {
+    "path": "tests/test_context_assembly.py",
+    "symbol": "test_optional_hot_overflow_is_moved_to_additional_evidence",
+    "line": 181,
+    "end_line": 193
+  },
+  {
+    "path": "tests/test_context_assembly.py",
+    "symbol": "test_overlapping_cards_do_not_repeat_facts_in_the_prompt",
+    "line": 196,
+    "end_line": 224
+  },
+  {
+    "path": "tests/test_context_assembly.py",
+    "symbol": "test_removing_an_optional_card_preserves_its_source_facts",
+    "line": 227,
+    "end_line": 255
+  },
+  {
+    "path": "tests/test_context_assembly.py",
+    "symbol": "read",
+    "line": 90,
+    "end_line": 94
+  },
+  {
+    "path": "tests/test_context_assembly.py",
+    "symbol": "read",
+    "line": 103,
+    "end_line": 113
+  },
+  {
+    "path": "tests/test_context_assembly.py",
+    "symbol": "read",
+    "line": 124,
+    "end_line": 129
+  },
+  {
+    "path": "tests/test_context_assembly.py",
+    "symbol": "read",
+    "line": 141,
+    "end_line": 144
+  },
+  {
+    "path": "tests/test_context_assembly.py",
+    "symbol": "session_first",
+    "line": 165,
+    "end_line": 168
+  },
+  {
+    "path": "tests/test_context_assembly.py",
+    "symbol": "read",
+    "line": 182,
+    "end_line": 187
+  },
+  {
+    "path": "tests/test_context_assembly.py",
+    "symbol": "read",
+    "line": 212,
+    "end_line": 219
+  },
+  {
+    "path": "tests/test_context_assembly.py",
+    "symbol": "read",
+    "line": 244,
+    "end_line": 249
+  },
+  {
+    "path": "tests/test_context_assembly.py",
+    "symbol": "unresolved",
+    "line": 155,
+    "end_line": 158
+  },
+  {
+    "path": "tests/test_context_cache.py",
+    "symbol": "test_lru_budget_expiration_and_returned_values_are_isolated",
+    "line": 9,
+    "end_line": 21
+  },
+  {
+    "path": "tests/test_context_cache.py",
+    "symbol": "test_explicit_invalidation_discards_private_payloads",
+    "line": 24,
+    "end_line": 30
+  },
+  {
+    "path": "tests/test_context_cache.py",
+    "symbol": "test_equal_halves_and_full_prompt_use_the_actual_tokenizer",
+    "line": 33,
+    "end_line": 46
+  },
+  {
+    "path": "tests/test_context_configuration.py",
+    "symbol": "test_configuration_builds_a_recoverable_profile_without_loading_models",
+    "line": 9,
+    "end_line": 29
+  },
+  {
+    "path": "tests/test_context_configuration.py",
+    "symbol": "test_configuration_rejects_unknown_fields_and_missing_tokenizer",
+    "line": 32,
+    "end_line": 47
+  },
+  {
+    "path": "tests/test_context_contracts.py",
+    "symbol": "evidence",
+    "line": 14,
+    "end_line": 28
+  },
+  {
+    "path": "tests/test_context_contracts.py",
+    "symbol": "test_contracts_reject_unknown_configuration_and_required_profile_fallback",
+    "line": 31,
+    "end_line": 39
+  },
+  {
+    "path": "tests/test_context_contracts.py",
+    "symbol": "test_card_uses_current_evidence_and_retains_missing_fields",
+    "line": 42,
+    "end_line": 58
+  },
+  {
+    "path": "tests/test_context_contracts.py",
+    "symbol": "test_unusable_evidence_is_not_turned_into_a_fact",
+    "line": 64,
+    "end_line": 69
+  },
+  {
+    "path": "tests/test_context_contracts.py",
+    "symbol": "test_malformed_supported_evidence_fails_closed",
+    "line": 72,
+    "end_line": 76
+  },
+  {
+    "path": "tests/test_context_contracts.py",
+    "symbol": "test_supported_values_keep_json_type_identity",
+    "line": 79,
+    "end_line": 85
+  },
+  {
+    "path": "tests/test_context_contracts.py",
+    "symbol": "test_card_guidance_is_labelled_and_hash_changes_with_evidence",
+    "line": 88,
+    "end_line": 114
+  },
+  {
+    "path": "tests/test_context_journal.py",
+    "symbol": "test_generation_survives_restart_and_idempotent_submit",
+    "line": 6,
+    "end_line": 22
+  },
+  {
+    "path": "tests/test_context_journal.py",
+    "symbol": "test_failed_retry_withdraw_redact_and_future_sql_paths_are_covered",
+    "line": 25,
+    "end_line": 44
+  },
+  {
+    "path": "tests/test_context_journal.py",
+    "symbol": "test_generation_rollback_is_atomic",
+    "line": 47,
+    "end_line": 59
+  },
+  {
+    "path": "tests/test_context_service.py",
+    "symbol": "contexts",
+    "line": 17,
+    "end_line": 36
+  },
+  {
+    "path": "tests/test_context_service.py",
+    "symbol": "actor",
+    "line": 39,
+    "end_line": 40
+  },
+  {
+    "path": "tests/test_context_service.py",
+    "symbol": "event",
+    "line": 43,
+    "end_line": 66
+  },
+  {
+    "path": "tests/test_context_service.py",
+    "symbol": "context",
+    "line": 69,
+    "end_line": 76
+  },
+  {
+    "path": "tests/test_context_service.py",
+    "symbol": "test_warm_hit_pending_change_and_accepted_replacement",
+    "line": 79,
+    "end_line": 115
+  },
+  {
+    "path": "tests/test_context_service.py",
+    "symbol": "test_unrelated_trip_keeps_context_warm_but_global_changes_still_block",
+    "line": 118,
+    "end_line": 165
+  },
+  {
+    "path": "tests/test_context_service.py",
+    "symbol": "test_misleading_event_envelope_cannot_hide_relevant_pending_claims",
+    "line": 168,
+    "end_line": 194
+  },
+  {
+    "path": "tests/test_context_service.py",
+    "symbol": "test_scope_gates_preserve_work_input_validation",
+    "line": 197,
+    "end_line": 202
+  },
+  {
+    "path": "tests/test_context_service.py",
+    "symbol": "test_external_graph_change_also_revokes_context",
+    "line": 205,
+    "end_line": 227
+  },
+  {
+    "path": "tests/test_context_service.py",
+    "symbol": "test_tokens_are_actor_bound_and_tamper_proof",
+    "line": 230,
+    "end_line": 243
+  },
+  {
+    "path": "tests/test_context_service.py",
+    "symbol": "test_other_trips_users_and_redaction_cannot_reuse_cached_values",
+    "line": 246,
+    "end_line": 277
+  },
+  {
+    "path": "tests/test_context_service.py",
+    "symbol": "test_future_claim_boundary_invalidates_without_a_new_write",
+    "line": 280,
+    "end_line": 292
+  },
+  {
+    "path": "tests/test_context_service.py",
+    "symbol": "test_concurrent_requests_return_independent_payloads",
+    "line": 295,
+    "end_line": 300
+  },
+  {
+    "path": "tests/test_context_service.py",
+    "symbol": "seed_ready",
+    "line": 303,
+    "end_line": 329
+  },
+  {
+    "path": "tests/test_context_service.py",
+    "symbol": "test_all_saved_trip_requirements_reach_every_brief_and_work",
+    "line": 332,
+    "end_line": 405
+  },
+  {
+    "path": "tests/test_context_service.py",
+    "symbol": "test_protected_profile_and_session_rules_cannot_be_hidden_by_trip_preferences",
+    "line": 408,
+    "end_line": 442
+  },
+  {
+    "path": "tests/test_context_service.py",
+    "symbol": "test_http_client_discards_response_generated_during_a_change",
+    "line": 445,
+    "end_line": 486
+  },
+  {
+    "path": "tests/test_context_service.py",
+    "symbol": "test_generation_retry_is_bounded_and_missing_fields_skip_generation",
+    "line": 489,
+    "end_line": 504
+  },
+  {
+    "path": "tests/test_context_service.py",
+    "symbol": "test_failed_or_unclear_event_cannot_bypass_a_warm_context",
+    "line": 507,
+    "end_line": 531
+  },
+  {
+    "path": "tests/test_context_service.py",
+    "symbol": "test_context_dependencies_reach_handoff_without_sharing_ownership",
+    "line": 534,
+    "end_line": 543
+  },
+  {
+    "path": "tests/test_context_service.py",
+    "symbol": "test_restart_rebuilds_views_and_rejects_old_context_proofs",
+    "line": 546,
+    "end_line": 563
+  },
+  {
+    "path": "tests/test_context_service.py",
+    "symbol": "test_agent_proposal_does_not_become_a_current_context_requirement",
+    "line": 566,
+    "end_line": 590
+  },
+  {
+    "path": "tests/test_context_service.py",
+    "symbol": "test_time_boundary_crossed_during_assembly_does_not_return_old_context",
+    "line": 593,
+    "end_line": 600
+  },
+  {
+    "path": "tests/test_context_service.py",
+    "symbol": "test_cuda_service_change_and_deletion_revoke_resident_cards",
+    "line": 604,
+    "end_line": 625
+  },
+  {
+    "path": "tests/test_context_service.py",
+    "symbol": "generate",
+    "line": 462,
+    "end_line": 472
+  },
+  {
+    "path": "tests/test_extraction_cache.py",
+    "symbol": "ProtocolDelegate",
+    "line": 9,
+    "end_line": 26
+  },
+  {
+    "path": "tests/test_extraction_cache.py",
+    "symbol": "test_cache_hits_do_not_call_delegate",
+    "line": 29,
+    "end_line": 35
+  },
+  {
+    "path": "tests/test_extraction_cache.py",
+    "symbol": "test_legacy_response_migrates_without_reissue",
+    "line": 38,
+    "end_line": 49
+  },
+  {
+    "path": "tests/test_extraction_cache.py",
+    "symbol": "test_corrupt_entry_never_silently_contacts_delegate",
+    "line": 52,
+    "end_line": 58
+  },
+  {
+    "path": "tests/test_extraction_cache.py",
+    "symbol": "test_mock_delegate_cannot_be_marked_as_real",
+    "line": 61,
+    "end_line": 65
+  },
+  {
+    "path": "tests/test_extraction_cache.py",
+    "symbol": "extract_entities_and_relations",
+    "line": 17,
+    "end_line": 26
+  },
+  {
+    "path": "tests/test_falkordb_counts.py",
+    "symbol": "test_counts_report_directed_edges_once",
+    "line": 8,
+    "end_line": 24
+  },
+  {
+    "path": "tests/test_falkordb_counts.py",
+    "symbol": "test_entity_index_invalidates_and_batched_conflicts_keep_original_ids",
+    "line": 27,
+    "end_line": 48
+  },
+  {
+    "path": "tests/test_falkordb_transactions.py",
+    "symbol": "test_multiline_quoted_text_is_preserved",
+    "line": 11,
+    "end_line": 18
+  },
+  {
+    "path": "tests/test_falkordb_transactions.py",
+    "symbol": "test_live_graph_does_not_expose_staging_writes",
+    "line": 21,
+    "end_line": 35
+  },
+  {
+    "path": "tests/test_falkordb_transactions.py",
+    "symbol": "test_lost_publication_response_restores_both_stores",
+    "line": 38,
+    "end_line": 65
+  },
+  {
+    "path": "tests/test_falkordb_transactions.py",
+    "symbol": "test_shared_clients_refresh_entity_lookup_and_keep_unique_ids",
+    "line": 68,
+    "end_line": 81
+  },
+  {
+    "path": "tests/test_falkordb_transactions.py",
+    "symbol": "test_graph_lease_loss_rejects_publication",
+    "line": 84,
+    "end_line": 94
+  },
+  {
+    "path": "tests/test_falkordb_transactions.py",
+    "symbol": "test_native_identifier_constraints_reject_duplicate_nodes",
+    "line": 97,
+    "end_line": 106
+  },
+  {
+    "path": "tests/test_falkordb_transactions.py",
+    "symbol": "test_capped_results_are_rejected_instead_of_silently_accepted",
+    "line": 109,
+    "end_line": 115
+  },
+  {
+    "path": "tests/test_falkordb_transactions.py",
+    "symbol": "test_batched_seeds_preserve_order_missing_ids_and_node_limit",
+    "line": 118,
+    "end_line": 130
+  },
+  {
+    "path": "tests/test_falkordb_transactions.py",
+    "symbol": "test_conflict_cache_refreshes_across_clients_and_does_not_leak_mutations",
+    "line": 133,
+    "end_line": 157
+  },
+  {
+    "path": "tests/test_falkordb_transactions.py",
+    "symbol": "test_conflict_cache_tracks_staging_publication_and_rollback",
+    "line": 160,
+    "end_line": 177
+  },
+  {
+    "path": "tests/test_falkordb_transactions.py",
+    "symbol": "test_graph_copy_retries_only_explicit_background_fork_collision",
+    "line": 180,
+    "end_line": 202
+  },
+  {
+    "path": "tests/test_falkordb_transactions.py",
+    "symbol": "test_graph_copy_does_not_retry_ambiguous_failure",
+    "line": 205,
+    "end_line": 218
+  },
+  {
+    "path": "tests/test_falkordb_transactions.py",
+    "symbol": "test_graph_copy_retry_is_bounded",
+    "line": 221,
+    "end_line": 239
+  },
+  {
+    "path": "tests/test_falkordb_transactions.py",
+    "symbol": "lost_response",
+    "line": 48,
+    "end_line": 54
+  },
+  {
+    "path": "tests/test_falkordb_transactions.py",
+    "symbol": "collide_once",
+    "line": 190,
+    "end_line": 194
+  },
+  {
+    "path": "tests/test_falkordb_transactions.py",
+    "symbol": "lost_response",
+    "line": 209,
+    "end_line": 211
+  },
+  {
+    "path": "tests/test_falkordb_transactions.py",
+    "symbol": "blocked",
+    "line": 228,
+    "end_line": 230
+  },
+  {
+    "path": "tests/test_hosted_boundaries.py",
+    "symbol": "Client",
+    "line": 21,
+    "end_line": 39
+  },
+  {
+    "path": "tests/test_hosted_boundaries.py",
+    "symbol": "claim",
+    "line": 42,
+    "end_line": 51
+  },
+  {
+    "path": "tests/test_hosted_boundaries.py",
+    "symbol": "body",
+    "line": 54,
+    "end_line": 63
+  },
+  {
+    "path": "tests/test_hosted_boundaries.py",
+    "symbol": "test_parser_rejects_embedded_examples_and_duplicate_nonfinite_objects",
+    "line": 66,
+    "end_line": 77
+  },
+  {
+    "path": "tests/test_hosted_boundaries.py",
+    "symbol": "test_nemotron_json_mode_bounded_repair_and_truncation",
+    "line": 80,
+    "end_line": 99
+  },
+  {
+    "path": "tests/test_hosted_boundaries.py",
+    "symbol": "test_model_cannot_broaden_source_authority_or_scope",
+    "line": 114,
+    "end_line": 119
+  },
+  {
+    "path": "tests/test_hosted_boundaries.py",
+    "symbol": "test_unknown_change_field_is_rejected_instead_of_orphaning_a_correction",
+    "line": 122,
+    "end_line": 147
+  },
+  {
+    "path": "tests/test_hosted_boundaries.py",
+    "symbol": "test_answer_validates_memory_ids_and_preserves_dispute_status",
+    "line": 150,
+    "end_line": 179
+  },
+  {
+    "path": "tests/test_hosted_boundaries.py",
+    "symbol": "test_missing_evidence_cannot_gain_fabricated_citations",
+    "line": 182,
+    "end_line": 189
+  },
+  {
+    "path": "tests/test_hosted_boundaries.py",
+    "symbol": "test_wire_format_preserves_int64_without_changing_engine_values",
+    "line": 192,
+    "end_line": 199
+  },
+  {
+    "path": "tests/test_hosted_boundaries.py",
+    "symbol": "test_failed_extraction_leaves_both_real_test_stores_unchanged",
+    "line": 202,
+    "end_line": 211
+  },
+  {
+    "path": "tests/test_hosted_boundaries.py",
+    "symbol": "test_hosted_correction_uses_real_catalog_targets_and_retains_evidence",
+    "line": 214,
+    "end_line": 255
+  },
+  {
+    "path": "tests/test_hosted_boundaries.py",
+    "symbol": "test_hosted_api_failure_is_sanitized",
+    "line": 258,
+    "end_line": 266
+  },
+  {
+    "path": "tests/test_hosted_boundaries.py",
+    "symbol": "test_hosted_write_retry_reuses_durable_extraction_without_another_api_call",
+    "line": 269,
+    "end_line": 284
+  },
+  {
+    "path": "tests/test_hosted_boundaries.py",
+    "symbol": "test_context_metadata_cannot_be_extracted_as_a_source_fact",
+    "line": 287,
+    "end_line": 302
+  },
+  {
+    "path": "tests/test_hosted_boundaries.py",
+    "symbol": "test_reschedule_must_be_a_supported_change_not_an_unrelated_assertion",
+    "line": 305,
+    "end_line": 326
+  },
+  {
+    "path": "tests/test_hosted_boundaries.py",
+    "symbol": "test_nvidia_schema_avoids_unsupported_unique_items_keyword",
+    "line": 329,
+    "end_line": 339
+  },
+  {
+    "path": "tests/test_hosted_boundaries.py",
+    "symbol": "test_unrelated_namespace_record_failure_does_not_block_request",
+    "line": 342,
+    "end_line": 364
+  },
+  {
+    "path": "tests/test_hosted_boundaries.py",
+    "symbol": "__init__",
+    "line": 22,
+    "end_line": 25
+  },
+  {
+    "path": "tests/test_hosted_boundaries.py",
+    "symbol": "create",
+    "line": 27,
+    "end_line": 39
+  },
+  {
+    "path": "tests/test_hosted_boundaries.py",
+    "symbol": "detail",
+    "line": 353,
+    "end_line": 356
+  },
+  {
+    "path": "tests/test_hosted_routing.py",
+    "symbol": "test_field_router_rejects_invented_fields",
+    "line": 11,
+    "end_line": 19
+  },
+  {
+    "path": "tests/test_hosted_routing.py",
+    "symbol": "test_unrelated_dispute_does_not_taint_current_field_answer",
+    "line": 22,
+    "end_line": 63
+  },
+  {
+    "path": "tests/test_hybrid_retrieval_logic.py",
+    "symbol": "test_extractor_validation_and_mock_marking",
+    "line": 27,
+    "end_line": 77
+  },
+  {
+    "path": "tests/test_hybrid_retrieval_logic.py",
+    "symbol": "test_query_understanding_and_entity_linking",
+    "line": 80,
+    "end_line": 116
+  },
+  {
+    "path": "tests/test_hybrid_retrieval_logic.py",
+    "symbol": "test_bounded_graph_expansion",
+    "line": 119,
+    "end_line": 143
+  },
+  {
+    "path": "tests/test_hybrid_retrieval_logic.py",
+    "symbol": "test_temporal_point_in_time_and_changed_preferences",
+    "line": 146,
+    "end_line": 213
+  },
+  {
+    "path": "tests/test_hybrid_retrieval_logic.py",
+    "symbol": "test_contradiction_supersession_graph_chain_and_ranking",
+    "line": 216,
+    "end_line": 263
+  },
+  {
+    "path": "tests/test_hybrid_retrieval_logic.py",
+    "symbol": "test_retrieval_trace_inspection",
+    "line": 266,
+    "end_line": 292
+  },
+  {
+    "path": "tests/test_maintenance.py",
+    "symbol": "test_memory_decay_real_calculation_and_cross_store_sync",
+    "line": 39,
+    "end_line": 91
+  },
+  {
+    "path": "tests/test_maintenance.py",
+    "symbol": "test_memory_decay_idempotency",
+    "line": 94,
+    "end_line": 125
+  },
+  {
+    "path": "tests/test_maintenance.py",
+    "symbol": "test_memory_deduplication_merges_exact_duplicates",
+    "line": 128,
+    "end_line": 167
+  },
+  {
+    "path": "tests/test_maintenance.py",
+    "symbol": "test_memory_deduplication_safeguards_disjoint_temporal_periods",
+    "line": 170,
+    "end_line": 199
+  },
+  {
+    "path": "tests/test_maintenance.py",
+    "symbol": "test_memory_deduplication_safeguards_contradictory_facts",
+    "line": 202,
+    "end_line": 231
+  },
+  {
+    "path": "tests/test_maintenance.py",
+    "symbol": "test_memory_consolidation_provenance_and_dual_store",
+    "line": 234,
+    "end_line": 300
+  },
+  {
+    "path": "tests/test_maintenance.py",
+    "symbol": "test_maintenance_scheduler_run_all",
+    "line": 303,
+    "end_line": 321
+  },
+  {
+    "path": "tests/test_maintenance.py",
+    "symbol": "test_storage_growth_and_latency_measurement",
+    "line": 324,
+    "end_line": 361
+  },
+  {
+    "path": "tests/test_memory_engine.py",
+    "symbol": "test_engine_add_get_and_search",
+    "line": 23,
+    "end_line": 69
+  },
+  {
+    "path": "tests/test_memory_engine.py",
+    "symbol": "test_engine_update_and_reopen_persistence",
+    "line": 72,
+    "end_line": 117
+  },
+  {
+    "path": "tests/test_memory_engine.py",
+    "symbol": "test_engine_shared_entity_preservation_on_delete",
+    "line": 120,
+    "end_line": 149
+  },
+  {
+    "path": "tests/test_memory_engine.py",
+    "symbol": "test_engine_compensating_rollback_on_add_failure",
+    "line": 152,
+    "end_line": 177
+  },
+  {
+    "path": "tests/test_memory_engine.py",
+    "symbol": "test_engine_compensating_rollback_on_update_failure",
+    "line": 180,
+    "end_line": 205
+  },
+  {
+    "path": "tests/test_memory_engine.py",
+    "symbol": "test_engine_device_status_and_telemetry",
+    "line": 208,
+    "end_line": 235
+  },
+  {
+    "path": "tests/test_memory_engine.py",
+    "symbol": "test_engine_batch_ingest",
+    "line": 238,
+    "end_line": 260
+  },
+  {
+    "path": "tests/test_memory_engine.py",
+    "symbol": "broken_upsert_observation",
+    "line": 161,
+    "end_line": 162
+  },
+  {
+    "path": "tests/test_memory_engine.py",
+    "symbol": "broken_upsert_observation",
+    "line": 191,
+    "end_line": 192
+  },
+  {
+    "path": "tests/test_memory_lifecycle.py",
+    "symbol": "engine",
+    "line": 13,
+    "end_line": 18
+  },
+  {
+    "path": "tests/test_memory_lifecycle.py",
+    "symbol": "add",
+    "line": 21,
+    "end_line": 61
+  },
+  {
+    "path": "tests/test_memory_lifecycle.py",
+    "symbol": "cid",
+    "line": 64,
+    "end_line": 65
+  },
+  {
+    "path": "tests/test_memory_lifecycle.py",
+    "symbol": "test_ordinary_decay_is_explainable_and_protection_is_separate",
+    "line": 68,
+    "end_line": 82
+  },
+  {
+    "path": "tests/test_memory_lifecycle.py",
+    "symbol": "test_accepted_change_retains_both_and_transfers_protection",
+    "line": 85,
+    "end_line": 119
+  },
+  {
+    "path": "tests/test_memory_lifecycle.py",
+    "symbol": "test_retraction_retains_history_without_an_invented_replacement_value",
+    "line": 122,
+    "end_line": 152
+  },
+  {
+    "path": "tests/test_memory_lifecycle.py",
+    "symbol": "test_repeated_agent_disagreement_is_not_independent_negative_evidence",
+    "line": 155,
+    "end_line": 162
+  },
+  {
+    "path": "tests/test_memory_lifecycle.py",
+    "symbol": "test_unaccepted_conflict_preserves_protected_value_and_stops_answer",
+    "line": 165,
+    "end_line": 181
+  },
+  {
+    "path": "tests/test_memory_lifecycle.py",
+    "symbol": "test_scope_and_partial_confirmation_do_not_refresh_other_fields",
+    "line": 184,
+    "end_line": 221
+  },
+  {
+    "path": "tests/test_memory_lifecycle.py",
+    "symbol": "test_event_retries_do_not_duplicate_or_manufacture_independent_support",
+    "line": 224,
+    "end_line": 233
+  },
+  {
+    "path": "tests/test_memory_lifecycle.py",
+    "symbol": "test_missing_field_does_not_become_an_answer",
+    "line": 236,
+    "end_line": 241
+  },
+  {
+    "path": "tests/test_memory_lifecycle.py",
+    "symbol": "test_alias_and_explicit_two_step_evidence_path",
+    "line": 244,
+    "end_line": 295
+  },
+  {
+    "path": "tests/test_memory_lifecycle.py",
+    "symbol": "test_search_reconciles_old_vector_hits_with_current_claims",
+    "line": 299,
+    "end_line": 326
+  },
+  {
+    "path": "tests/test_memory_lifecycle.py",
+    "symbol": "test_correction_history_is_not_falsely_reported_as_past_truth",
+    "line": 329,
+    "end_line": 361
+  },
+  {
+    "path": "tests/test_memory_lifecycle.py",
+    "symbol": "test_only_affected_work_becomes_stale_and_handoff_carries_versions",
+    "line": 364,
+    "end_line": 386
+  },
+  {
+    "path": "tests/test_memory_lifecycle.py",
+    "symbol": "test_invalid_authority_and_failed_graph_write_leave_stores_unchanged",
+    "line": 389,
+    "end_line": 413
+  },
+  {
+    "path": "tests/test_memory_lifecycle.py",
+    "symbol": "test_typed_sources_cannot_be_overwritten_merged_or_silently_deleted",
+    "line": 416,
+    "end_line": 429
+  },
+  {
+    "path": "tests/test_memory_lifecycle.py",
+    "symbol": "test_original_source_and_score_explanation_survive_reopening",
+    "line": 432,
+    "end_line": 446
+  },
+  {
+    "path": "tests/test_memory_lifecycle.py",
+    "symbol": "test_source_only_ingestion_records_episode_without_inventing_facts",
+    "line": 449,
+    "end_line": 460
+  },
+  {
+    "path": "tests/test_memory_lifecycle.py",
+    "symbol": "test_known_time_does_not_use_a_correction_that_was_not_yet_known",
+    "line": 463,
+    "end_line": 480
+  },
+  {
+    "path": "tests/test_memory_lifecycle.py",
+    "symbol": "test_agent_tool_cannot_forge_confirmation_protection_or_user_deletion",
+    "line": 483,
+    "end_line": 514
+  },
+  {
+    "path": "tests/test_memory_lifecycle.py",
+    "symbol": "test_completed_work_is_retained_when_later_memory_change_requires_review",
+    "line": 517,
+    "end_line": 544
+  },
+  {
+    "path": "tests/test_memory_lifecycle.py",
+    "symbol": "test_conflicting_claim_marks_only_related_work_for_review",
+    "line": 547,
+    "end_line": 561
+  },
+  {
+    "path": "tests/test_memory_lifecycle.py",
+    "symbol": "test_batch_typed_ingestion_and_immutable_event_replay",
+    "line": 564,
+    "end_line": 577
+  },
+  {
+    "path": "tests/test_memory_lifecycle.py",
+    "symbol": "test_accepted_alias_is_not_available_before_its_evidence_was_known",
+    "line": 580,
+    "end_line": 617
+  },
+  {
+    "path": "tests/test_memory_lifecycle.py",
+    "symbol": "test_agent_repetition_does_not_refresh_or_strengthen_a_user_fact",
+    "line": 620,
+    "end_line": 637
+  },
+  {
+    "path": "tests/test_memory_lifecycle.py",
+    "symbol": "test_agents_cannot_relabel_a_budget_as_the_phone_number",
+    "line": 640,
+    "end_line": 650
+  },
+  {
+    "path": "tests/test_memory_lifecycle.py",
+    "symbol": "test_equal_numeric_values_do_not_create_false_contradictions",
+    "line": 653,
+    "end_line": 657
+  },
+  {
+    "path": "tests/test_memory_lifecycle.py",
+    "symbol": "test_past_belief_is_not_reported_as_truth_after_a_known_correction",
+    "line": 660,
+    "end_line": 677
+  },
+  {
+    "path": "tests/test_memory_lifecycle.py",
+    "symbol": "test_identical_messages_in_different_events_are_distinct_episodes",
+    "line": 680,
+    "end_line": 696
+  },
+  {
+    "path": "tests/test_memory_lifecycle.py",
+    "symbol": "test_repeated_identity_evidence_preserves_earlier_knowledge_and_deletion",
+    "line": 699,
+    "end_line": 737
+  },
+  {
+    "path": "tests/test_memory_lifecycle.py",
+    "symbol": "fail",
+    "line": 398,
+    "end_line": 399
+  },
+  {
+    "path": "tests/test_memory_reliability_fixes.py",
+    "symbol": "submit",
+    "line": 16,
+    "end_line": 41
+  },
+  {
+    "path": "tests/test_memory_reliability_fixes.py",
+    "symbol": "test_new_rule_blocks_existing_work_and_completion",
+    "line": 44,
+    "end_line": 54
+  },
+  {
+    "path": "tests/test_memory_reliability_fixes.py",
+    "symbol": "test_new_unrelated_trip_rule_keeps_work_current",
+    "line": 57,
+    "end_line": 64
+  },
+  {
+    "path": "tests/test_memory_reliability_fixes.py",
+    "symbol": "test_expiry_rechecks_completed_prerequisite_recursively",
+    "line": 67,
+    "end_line": 98
+  },
+  {
+    "path": "tests/test_memory_reliability_fixes.py",
+    "symbol": "test_source_events_reach_cards_and_legacy_metadata",
+    "line": 101,
+    "end_line": 121
+  },
+  {
+    "path": "tests/test_memory_reliability_fixes.py",
+    "symbol": "test_work_proof_requires_complete_context_and_watches_new_session_rules",
+    "line": 124,
+    "end_line": 155
+  },
+  {
+    "path": "tests/test_memory_reliability_fixes.py",
+    "symbol": "test_completed_work_cannot_be_reused_after_a_new_rule",
+    "line": 158,
+    "end_line": 171
+  },
+  {
+    "path": "tests/test_memory_reliability_fixes.py",
+    "symbol": "test_future_rules_and_legacy_work_fail_closed",
+    "line": 174,
+    "end_line": 187
+  },
+  {
+    "path": "tests/test_memory_reliability_fixes.py",
+    "symbol": "test_fuzzy_quality_and_conflicts_move_in_expected_direction",
+    "line": 193,
+    "end_line": 208
+  },
+  {
+    "path": "tests/test_memory_reliability_fixes.py",
+    "symbol": "score",
+    "line": 196,
+    "end_line": 203
+  },
+  {
+    "path": "tests/test_memory_spaces.py",
+    "symbol": "bench",
+    "line": 21,
+    "end_line": 25
+  },
+  {
+    "path": "tests/test_memory_spaces.py",
+    "symbol": "send",
+    "line": 28,
+    "end_line": 31
+  },
+  {
+    "path": "tests/test_memory_spaces.py",
+    "symbol": "create",
+    "line": 34,
+    "end_line": 35
+  },
+  {
+    "path": "tests/test_memory_spaces.py",
+    "symbol": "test_spaces_persist_empty_and_duplicate_names_have_distinct_ids",
+    "line": 38,
+    "end_line": 46
+  },
+  {
+    "path": "tests/test_memory_spaces.py",
+    "symbol": "test_invalid_ids_fail_closed",
+    "line": 50,
+    "end_line": 53
+  },
+  {
+    "path": "tests/test_memory_spaces.py",
+    "symbol": "test_unknown_and_conflicting_space_ids_are_rejected",
+    "line": 56,
+    "end_line": 62
+  },
+  {
+    "path": "tests/test_memory_spaces.py",
+    "symbol": "test_same_request_id_cannot_mix_spaces_and_replays_remain_local",
+    "line": 65,
+    "end_line": 102
+  },
+  {
+    "path": "tests/test_memory_spaces.py",
+    "symbol": "test_changes_and_reserved_scope_cannot_escape_space",
+    "line": 105,
+    "end_line": 126
+  },
+  {
+    "path": "tests/test_memory_spaces.py",
+    "symbol": "test_graph_only_memory_keeps_its_owner",
+    "line": 129,
+    "end_line": 137
+  },
+  {
+    "path": "tests/test_memory_spaces.py",
+    "symbol": "test_legacy_namespaces_remain_switchable_without_migration",
+    "line": 140,
+    "end_line": 147
+  },
+  {
+    "path": "tests/test_memory_spaces.py",
+    "symbol": "test_legacy_receipt_replays_and_alias_spelling_is_idempotent",
+    "line": 150,
+    "end_line": 179
+  },
+  {
+    "path": "tests/test_memory_spaces.py",
+    "symbol": "test_restart_preserves_spaces_records_and_scoped_recall",
+    "line": 182,
+    "end_line": 199
+  },
+  {
+    "path": "tests/test_memory_spaces.py",
+    "symbol": "test_concurrent_requests_keep_distinct_spaces",
+    "line": 202,
+    "end_line": 219
+  },
+  {
+    "path": "tests/test_memory_spaces.py",
+    "symbol": "test_hosted_context_never_includes_other_space",
+    "line": 222,
+    "end_line": 243
+  },
+  {
+    "path": "tests/test_memory_spaces.py",
+    "symbol": "test_http_inventory_requires_exact_space_and_create_requires_token",
+    "line": 246,
+    "end_line": 299
+  },
+  {
+    "path": "tests/test_memory_spaces.py",
+    "symbol": "write",
+    "line": 206,
+    "end_line": 208
+  },
+  {
+    "path": "tests/test_shared_embedder.py",
+    "symbol": "test_compatible_engines_share_one_model_and_configuration_is_respected",
+    "line": 4,
+    "end_line": 18
+  },
+  {
+    "path": "tests/test_shared_embedder.py",
+    "symbol": "FakeEmbedder",
+    "line": 8,
+    "end_line": 10
+  },
+  {
+    "path": "tests/test_shared_embedder.py",
+    "symbol": "__init__",
+    "line": 9,
+    "end_line": 10
+  },
+  {
+    "path": "tests/test_shared_memory_service.py",
+    "symbol": "settings",
+    "line": 24,
+    "end_line": 42
+  },
+  {
+    "path": "tests/test_shared_memory_service.py",
+    "symbol": "shared",
+    "line": 46,
+    "end_line": 56
+  },
+  {
+    "path": "tests/test_shared_memory_service.py",
+    "symbol": "principal",
+    "line": 59,
+    "end_line": 61
+  },
+  {
+    "path": "tests/test_shared_memory_service.py",
+    "symbol": "send",
+    "line": 64,
+    "end_line": 81
+  },
+  {
+    "path": "tests/test_shared_memory_service.py",
+    "symbol": "drain",
+    "line": 84,
+    "end_line": 87
+  },
+  {
+    "path": "tests/test_shared_memory_service.py",
+    "symbol": "test_receipt_is_durable_before_semantic_work_and_retry_is_idempotent",
+    "line": 90,
+    "end_line": 106
+  },
+  {
+    "path": "tests/test_shared_memory_service.py",
+    "symbol": "test_pending_change_blocks_completion_and_invalidates_only_related_work",
+    "line": 109,
+    "end_line": 127
+  },
+  {
+    "path": "tests/test_shared_memory_service.py",
+    "symbol": "test_private_user_spaces_and_source_authority",
+    "line": 130,
+    "end_line": 145
+  },
+  {
+    "path": "tests/test_shared_memory_service.py",
+    "symbol": "test_raw_inputs_are_interpreted_conservatively_and_failures_stay_visible",
+    "line": 148,
+    "end_line": 208
+  },
+  {
+    "path": "tests/test_shared_memory_service.py",
+    "symbol": "test_notification_acknowledgments_are_per_agent_and_persistent",
+    "line": 211,
+    "end_line": 220
+  },
+  {
+    "path": "tests/test_shared_memory_service.py",
+    "symbol": "test_concurrent_agents_have_one_owner_and_stale_completion_is_fenced",
+    "line": 223,
+    "end_line": 266
+  },
+  {
+    "path": "tests/test_shared_memory_service.py",
+    "symbol": "test_http_authentication_tenant_binding_and_pending_response",
+    "line": 269,
+    "end_line": 348
+  },
+  {
+    "path": "tests/test_shared_memory_service.py",
+    "symbol": "test_cold_backup_and_fresh_restore_preserve_memory_and_completed_work",
+    "line": 351,
+    "end_line": 397
+  },
+  {
+    "path": "tests/test_shared_memory_service.py",
+    "symbol": "test_two_workers_keep_one_tenant_ordered_while_another_can_progress",
+    "line": 400,
+    "end_line": 453
+  },
+  {
+    "path": "tests/test_shared_memory_service.py",
+    "symbol": "test_local_interpretation_does_not_drop_a_destination_condition",
+    "line": 456,
+    "end_line": 463
+  },
+  {
+    "path": "tests/test_shared_memory_service.py",
+    "symbol": "test_killed_process_replays_receipt_and_repairs_partial_write",
+    "line": 467,
+    "end_line": 508
+  },
+  {
+    "path": "tests/test_shared_memory_service.py",
+    "symbol": "test_user_deletion_scrubs_history_and_retries_do_not_resurrect_evidence",
+    "line": 511,
+    "end_line": 526
+  },
+  {
+    "path": "tests/test_shared_memory_service.py",
+    "symbol": "test_task_waits_for_its_prerequisite_before_an_agent_can_acquire_it",
+    "line": 529,
+    "end_line": 548
+  },
+  {
+    "path": "tests/test_shared_memory_service.py",
+    "symbol": "test_unknown_confirmed_change_blocks_use_of_old_approved_budget",
+    "line": 551,
+    "end_line": 576
+  },
+  {
+    "path": "tests/test_shared_memory_service.py",
+    "symbol": "attempt",
+    "line": 232,
+    "end_line": 236
+  },
+  {
+    "path": "tests/test_shared_memory_service.py",
+    "symbol": "call",
+    "line": 276,
+    "end_line": 287
+  },
+  {
+    "path": "tests/test_shared_memory_service.py",
+    "symbol": "interpret",
+    "line": 407,
+    "end_line": 413
+  },
+  {
+    "path": "tests/test_storage_persistence.py",
+    "symbol": "test_qdrant_write_close_reopen",
+    "line": 20,
+    "end_line": 83
+  },
+  {
+    "path": "tests/test_storage_persistence.py",
+    "symbol": "test_falkordb_write_close_reopen",
+    "line": 86,
+    "end_line": 164
+  },
+  {
+    "path": "tests/test_storage_persistence.py",
+    "symbol": "test_falkordb_referential_integrity_and_deletion",
+    "line": 167,
+    "end_line": 201
+  },
+  {
+    "path": "tests/test_storage_persistence.py",
+    "symbol": "test_falkordb_delete_memory",
+    "line": 204,
+    "end_line": 244
+  },
+  {
+    "path": "tests/test_storage_persistence.py",
+    "symbol": "test_shared_identifier_alignment",
+    "line": 247,
+    "end_line": 304
+  },
+  {
+    "path": "tests/test_wayfinder_app.py",
+    "symbol": "factory",
+    "line": 16,
+    "end_line": 22
+  },
+  {
+    "path": "tests/test_wayfinder_app.py",
+    "symbol": "app",
+    "line": 26,
+    "end_line": 29
+  },
+  {
+    "path": "tests/test_wayfinder_app.py",
+    "symbol": "space",
+    "line": 32,
+    "end_line": 33
+  },
+  {
+    "path": "tests/test_wayfinder_app.py",
+    "symbol": "call",
+    "line": 36,
+    "end_line": 37
+  },
+  {
+    "path": "tests/test_wayfinder_app.py",
+    "symbol": "propose",
+    "line": 40,
+    "end_line": 48
+  },
+  {
+    "path": "tests/test_wayfinder_app.py",
+    "symbol": "approve",
+    "line": 51,
+    "end_line": 52
+  },
+  {
+    "path": "tests/test_wayfinder_app.py",
+    "symbol": "recall",
+    "line": 55,
+    "end_line": 56
+  },
+  {
+    "path": "tests/test_wayfinder_app.py",
+    "symbol": "values",
+    "line": 59,
+    "end_line": 60
+  },
+  {
+    "path": "tests/test_wayfinder_app.py",
+    "symbol": "test_consent_isolation_fresh_conversation_and_transcript_separation",
+    "line": 63,
+    "end_line": 85
+  },
+  {
+    "path": "tests/test_wayfinder_app.py",
+    "symbol": "test_correction_rejection_history_conflict_and_missing",
+    "line": 88,
+    "end_line": 114
+  },
+  {
+    "path": "tests/test_wayfinder_app.py",
+    "symbol": "test_immutable_replay_concurrent_approval_and_independent_space_ids",
+    "line": 117,
+    "end_line": 129
+  },
+  {
+    "path": "tests/test_wayfinder_app.py",
+    "symbol": "test_authenticated_http_role_and_foreign_space_deny_before_inspection",
+    "line": 132,
+    "end_line": 174
+  },
+  {
+    "path": "tests/test_wayfinder_app.py",
+    "symbol": "test_target_task_and_conversation_boundaries",
+    "line": 177,
+    "end_line": 198
+  },
+  {
+    "path": "tests/test_wayfinder_app.py",
+    "symbol": "test_context_proof_scope_stale_approval_and_mid_request_change",
+    "line": 201,
+    "end_line": 223
+  },
+  {
+    "path": "tests/test_wayfinder_app.py",
+    "symbol": "test_storage_failure_no_false_receipt_and_safe_retry",
+    "line": 226,
+    "end_line": 241
+  },
+  {
+    "path": "tests/test_wayfinder_app.py",
+    "symbol": "test_forget_failure_blocks_reads_and_retry_scrubs_copies",
+    "line": 244,
+    "end_line": 273
+  },
+  {
+    "path": "tests/test_wayfinder_app.py",
+    "symbol": "test_restart_backup_restore_checksums_and_deletion_reconciliation",
+    "line": 276,
+    "end_line": 316
+  },
+  {
+    "path": "tests/test_wayfinder_app.py",
+    "symbol": "test_single_owner_settings_validation_message_replay_and_wire_precision",
+    "line": 319,
+    "end_line": 335
+  },
+  {
+    "path": "tests/test_wayfinder_app.py",
+    "symbol": "test_commit_before_receipt_failure_reconciles_without_duplicate",
+    "line": 338,
+    "end_line": 353
+  },
+  {
+    "path": "tests/test_wayfinder_app.py",
+    "symbol": "test_failed_uncommitted_write_cannot_use_stale_approval",
+    "line": 356,
+    "end_line": 371
+  },
+  {
+    "path": "tests/test_wayfinder_app.py",
+    "symbol": "test_startup_failure_releases_engine_and_owner_for_retry",
+    "line": 374,
+    "end_line": 388
+  },
+  {
+    "path": "tests/test_wayfinder_app.py",
+    "symbol": "must_not_read",
+    "line": 142,
+    "end_line": 143
+  },
+  {
+    "path": "tests/test_wayfinder_app.py",
+    "symbol": "racing",
+    "line": 216,
+    "end_line": 219
+  },
+  {
+    "path": "tests/test_wayfinder_app.py",
+    "symbol": "fail",
+    "line": 231,
+    "end_line": 232
+  },
+  {
+    "path": "tests/test_wayfinder_app.py",
+    "symbol": "fail",
+    "line": 257,
+    "end_line": 258
+  },
+  {
+    "path": "tests/test_wayfinder_app.py",
+    "symbol": "committed_then_failed",
+    "line": 343,
+    "end_line": 345
+  },
+  {
+    "path": "tests/test_wayfinder_app.py",
+    "symbol": "fail",
+    "line": 361,
+    "end_line": 362
+  },
+  {
+    "path": "tests/test_wayfinder_app.py",
+    "symbol": "fail",
+    "line": 379,
+    "end_line": 380
+  },
+  {
+    "path": "tests/test_wayfinder_desktop.py",
+    "symbol": "settle",
+    "line": 18,
+    "end_line": 24
+  },
+  {
+    "path": "tests/test_wayfinder_desktop.py",
+    "symbol": "test_shared_views_switch_settings_approval_and_native_lifecycle",
+    "line": 27,
+    "end_line": 121
+  },
+  {
+    "path": "tests/test_wayfinder_desktop.py",
+    "symbol": "test_inflight_result_cannot_retarget_new_space",
+    "line": 124,
+    "end_line": 157
+  },
+  {
+    "path": "tests/test_wayfinder_desktop.py",
+    "symbol": "shutdown",
+    "line": 36,
+    "end_line": 40
+  },
+  {
+    "path": "tests/test_wayfinder_desktop.py",
+    "symbol": "shutdown",
+    "line": 132,
+    "end_line": 135
+  },
+  {
+    "path": "tests/test_workbench.py",
+    "symbol": "request",
+    "line": 17,
+    "end_line": 25
+  },
+  {
+    "path": "tests/test_workbench.py",
+    "symbol": "bench",
+    "line": 29,
+    "end_line": 33
+  },
+  {
+    "path": "tests/test_workbench.py",
+    "symbol": "claim",
+    "line": 36,
+    "end_line": 44
+  },
+  {
+    "path": "tests/test_workbench.py",
+    "symbol": "test_empty_retrieval_is_truthful_and_read_only",
+    "line": 47,
+    "end_line": 53
+  },
+  {
+    "path": "tests/test_workbench.py",
+    "symbol": "test_namespace_evidence_and_no_current_prompt_leak",
+    "line": 56,
+    "end_line": 70
+  },
+  {
+    "path": "tests/test_workbench.py",
+    "symbol": "test_explicit_correction_and_conflict_states_are_engine_evidence",
+    "line": 73,
+    "end_line": 96
+  },
+  {
+    "path": "tests/test_workbench.py",
+    "symbol": "test_change_cannot_target_other_namespace_and_needs_confirmation",
+    "line": 99,
+    "end_line": 111
+  },
+  {
+    "path": "tests/test_workbench.py",
+    "symbol": "test_retry_same_event_preserves_source_and_does_not_duplicate",
+    "line": 114,
+    "end_line": 126
+  },
+  {
+    "path": "tests/test_workbench.py",
+    "symbol": "test_graph_only_record_visible_and_missing_vector_not_claimed",
+    "line": 129,
+    "end_line": 137
+  },
+  {
+    "path": "tests/test_workbench.py",
+    "symbol": "test_retrieval_failure_does_not_create_memory_or_leak_driver_secret",
+    "line": 140,
+    "end_line": 154
+  },
+  {
+    "path": "tests/test_workbench.py",
+    "symbol": "test_inventory_scrolls_all_pages_without_neural_loading",
+    "line": 157,
+    "end_line": 169
+  },
+  {
+    "path": "tests/test_workbench.py",
+    "symbol": "test_http_loopback_origin_token_and_no_shell_or_file_routes",
+    "line": 172,
+    "end_line": 221
+  },
+  {
+    "path": "tests/test_workbench.py",
+    "symbol": "test_authenticated_stop_returns_and_shuts_down_server",
+    "line": 224,
+    "end_line": 250
+  },
+  {
+    "path": "tests/test_workbench.py",
+    "symbol": "test_real_cached_model_storage_retrieval_and_restart",
+    "line": 254,
+    "end_line": 278
+  },
+  {
+    "path": "tests/test_workbench.py",
+    "symbol": "broken",
+    "line": 145,
+    "end_line": 146
+  },
+  {
+    "path": "tests/test_workbench.py",
+    "symbol": "scroll",
+    "line": 161,
+    "end_line": 163
+  },
+  {
+    "path": "scripts/diagnose_nvidia_validation.py",
+    "symbol": "capture",
+    "line": 39,
+    "end_line": 49
+  },
+  {
+    "path": "scripts/setup_shared_service.py",
+    "symbol": "main",
+    "line": 9,
+    "end_line": 47
+  },
+  {
+    "path": "scripts/shared_memory_snapshot.py",
+    "symbol": "main",
+    "line": 13,
+    "end_line": 33
+  },
+  {
+    "path": "scripts/validate_memory_spaces.py",
+    "symbol": "api",
+    "line": 30,
+    "end_line": 41
+  },
+  {
+    "path": "scripts/validate_memory_spaces.py",
+    "symbol": "save",
+    "line": 44,
+    "end_line": 49
+  },
+  {
+    "path": "scripts/validate_memory_spaces.py",
+    "symbol": "check",
+    "line": 52,
+    "end_line": 55
+  },
+  {
+    "path": "scripts/validate_memory_spaces.py",
+    "symbol": "send",
+    "line": 58,
+    "end_line": 73
+  },
+  {
+    "path": "scripts/validate_nemotron.py",
+    "symbol": "Validation",
+    "line": 18,
+    "end_line": 427
+  },
+  {
+    "path": "scripts/validate_nemotron.py",
+    "symbol": "main",
+    "line": 430,
+    "end_line": 442
+  },
+  {
+    "path": "scripts/validate_nemotron.py",
+    "symbol": "__init__",
+    "line": 19,
+    "end_line": 25
+  },
+  {
+    "path": "scripts/validate_nemotron.py",
+    "symbol": "api",
+    "line": 27,
+    "end_line": 40
+  },
+  {
+    "path": "scripts/validate_nemotron.py",
+    "symbol": "send",
+    "line": 42,
+    "end_line": 64
+  },
+  {
+    "path": "scripts/validate_nemotron.py",
+    "symbol": "records",
+    "line": 66,
+    "end_line": 71
+  },
+  {
+    "path": "scripts/validate_nemotron.py",
+    "symbol": "mid",
+    "line": 74,
+    "end_line": 75
+  },
+  {
+    "path": "scripts/validate_nemotron.py",
+    "symbol": "evidence",
+    "line": 78,
+    "end_line": 85
+  },
+  {
+    "path": "scripts/validate_nemotron.py",
+    "symbol": "check",
+    "line": 87,
+    "end_line": 97
+  },
+  {
+    "path": "scripts/validate_nemotron.py",
+    "symbol": "save",
+    "line": 99,
+    "end_line": 107
+  },
+  {
+    "path": "scripts/validate_nemotron.py",
+    "symbol": "restart",
+    "line": 109,
+    "end_line": 145
+  },
+  {
+    "path": "scripts/validate_nemotron.py",
+    "symbol": "model_tests",
+    "line": 147,
+    "end_line": 349
+  },
+  {
+    "path": "scripts/validate_nemotron.py",
+    "symbol": "report",
+    "line": 351,
+    "end_line": 427
+  },
+  {
+    "path": "scripts/validate_workbench_live.py",
+    "symbol": "Run",
+    "line": 21,
+    "end_line": 826
+  },
+  {
+    "path": "scripts/validate_workbench_live.py",
+    "symbol": "main",
+    "line": 829,
+    "end_line": 856
+  },
+  {
+    "path": "scripts/validate_workbench_live.py",
+    "symbol": "__init__",
+    "line": 22,
+    "end_line": 27
+  },
+  {
+    "path": "scripts/validate_workbench_live.py",
+    "symbol": "http",
+    "line": 29,
+    "end_line": 42
+  },
+  {
+    "path": "scripts/validate_workbench_live.py",
+    "symbol": "records",
+    "line": 44,
+    "end_line": 49
+  },
+  {
+    "path": "scripts/validate_workbench_live.py",
+    "symbol": "prompt",
+    "line": 51,
+    "end_line": 63
+  },
+  {
+    "path": "scripts/validate_workbench_live.py",
+    "symbol": "result",
+    "line": 65,
+    "end_line": 95
+  },
+  {
+    "path": "scripts/validate_workbench_live.py",
+    "symbol": "save",
+    "line": 97,
+    "end_line": 111
+  },
+  {
+    "path": "scripts/validate_workbench_live.py",
+    "symbol": "raw",
+    "line": 113,
+    "end_line": 329
+  },
+  {
+    "path": "scripts/validate_workbench_live.py",
+    "symbol": "structured",
+    "line": 331,
+    "end_line": 442
+  },
+  {
+    "path": "scripts/validate_workbench_live.py",
+    "symbol": "nvidia",
+    "line": 444,
+    "end_line": 693
+  },
+  {
+    "path": "scripts/validate_workbench_live.py",
+    "symbol": "report",
+    "line": 695,
+    "end_line": 826
+  },
+  {
+    "path": "scripts/validate_workbench_live.py",
+    "symbol": "store",
+    "line": 334,
+    "end_line": 347
+  }
+]

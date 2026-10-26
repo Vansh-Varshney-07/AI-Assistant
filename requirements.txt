@@ -1,6 +1,6 @@
 -r requirements/cpu.txt
-hermes==0.10.0
-nemoclaw==0.0.0a1
-openshell==0.1.5
+# Nous Hermes / NVIDIA NemoClaw / OpenShell use the managed installation in ops/.
+# Do not install similarly named Python packages into the Windows app environment.
+Pillow==12.3.0
 tavily-python==0.8.5
 tavily-cli==0.1.8

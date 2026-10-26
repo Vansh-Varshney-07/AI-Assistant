@@ -1,0 +1,107 @@
+{
+  "scope": "actual inline preview JS with fake DOM; CSS observations are static only",
+  "reachable_states": 366,
+  "transitions": 7620,
+  "bfs_dfs_same_reachable_states": true,
+  "actions": "release selection, visible navigation, design flow, inspector tabs, inspector toggle",
+  "checks": [
+    {
+      "id": "P01-r1-navigation",
+      "pass": true,
+      "actual": false,
+      "expected": false,
+      "detail": "R1 destinations should remain Chat, Runs and Settings."
+    },
+    {
+      "id": "P02-r1-no-google-inspector",
+      "pass": false,
+      "actual": true,
+      "expected": false,
+      "detail": "R1 inspector currently shows R3 sources."
+    },
+    {
+      "id": "P03-r2-no-google-prompt",
+      "pass": false,
+      "actual": true,
+      "expected": false,
+      "detail": "R2 scenario should use memory/documents, not unshipped Google."
+    },
+    {
+      "id": "P04-r1-no-task-approval",
+      "pass": false,
+      "actual": true,
+      "expected": false,
+      "detail": "R1 exposes a task action planned for R3."
+    },
+    {
+      "id": "P05-lower-release-navigation-reset",
+      "pass": true,
+      "actual": "chat",
+      "expected": "chat",
+      "detail": "Switching to R1 correctly leaves a later-release destination."
+    },
+    {
+      "id": "P06-ime-enter",
+      "pass": false,
+      "actual": true,
+      "expected": false,
+      "detail": "IME composition should not be interpreted as submit."
+    },
+    {
+      "id": "P07-enter-preview-is-inert",
+      "pass": true,
+      "actual": true,
+      "expected": true,
+      "detail": "Preview send only announces that nothing was sent."
+    },
+    {
+      "id": "P08-narrow-drawer-control",
+      "pass": false,
+      "actual": false,
+      "expected": true,
+      "detail": "Sidebar is hidden below 760px but has no implemented reopen control."
+    },
+    {
+      "id": "P09-wide-inspector-toggle-rule",
+      "pass": false,
+      "actual": false,
+      "expected": true,
+      "detail": "Current toggle class only affects a media-query sheet; wide inspector has no hide rule."
+    },
+    {
+      "id": "P10-preview-no-network",
+      "pass": true,
+      "actual": true,
+      "expected": true,
+      "detail": "Preview declares no backend network connections."
+    },
+    {
+      "id": "P11-composer-focus-style",
+      "pass": false,
+      "actual": true,
+      "expected": false,
+      "detail": "Composer rule overrides the declared focus-visible outline; static CSS cascade observation."
+    }
+  ],
+  "passed": 4,
+  "failed": 7,
+  "sample_shortest_trace_to_r1_review": [
+    [
+      "release",
+      1
+    ],
+    [
+      "tab",
+      "review"
+    ]
+  ],
+  "exclusions": [
+    "real browser",
+    "CSS rendering",
+    "screen reader",
+    "Electron IPC",
+    "backend",
+    "provider",
+    "actual desktop"
+  ]
+}

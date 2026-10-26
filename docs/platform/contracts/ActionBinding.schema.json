@@ -1,0 +1,42 @@
+{
+  "additionalProperties": false,
+  "description": "Versioned reference; the trusted plan binding and ActionGate enforce authority.",
+  "properties": {
+    "contract": {
+      "const": "wayfinder.platform/1",
+      "default": "wayfinder.platform/1",
+      "title": "Contract",
+      "type": "string"
+    },
+    "action_ref": {
+      "title": "Action Ref",
+      "type": "string"
+    },
+    "digest": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Digest",
+      "type": "string"
+    },
+    "expires": {
+      "title": "Expires",
+      "type": "number"
+    },
+    "backend": {
+      "default": "desktop_action_gate",
+      "enum": [
+        "desktop_action_gate",
+        "git_branch_gate",
+        "memory_event_gate"
+      ],
+      "title": "Backend",
+      "type": "string"
+    }
+  },
+  "required": [
+    "action_ref",
+    "digest",
+    "expires"
+  ],
+  "title": "ActionBinding",
+  "type": "object"
+}

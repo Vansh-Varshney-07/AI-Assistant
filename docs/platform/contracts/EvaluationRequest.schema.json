@@ -1,0 +1,43 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "contract": {
+      "const": "wayfinder.platform/1",
+      "default": "wayfinder.platform/1",
+      "title": "Contract",
+      "type": "string"
+    },
+    "request_id": {
+      "maxLength": 100,
+      "minLength": 1,
+      "title": "Request Id",
+      "type": "string"
+    },
+    "required_phrases": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 8,
+      "title": "Required Phrases",
+      "type": "array"
+    },
+    "expected_file_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Expected File Sha256"
+    }
+  },
+  "required": [
+    "request_id"
+  ],
+  "title": "EvaluationRequest",
+  "type": "object"
+}

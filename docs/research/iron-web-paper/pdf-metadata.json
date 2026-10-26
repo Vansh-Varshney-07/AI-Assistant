@@ -1,0 +1,53 @@
+[
+  {
+    "id": "2604.21284v1",
+    "source": "C:\\Users\\User\\Downloads\\Documents\\2604.21284v1.pdf",
+    "pages": 20,
+    "sha256": "89bd711e289b38beb5ea6744f172c8cfc67c3444577ab772eefbc21b99a13424",
+    "pdf_metadata": {
+      "/Author": "Robin Dey; Panyanon Viradecha",
+      "/Creator": "arXiv GenPDF (tex2pdf:a6404ea)",
+      "/DOI": "https://doi.org/10.48550/arXiv.2604.21284",
+      "/License": "http://creativecommons.org/licenses/by/4.0/",
+      "/PTEX.Fullbanner": "This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) kpathsea version 6.4.1",
+      "/Producer": "pikepdf 8.15.1",
+      "/Title": "Spatial Metaphors for LLM Memory: A Critical Analysis of the MemPalace Architecture",
+      "/Trapped": "/False",
+      "/arXivID": "https://arxiv.org/abs/2604.21284v1"
+    }
+  },
+  {
+    "id": "2504.19413v1",
+    "source": "C:\\Users\\User\\Downloads\\Documents\\2504.19413v1.pdf",
+    "pages": 23,
+    "sha256": "bec870b657aa73405275a6d8fe27bcd4271799e028bc62986ab9c4cd27a3712d",
+    "pdf_metadata": {
+      "/Author": "",
+      "/CreationDate": "D:20250429011116Z",
+      "/Creator": "LaTeX with hyperref",
+      "/Keywords": "",
+      "/ModDate": "D:20250429011116Z",
+      "/PTEX.Fullbanner": "This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) kpathsea version 6.3.5",
+      "/Producer": "pdfTeX-1.40.25",
+      "/Subject": "",
+      "/Title": "",
+      "/Trapped": "/False"
+    }
+  },
+  {
+    "id": "2501.13956v1",
+    "source": "C:\\Users\\User\\Downloads\\Documents\\2501.13956v1.pdf",
+    "pages": 12,
+    "sha256": "d26f7eb599540e8b14d75e7efda58a07661abbb1b864e58323b5768475a15d42",
+    "pdf_metadata": {
+      "/Producer": "GPL Ghostscript 10.01.2",
+      "/CreationDate": "D:20250126200147-05'00'",
+      "/ModDate": "D:20250126200147-05'00'",
+      "/Creator": "LaTeX with hyperref",
+      "/Title": "",
+      "/Subject": "",
+      "/Author": "",
+      "/Keywords": ""
+    }
+  }
+]

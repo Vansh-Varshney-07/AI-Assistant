@@ -1,0 +1,171 @@
+{
+  "batch": 5,
+  "scope": "artifact consistency and finite design models only",
+  "original_files_unchanged": 23,
+  "findings_total": 36,
+  "findings_design_addressed": 36,
+  "contracts_present": 23,
+  "release_manifest": {
+    "features": 18,
+    "acyclic": true,
+    "cumulative_releases": 7
+  },
+  "original_safety_models": {
+    "action_guarded": {
+      "states": 240,
+      "edges": 875,
+      "bfs_dfs_same_reachable_states": true,
+      "dfs_edges": 875,
+      "violating_states": 0,
+      "shortest_counterexamples": {}
+    },
+    "chat_guarded": {
+      "states": 10,
+      "edges": 22,
+      "bfs_dfs_same_reachable_states": true,
+      "shortest_counterexamples": {}
+    },
+    "negative_control_action": {
+      "states": 1376,
+      "edges": 5632,
+      "bfs_dfs_same_reachable_states": true,
+      "dfs_edges": 5632,
+      "violating_states": 1024,
+      "shortest_counterexamples": {
+        "dispatch_requires_current_exact_authorization": [
+          "switch_active_account",
+          "approve_original_proposal",
+          "dispatch"
+        ],
+        "complete_requires_independent_verification": [
+          "approve_original_proposal",
+          "dispatch",
+          "provider_applies",
+          "receive_acknowledgement"
+        ],
+        "uncertain_write_is_not_redispatched": [
+          "approve_original_proposal",
+          "dispatch",
+          "lose_acknowledgement",
+          "ordinary_retry_same_action",
+          "dispatch"
+        ],
+        "same_action_id_has_at_most_one_effect": [
+          "approve_original_proposal",
+          "dispatch",
+          "provider_applies",
+          "lose_acknowledgement",
+          "ordinary_retry_same_action",
+          "dispatch",
+          "provider_applies"
+        ]
+      }
+    },
+    "negative_control_chat": {
+      "states": 30,
+      "edges": 86,
+      "bfs_dfs_same_reachable_states": true,
+      "shortest_counterexamples": {
+        "scope_safe_delivery": [
+          "switch_visible_space",
+          "submit_in_space_A",
+          "delta_1_for_space_A"
+        ],
+        "terminal_cancel_not_resurrected": [
+          "submit_in_space_A",
+          "server_confirms_cancel",
+          "complete_2_for_space_A"
+        ],
+        "duplicate_final_not_published": [
+          "submit_in_space_A",
+          "complete_2_for_space_A",
+          "complete_2_for_space_A"
+        ]
+      }
+    },
+    "orderings": {
+      "results": {
+        "deliberately_permissive": {
+          "orders": 288,
+          "violating_orders": 116
+        },
+        "guarded": {
+          "orders": 288,
+          "violating_orders": 0
+        }
+      },
+      "interpretation": "abstract event orderings; not concurrent threads or provider races"
+    },
+    "wire": {
+      "passed": 9,
+      "source_sha256": "b95abbd2c080756755a38c7b42f2bfaa05bc395f719312a0672cb627e852165e",
+      "interpretation": "existing Python wire function only; future TypeScript event contract is still unspecified"
+    },
+    "dates": {
+      "spring_local_time_nonexistent": true,
+      "autumn_local_time_ambiguous": true,
+      "date_only_task_can_shift_day_if_treated_as_timestamp": true,
+      "interpretation": "timezone arithmetic only; no schedule was created or tested"
+    }
+  },
+  "epoch_negative_control": {
+    "states": 23,
+    "edges": 57,
+    "bfs_dfs_agree": true,
+    "stale_delivery_counterexample": [
+      "submit_frozen_context",
+      "disconnect_or_replace_account",
+      "worker_finishes",
+      "publish_or_rehydrate_cached_result"
+    ],
+    "assumptions": "one input, one context revision, one account epoch; no real storage/provider"
+  },
+  "epoch_guarded": {
+    "states": 18,
+    "edges": 45,
+    "bfs_dfs_agree": true,
+    "stale_delivery_counterexample": null,
+    "assumptions": "one input, one context revision, one account epoch; no real storage/provider"
+  },
+  "uncertainty_lock_negative_control": {
+    "states": 7,
+    "edges": 16,
+    "bfs_dfs_agree": true,
+    "repeat_counterexample": [
+      "reconnect_same_stable_account",
+      "resubmit_unknown_same_family_with_new_request_id"
+    ],
+    "assumptions": "one already-uncertain effect, one stable provider account/resource/family; no provider semantics proof"
+  },
+  "uncertainty_lock_guarded": {
+    "states": 4,
+    "edges": 8,
+    "bfs_dfs_agree": true,
+    "repeat_counterexample": null,
+    "assumptions": "one already-uncertain effect, one stable provider account/resource/family; no provider semantics proof"
+  },
+  "unresolved_links": [],
+  "implementation_status": "Not run; no desktop app or live integration tested",
+  "worker_inventory": "47 IDs covered; bindings still unverified",
+  "acceptance": {
+    "cases": 148,
+    "status": {
+      "Not run": 148
+    }
+  },
+  "design_sha256": {
+    "PLAN.md": "6d6b1c8182ea328f33dd740e867cb23ae6e440615ee53da8ca1fe9a899e21fbf",
+    "CONTRACTS.md": "a7e9c9b6cd7754d99f67ee8450ea6892b81f99401fe10430dc4f4bf6cc3b1fa0",
+    "FLOWS.md": "15832a21de69d981bc134e3bc1a83fb731834bd5bff1643dc8c0c4056dbacd8c",
+    "manifest.json": "09bba44fbc894ef7c55dfc8a67faf50bdc579de45e5d0e57d4e10b22e705350f",
+    "preview.html": "ad8abc78b5d46ac4812978f3cfb36e7b4897b870fb8311dddf80d7d5de981ce8",
+    "ACCEPTANCE.csv": "d685dfa8defb89a861889fbaa56bbf89fb7f4f2a98a869878b56a9a6e61b766f",
+    "SECOND-ORDER.md": "cc7d8608b6a83faaf9d315cb082d9521b3ec38600261342654bb974874aa6bbb"
+  },
+  "preview": {
+    "reachable_states": 1404,
+    "transitions": 35316,
+    "passed": 31,
+    "failed": 0
+  }
+}

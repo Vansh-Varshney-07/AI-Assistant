@@ -1,0 +1,129 @@
+{
+  "$defs": {
+    "MemoryProposal": {
+      "additionalProperties": false,
+      "properties": {
+        "text": {
+          "maxLength": 20000,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        },
+        "subject": {
+          "default": "me",
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Subject",
+          "type": "string"
+        },
+        "predicate": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Predicate",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value"
+        },
+        "task_id": {
+          "default": "general",
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Task Id",
+          "type": "string"
+        },
+        "kind": {
+          "default": "fact",
+          "title": "Kind",
+          "type": "string"
+        },
+        "action": {
+          "default": "assert",
+          "title": "Action",
+          "type": "string"
+        },
+        "targets": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Targets"
+        },
+        "reason": {
+          "default": "",
+          "maxLength": 2000,
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text",
+        "predicate",
+        "value"
+      ],
+      "title": "MemoryProposal",
+      "type": "object"
+    },
+    "MemoryStep": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "const": "memory.apply_event",
+          "default": "memory.apply_event",
+          "title": "Action",
+          "type": "string"
+        }
+      },
+      "title": "MemoryStep",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "contract": {
+      "const": "wayfinder.platform/1",
+      "default": "wayfinder.platform/1",
+      "title": "Contract",
+      "type": "string"
+    },
+    "proposal_ref": {
+      "maxLength": 100,
+      "minLength": 1,
+      "title": "Proposal Ref",
+      "type": "string"
+    },
+    "body": {
+      "$ref": "#/$defs/MemoryProposal"
+    },
+    "state": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "State",
+      "type": "string"
+    },
+    "steps": {
+      "items": {
+        "$ref": "#/$defs/MemoryStep"
+      },
+      "maxItems": 1,
+      "minItems": 1,
+      "title": "Steps",
+      "type": "array"
+    }
+  },
+  "required": [
+    "proposal_ref",
+    "body",
+    "state",
+    "steps"
+  ],
+  "title": "MemoryPlan",
+  "type": "object"
+}

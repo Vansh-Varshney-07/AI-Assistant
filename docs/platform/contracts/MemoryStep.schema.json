@@ -1,0 +1,13 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "action": {
+      "const": "memory.apply_event",
+      "default": "memory.apply_event",
+      "title": "Action",
+      "type": "string"
+    }
+  },
+  "title": "MemoryStep",
+  "type": "object"
+}

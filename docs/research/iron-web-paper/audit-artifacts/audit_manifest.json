@@ -1,0 +1,41 @@
+{
+  "audit_date": "2026-10-24",
+  "assembled_at_utc": "2026-10-24T17:21:35.625316+00:00",
+  "base_commit": "dc96f3550767e30059293cdc639d900331ab385a",
+  "source_identity": "base commit plus artifact_hashes.csv; worktree has pre-existing changes",
+  "original_paper": {
+    "sha256": "a47c2819f40da69d200cfe027763785ed0487cb70972f8f252517de30ea0c33f",
+    "embedded_pictures": 1,
+    "tables": 3,
+    "repeated_results_headings": 2
+  },
+  "hashed_files": 202,
+  "indexed_symbols": 833,
+  "new_experiments_executed": false,
+  "new_tests_executed": false,
+  "application_code_modified": false,
+  "databases_opened_by_audit": false,
+  "original_paper_overwritten": false,
+  "access_limits": [
+    ".local/tests-relocation-20261024 traversal denied",
+    "hardware CIM inventory denied; GPU spec remains user-reported",
+    "No earlier chat output or files outside the audited project were treated as accessible evidence"
+  ],
+  "evidence_missing_in_accessible_project": [
+    "regression.xml",
+    "startup-memory-tests.xml",
+    "phase02-tests.xml",
+    "real-embedding-smoke.json",
+    "memory-spaces-live-evidence.json"
+  ],
+  "external_sources_checked": [
+    "https://github.com/snap-research/locomo/blob/main/LICENSE.txt",
+    "https://github.com/xiaowu0162/LongMemEval/blob/main/LICENSE",
+    "https://huggingface.co/datasets/xiaowu0162/longmemeval-cleaned",
+    "https://github.com/xiaowu0162/LongMemEval-V2/blob/main/LICENSE",
+    "https://huggingface.co/datasets/xiaowu0162/longmemeval-v2/blob/main/README.md",
+    "https://arxiv.org/abs/2504.19413v1",
+    "https://arxiv.org/abs/2501.13956",
+    "https://arxiv.org/abs/2604.21284v1"
+  ]
+}

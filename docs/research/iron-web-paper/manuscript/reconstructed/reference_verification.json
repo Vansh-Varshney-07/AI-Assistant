@@ -1,0 +1,88 @@
+[
+  {
+    "text": "P. Lewis et al., “Retrieval-augmented generation for knowledge-intensive NLP tasks,” arXiv:2005.11401v4, 2021.",
+    "url": "https://arxiv.org/abs/2005.11401v4",
+    "verified": "Primary version record; v4 dated 12 April 2021; original work also appeared at NeurIPS 2020.",
+    "key": "rag",
+    "number": 1
+  },
+  {
+    "text": "C. Packer et al., “MemGPT: Towards LLMs as operating systems,” arXiv:2310.08560v2, 2024.",
+    "url": "https://arxiv.org/abs/2310.08560v2",
+    "verified": "Primary version record; v2 dated 12 February 2024; seven-author list checked.",
+    "key": "memgpt",
+    "number": 2
+  },
+  {
+    "text": "“Iron Web implementation and evidence audit,” unpublished project technical report and supporting artifact manifests, Oct. 24, 2026. Historical engineering records are not independently reproduced.",
+    "url": null,
+    "verified": "Actual local audit and hashed retained artifacts; not a public or peer-reviewed publication.",
+    "key": "artifact",
+    "number": 3
+  },
+  {
+    "text": "P. Chhikara, D. Khant, S. Aryan, T. Singh, and D. Yadav, “Mem0: Building production-ready AI agents with scalable long-term memory,” arXiv:2504.19413v1, 2025.",
+    "url": "https://arxiv.org/abs/2504.19413v1",
+    "verified": "Primary author/title/version record and supplied PDF methods/results.",
+    "key": "mem0",
+    "number": 4
+  },
+  {
+    "text": "P. Rasmussen, P. Paliychuk, T. Beauvais, J. Ryan, and D. Chalef, “Zep: A temporal knowledge graph architecture for agent memory,” arXiv:2501.13956v1, 2025.",
+    "url": "https://arxiv.org/abs/2501.13956v1",
+    "verification_url": "https://arxiv.org/abs/2501.13956",
+    "verified": "Official record shows v1 only; supplied PDF methods and provenance caveat checked.",
+    "key": "zep",
+    "number": 5
+  },
+  {
+    "text": "R. Dey and P. Viradecha, “Spatial metaphors for LLM memory: A critical analysis of the MemPalace architecture,” arXiv:2604.21284v1, 2026.",
+    "url": "https://arxiv.org/abs/2604.21284v1",
+    "verified": "Primary version record and supplied PDF; heterogeneous external score table not reused.",
+    "key": "mempalace",
+    "number": 6
+  },
+  {
+    "text": "C. Latimer et al., “Hindsight is 20/20: Building agent memory that retains, recalls, and reflects,” arXiv:2512.12818v1, 2025.",
+    "url": "https://arxiv.org/abs/2512.12818v1",
+    "verified": "Primary seven-author version record and abstract; citation limited to documented conceptual distinction.",
+    "key": "hindsight",
+    "number": 7
+  },
+  {
+    "text": "R. Snodgrass and I. Ahn, “Temporal databases,” Computer, vol. 19, no. 9, pp. 35–42, 1986, doi: 10.1109/MC.1986.1663327.",
+    "url": "https://doi.org/10.1109/MC.1986.1663327",
+    "verification_url": "https://experts.arizona.edu/en/publications/temporal-databases/",
+    "verified": "Author-institution publication record, abstract and DOI verified; author-hosted full-PDF fetch timed out.",
+    "key": "temporal",
+    "number": 8
+  },
+  {
+    "text": "L. Moreau and P. Missier, Eds., “PROV-DM: The PROV data model,” W3C Recommendation, Apr. 30, 2013.",
+    "url": "https://www.w3.org/TR/2013/REC-prov-dm-20130430/",
+    "verified": "Official dated recommendation; editors and model description checked. No Iron Web compliance claim.",
+    "key": "prov",
+    "number": 9
+  },
+  {
+    "text": "R. Fielding, M. Nottingham, and J. Reschke, Eds., “HTTP semantics,” RFC 9110, June 2022, doi: 10.17487/RFC9110.",
+    "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+    "verified": "Official RFC author/date record and section 13.1.1 If-Match checked. Errata rendering not used as the normative reference.",
+    "key": "http",
+    "number": 10
+  },
+  {
+    "text": "A. Maharana et al., “Evaluating very long-term conversational memory of LLM agents,” Proc. ACL, vol. 1, pp. 13851–13870, 2024, doi: 10.18653/v1/2024.acl-long.747.",
+    "url": "https://aclanthology.org/2024.acl-long.747/",
+    "verified": "Official ACL bibliographic record; six authors, venue, pages, year and DOI checked.",
+    "key": "locomo",
+    "number": 11
+  },
+  {
+    "text": "D. Wu et al., “LongMemEval: Benchmarking chat assistants on long-term interactive memory,” arXiv:2410.10813v2, 2025.",
+    "url": "https://arxiv.org/abs/2410.10813v2",
+    "verified": "Primary six-author version record; v2 dated 4 March 2025; benchmark documentation previously checked.",
+    "key": "lme",
+    "number": 12
+  }
+]
