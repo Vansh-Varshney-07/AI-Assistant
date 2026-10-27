@@ -1,0 +1,15 @@
+{
+  "reader_pid": 38656,
+  "reader_executable": "D:\\Opencode_\\AI assistant\\.local\\benchmarks\\local-reader\\bin\\llama-server.exe",
+  "observed_cuda_process": "38656, D:\\Opencode_\\AI assistant\\.local\\benchmarks\\local-reader\\bin\\llama-server.exe",
+  "server_build": "b11889-d854d98ba",
+  "model_revision": "91cad51170dc346986eccefdc2dd33a9da36ead9",
+  "model_sha256": "6a1a2eb6d15622bf3c96857206351ba97e1af16c30d7a74ee38970e434e9407e",
+  "host": "127.0.0.1",
+  "port": 3397,
+  "gpu_layers_requested": 99,
+  "context_pool_tokens": 16384,
+  "parallel_slots": 2,
+  "flash_attention": "on",
+  "status": "completed; owned reader stopped after measurement"
+}

@@ -1,0 +1,162 @@
+{
+  "$defs": {
+    "Step": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "enum": [
+            "type_text",
+            "press_key",
+            "click"
+          ],
+          "title": "Action",
+          "type": "string"
+        },
+        "delivery_mode": {
+          "anyOf": [
+            {
+              "enum": [
+                "background",
+                "foreground"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Delivery Mode"
+        },
+        "text": {
+          "anyOf": [
+            {
+              "maxLength": 2000,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Text"
+        },
+        "key": {
+          "anyOf": [
+            {
+              "enum": [
+                "ENTER",
+                "TAB",
+                "ESC",
+                "CTRL+S",
+                "CTRL+A"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Key"
+        },
+        "x": {
+          "anyOf": [
+            {
+              "maximum": 16384,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "X"
+        },
+        "y": {
+          "anyOf": [
+            {
+              "maximum": 16384,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Y"
+        }
+      },
+      "required": [
+        "action"
+      ],
+      "title": "Step",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "summary": {
+      "maxLength": 1000,
+      "minLength": 1,
+      "title": "Summary",
+      "type": "string"
+    },
+    "app": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "App",
+      "type": "string"
+    },
+    "window": {
+      "exclusiveMinimum": 0,
+      "title": "Window",
+      "type": "integer"
+    },
+    "process": {
+      "exclusiveMinimum": 0,
+      "title": "Process",
+      "type": "integer"
+    },
+    "state": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "State",
+      "type": "string"
+    },
+    "steps": {
+      "items": {
+        "$ref": "#/$defs/Step"
+      },
+      "maxItems": 12,
+      "minItems": 1,
+      "title": "Steps",
+      "type": "array"
+    },
+    "completion": {
+      "maxLength": 1000,
+      "minLength": 1,
+      "title": "Completion",
+      "type": "string"
+    },
+    "observation": {
+      "const": "selected_window",
+      "title": "Observation",
+      "type": "string"
+    }
+  },
+  "required": [
+    "summary",
+    "app",
+    "window",
+    "process",
+    "state",
+    "steps",
+    "completion",
+    "observation"
+  ],
+  "title": "DesktopPlan",
+  "type": "object"
+}

@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="950" viewBox="0 0 1440 950" role="img" aria-labelledby="title desc"><title id="title">Wayfinder conversation-first desktop concept</title><desc id="desc">A future R4 design with navigation, conversation, composer and a review inspector. All data is synthetic and no account is connected.</desc><g font-family="Segoe UI,Arial,sans-serif">
+<rect x="0" y="0" width="1440" height="950" rx="0" fill="#eeeef3" stroke="none"/>
+<text x="34" y="37" font-size="15" fill="#41465c" font-weight="700">WAYFINDER / DESKTOP CONCEPT</text>
+<text x="34" y="66" font-size="26" fill="#171b2b" font-weight="600">A familiar workspace. Hermes underneath. Your work in focus.</text>
+<rect x="28" y="92" width="1384" height="792" rx="18" fill="#17181d" stroke="none"/>
+<rect x="28" y="92" width="1384" height="49" rx="18" fill="#1d1e24" stroke="none"/>
+<text x="50" y="123" font-size="18" fill="#f2f2f8" font-weight="650">W  Wayfinder</text>
+<text x="275" y="122" font-size="14" fill="#a8adbb" font-weight="400">Personal  /  Cedar</text>
+<rect x="1046" y="105" width="344" height="25" rx="12" fill="#2a2838" stroke="none"/>
+<text x="1061" y="122" font-size="11" fill="#c5b9ee" font-weight="600">DESIGN PREVIEW  ·  SYNTHETIC DATA</text>
+<rect x="28" y="141" width="60" height="743" rx="0" fill="#1c1d22" stroke="none"/>
+<rect x="88" y="141" width="218" height="743" rx="0" fill="#191a20" stroke="none"/>
+<rect x="1080" y="141" width="332" height="743" rx="0" fill="#1b1c22" stroke="none"/>
+<rect x="40" y="163" width="36" height="36" rx="9" fill="#343044" stroke="none"/>
+<text x="52" y="187" font-size="15" fill="#dfd2ff" font-weight="600">C</text>
+<rect x="40" y="217" width="36" height="36" rx="9" fill="#22242c" stroke="none"/>
+<text x="52" y="241" font-size="15" fill="#9298a9" font-weight="600">T</text>
+<rect x="40" y="271" width="36" height="36" rx="9" fill="#22242c" stroke="none"/>
+<text x="52" y="295" font-size="15" fill="#9298a9" font-weight="600">W</text>
+<rect x="40" y="325" width="36" height="36" rx="9" fill="#22242c" stroke="none"/>
+<text x="52" y="349" font-size="15" fill="#9298a9" font-weight="600">S</text>
+<rect x="40" y="379" width="36" height="36" rx="9" fill="#22242c" stroke="none"/>
+<text x="52" y="403" font-size="15" fill="#9298a9" font-weight="600">M</text>
+<rect x="103" y="157" width="188" height="39" rx="9" fill="#2a2c35" stroke="none"/>
+<text x="119" y="182" font-size="14" fill="#ededf7" font-weight="600">+  New conversation</text>
+<rect x="104" y="213" width="185" height="29" rx="6" fill="#2a2639" stroke="none"/>
+<text x="118" y="233" font-size="13" fill="#c9cdd9" font-weight="600">Chat</text>
+<rect x="104" y="245" width="185" height="29" rx="6" fill="#191a20" stroke="none"/>
+<text x="118" y="265" font-size="13" fill="#c9cdd9" font-weight="400">Today</text>
+<rect x="104" y="277" width="185" height="29" rx="6" fill="#191a20" stroke="none"/>
+<text x="118" y="297" font-size="13" fill="#c9cdd9" font-weight="400">Tasks</text>
+<rect x="104" y="309" width="185" height="29" rx="6" fill="#191a20" stroke="none"/>
+<text x="118" y="329" font-size="13" fill="#c9cdd9" font-weight="400">Workflows</text>
+<rect x="104" y="341" width="185" height="29" rx="6" fill="#191a20" stroke="none"/>
+<text x="118" y="361" font-size="13" fill="#c9cdd9" font-weight="400">Connections</text>
+<rect x="104" y="373" width="185" height="29" rx="6" fill="#191a20" stroke="none"/>
+<text x="118" y="393" font-size="13" fill="#c9cdd9" font-weight="400">Memory</text>
+<rect x="104" y="405" width="185" height="29" rx="6" fill="#191a20" stroke="none"/>
+<text x="118" y="425" font-size="13" fill="#74798a" font-weight="400">Scheduler  ·  R5</text>
+<rect x="104" y="437" width="185" height="29" rx="6" fill="#191a20" stroke="none"/>
+<text x="118" y="457" font-size="13" fill="#74798a" font-weight="400">Skills &amp; Agents  ·  R6</text>
+<text x="118" y="511" font-size="10" fill="#7e8597" font-weight="600">RECENT CONVERSATIONS</text>
+<rect x="104" y="527" width="185" height="35" rx="6" fill="#292b34" stroke="none"/>
+<text x="117" y="550" font-size="13" fill="#f0edf8" font-weight="400">Plan tomorrow</text>
+<text x="117" y="590" font-size="13" fill="#9fa6b8" font-weight="400">Compare release notes</text>
+<text x="117" y="627" font-size="13" fill="#9fa6b8" font-weight="400">Research a decision</text>
+<text x="117" y="842" font-size="13" fill="#a6acc0" font-weight="400">Settings</text>
+<text x="330" y="177" font-size="18" fill="#f4f3fb" font-weight="600">Plan tomorrow</text>
+<text x="330" y="202" font-size="12" fill="#9199ac" font-weight="400">Chat</text>
+<text x="914" y="178" font-size="11" fill="#b0a5cd" font-weight="400">Sources   |   Plan   |   Review</text>
+<rect x="470" y="238" width="568" height="75" rx="13" fill="#282b35" stroke="none"/>
+<text x="491" y="266" font-size="15" fill="#e9eaf2" font-weight="400">Help me plan tomorrow using my calendar and tasks.</text>
+<text x="491" y="291" font-size="14" fill="#b9bfd0" font-weight="400">Prepare a brief. Keep changes for me to review.</text>
+<text x="350" y="357" font-size="17" fill="#d2beff" font-weight="700">W</text>
+<text x="386" y="357" font-size="20" fill="#f0edf9" font-weight="600">Here is a draft of your day.</text>
+<text x="386" y="391" font-size="14" fill="#b7bfce" font-weight="400">Three events and four open tasks are shown in this example.</text>
+<text x="386" y="415" font-size="14" fill="#b7bfce" font-weight="400">The brief explains the priorities and links back to its sources.</text>
+<rect x="387" y="438" width="171" height="28" rx="14" fill="#262c35" stroke="none"/>
+<text x="400" y="457" font-size="12" fill="#b6cadf" font-weight="400">Calendar · 3 events</text>
+<rect x="568" y="438" width="148" height="28" rx="14" fill="#262d31" stroke="none"/>
+<text x="580" y="457" font-size="12" fill="#b7d5c4" font-weight="400">Tasks · 4 items</text>
+<rect x="386" y="493" width="643" height="125" rx="10" fill="#20222a" stroke="#353744"/>
+<text x="405" y="521" font-size="13" fill="#bcb0da" font-weight="600">Suggested focus</text>
+<text x="406" y="550" font-size="15" fill="#e4e5ef" font-weight="400">08:30 – 10:00    Work on your most important task</text>
+<text x="406" y="582" font-size="15" fill="#e4e5ef" font-weight="400">11:00 – 11:30    Project review</text>
+<text x="386" y="653" font-size="15" fill="#e8e8f1" font-weight="600">Why this plan?</text>
+<text x="386" y="680" font-size="13" fill="#aeb6c8" font-weight="400">It leaves room around meetings and keeps the overdue item visible.</text>
+<text x="386" y="711" font-size="12" fill="#bca4ef" font-weight="400">View sources     Open task list     Save as workflow</text>
+<rect x="330" y="758" width="716" height="97" rx="16" fill="#24262f" stroke="#3a3e4b"/>
+<text x="349" y="790" font-size="14" fill="#929aad" font-weight="400">Ask a question or describe the next step…</text>
+<text x="349" y="829" font-size="12" fill="#b2b9cb" font-weight="400">+ Attach     Cedar memory space</text>
+<text x="786" y="829" font-size="12" fill="#aeb6cb" font-weight="400">Lightning</text>
+<rect x="992" y="807" width="33" height="32" rx="15" fill="#c6b2f3" stroke="none"/>
+<text x="1003" y="829" font-size="18" fill="#292238" font-weight="700">↑</text>
+<text x="1101" y="178" font-size="17" fill="#f1edf9" font-weight="600">Review</text>
+<text x="1101" y="203" font-size="12" fill="#949caf" font-weight="400">Exact changes, when you need them</text>
+<rect x="1098" y="227" width="296" height="175" rx="10" fill="#23252e" stroke="#383b48"/>
+<text x="1114" y="254" font-size="10" fill="#969fb4" font-weight="600">DAILY BRIEF</text>
+<text x="1114" y="284" font-size="14" fill="#dfe2ed" font-weight="400">Read calendar</text>
+<text x="1114" y="320" font-size="14" fill="#dfe2ed" font-weight="400">Read tasks</text>
+<text x="1114" y="356" font-size="14" fill="#dfe2ed" font-weight="400">Prepare a brief</text>
+<text x="1114" y="385" font-size="11" fill="#9faac0" font-weight="400">Read-only plan · example</text>
+<rect x="1098" y="426" width="296" height="279" rx="10" fill="#24232d" stroke="#494151"/>
+<text x="1114" y="455" font-size="16" fill="#eee6fc" font-weight="600">Proposed local task</text>
+<text x="1114" y="483" font-size="12" fill="#c0b5d8" font-weight="400">Review before applying</text>
+<text x="1114" y="521" font-size="11" fill="#9891ab" font-weight="400">Title</text>
+<text x="1114" y="546" font-size="14" fill="#eee8fa" font-weight="400">Review the project brief</text>
+<text x="1114" y="581" font-size="11" fill="#9891ab" font-weight="400">Destination</text>
+<text x="1114" y="606" font-size="14" fill="#eee8fa" font-weight="400">Personal tasks</text>
+<rect x="1113" y="644" width="113" height="35" rx="7" fill="#33313e" stroke="none"/>
+<text x="1148" y="667" font-size="13" fill="#ddd7e9" font-weight="400">Reject</text>
+<rect x="1237" y="644" width="141" height="35" rx="7" fill="#c6b2f3" stroke="none"/>
+<text x="1260" y="667" font-size="13" fill="#282135" font-weight="600">Approve once</text>
+<text x="1113" y="740" font-size="12" fill="#a8afc1" font-weight="400">No changes have been applied.</text>
+<text x="1113" y="765" font-size="11" fill="#7f889c" font-weight="400">Buttons shown for design review only.</text>
+<text x="35" y="922" font-size="15" fill="#4b5267" font-weight="400">R4 vision: navigation + conversation + optional inspector. R1 starts with Chat, Runs and Settings only.</text>
+</g></svg>

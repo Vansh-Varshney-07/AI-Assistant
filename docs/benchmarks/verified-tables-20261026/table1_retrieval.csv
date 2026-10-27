@@ -1,0 +1,13 @@
+﻿benchmark,system,metric,value,n,scope,evidence
+DMR,Iron Web historical hybrid + reranking,macro evidence Recall@5,0.09,100,"100 total queries; frozen 20% cohort, not a fresh full benchmark",S001
+DMR,Iron Web historical hybrid + reranking,MRR@10,0.03158333333333333,100,"100 total queries; frozen 20% cohort, not a fresh full benchmark",S001
+DMR,Iron Web historical hybrid + reranking,macro evidence Recall@10,0.14,100,"100 total queries; frozen 20% cohort, not a fresh full benchmark",S001
+LoCoMo,Iron Web historical hybrid + reranking,macro evidence Recall@5,0.7872151898734178,395,"397 total queries; frozen 20% cohort, not a fresh full benchmark",S004
+LoCoMo,Iron Web historical hybrid + reranking,MRR@10,0.7174362065501306,395,"397 total queries; frozen 20% cohort, not a fresh full benchmark",S004
+LoCoMo,Iron Web historical hybrid + reranking,macro evidence Recall@10,0.8961603375527426,395,"397 total queries; frozen 20% cohort, not a fresh full benchmark",S004
+LongMemEval,Iron Web historical hybrid + reranking,macro evidence Recall@5,0.8513333333333334,100,"100 total queries; frozen 20% cohort, not a fresh full benchmark",S005
+LongMemEval,Iron Web historical hybrid + reranking,MRR@10,0.756234126984127,100,"100 total queries; frozen 20% cohort, not a fresh full benchmark",S005
+LongMemEval,Iron Web historical hybrid + reranking,macro evidence Recall@10,0.9455,100,"100 total queries; frozen 20% cohort, not a fresh full benchmark",S005
+LongMemEval,MemPalace raw,hit-any@5,0.966,500,project-reported expected full-500 output; different from macro recall,S016
+LongMemEval,MemPalace raw,hit-any@10,0.982,500,project-reported expected full-500 output; not rerun here,S016
+LoCoMo,"MemPalace raw, session granularity",reported average evidence recall@10,0.603,full 10-conversation project report,project-reported expected full-10-conversation output; different cohort,S016

@@ -1,0 +1,53 @@
+{
+  "created_utc": "2026-10-27T08:12:14.262976+00:00",
+  "purpose": "One fixed before/after validation requested by the user; no parameter selection from these outcomes",
+  "cohort": "All 528 eligible paired questions from the same archived frozen retrieval cohorts",
+  "before": {
+    "top_k_documents": 5,
+    "context_tokens": 768,
+    "reader_prompt": "legacy"
+  },
+  "after": {
+    "top_k_documents": 10,
+    "context_tokens": 1800,
+    "reader_prompt": "concise"
+  },
+  "shared": {
+    "reader": "Qwen2.5-1.5B-Instruct Q4_K_M",
+    "runtime": "llama.cpp b11889",
+    "seed": 20261026,
+    "temperature": 0,
+    "max_generated_tokens": 48,
+    "conditions": [
+      "ironweb",
+      "baseline"
+    ],
+    "grading": "normalized exact match and token F1"
+  },
+  "comparison": "Paired per-question outcomes before vs after, reported separately for each retrieval condition. This compares the bundled reader changes; it does not attribute individual effects.",
+  "dmr_boundary": "Same archived rankings for reader-only QA comparison; repaired DMR retrieval and corrected evidence recall are not measured here.",
+  "before_files": {
+    "local_qa_protocol.json": {
+      "path": "D:\\Opencode_\\AI assistant\\docs\\benchmarks\\verified-tables-20261026\\local_qa_protocol.json",
+      "sha256": "39fb24a75455932ef0744f57d833e07bc1ccf18fae1b7f1b450cf7c602918f9b"
+    },
+    "local_qa_pairs.jsonl": {
+      "path": "D:\\Opencode_\\AI assistant\\docs\\benchmarks\\verified-tables-20261026\\local_qa_pairs.jsonl",
+      "sha256": "bca92537cd4bba3cc0f8935be76189a849c03b9b1f4fbe2e2cbe48529d434c79"
+    },
+    "local_qa_predictions.jsonl": {
+      "path": "D:\\Opencode_\\AI assistant\\docs\\benchmarks\\verified-tables-20261026\\local_qa_predictions.jsonl",
+      "sha256": "b84a8660acc349a7c5065c4fdfa9b8e8410d9fdecf308063aaff3d598e699d84"
+    }
+  },
+  "collector_sha256": "41106262a65792270e903988d08bfa623595f4406b97aac1af4266fae9d074d7",
+  "runtime_allocation_adjustment": {
+    "after_checkpoint_answers": 82,
+    "context_pool_before": 16384,
+    "context_pool_after": 8192,
+    "parallel_slots": 2,
+    "evidence_tokens": 1800,
+    "reason": "Reduce unused KV reservation under GPU contention; no changes to model, prompt, decoding, question selection, or scoring. No protocol selection based on scores.",
+    "latency_comparison_valid": false
+  }
+}

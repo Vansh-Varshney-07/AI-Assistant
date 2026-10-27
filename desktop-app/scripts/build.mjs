@@ -1,0 +1,9 @@
+import { build as viteBuild } from 'vite';
+import { build } from 'esbuild';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+await viteBuild({ configFile: path.join(root, 'vite.config.ts') });
+await build({ entryPoints: [path.join(root, 'src/main/index.ts')], outfile: path.join(root, 'dist/main/index.js'), bundle: true, platform: 'node', target: 'node22', format: 'esm', external: ['electron'], define: { WAYFINDER_SOURCE_ROOT: JSON.stringify(path.resolve(root, '..')) } });
+await build({ entryPoints: [path.join(root, 'src/preload/index.ts')], outfile: path.join(root, 'dist/preload/index.cjs'), bundle: true, platform: 'node', target: 'node22', format: 'cjs', external: ['electron'] });
+console.log('Built renderer, isolated preload and main broker. Backend source remains unchanged.');

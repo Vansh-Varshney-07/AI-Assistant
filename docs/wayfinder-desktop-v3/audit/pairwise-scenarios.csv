@@ -1,0 +1,25 @@
+id,entry,lifecycle,authority,operation,evidence,payload,status
+S0001,chat,online,valid,read,fresh,ordinary,Not run
+S0002,chat,offline,expired,propose,changed,oversize,Not run
+S0003,chat,restarting,revoked,write,deleted,unicode,Not run
+S0004,quick_chat,online,expired,write,missing,untrusted_markup,Not run
+S0005,quick_chat,asleep,account_changed,read,changed,unicode,Not run
+S0006,schedule,restarting,account_changed,propose,fresh,untrusted_markup,Not run
+S0007,workflow,asleep,revoked,propose,missing,ordinary,Not run
+S0008,schedule,asleep,valid,write,deleted,oversize,Not run
+S0009,shortcut,offline,revoked,read,deleted,untrusted_markup,Not run
+S0010,workflow,offline,valid,write,fresh,unicode,Not run
+S0011,workflow,restarting,expired,read,missing,oversize,Not run
+S0012,shortcut,online,account_changed,write,changed,ordinary,Not run
+S0013,quick_chat,online,revoked,propose,fresh,oversize,Not run
+S0014,shortcut,restarting,valid,propose,missing,unicode,Not run
+S0015,quick_chat,offline,expired,propose,deleted,ordinary,Not run
+S0016,schedule,online,expired,read,fresh,unicode,Not run
+S0017,chat,offline,account_changed,read,missing,oversize,Not run
+S0018,chat,asleep,valid,read,changed,untrusted_markup,Not run
+S0019,schedule,restarting,revoked,read,changed,ordinary,Not run
+S0020,workflow,online,account_changed,read,deleted,untrusted_markup,Not run
+S0021,shortcut,asleep,expired,read,fresh,oversize,Not run
+S0022,quick_chat,restarting,valid,read,fresh,ordinary,Not run
+S0023,schedule,offline,valid,read,missing,ordinary,Not run
+S0024,workflow,online,valid,read,changed,ordinary,Not run

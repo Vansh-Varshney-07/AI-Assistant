@@ -1,0 +1,399 @@
+{
+  "reader": "Qwen2.5-1.5B-Instruct Q4_K_M",
+  "runtime": "llama.cpp b11889",
+  "temperature": 0,
+  "seed": 20261026,
+  "max_generated_tokens": 48,
+  "context_tokens": 768,
+  "top_k_documents": 5,
+  "ironweb_retrieval": "archived FalkorDB hybrid + reranking",
+  "baseline_retrieval": "archived FalkorDB vector mode; not an untreated dense baseline",
+  "scoring": "normalized exact match; articles/punctuation/case ignored; token F1 secondary",
+  "scope": "New local reader replay of frozen historical rankings; not official benchmark QA",
+  "full_public_dataset": false,
+  "sources": [
+    {
+      "path": "D:\\Opencode_\\reserchpaper\\data\\graph_full_analysis\\full20_graph_20261013\\inputs\\dmr\\dmr.json",
+      "sha256": "ac0c4de54e5917633c372cc95f473ff15487a7afaa27dca68a62a0eb8630d4a8"
+    },
+    {
+      "path": "D:\\Opencode_\\reserchpaper\\report\\full20_graph_analysis_20261013\\raw\\dmr_reranked_hybrid_falkordb_after.jsonl",
+      "sha256": "2cea29a0b42a2548e4b74be14ece156663b5ae462f17ebcf81e1be09f6f81dca"
+    },
+    {
+      "path": "D:\\Opencode_\\reserchpaper\\report\\full20_graph_analysis_20261013\\raw\\dmr_vector_falkordb_after.jsonl",
+      "sha256": "8c0e4d586d4498a3ed67b67856e6bffc5a4022f10a6017119686c7c10ce1d703"
+    },
+    {
+      "path": "D:\\Opencode_\\reserchpaper\\data\\graph_full_analysis\\full20_graph_20261013\\inputs\\locomo\\locomo.json",
+      "sha256": "1f50288c1836a838489be56fad719e0b14edc3dfe4dd0d9d5dd6075af044b813"
+    },
+    {
+      "path": "D:\\Opencode_\\reserchpaper\\report\\full20_graph_analysis_20261013\\raw\\locomo_reranked_hybrid_falkordb_after.jsonl",
+      "sha256": "a293bc2675114a3a2191b828b29a12d9d02ea5d290f4bb08745f5b9f8be728cb"
+    },
+    {
+      "path": "D:\\Opencode_\\reserchpaper\\report\\full20_graph_analysis_20261013\\raw\\locomo_vector_falkordb_after.jsonl",
+      "sha256": "30e8cb04417832bd4406612cd54f2ac475f45b8703276f6d036c195ecb42716b"
+    },
+    {
+      "path": "D:\\Opencode_\\reserchpaper\\data\\graph_full_analysis\\full20_graph_20261013\\inputs\\longmemeval\\longmemeval.json",
+      "sha256": "82ee438f29b1c808b9633d86ca569e728e9bef22ecaa1300096ed7359d4c0fdd"
+    },
+    {
+      "path": "D:\\Opencode_\\reserchpaper\\report\\full20_graph_analysis_20261013\\raw\\longmemeval_reranked_hybrid_falkordb_after.jsonl",
+      "sha256": "b8479b65ad64831ff0aa351ff9c5746414db175108c8fc6a3cbf9ebf39227d58"
+    },
+    {
+      "path": "D:\\Opencode_\\reserchpaper\\report\\full20_graph_analysis_20261013\\raw\\longmemeval_vector_falkordb_after.jsonl",
+      "sha256": "7ecb4a2bd88710d369fa41e5313ed9f823b82dc6ffe2286a18e92ad02a115919"
+    }
+  ],
+  "excluded": [
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:152",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:153",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:154",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:155",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:156",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:157",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:158",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:159",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:160",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:161",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:162",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:163",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:164",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:165",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:166",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:168",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:169",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:170",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:171",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:172",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:173",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:174",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:175",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:176",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:177",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:179",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:180",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:181",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:182",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:183",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:184",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:185",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:186",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:187",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:188",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:189",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:190",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:191",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:192",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:193",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:194",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:195",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:196",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:197",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-26:qa:198",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-30:qa:79",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-30:qa:82",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-30:qa:83",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-30:qa:84",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-30:qa:85",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-30:qa:86",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-30:qa:87",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-30:qa:88",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-30:qa:89",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-30:qa:90",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-30:qa:91",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-30:qa:92",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-30:qa:93",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-30:qa:94",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-30:qa:95",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-30:qa:96",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-30:qa:97",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-30:qa:98",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-30:qa:99",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-30:qa:100",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-30:qa:101",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-30:qa:102",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-30:qa:103",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    },
+    {
+      "benchmark": "locomo",
+      "example_id": "locomo:conv-30:qa:104",
+      "reason": "missing gold answer; excluded identically from both conditions"
+    }
+  ]
+}

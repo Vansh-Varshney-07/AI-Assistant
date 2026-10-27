@@ -1,0 +1,15 @@
+{
+  "pages_rendered": 9,
+  "abstract_words": 200,
+  "keywords": 3,
+  "references": 20,
+  "citation_order": "passed",
+  "tables": 3,
+  "diagram": true,
+  "visual_page_review": "all nine pages inspected; no clipping or blank pages",
+  "renderer": "installed Microsoft Word export; PDFium rasterization",
+  "layout": "expanded one-column editing draft; 15-point body",
+  "author_details": "placeholders",
+  "results": "reported external scores; Iron Web public benchmark not measured",
+  "docx_bytes": 88843
+}

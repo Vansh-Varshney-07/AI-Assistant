@@ -1,0 +1,73 @@
+{
+  "generated_at_utc": "2026-10-24T18:13:04.949147+00:00",
+  "original_sha256": "a47c2819f40da69d200cfe027763785ed0487cb70972f8f252517de30ea0c33f",
+  "original_unchanged": true,
+  "audited_files_rechecked": 202,
+  "snapshot_unchanged": true,
+  "abstract_words": 200,
+  "body_words": 2105,
+  "references": 12,
+  "main_sections": 10,
+  "figures": 1,
+  "tables": 2,
+  "new_experiments": false,
+  "application_modified": false,
+  "databases_opened": false,
+  "pdf_render": "Microsoft Word native ExportAsFixedFormat; standard renderer unavailable because LibreOffice is absent",
+  "visual_inspection": {
+    "pages": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "status": "passed",
+    "details": "All final page PNGs inspected. Diagram readable, tables aligned and complete, references left aligned, no blank pages, clipped text, repeated headings or unfinished result placeholders."
+  },
+  "pdf_pages": 9,
+  "document_checks": {
+    "all_mapped_paragraphs_present_in_pdf": true,
+    "table_cells_match_audited_data": true,
+    "references_numbered_in_first_citation_order": true,
+    "original_backup_unchanged": true,
+    "main_headings_unique": true,
+    "body_font_points": 15
+  },
+  "outputs": [
+    {
+      "file": "Iron_Web_Complete_Research_Paper.docx",
+      "bytes": 180958,
+      "sha256": "6cb45b28d87fb2eb6aba942998c84fb8ee65d15039599deadef50502e7bd6cc4"
+    },
+    {
+      "file": "Iron_Web_Complete_Research_Paper.pdf",
+      "bytes": 325670,
+      "sha256": "8330225158c58ae17233911ef7c2eedc6ccd9cd81182e25c9ffbe2f63378d5e7"
+    },
+    {
+      "file": "paper_claim_evidence_audit.md",
+      "bytes": 4822,
+      "sha256": "edb7d60ecc3537e0e31d267c9206609ef8e1432c29aaf2160c04a13db822d502"
+    },
+    {
+      "file": "paper_generation_notes.md",
+      "bytes": 4757,
+      "sha256": "e3136637f034e7dc9050e0aaf567f4f309d8220c9d39abd2aedceb52a5edbe48"
+    },
+    {
+      "file": "paper_claim_map.json",
+      "bytes": 25066,
+      "sha256": "4abe0c8f3f976ad80839a5a18a32143c81751d3bdee02cefb198f321e648c494"
+    },
+    {
+      "file": "reference_verification.json",
+      "bytes": 4556,
+      "sha256": "da537cb36096bb1beae4e705904e0b350736a79bb71d235fb37abcd06c3e8429"
+    }
+  ]
+}

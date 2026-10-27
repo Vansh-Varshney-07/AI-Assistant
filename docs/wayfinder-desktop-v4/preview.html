@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Wayfinder v4 — offline design</title>
+<style>
+:root{color-scheme:dark;--bg:#15161b;--panel:#1d1f27;--line:#373b49;--text:#e7e9f2;--muted:#aeb8cc;--accent:#d5bdf8}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.6 'Segoe UI',Arial,sans-serif}button,textarea{font:inherit}button,a{cursor:pointer}button{background:#292c38;color:var(--text);border:1px solid var(--line);border-radius:7px;padding:8px 12px}button:focus-visible,a:focus-visible,textarea:focus-visible{outline:3px solid var(--accent);outline-offset:3px}button[aria-pressed=true],button[aria-selected=true],button[aria-current=page]{background:#3a2f4b;border-color:#c8a6f1}a{color:var(--accent)}.designbar,.appbar{display:flex;gap:14px;align-items:center;flex-wrap:wrap;padding:12px 20px;border-bottom:1px solid var(--line)}.designbar{background:#2a2236}.designbar strong{font-size:12px;letter-spacing:.06em}.release-picker{display:flex;gap:5px;flex-wrap:wrap;margin-left:auto}.release-picker button{padding:4px 9px}.appbar .status{margin-left:auto;color:var(--muted);font-size:12px}.brand{font-size:20px;font-weight:600}.layout{display:grid;grid-template-columns:56px 220px minmax(0,1fr);min-height:680px;height:calc(100vh - 160px)}.rail,.sidebar,.inspector{background:var(--panel)}.rail{display:flex;flex-direction:column;gap:12px;padding:18px 6px;border-right:1px solid var(--line)}.rail button{padding:8px 4px}.sidebar{padding:20px 12px;border-right:1px solid var(--line);overflow:auto}.nav{display:grid;gap:5px}.nav button{text-align:left;border:0}.label{font-size:11px;color:var(--muted);margin:22px 0 8px}.main{min-width:0;display:flex;flex-direction:column;overflow:hidden}.content-head{display:flex;gap:14px;align-items:center;padding:18px 24px;border-bottom:1px solid var(--line)}h1{font-size:19px;margin:0}.content-head button{margin-left:auto}.scroll{overflow:auto;flex:1;padding:26px 32px}.summary{background:#272030;border:1px solid #51425f;border-radius:10px;padding:14px;margin-bottom:24px}.hint{color:var(--muted);font-size:12px}.user{background:#282c38;border-radius:12px;padding:15px 18px;margin:0 0 26px auto;max-width:650px}.answer{max-width:760px;margin:auto}.answer h2{font-size:22px}.card{border:1px solid var(--line);background:#20232c;border-radius:10px;padding:16px;margin:14px 0}.card h3{font-size:15px;margin:0 0 8px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}.composer{margin:14px 24px 20px;padding:14px;background:#252832;border:1px solid #484e5e;border-radius:13px}.composer:focus-within{border-color:var(--accent)}textarea{display:block;width:100%;min-height:64px;resize:vertical;background:transparent;color:var(--text);border:0}.composer-footer{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:12px}.composer-footer .hint{margin-left:auto}.inspector{display:none;padding:20px 16px;border-left:1px solid var(--line);overflow:auto}.layout.inspector-visible{grid-template-columns:56px 220px minmax(0,1fr) 330px}.layout.inspector-visible .inspector{display:block}.inspector-head{display:flex;align-items:center;gap:10px}.inspector-head h2{font-size:17px;flex:1}.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:16px 0}.tabs button{font-size:12px;padding:7px 9px}dialog{background:var(--panel);color:var(--text);border:1px solid #736087;border-radius:12px;max-width:calc(100vw - 24px);max-height:calc(100vh - 32px);width:380px;padding:22px;overflow:auto}dialog::backdrop{background:#000b}.dialog-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.dialog-head h2{font-size:18px}footer{border-top:1px solid var(--line);padding:12px 20px;color:var(--muted);font-size:12px}#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);max-width:90vw;background:#dbc5f7;color:#2b2037;padding:14px 20px;border-radius:9px;z-index:10}.hidden{display:none!important}@media(max-width:1200px){.layout,.layout.inspector-visible{grid-template-columns:52px 190px minmax(0,1fr)}.layout.inspector-visible .inspector{display:none}}@media(max-width:760px){.layout,.layout.inspector-visible{grid-template-columns:48px minmax(0,1fr);height:auto;min-height:720px}.sidebar{display:none}.scroll{padding:18px}.content-head{padding:15px}.composer{margin:12px}.appbar .space{display:none}.designbar{padding:12px}.release-picker{margin-left:0}}@media(forced-colors:active){button:focus-visible,a:focus-visible,textarea:focus-visible{outline:3px solid Highlight}.composer:focus-within{outline:2px solid Highlight}}
+</style>
+</head>
+<body>
+<div class="designbar"><strong>V4 · OFFLINE DESIGN</strong><span class="hint">Synthetic examples · no model, accounts, saving or effects</span><div class="release-picker" aria-label="Preview release"></div><a href="PLAN.md">Plan</a></div>
+<header class="appbar"><button id="toggle-sidebar" aria-haspopup="dialog" aria-controls="navigation-dialog" aria-expanded="false">Menu</button><span class="brand">W · Wayfinder</span><span class="space">Synthetic personal space</span><span class="status">Runtime not connected</span></header>
+<div class="layout" id="layout">
+<div class="rail" aria-label="Workspace shortcuts"><button data-page="chat" aria-label="Chat">C</button><button data-page="runs" aria-label="Runs">R</button><button data-page="settings" aria-label="Settings">⚙</button></div>
+<aside class="sidebar"><button data-page="chat">＋ Conversation example</button><div class="label">WORKSPACE</div><nav class="nav" aria-label="Application destinations"></nav><div class="label">DESIGN DOCUMENTS</div><p><a href="FLOWS.md">Flowcharts</a></p><p><a href="WORKER-SURFACES.md">Worker coverage</a></p><p><a href="ACCEPTANCE.csv">Acceptance cases</a></p></aside>
+<main class="main"><div class="content-head"><h1 id="page-title">Conversation</h1><button id="toggle-inspector" aria-expanded="false" aria-controls="inspector-panel">Open details</button></div><div class="scroll" id="content"></div><div class="composer"><textarea aria-label="Offline preview composer" placeholder="Explore the layout — this preview sends nothing"></textarea><div class="composer-footer"><span id="attachment-control"></span><span class="hint">Provider/model will be verified in the app</span><button id="preview-send" aria-label="Preview send">↑</button></div></div></main>
+<aside class="inspector" id="inspector-panel" aria-label="Run details"><div class="inspector-head"><h2>Details</h2><button data-action="close-inspector" aria-label="Close details">×</button></div><div class="tabs" id="wide-tabs"></div><div id="details"></div></aside>
+</div>
+<dialog id="navigation-dialog" aria-labelledby="navigation-title"><div class="dialog-head"><h2 id="navigation-title">Workspace</h2><button data-action="close-overlay" aria-label="Close navigation">×</button></div><nav id="drawer-nav" class="nav" aria-label="Drawer destinations"></nav></dialog>
+<dialog id="inspector-dialog" aria-labelledby="inspector-title"><div class="dialog-head"><h2 id="inspector-title">Details</h2><button data-action="close-inspector" aria-label="Close details">×</button></div><div class="tabs" id="sheet-tabs"></div><div id="sheet-details"></div></dialog>
+<footer id="release-caption"></footer><div id="toast" role="status" class="hidden"></div>
+<script>
+'use strict';
+const manifest = {"design_version": "4.0", "contract_version": "wayfinder.desktop/1", "status": "proposed_not_implemented", "host": "electron_react_typescript", "host_selection": "qualified_hermes_extension_else_thin_shell", "features": [{"id": "chat", "release": 1, "requires": [], "contract": "C01", "batch": 1}, {"id": "runtime", "release": 1, "requires": [], "contract": "C02", "batch": 1}, {"id": "memory", "release": 2, "requires": ["chat", "runtime"], "contract": "C09", "batch": 2}, {"id": "documents", "release": 2, "requires": ["chat", "runtime"], "contract": "C08", "batch": 2}, {"id": "google_read", "release": 3, "requires": ["chat", "runtime"], "contract": "C11", "batch": 3}, {"id": "local_tasks", "release": 3, "requires": ["runtime"], "contract": "C12", "batch": 3}, {"id": "workflows", "release": 4, "requires": ["chat", "runtime", "google_read"], "contract": "C14", "batch": 4}, {"id": "scheduler", "release": 5, "requires": ["workflows"], "contract": "C16", "batch": 4}, {"id": "quick_chat", "release": 5, "requires": ["chat", "runtime"], "contract": "C19", "batch": 5}, {"id": "skills", "release": 6, "requires": ["workflows"], "contract": "C18", "batch": 4}, {"id": "agents", "release": 6, "requires": ["runtime"], "contract": "C18", "batch": 4}, {"id": "project_review", "release": 7, "requires": ["runtime"], "contract": "C20", "batch": 4}], "optional_features": [{"id": "background_mode", "release": 5, "requires": ["scheduler"], "contract": "C17", "batch": 4, "default": "disabled"}, {"id": "google_write", "release": 7, "requires": ["google_read"], "contract": "C13", "batch": 3, "default": "disabled"}, {"id": "communication", "release": 7, "requires": ["google_read"], "contract": "C13", "batch": 3, "default": "disabled"}, {"id": "coding_effect", "release": 7, "requires": ["project_review"], "contract": "C13", "batch": 4, "default": "disabled"}, {"id": "selected_image", "release": 7, "requires": ["documents"], "contract": "C20", "batch": 4, "default": "disabled"}, {"id": "native_desktop", "release": 7, "requires": ["runtime"], "contract": "C20", "batch": 4, "default": "disabled"}], "deferred": ["two_way_task_sync", "web_research", "knowledge_notes_connector", "fitness", "voice", "mobile", "cross_device_sync", "autonomous_installs", "automatic_updates"], "qualification_states": ["planned", "configured", "tested_fixture", "qualified_live", "unavailable", "disabled", "needs_review"], "default_variant": "core", "surface_policy": "release_and_advertised_feature_and_qualification_and_current_authority", "r1": {"tools": "closed", "automatic_memory": false, "history": "application_canonical_bounded_selection", "max_active_model_calls": 1, "max_queued_runs": 3, "provider_deadline_seconds": 120, "automatic_command_retries": 0, "remote_images": false, "background_execution": false}};
+/* Offline design only. Content is fixed synthetic text; no requests or storage. */
+const $ = selector => document.querySelector(selector);
+const releases = [
+  ['Real conversation', 'Actual bounded model replies, stop and reopen; no tools or implicit memory.'],
+  ['Memory and documents', 'Explicit scoped memory changes and selected supported files.'],
+  ['Today and local tasks', 'Google reads; local work items stay separate from provider tasks.'],
+  ['Repeatable reads', 'Small versioned linear workflows, with bounded inputs and partial outcomes.'],
+  ['Daily brief and quick access', 'Fixed-zone read schedule and another view on the same conversation.'],
+  ['Skills and roles', 'Actual bindings, tested versions and reviewed configuration.'],
+  ['Project review', 'Scoped read-only repository evidence; effects remain optional and disabled.'],
+];
+const destinations = [
+  ['chat', 'Chat', 'chat'], ['runs', 'Runs', 'runtime'],
+  ['memory', 'Memory', 'memory'], ['today', 'Today', 'google_read'],
+  ['tasks', 'Local tasks', 'local_tasks'], ['connections', 'Connections', 'google_read'],
+  ['workflows', 'Workflows', 'workflows'], ['scheduler', 'Scheduler', 'scheduler'],
+  ['skills', 'Skills', 'skills'], ['agents', 'Agents', 'agents'],
+  ['projects', 'Projects', 'project_review'], ['settings', 'Settings', 'runtime'],
+];
+let release = 1, page = 'chat', tab = 'plan', inspectorVisible = false;
+let overlay = 'none', returnFocus = null, composing = false, toastTimer;
+let widthBand = window.innerWidth <= 760 ? 'narrow' : window.innerWidth <= 1200 ? 'medium' : 'wide';
+function allowedFeature(id) { return manifest.features.some(f => f.id === id && f.release <= release); }
+function allowedPages() { return destinations.filter(d => allowedFeature(d[2])); }
+function allowedTabs() { return release >= 2 ? ['plan', 'sources', 'review'] : ['plan']; }
+function notify(message = 'Design preview only — no request was sent and nothing was changed.') {
+  $('#toast').textContent = message; $('#toast').classList.remove('hidden');
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => $('#toast').classList.add('hidden'), 4500);
+}
+function closeOverlay(restoreFocus = true) {
+  const previousOverlay = overlay;
+  for (const id of ['navigation-dialog', 'inspector-dialog']) {
+    const dialog = $(`#${id}`); if (dialog.open) dialog.close();
+  }
+  if (overlay === 'inspector') inspectorVisible = false;
+  overlay = 'none'; $('#toggle-sidebar').setAttribute('aria-expanded', 'false');
+  if (restoreFocus && previousOverlay !== 'none') {
+    const fallback = previousOverlay === 'navigation' ? $('#toggle-sidebar') : $('#toggle-inspector');
+    (returnFocus?.isConnected ? returnFocus : fallback).focus();
+  }
+  returnFocus = null;
+}
+function openOverlay(kind, trigger) {
+  closeOverlay(false); returnFocus = trigger || document.activeElement;
+  overlay = kind; if (kind === 'inspector') inspectorVisible = true;
+  $(`#${kind === 'navigation' ? 'navigation' : 'inspector'}-dialog`).showModal();
+  $('#toggle-sidebar').setAttribute('aria-expanded', String(kind === 'navigation'));
+}
+function toggleInspector(trigger) {
+  if (inspectorVisible) { closeOverlay(); inspectorVisible = false; }
+  else if (widthBand === 'wide') { closeOverlay(false); inspectorVisible = true; }
+  else openOverlay('inspector', trigger);
+  renderInspector();
+}
+function summary() { return `<div class="summary"><strong>R${release} · ${releases[release - 1][0]}</strong><div>${releases[release - 1][1]}</div><div class="hint">Proposed release · synthetic design · unqualified runtime</div></div>`; }
+function navigationMarkup() { return allowedPages().map(d => `<button data-page="${d[0]}" aria-current="${page === d[0] ? 'page' : 'false'}">${d[1]}</button>`).join(''); }
+function chat() {
+  const prompt = release === 1 ? 'Explain this project in three sentences.' : release === 2 ? 'Compare my retained preference with this selected text file.' : 'Prepare a brief from my permitted calendar and task reads.';
+  const heading = release === 1 ? 'A real conversation is the first useful app.' : release === 2 ? 'Evidence, with its source and limits.' : 'A useful brief, with observation times.';
+  const body = release === 1 ? 'The real R1 app must return an actual Hermes-backed answer. This offline layout does not generate one.' : release === 2 ? 'An example memory/document result belongs here. A discrepancy stays visible until a reviewed correction. No account integration is present at this release.' : 'This fictional brief represents read-only provider evidence. A local work item is independent; no provider update or synchronization is implied.';
+  return summary() + `<div class="user">${prompt}</div><article class="answer"><h2>${heading}</h2><p>${body}</p><div class="card"><h3>${release === 1 ? 'Run summary' : 'Evidence and outcome'}</h3><p>${release === 1 ? 'One bounded request, durable acceptance and honest stop/recovery states.' : 'Source identity, observed version and actual coverage appear in details.'}</p><p class="hint">Synthetic example; not a completed run.</p></div><div class="actions"><button data-tab="plan">Run details</button>${release >= 2 ? '<button data-tab="sources">Sources</button><button data-tab="review">Example review</button>' : ''}${allowedFeature('workflows') ? '<button data-page="workflows">Workflow example</button>' : ''}</div></article>`;
+}
+const pageData = {
+  runs: ['Runs', 'Canonical outcomes survive reconnect; it never repeats execution.', ['Example read attempt · not actually run', 'Interrupted request · observation only']],
+  memory: ['Memory', 'Current, historical and disputed evidence stay distinct.', ['Remember / correct / retract', 'Forget barrier · fresh chat required']],
+  today: ['Today', 'Permitted provider reads have separate observation times.', ['Calendar events · synthetic', 'Provider tasks · read-only', 'Gmail references · no bodies or sends']],
+  tasks: ['Local tasks', 'Local tasks are independent of provider tasks.', ['Create a local work item', 'Copy to local is a one-time draft; no sync']],
+  connections: ['Connections', 'Authentication, qualification and resource access are separate.', ['Google Calendar / Tasks · not connected', 'Gmail references only · not connected', 'Disable / disconnect / revoke have distinct meanings']],
+  workflows: ['Workflows', 'Linear reads with frozen versions and explicit required inputs.', ['1. Calendar read', '2. Tasks read', '3. Scoped brief synthesis']],
+  scheduler: ['Scheduler', 'Existing scheduler adapter must qualify before recurrence.', ['Daily read brief · draft only', 'Fixed IANA zone · skip missed/gap; first repeated time', 'Background off · no external writes']],
+  skills: ['Skills', 'Review versions and effective permissions before publication.', ['Inspect installed version and fixture evidence', 'Rollback changes future configuration, not past effects']],
+  agents: ['Agents', 'Logical worker roles, not permanent processes or permission grants.', ['Actual binding and effective tools', 'Unresolved numbered roles stay unavailable', 'Native execution remains disabled']],
+  projects: ['Projects', 'Read-only qualified repository evidence.', ['Select a permitted repository', 'Inspect actual status/diff only after qualification', 'No command execution or write implied']],
+  settings: ['Settings', 'Simple choices, honest component health and private credentials.', ['Selected provider/model · unverified here', 'Runtime / storage / model health', 'Privacy / appearance / compatibility']],
+};
+function renderPage() {
+  if (!allowedPages().some(d => d[0] === page)) page = 'chat';
+  if (!allowedTabs().includes(tab)) tab = 'plan';
+  $('.release-picker').innerHTML = releases.map((r, i) => `<button data-release="${i + 1}" aria-pressed="${release === i + 1}">R${i + 1}</button>`).join('');
+  $('.nav').innerHTML = navigationMarkup(); $('#drawer-nav').innerHTML = navigationMarkup();
+  $('#release-caption').textContent = `R${release}: ${releases[release - 1][0]} · Every prior feature remains part of later core releases · No acceptance has run`;
+  if (page === 'chat') { $('#page-title').textContent = 'Conversation'; $('#content').innerHTML = chat(); }
+  else { const data = pageData[page]; $('#page-title').textContent = data[0]; $('#content').innerHTML = summary() + `<article class="answer"><h2>${data[0]}</h2><p>${data[1]}</p>${data[2].map(text => `<div class="card"><h3>${text}</h3><p class="hint">Synthetic design state · no connected runtime</p></div>`).join('')}</article>`; }
+  $('#attachment-control').innerHTML = allowedFeature('documents') ? '<button data-demo="attach">＋ Selected file example</button>' : '';
+  renderInspector();
+}
+function renderInspector() {
+  if (!allowedTabs().includes(tab)) tab = 'plan';
+  const titles = { plan: release === 1 ? 'Run' : 'Plan', sources: 'Sources', review: 'Review' };
+  const tabs = allowedTabs().map(t => `<button data-tab="${t}" aria-pressed="${t === tab}">${titles[t]}</button>`).join('');
+  $('#wide-tabs').innerHTML = tabs; $('#sheet-tabs').innerHTML = tabs;
+  let detail;
+  if (tab === 'plan') detail = release === 1 ? '<div class="card"><h3>Bounded chat run</h3><p>Queued → running → completed, stopped or interrupted.</p><p>Tools closed. No implicit memory.</p></div>' : release === 2 ? '<div class="card"><h3>Selected memory and document evidence</h3><p>Read permitted evidence → compare → propose a scoped correction.</p></div>' : '<div class="card"><h3>Read-only brief</h3><p>Read selected calendar and tasks → synthesize with source times.</p><p>No provider write.</p></div>';
+  else if (tab === 'sources') detail = release === 2 ? '<div class="card"><h3>Evidence</h3><p>Authorized memory claim and selected text file, with versions and expiry.</p></div>' : '<div class="card"><h3>Evidence</h3><p>Authorized calendar/task projections with observation times.</p><p>Historical excerpts are distinct from fresh reads.</p></div>';
+  else detail = release === 2 ? '<div class="card"><h3>Example memory correction</h3><p>Synthetic target: selected personal space / retention preference.</p><p>Proposed 30 → 42 days. Actual app must show exact service-issued digest, scope and expiry.</p><div class="actions"><button data-demo="reject">Reject example</button><button data-demo="approve">Review example only</button></div></div>' : '<div class="card"><h3>Proposed local task</h3><p>Title: Review the brief. Target: local personal task list.</p><p>No provider task change. Actual review binds exact payload/version/expiry.</p><div class="actions"><button data-demo="reject">Reject example</button><button data-demo="approve">Review example only</button></div></div>';
+  $('#details').innerHTML = detail; $('#sheet-details').innerHTML = detail;
+  $('#layout').classList.toggle('inspector-visible', inspectorVisible && widthBand === 'wide');
+  $('#toggle-inspector').textContent = inspectorVisible ? 'Close details' : 'Open details';
+  $('#toggle-inspector').setAttribute('aria-expanded', String(inspectorVisible));
+  $('#toggle-inspector').setAttribute('aria-controls', widthBand === 'wide' ? 'inspector-panel' : 'inspector-dialog');
+}
+document.addEventListener('click', event => {
+  const b = event.target.closest('button'); if (!b) return;
+  if (b.dataset.release) {
+    const value = Number(b.dataset.release); if (!Number.isInteger(value) || value < 1 || value > 7) return;
+    closeOverlay(); release = value; renderPage();
+  } else if (b.dataset.page) {
+    if (!allowedPages().some(d => d[0] === b.dataset.page)) { notify('This destination is outside the selected release. Nothing was changed.'); return; }
+    closeOverlay(); page = b.dataset.page; renderPage();
+  } else if (b.dataset.tab) {
+    if (!allowedTabs().includes(b.dataset.tab)) { notify('This detail is outside the selected release. Nothing was changed.'); return; }
+    tab = b.dataset.tab; if (!inspectorVisible) toggleInspector(b); else renderInspector();
+    const panel = widthBand === 'wide' ? '#wide-tabs' : '#sheet-tabs';
+    $(`${panel} [data-tab="${tab}"]`)?.focus();
+  } else if (b.id === 'toggle-inspector' || b.dataset.action === 'close-inspector') {
+    toggleInspector(b);
+  } else if (b.id === 'toggle-sidebar') {
+    if (overlay === 'navigation') closeOverlay(); else { inspectorVisible = false; openOverlay('navigation', b); }
+    renderInspector();
+  } else if (b.dataset.action === 'close-overlay') { closeOverlay(); renderInspector(); }
+  else if (b.dataset.demo || b.id === 'preview-send') notify();
+});
+for (const id of ['navigation-dialog', 'inspector-dialog']) $(`#${id}`).addEventListener('cancel', event => { event.preventDefault(); closeOverlay(); renderInspector(); });
+document.addEventListener('keydown', event => { if (event.key === 'Escape' && overlay !== 'none') { event.preventDefault(); closeOverlay(); renderInspector(); } });
+$('textarea').addEventListener('compositionstart', () => { composing = true; });
+$('textarea').addEventListener('compositionend', () => { composing = false; });
+$('textarea').addEventListener('keydown', event => {
+  if (composing || event.isComposing || event.keyCode === 229) return;
+  if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); notify(); }
+});
+window.addEventListener('resize', () => {
+  const next = window.innerWidth <= 760 ? 'narrow' : window.innerWidth <= 1200 ? 'medium' : 'wide';
+  if (next !== widthBand) { closeOverlay(); inspectorVisible = false; widthBand = next; renderInspector(); }
+});
+renderPage();
+
+</script>
+</body>
+</html>

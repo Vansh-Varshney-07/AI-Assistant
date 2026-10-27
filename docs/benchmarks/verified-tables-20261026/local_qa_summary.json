@@ -1,0 +1,15 @@
+{
+  "paired_cases": 528,
+  "new_answers": 1056,
+  "elapsed_generation_seconds": 195.91999670001678,
+  "external_inference_calls": 0,
+  "local_generated_tokens": 10202,
+  "counts": {
+    "dmr": 100,
+    "locomo": 328,
+    "longmemeval": 100
+  },
+  "generation_errors": 0,
+  "last_resume_new_answers": 0,
+  "last_resume_elapsed_seconds": 0.016163199907168746
+}

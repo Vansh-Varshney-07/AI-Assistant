@@ -1,0 +1,12 @@
+﻿benchmark,system,reader,qa_percent,baseline_percent,n,delta_pp,scoring,evidence,status,search_p50_ms,search_p95_ms
+DMR,Iron Web,Qwen2.5-1.5B-Instruct Q4_K_M,0.0,0.0,2,0.0,normalized exact match; articles/punctuation/case ignored; token F1 secondary,S007,computed from supplied paired per-question labels,,
+LoCoMo,Iron Web,Qwen2.5-1.5B-Instruct Q4_K_M,0.0,0.0,2,0.0,normalized exact match; articles/punctuation/case ignored; token F1 secondary,S007,computed from supplied paired per-question labels,,
+LongMemEval,Iron Web,Qwen2.5-1.5B-Instruct Q4_K_M,0.0,0.0,2,0.0,normalized exact match; articles/punctuation/case ignored; token F1 secondary,S007,computed from supplied paired per-question labels,,
+DMR,Zep,gpt-4-turbo,94.8,94.4,,0.4,paper-reported QA; original protocol,S008,"external published context, not same-reader head-to-head",,
+DMR,Zep,gpt-4o-mini,98.2,98.0,,0.2,paper-reported QA; original protocol,S008,"external published context, not same-reader head-to-head",,
+LongMemEval,Zep,gpt-4o-mini,63.8,55.4,,8.4,paper-reported QA; original protocol,S008,"external published context, not same-reader head-to-head",,
+LongMemEval,Zep,gpt-4o,71.2,60.2,,11.0,paper-reported QA; original protocol,S008,"external published context, not same-reader head-to-head",,
+LoCoMo,Zep,gpt-4o-mini,65.99,72.9,,-6.91,paper-reported LLM-as-a-Judge score; four categories,S009,external reported score; incompatible with other protocols,513.0,778.0
+LoCoMo,Mem0,gpt-4o-mini,66.88,72.9,,-6.02,paper-reported LLM-as-a-Judge score; four categories,S009,external reported score; incompatible with other protocols,148.0,200.0
+LoCoMo,Mem0g,gpt-4o-mini,68.44,72.9,,-4.46,paper-reported LLM-as-a-Judge score; four categories,S009,external reported score; incompatible with other protocols,476.0,657.0
+LongMemEval,MemPalace,,67.2,,,,approximate QA value quoted by a critical analysis,S006,secondary reported context; reader/protocol unverified,,

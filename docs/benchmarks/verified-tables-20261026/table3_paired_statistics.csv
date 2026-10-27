@@ -1,0 +1,4 @@
+﻿benchmark,n,ironweb_percent,baseline_percent,delta_pp,ironweb_only_correct,baseline_only_correct,p_exact,evidence,status,p_holm
+DMR,100,7.0,6.0,1.0,5,4,1.0,S007,exact paired test; independence across questions not established,1.0
+LoCoMo,328,3.048780487804878,3.048780487804878,0.0,1,1,1.0,S007,exact paired test; independence across questions not established,1.0
+LongMemEval,100,8.0,10.0,-2.0,1,3,0.625,S007,exact paired test; independence across questions not established,1.0

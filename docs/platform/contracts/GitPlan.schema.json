@@ -1,0 +1,94 @@
+{
+  "$defs": {
+    "GitStep": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "const": "git.create_branch",
+          "default": "git.create_branch",
+          "title": "Action",
+          "type": "string"
+        }
+      },
+      "title": "GitStep",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "contract": {
+      "const": "wayfinder.platform/1",
+      "default": "wayfinder.platform/1",
+      "title": "Contract",
+      "type": "string"
+    },
+    "repository": {
+      "title": "Repository",
+      "type": "string"
+    },
+    "grant_ref": {
+      "title": "Grant Ref",
+      "type": "string"
+    },
+    "repository_identity": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "title": "Repository Identity",
+      "type": "array"
+    },
+    "git_identity": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "title": "Git Identity",
+      "type": "array"
+    },
+    "branch": {
+      "pattern": "^refs/heads/codex/[A-Za-z0-9][A-Za-z0-9._/-]{0,120}$",
+      "title": "Branch",
+      "type": "string"
+    },
+    "expected_head": {
+      "pattern": "^[a-f0-9]{40}$",
+      "title": "Expected Head",
+      "type": "string"
+    },
+    "nonce": {
+      "pattern": "^[a-f0-9]{32}$",
+      "title": "Nonce",
+      "type": "string"
+    },
+    "state": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "State",
+      "type": "string"
+    },
+    "steps": {
+      "items": {
+        "$ref": "#/$defs/GitStep"
+      },
+      "maxItems": 1,
+      "minItems": 1,
+      "title": "Steps",
+      "type": "array"
+    }
+  },
+  "required": [
+    "repository",
+    "grant_ref",
+    "repository_identity",
+    "git_identity",
+    "branch",
+    "expected_head",
+    "nonce",
+    "state",
+    "steps"
+  ],
+  "title": "GitPlan",
+  "type": "object"
+}

@@ -1,0 +1,40 @@
+﻿benchmark,system,metric,value,unit,scope,evidence
+DMR,Iron Web historical / kuzu,completed fresh-corpus ingestion,26.843948399997316,s,500/500 documents; complete,S020;S019;S021
+DMR,Iron Web historical / kuzu,default_hybrid mean retrieval,39.83582999993814,ms,100 archived queries; graph/vector/scoring included,S022;S019;S021
+DMR,Iron Web historical / kuzu,reranked_hybrid mean retrieval,1730.6115299998783,ms,100 archived queries; graph/vector/scoring included,S023;S019;S021
+DMR,Iron Web historical / falkordb_before,FAILED cold ingestion: elapsed until failure,27.288563400012208,s,218/500 documents; failed,S024;S019;S025
+DMR,Iron Web historical / falkordb_after,completed fresh-corpus ingestion,85.67472369997995,s,500/500 documents; complete,S028;S019;S029
+DMR,Iron Web historical / falkordb_after,default_hybrid mean retrieval,27.954892999550793,ms,100 archived queries; graph/vector/scoring included,S030;S019;S029
+DMR,Iron Web historical / falkordb_after,reranked_hybrid mean retrieval,2356.7356149991974,ms,100 archived queries; graph/vector/scoring included,S001;S019;S029
+LoCoMo,Iron Web historical / kuzu,completed fresh-corpus ingestion,4.516679299995303,s,70/70 documents; complete,S031;S019;S032
+LoCoMo,Iron Web historical / kuzu,default_hybrid mean retrieval,27.504901260064834,ms,397 archived queries; graph/vector/scoring included,S033;S019;S032
+LoCoMo,Iron Web historical / kuzu,reranked_hybrid mean retrieval,414.9732083113429,ms,397 archived queries; graph/vector/scoring included,S034;S019;S032
+LoCoMo,Iron Web historical / falkordb_before,FAILED cold ingestion: elapsed until failure,7.036064500018256,s,60/70 documents; failed,S035;S019;S036
+LoCoMo,Iron Web historical / falkordb_after,completed fresh-corpus ingestion,9.430229600024177,s,70/70 documents; complete,S039;S019;S040
+LoCoMo,Iron Web historical / falkordb_after,default_hybrid mean retrieval,20.72291964707868,ms,397 archived queries; graph/vector/scoring included,S041;S019;S040
+LoCoMo,Iron Web historical / falkordb_after,reranked_hybrid mean retrieval,415.7320727963383,ms,397 archived queries; graph/vector/scoring included,S004;S019;S040
+LongMemEval,Iron Web historical / kuzu,completed fresh-corpus ingestion,340.4131728000066,s,4612/4612 documents; complete,S042;S019;S043
+LongMemEval,Iron Web historical / kuzu,default_hybrid mean retrieval,177.70485799905146,ms,100 archived queries; graph/vector/scoring included,S044;S019;S043
+LongMemEval,Iron Web historical / kuzu,reranked_hybrid mean retrieval,1152.9789629983134,ms,100 archived queries; graph/vector/scoring included,S045;S019;S043
+LongMemEval,Iron Web historical / falkordb_before,FAILED cold ingestion: elapsed until failure,11.158024100004695,s,56/4612 documents; failed,S046;S019;S047
+LongMemEval,Iron Web historical / falkordb_after,completed fresh-corpus ingestion,4868.138969599997,s,4612/4612 documents; complete,S050;S019;S051
+LongMemEval,Iron Web historical / falkordb_after,default_hybrid mean retrieval,121.89901599835139,ms,100 archived queries; graph/vector/scoring included,S052;S019;S051
+LongMemEval,Iron Web historical / falkordb_after,reranked_hybrid mean retrieval,2212.265391998517,ms,100 archived queries; graph/vector/scoring included,S005;S019;S051
+LoCoMo,Mem0 managed v3 (top_200 artifact),search p50,3055.2,ms,public per-question search latency; public snapshot; hosted environment differs from local Iron Web,S014
+LoCoMo,Mem0 managed v3 (top_200 artifact),search p95,6001.99,ms,public per-question search latency; public snapshot; hosted environment differs from local Iron Web,S014
+LoCoMo,Mem0 managed v3 (top_50 artifact),search p50,915.85,ms,public per-question search latency; public snapshot; hosted environment differs from local Iron Web,S015
+LoCoMo,Mem0 managed v3 (top_50 artifact),search p95,1210.725,ms,public per-question search latency; public snapshot; hosted environment differs from local Iron Web,S015
+LoCoMo,Zep,search p50,513.0,ms,search only; external reported latency; different protocol and environment,S009
+LoCoMo,Zep,search p95,778.0,ms,search only; external reported latency; different protocol and environment,S009
+LoCoMo,Mem0,search p50,148.0,ms,search only; external reported latency; different protocol and environment,S009
+LoCoMo,Mem0,search p95,200.0,ms,search only; external reported latency; different protocol and environment,S009
+LoCoMo,Mem0g,search p50,476.0,ms,search only; external reported latency; different protocol and environment,S009
+LoCoMo,Mem0g,search p95,657.0,ms,search only; external reported latency; different protocol and environment,S009
+LongMemEval,MemPalace raw,project-expected COMPLETE benchmark wall time (approx.),300,s,"500-question run; Apple Silicon estimate, not per-query latency or isolated ingestion",S016
+LoCoMo,MemPalace raw,project-expected COMPLETE benchmark wall time (approx.),120,s,"full 10-conversation run; Apple Silicon estimate, not per-query latency or isolated ingestion",S016
+DMR,Local Qwen reader / ironweb ranking,median reader request wall time,249.73644997226074,ms,"100 local responses; includes queueing, excludes retrieval; two concurrent slots",S056
+DMR,Local Qwen reader / baseline ranking,median reader request wall time,243.01400006515905,ms,"100 local responses; includes queueing, excludes retrieval; two concurrent slots",S056
+LoCoMo,Local Qwen reader / ironweb ranking,median reader request wall time,318.1083499803208,ms,"328 local responses; includes queueing, excludes retrieval; two concurrent slots",S056
+LoCoMo,Local Qwen reader / baseline ranking,median reader request wall time,337.67365000676364,ms,"328 local responses; includes queueing, excludes retrieval; two concurrent slots",S056
+LongMemEval,Local Qwen reader / ironweb ranking,median reader request wall time,208.67670001462102,ms,"100 local responses; includes queueing, excludes retrieval; two concurrent slots",S056
+LongMemEval,Local Qwen reader / baseline ranking,median reader request wall time,272.9822000255808,ms,"100 local responses; includes queueing, excludes retrieval; two concurrent slots",S056

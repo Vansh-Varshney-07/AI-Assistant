@@ -25,3 +25,6 @@ client_secret*.json
 # Wayfinder Atlas generated index
 wayfinder/atlas/_index/
 wayfinder/atlas/registry/snapshot_*.json
+
+# Generated local desktop scenarios and runtime evidence
+workbench/scenarios/

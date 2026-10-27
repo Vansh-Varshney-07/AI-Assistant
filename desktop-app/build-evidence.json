@@ -1,0 +1,76 @@
+{
+  "build": "wayfinder-desktop/0.1",
+  "generated": "2026-10-26T05:03:20.275Z",
+  "scope": "static package inspection; Electron was not launched",
+  "checks": [
+    {
+      "name": "packaged:/dist/main/index.js",
+      "passed": true
+    },
+    {
+      "name": "packaged:/dist/preload/index.cjs",
+      "passed": true
+    },
+    {
+      "name": "packaged:/dist/renderer/index.html",
+      "passed": true
+    },
+    {
+      "name": "esm_main_entry",
+      "passed": true
+    },
+    {
+      "name": "no_private_runtime_or_fixture_in_archive",
+      "passed": true
+    },
+    {
+      "name": "renderer_isolation_flags",
+      "passed": true
+    },
+    {
+      "name": "production_csp_no_network_or_inline_script",
+      "passed": true
+    },
+    {
+      "name": "no_renderer_bootstrap_secret_or_bearer",
+      "passed": true
+    },
+    {
+      "name": "packaged_backend_matches_source",
+      "passed": true
+    },
+    {
+      "name": "only_host_python_packaged",
+      "passed": true
+    },
+    {
+      "name": "windows_pe_executable",
+      "passed": true
+    },
+    {
+      "name": "frontend_test_report_passed",
+      "passed": true
+    },
+    {
+      "name": "real_neural_and_hermes_evidence",
+      "passed": true
+    },
+    {
+      "name": "production_node_bridge_evidence",
+      "passed": true
+    }
+  ],
+  "passed": 14,
+  "frontend": {
+    "passed": 25,
+    "failed": 0
+  },
+  "real_neural_hermes_checks": 13,
+  "production_node_bridge_checks": 7,
+  "packaged_host_sha256": "774518d4a25fd2cfec52a8a81714a9ecc62e966909e8c2c9332b34b93116df7c",
+  "asar_sha256": "33a09f139d0175deeaa5d7ce18027ea81bda216966a236004ab04917ce946487",
+  "executable_sha256": "5f2e89f6752aecd2e0eac7bb70c64500cb10ec2e9b7c5ff9a5ea7e69650588f8",
+  "application_version": "0.1.0",
+  "native_or_visual_tests_run": false,
+  "google_account_tests_run": false
+}

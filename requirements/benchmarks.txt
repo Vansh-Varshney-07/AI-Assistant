@@ -1,0 +1,5 @@
+-r cpu.txt
+# Match the Hub API used by the project's previously verified FastEmbed setup.
+huggingface-hub==0.24.7
+# Stream LongMemEval-M without loading the multi-gigabyte JSON into memory.
+ijson>=3.3,<4

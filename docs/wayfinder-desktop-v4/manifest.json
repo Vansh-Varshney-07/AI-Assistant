@@ -1,0 +1,44 @@
+{
+  "design_version": "4.0",
+  "contract_version": "wayfinder.desktop/1",
+  "status": "proposed_not_implemented",
+  "host": "electron_react_typescript",
+  "host_selection": "qualified_hermes_extension_else_thin_shell",
+  "features": [
+    {"id":"chat","release":1,"requires":[],"contract":"C01","batch":1},
+    {"id":"runtime","release":1,"requires":[],"contract":"C02","batch":1},
+    {"id":"memory","release":2,"requires":["chat","runtime"],"contract":"C09","batch":2},
+    {"id":"documents","release":2,"requires":["chat","runtime"],"contract":"C08","batch":2},
+    {"id":"google_read","release":3,"requires":["chat","runtime"],"contract":"C11","batch":3},
+    {"id":"local_tasks","release":3,"requires":["runtime"],"contract":"C12","batch":3},
+    {"id":"workflows","release":4,"requires":["chat","runtime","google_read"],"contract":"C14","batch":4},
+    {"id":"scheduler","release":5,"requires":["workflows"],"contract":"C16","batch":4},
+    {"id":"quick_chat","release":5,"requires":["chat","runtime"],"contract":"C19","batch":5},
+    {"id":"skills","release":6,"requires":["workflows"],"contract":"C18","batch":4},
+    {"id":"agents","release":6,"requires":["runtime"],"contract":"C18","batch":4},
+    {"id":"project_review","release":7,"requires":["runtime"],"contract":"C20","batch":4}
+  ],
+  "optional_features": [
+    {"id":"background_mode","release":5,"requires":["scheduler"],"contract":"C17","batch":4,"default":"disabled"},
+    {"id":"google_write","release":7,"requires":["google_read"],"contract":"C13","batch":3,"default":"disabled"},
+    {"id":"communication","release":7,"requires":["google_read"],"contract":"C13","batch":3,"default":"disabled"},
+    {"id":"coding_effect","release":7,"requires":["project_review"],"contract":"C13","batch":4,"default":"disabled"},
+    {"id":"selected_image","release":7,"requires":["documents"],"contract":"C20","batch":4,"default":"disabled"},
+    {"id":"native_desktop","release":7,"requires":["runtime"],"contract":"C20","batch":4,"default":"disabled"}
+  ],
+  "deferred": ["two_way_task_sync","web_research","knowledge_notes_connector","fitness","voice","mobile","cross_device_sync","autonomous_installs","automatic_updates"],
+  "qualification_states": ["planned","configured","tested_fixture","qualified_live","unavailable","disabled","needs_review"],
+  "default_variant": "core",
+  "surface_policy": "release_and_advertised_feature_and_qualification_and_current_authority",
+  "r1": {
+    "tools": "closed",
+    "automatic_memory": false,
+    "history": "application_canonical_bounded_selection",
+    "max_active_model_calls": 1,
+    "max_queued_runs": 3,
+    "provider_deadline_seconds": 120,
+    "automatic_command_retries": 0,
+    "remote_images": false,
+    "background_execution": false
+  }
+}

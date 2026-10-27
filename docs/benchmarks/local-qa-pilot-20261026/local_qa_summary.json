@@ -1,0 +1,13 @@
+{
+  "paired_cases": 6,
+  "new_answers": 12,
+  "elapsed_generation_seconds": 2.1529685999266803,
+  "external_inference_calls": 0,
+  "local_generated_tokens": 55,
+  "counts": {
+    "dmr": 2,
+    "locomo": 2,
+    "longmemeval": 2
+  },
+  "generation_errors": 0
+}

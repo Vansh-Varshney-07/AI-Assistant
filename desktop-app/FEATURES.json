@@ -1,0 +1,34 @@
+{
+  "build": "wayfinder-desktop/0.1",
+  "scope": "completed_backend_workspace_not_full_R1_R7_acceptance",
+  "connected": [
+    {"feature":"spaces","backend":"wayfinder/service.py","operations":["spaces","create_space"],"scope":"owned persistent spaces"},
+    {"feature":"memory_evidence","backend":"wayfinder/service.py","operations":["inventory","source","recall"],"scope":"current/historical scoped evidence; source inspection"},
+    {"feature":"memory_events","backend":"wayfinder/platform/memory_control.py","operations":["platform_memory_propose","platform_memory_result","platform_memory_decide","platform_memory_revoke","platform_memory_reconcile","platform_memory_audit"],"scope":"fact proposals and selected-claim correction/retraction through trusted review"},
+    {"feature":"scoped_files","backend":"wayfinder/workers/files.py","operations":["worker_grant","worker_search","worker_revoke"],"scope":"trusted picker paths only, bounded discovery"},
+    {"feature":"document_analysis","backend":"wayfinder/workers/hub.py","operations":["worker_start","worker_result","worker_cancel","worker_jobs","worker_forget"],"scope":"W35 only; requires fresh runtime qualification and native disclosure consent"},
+    {"feature":"fixed_comparison","backend":"wayfinder/platform/service.py","operations":["platform_read_start","platform_read_result","platform_read_cancel","platform_audit"],"scope":"one existing document-plus-memory recipe; ContextGateway/Atlas reused internally"},
+    {"feature":"workflow_review","backend":"wayfinder/platform/evaluation.py","operations":["platform_read_retry","platform_read_clear","platform_workflow_evaluate","platform_workflow_metrics"],"scope":"explicit read retry with fresh disclosure; historical artifact checks; bounded clearing"},
+    {"feature":"local_branch","backend":"wayfinder/platform/connectors.py","operations":["platform_git_grant","platform_git_observe","platform_git_propose","platform_action_result","platform_action_decide","platform_action_revoke","platform_action_reconcile","platform_action_audit","platform_git_revoke"],"scope":"new local codex/ branch only; native exact confirmation"},
+    {"feature":"local_activity_csv","backend":"wayfinder/platform/activity.py","operations":["platform_activity_read"],"scope":"canonical selected local CSV only; no fitness provider"},
+    {"feature":"discovery","backend":"wayfinder/platform/runtime.py and catalog.py","operations":["platform_inspect","platform_capabilities"],"scope":"actual inspection plus non-authoritative candidates"},
+    {"feature":"settings","backend":"wayfinder/service.py","operations":["settings"],"scope":"reading size; background always false"},
+    {"feature":"google_setup_status","backend":"wayfinder/platform/google_read.py","operations":["platform_google_status"],"scope":"configuration presence only; live_qualified remains false"}
+  ],
+  "excluded": [
+    {"feature":"general_chat","reason":"No completed inference/session service; transcript storage is not chat."},
+    {"feature":"google_live","reason":"Live account read/write qualification unfinished; no account connector controls exposed."},
+    {"feature":"tasks_and_sync","reason":"No completed Wayfinder WorkItem/two-way synchronization service or qualified Hermes Kanban scope/approval adapter."},
+    {"feature":"workflow_builder_scheduler_quick_chat","reason":"Only one fixed recipe is complete; arbitrary templates and trusted recurrence/background lifecycle unqualified."},
+    {"feature":"agent_skill_edits","reason":"Full role/binding reconciliation and publish/rollback enforcement unfinished."},
+    {"feature":"W33_W36_W37","reason":"Excluded image/planning/native surfaces; native execution not qualified or re-enabled."},
+    {"feature":"global_forget_maintenance","reason":"Full cross-copy erasure and store-wide maintenance not complete; retraction and labelled artifact clearing only."},
+    {"feature":"cold_backup_restore_UI","reason":"Existing CLI primitives retained; stopped-runtime UI activation lifecycle not implemented."},
+    {"feature":"hosted_git_and_messaging_fitness","reason":"No qualified hosted write/send/vendor interfaces."}
+  ],
+  "desktop_adapter_additions": ["private owned-process bootstrap", "named IPC broker and sender validation", "main-owned exact confirmation and disclosure", "read-only scoped run/action list facade", "read-only original retry intent facade", "same-family unknown-outcome admission guard"],
+  "new_agent_loops": false,
+  "new_memory_engine": false,
+  "new_scheduler": false,
+  "native_testing_enabled": false
+}

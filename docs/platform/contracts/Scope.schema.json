@@ -1,0 +1,30 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "owner": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Owner",
+      "type": "string"
+    },
+    "space": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Space",
+      "type": "string"
+    },
+    "task": {
+      "maxLength": 100,
+      "minLength": 1,
+      "title": "Task",
+      "type": "string"
+    }
+  },
+  "required": [
+    "owner",
+    "space",
+    "task"
+  ],
+  "title": "Scope",
+  "type": "object"
+}

@@ -1,0 +1,74 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "provider": {
+      "pattern": "^[A-Za-z0-9_-]{1,80}$",
+      "title": "Provider",
+      "type": "string"
+    },
+    "record_id": {
+      "pattern": "^[A-Za-z0-9_-]{1,100}$",
+      "title": "Record Id",
+      "type": "string"
+    },
+    "revision": {
+      "maximum": 2147483647,
+      "minimum": 1,
+      "title": "Revision",
+      "type": "integer"
+    },
+    "metric": {
+      "enum": [
+        "steps",
+        "workout_duration"
+      ],
+      "title": "Metric",
+      "type": "string"
+    },
+    "value": {
+      "maximum": 1000000000.0,
+      "minimum": 0,
+      "title": "Value",
+      "type": "number"
+    },
+    "unit": {
+      "enum": [
+        "count",
+        "minute"
+      ],
+      "title": "Unit",
+      "type": "string"
+    },
+    "start_time": {
+      "maxLength": 40,
+      "minLength": 1,
+      "title": "Start Time",
+      "type": "string"
+    },
+    "end_time": {
+      "maxLength": 40,
+      "minLength": 1,
+      "title": "End Time",
+      "type": "string"
+    },
+    "timezone": {
+      "maxLength": 80,
+      "minLength": 1,
+      "title": "Timezone",
+      "type": "string"
+    }
+  },
+  "required": [
+    "provider",
+    "record_id",
+    "revision",
+    "metric",
+    "value",
+    "unit",
+    "start_time",
+    "end_time",
+    "timezone"
+  ],
+  "title": "ActivityRecord",
+  "type": "object"
+}

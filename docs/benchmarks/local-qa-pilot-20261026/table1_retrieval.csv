@@ -1,0 +1,13 @@
+﻿benchmark,system,total_queries,scored_queries,no_gold_queries,failed_queries,recall5,mrr10,recall10,metric_basis,evidence,status,generator_for_archived_answers,reported_hit_any5
+DMR,Iron Web (historical hybrid + reranking),100,100,0,0,0.09,0.03158333333333333,0.14,macro fraction of gold IDs; MRR truncated at 10,S001,recomputed historical 20% question cohort; not a new current-system run,first_context_line,
+DMR,Zep,,,,,,,,,,No compatible local experiment or verified comparable metric,,
+DMR,Mem0,,,,,,,,,,No compatible local experiment or verified comparable metric,,
+DMR,MemPalace,,,,,,,,,,No compatible local experiment or verified comparable metric,,
+LoCoMo,Iron Web (historical hybrid + reranking),397,395,2,0,0.7872151898734178,0.7174362065501306,0.8961603375527426,macro fraction of gold IDs; MRR truncated at 10,S004,recomputed historical 20% question cohort; not a new current-system run,first_context_line,
+LoCoMo,Zep,,,,,,,,,,No compatible local experiment or verified comparable metric,,
+LoCoMo,Mem0,,,,,,,,,,No compatible local experiment or verified comparable metric,,
+LoCoMo,MemPalace,,,,,,,,,,No compatible local experiment or verified comparable metric,,
+LongMemEval,Iron Web (historical hybrid + reranking),100,100,0,0,0.8513333333333334,0.756234126984127,0.9455,macro fraction of gold IDs; MRR truncated at 10,S005,recomputed historical 20% question cohort; not a new current-system run,first_context_line,
+LongMemEval,Zep,,,,,,,,,,No compatible local experiment or verified comparable metric,,
+LongMemEval,Mem0,,,,,,,,,,No compatible local experiment or verified comparable metric,,
+LongMemEval,MemPalace,,,,,,,,"reported hit-any@5, not macro evidence recall",S006,"Secondary critical-analysis report; separate study, not a controlled comparison",,0.966

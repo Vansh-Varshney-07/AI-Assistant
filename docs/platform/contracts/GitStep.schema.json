@@ -1,0 +1,13 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "action": {
+      "const": "git.create_branch",
+      "default": "git.create_branch",
+      "title": "Action",
+      "type": "string"
+    }
+  },
+  "title": "GitStep",
+  "type": "object"
+}

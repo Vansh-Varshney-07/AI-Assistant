@@ -1,0 +1,50 @@
+[
+  {
+    "benchmark": "LongMemEval",
+    "condition": "top_200",
+    "readme_claim_percent": 94.4,
+    "readme_claim_correct": 472,
+    "artifact_percent": 93.4,
+    "artifact_correct": 467,
+    "n": 500,
+    "readme_source": "S012",
+    "artifact_source": "S011",
+    "disposition": "Different published snapshots; use case-level artifact for this reanalysis, retain headline separately."
+  },
+  {
+    "benchmark": "LongMemEval",
+    "condition": "top_50",
+    "readme_claim_percent": 94.8,
+    "readme_claim_correct": 474,
+    "artifact_percent": 90.4,
+    "artifact_correct": 452,
+    "n": 500,
+    "readme_source": "S012",
+    "artifact_source": "S013",
+    "disposition": "Different published snapshots; use case-level artifact for this reanalysis, retain headline separately."
+  },
+  {
+    "benchmark": "LoCoMo",
+    "condition": "top_200",
+    "readme_claim_percent": 92.5,
+    "readme_claim_correct": 1425,
+    "artifact_percent": 91.55844155844156,
+    "artifact_correct": 1410,
+    "n": 1540,
+    "readme_source": "S012",
+    "artifact_source": "S014",
+    "disposition": "Different published snapshots; use case-level artifact for this reanalysis, retain headline separately."
+  },
+  {
+    "benchmark": "LoCoMo",
+    "condition": "top_50",
+    "readme_claim_percent": 91.8,
+    "readme_claim_correct": 1414,
+    "artifact_percent": 82.66233766233766,
+    "artifact_correct": 1273,
+    "n": 1540,
+    "readme_source": "S012",
+    "artifact_source": "S015",
+    "disposition": "Different published snapshots; use case-level artifact for this reanalysis, retain headline separately."
+  }
+]

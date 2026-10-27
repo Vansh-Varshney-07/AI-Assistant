@@ -1,0 +1,99 @@
+{
+  "observed_utc": "2026-10-27T08:13:20.507249+00:00",
+  "model_revision": "91cad51170dc346986eccefdc2dd33a9da36ead9",
+  "model_sha256": "6a1a2eb6d15622bf3c96857206351ba97e1af16c30d7a74ee38970e434e9407e",
+  "server_executable": "D:\\Opencode_\\AI assistant\\.local\\benchmarks\\local-reader\\bin\\llama-server.exe",
+  "llama_release": "b11889",
+  "server_build": "b11889-d854d98ba",
+  "total_slots": 2,
+  "default_generation_settings": {
+    "params": {
+      "seed": 4294967295,
+      "temperature": 0.800000011920929,
+      "dynatemp_range": 0.0,
+      "dynatemp_exponent": 1.0,
+      "top_k": 40,
+      "top_p": 0.949999988079071,
+      "min_p": 0.05000000074505806,
+      "top_n_sigma": -1.0,
+      "xtc_probability": 0.0,
+      "xtc_threshold": 0.10000000149011612,
+      "typical_p": 1.0,
+      "repeat_last_n": 64,
+      "repeat_penalty": 1.0,
+      "presence_penalty": 0.0,
+      "frequency_penalty": 0.0,
+      "dry_multiplier": 0.0,
+      "dry_base": 1.75,
+      "dry_allowed_length": 2,
+      "dry_penalty_last_n": 64,
+      "mirostat": 0,
+      "mirostat_tau": 5.0,
+      "mirostat_eta": 0.10000000149011612,
+      "adaptive_target": -1.0,
+      "adaptive_decay": 0.8999999761581421,
+      "max_tokens": -1,
+      "n_predict": -1,
+      "n_keep": 0,
+      "n_discard": 0,
+      "ignore_eos": false,
+      "stream": false,
+      "n_probs": 0,
+      "min_keep": 0,
+      "chat_format": "Content-only",
+      "reasoning_format": "none",
+      "reasoning_in_content": false,
+      "generation_prompt": "",
+      "samplers": [
+        "penalties",
+        "dry",
+        "top_n_sigma",
+        "top_k",
+        "typ_p",
+        "top_p",
+        "min_p",
+        "xtc",
+        "temperature"
+      ],
+      "speculative.types": "none",
+      "timings_per_token": false,
+      "post_sampling_probs": false,
+      "backend_sampling": false,
+      "lora": []
+    },
+    "n_ctx": 8192
+  },
+  "observed_cuda_reader_processes": [
+    "53976, D:\\Opencode_\\AI assistant\\.local\\benchmarks\\local-reader\\bin\\llama-server.exe"
+  ],
+  "host": "127.0.0.1",
+  "port": 3397,
+  "observed_resource_constraint": {
+    "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+    "memory_total_mib": 6141,
+    "memory_used_mib": 5799,
+    "memory_free_mib": 122,
+    "gpu_utilization_percent": 100,
+    "latency_comparison_valid": false
+  },
+  "execution_segments": [
+    {
+      "reader_pid": 53976,
+      "context_pool_tokens": 16384,
+      "parallel_slots": 2,
+      "completed_checkpoint_answers": 82,
+      "status": "stopped to reduce unused KV reservation"
+    },
+    {
+      "context_pool_tokens": 8192,
+      "parallel_slots": 2,
+      "reason": "Reduce unused KV allocation under GPU memory contention. Evidence and decoding settings unchanged.",
+      "reader_pid": 52552,
+      "started_utc": "2026-10-27T08:21:41.465406+00:00",
+      "status": "stopped at user request"
+    }
+  ],
+  "status": "stopped at user request; incomplete comparison",
+  "stopped_utc": "2026-10-27T08:24:40.623445+00:00",
+  "completed_checkpoint_answers": 123
+}

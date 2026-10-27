@@ -1,0 +1,18 @@
+﻿benchmark,system,metric,score_percent,reader,n,protocol,evidence
+DMR,Iron Web ranking + local reader replay,normalized answer exact-match (%),7.0,Qwen2.5-1.5B-Instruct Q4_K_M,100,"new local Qwen replay, 768 evidence tokens; not official judge",S007
+DMR,Iron Web ranking + local reader replay,mean answer token-F1 (%),15.802441267882445,Qwen2.5-1.5B-Instruct Q4_K_M,100,"same generated answers; token overlap, not semantic QA accuracy",S007
+LoCoMo,Iron Web ranking + local reader replay,normalized answer exact-match (%),3.048780487804878,Qwen2.5-1.5B-Instruct Q4_K_M,328,"new local Qwen replay, 768 evidence tokens; not official judge",S007
+LoCoMo,Iron Web ranking + local reader replay,mean answer token-F1 (%),13.117139975264053,Qwen2.5-1.5B-Instruct Q4_K_M,328,"same generated answers; token overlap, not semantic QA accuracy",S007
+LongMemEval,Iron Web ranking + local reader replay,normalized answer exact-match (%),8.0,Qwen2.5-1.5B-Instruct Q4_K_M,100,"new local Qwen replay, 768 evidence tokens; not official judge",S007
+LongMemEval,Iron Web ranking + local reader replay,mean answer token-F1 (%),9.898176291793312,Qwen2.5-1.5B-Instruct Q4_K_M,100,"same generated answers; token overlap, not semantic QA accuracy",S007
+DMR,Zep,published QA/judge score (%),94.8,gpt-4-turbo,see cited paper protocol,paper-reported QA; original protocol,S008
+DMR,Zep,published QA/judge score (%),98.2,gpt-4o-mini,see cited paper protocol,paper-reported QA; original protocol,S008
+LongMemEval,Zep,published QA/judge score (%),63.8,gpt-4o-mini,see cited paper protocol,paper-reported QA; original protocol,S008
+LongMemEval,Zep,published QA/judge score (%),71.2,gpt-4o,see cited paper protocol,paper-reported QA; original protocol,S008
+LoCoMo,Zep,published QA/judge score (%),65.99,gpt-4o-mini,see cited paper protocol,paper-reported LLM-as-a-Judge score; four categories,S009
+LoCoMo,Mem0,published QA/judge score (%),66.88,gpt-4o-mini,see cited paper protocol,paper-reported LLM-as-a-Judge score; four categories,S009
+LoCoMo,Mem0g,published QA/judge score (%),68.44,gpt-4o-mini,see cited paper protocol,paper-reported LLM-as-a-Judge score; four categories,S009
+LongMemEval,Mem0 managed v3 (top_200 artifact),published QA/judge score (%),93.4,gpt-5,500,"public PASS/CORRECT labels; locally recomputed, errors remain in denominator",S011
+LongMemEval,Mem0 managed v3 (top_50 artifact),published QA/judge score (%),90.4,gpt-5,500,"public PASS/CORRECT labels; locally recomputed, errors remain in denominator",S013
+LoCoMo,Mem0 managed v3 (top_200 artifact),published QA/judge score (%),91.55844155844156,gpt-5,1540,"public PASS/CORRECT labels; locally recomputed, errors remain in denominator",S014
+LoCoMo,Mem0 managed v3 (top_50 artifact),published QA/judge score (%),82.66233766233766,gpt-5,1540,"public PASS/CORRECT labels; locally recomputed, errors remain in denominator",S015

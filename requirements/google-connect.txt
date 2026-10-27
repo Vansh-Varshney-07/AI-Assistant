@@ -1,0 +1,3 @@
+# OAuth helper for user-run local consent; installed only into .local/google-oauth.
+-r platform.txt
+google-auth-oauthlib==1.5.0

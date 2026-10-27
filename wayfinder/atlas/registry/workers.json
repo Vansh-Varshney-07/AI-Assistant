@@ -356,16 +356,27 @@
       "id": "file_discovery_worker",
       "name": "File Discovery Worker",
       "description": "Locates and catalogs files in the local workspace. No default web access.",
-      "permitted_tool_groups": ["filesystem_read", "memory"],
-      "permitted_tools": [
-        "filesystem.read_file",
-        "memory.recall",
-        "agent.clarify"
+      "permitted_tool_groups": [
+        "wayfinder_scoped_desktop"
       ],
-      "denied_tools": ["tavily_*", "system.terminal_exec", "whatsapp.*"],
-      "capabilities": ["file_discovery", "workspace_scanning"],
+      "permitted_tools": [
+        "wayfinder.files.search"
+      ],
+      "denied_tools": [
+        "system.*",
+        "filesystem.*",
+        "memory.*",
+        "whatsapp.*",
+        "tavily_*"
+      ],
+      "capabilities": [
+        "scoped_file_discovery"
+      ],
       "request_tools_through_orchestrator": true,
-      "notes": "No default Tavily access. Can request web research through the orchestrator if needed."
+      "notes": "Executable permissions are enforced by the application handlers; registry matching does not authorize execution.",
+      "logical_id": "W34",
+      "runtime": "hermes",
+      "implementation": "wayfinder.workers.hub.WorkerHub"
     },
     {
       "id": "repository_analyst",
@@ -569,6 +580,108 @@
       "capabilities": ["planning", "delegation", "workflow_composition", "permission_enforcement"],
       "request_tools_through_orchestrator": false,
       "notes": "Checks capability availability and policy permissions before delegating to workers."
+    },
+    {
+      "id": "desktop_context_analyst",
+      "logical_id": "W33",
+      "name": "Desktop Context Analyst",
+      "runtime": "hermes",
+      "implementation": "wayfinder.workers.hub.WorkerHub",
+      "permitted_tool_groups": [
+        "wayfinder_scoped_desktop"
+      ],
+      "permitted_tools": [
+        "wayfinder.image.analyze"
+      ],
+      "denied_tools": [
+        "system.*",
+        "filesystem.*",
+        "memory.*",
+        "whatsapp.*",
+        "tavily_*"
+      ],
+      "capabilities": [
+        "selected_image_analysis"
+      ],
+      "request_tools_through_orchestrator": true,
+      "notes": "Executable permissions are enforced by the application handlers; registry matching does not authorize execution."
+    },
+    {
+      "id": "local_file_analyst",
+      "logical_id": "W35",
+      "name": "Local File Analyst",
+      "runtime": "hermes",
+      "implementation": "wayfinder.workers.hub.WorkerHub",
+      "permitted_tool_groups": [
+        "wayfinder_scoped_desktop"
+      ],
+      "permitted_tools": [
+        "wayfinder.files.analyze"
+      ],
+      "denied_tools": [
+        "system.*",
+        "filesystem.*",
+        "memory.*",
+        "whatsapp.*",
+        "tavily_*"
+      ],
+      "capabilities": [
+        "scoped_document_analysis"
+      ],
+      "request_tools_through_orchestrator": true,
+      "notes": "Executable permissions are enforced by the application handlers; registry matching does not authorize execution.",
+      "reuses": "document_analyst (restricted local variant)"
+    },
+    {
+      "id": "desktop_action_planner",
+      "logical_id": "W36",
+      "name": "Desktop Action Planner",
+      "runtime": "hermes",
+      "implementation": "wayfinder.workers.hub.WorkerHub",
+      "permitted_tool_groups": [
+        "wayfinder_scoped_desktop"
+      ],
+      "permitted_tools": [
+        "wayfinder.desktop.plan"
+      ],
+      "denied_tools": [
+        "system.*",
+        "filesystem.*",
+        "memory.*",
+        "whatsapp.*",
+        "tavily_*"
+      ],
+      "capabilities": [
+        "reviewable_action_planning"
+      ],
+      "request_tools_through_orchestrator": true,
+      "notes": "Executable permissions are enforced by the application handlers; registry matching does not authorize execution."
+    },
+    {
+      "id": "desktop_action_worker",
+      "logical_id": "W37",
+      "name": "Desktop Action Worker",
+      "runtime": "hermes",
+      "implementation": "wayfinder.workers.hub.WorkerHub",
+      "permitted_tool_groups": [
+        "wayfinder_scoped_desktop"
+      ],
+      "permitted_tools": [
+        "wayfinder.desktop.execute_approved"
+      ],
+      "denied_tools": [
+        "system.*",
+        "filesystem.*",
+        "memory.*",
+        "whatsapp.*",
+        "tavily_*"
+      ],
+      "capabilities": [
+        "approved_desktop_actions"
+      ],
+      "request_tools_through_orchestrator": true,
+      "notes": "Executable permissions are enforced by the application handlers; registry matching does not authorize execution.",
+      "availability": "locked_until_verified_windows_driver"
     }
   ]
 }

@@ -1,0 +1,1079 @@
+=== PDF PAGE 1 ===
+                      Spatial Metaphors for LLM Memory:
+         A Critical Analysis of the MemPalace Architecture
+
+Robin Dey                                                                 robin@openhubresearch.org
+OpenHub Research
+Chiang Mai, Thailand
+https://github.com/web3guru888/mempalace-scientific-analysis
+
+Panyanon Viradecha
+OpenHub Research
+Chiang Mai, Thailand
+
+
+                                                  Abstract
+
+
+
+
+     MemPalace is an open-source AI memory system that applies the ancientmethod of loci
+     (memorypalace)spatialmetaphortoorganizelong-termmemoryforlargelanguagemodels.
+     Launched in April 2026, the project accumulated over 47,000 GitHub stars in its first two
+     weeks and claims state-of-the-art retrieval performance on the LongMemEval benchmark
+     (96.6%Recall@5)withoutrequiringanyLLMinferenceatwritetime. Wepresentacompre-
+     hensive technical analysis of the MemPalace architecture, examining the mapping between
+     itscognitive-science-inspiredhierarchicalstructure(Wings→Rooms→Closets→Drawers)and
+     its actual implementation in code.  Through independent codebase analysis, benchmark
+     replication, and comparison with competing systems, we find that MemPalace’s headline
+     retrievalperformanceisattributableprimarilytoitsverbatimstoragephilosophycombined
+     with ChromaDB’s default embedding model (all-MiniLM-L6-v2), rather than to its spatial
+     organizationalmetaphorperse. Thepalacehierarchyoperatesasstandardvectordatabase
+     metadata filtering—an effective but well-established technique.  However, we argue that
+     MemPalace makes several genuinely novel contributions that the community has under-
+     appreciated: (1) a contrarian verbatim-first storage philosophy that challenges extraction-
+     based competitors, (2) an extremely low wake-up cost (∼170 tokens) through its four-layer
+     memory stack, (3) a fully deterministic, zero-LLM write path enabling offline operation
+     at zero API cost, and (4) the first systematic application of spatial memory metaphors
+     as an organizing principle for AI memory systems. We situate these contributions within
+     the broader landscape of AI memory architectures, cognitive science research on hierarchi-
+     cal memory, and the emerging MCP protocol ecosystem.  We note that the competitive
+     landscape is evolving rapidly:  Mem0’s April 2026 token-efficient algorithm raised their
+     LongMemEval score from∼49% to 93.4%, narrowing the gap between extraction-based
+     and verbatim approaches.  Our analysis concludes that MemPalace represents significant
+     architectural insightwrapped inoverstated claims—a pattern common in rapidly adopted
+     open-source projects where marketing velocity exceeds scientific rigor.
+
+
+
+
+     Keywords:AI memory systems, method of loci, spatial memory, vector databases, LLM
+     memory, retrieval-augmented generation, MCP protocol, ChromaDB, LongMemEval, ver-
+     batim storage
+
+
+©2026 Dey and Viradecha.
+License: CC-BY 4.0, seehttps://creativecommons.org/licenses/by/4.0/.
+
+=== PDF PAGE 2 ===
+                                         Dey and Viradecha
+
+
+
+1 Introduction
+The problem of persistent memory for large language models (LLMs) has emerged as one of
+thecentralchallengesinappliedAI. Transformer-basedmodelsoperatewithinfixedcontext
+windows—typically 128K to 1M tokens as of early 2026—and possess no native mechanism
+for retaining information across sessions. Every new conversation begins from zero.
+
+This limitation has spawned a rapidly growing ecosystem of memory augmentation systems.
+Mem0 (Mem0 AI,2024) uses LLM-driven fact extraction.  Zep/Graphiti (Zep AI,2024)
+buildstemporalknowledgegraphswithNeo4j. Letta(Packeretal.,2023)implementstiered
+memory with self-editing.  LangMem (LangChain Inc.,2025) provides memory primitives
+within the LangChain ecosystem. Each approaches the same fundamental problem: how to
+give an LLM useful access to information from prior interactions without exceeding context
+limits or requiring the user to manually manage conversation history.
+
+Into this landscape, MemPalace (Jovovich,2026) arrived in April 2026 with an unconven-
+tional proposition: borrow the organizational structure of themethod of loci—a 2,500-year-
+old mnemonic technique—and use it to organize AI memory. Instead of extracting facts or
+building graphs, MemPalace stores everything verbatim and organizes it into a hierarchical
+spatial structure:  Wings (domains) contain Rooms (topics) contain Drawers (individual
+memory chunks).  The system requires only two runtime dependencies (ChromaDB and
+PyYAML), runs entirely offline, and claimed 96.6% Recall@5 on the LongMemEval bench-
+mark (Wu et al.,2024)—higher than any extraction-based competitor.
+
+The project’s reception was extraordinary.  Within 48 hours of launch, MemPalace accu-
+mulated over 7,000 GitHub stars.  By April 19, 2026—two weeks after launch—the count
+exceeded 47,900 stars and 6,000+ forks, making it one of the fastest-growing AI projects in
+GitHub history.
+
+Thispaperasksadirectquestion:IsMemPalace’sapproachscientificallyrevolution-
+ary, or is it well-marketed engineering on existing primitives?
+
+We find the answer is nuanced. MemPalace’s core retrieval performance derives from stan-
+dard vector database operations, not from its spatial metaphor.   Its benchmark claims,
+while not fabricated, were initially presented with insufficient methodological transparency.
+However, MemPalace’s design philosophy contains genuinely novel insights about verbatim
+storage, minimal wake-up cost, and zero-LLM write paths that challenge the consensus
+approach in the field.
+
+1.1 Contributions
+This paper makes the following contributions:
+
+1.Architectural decomposition:  We map MemPalace’s spatial metaphor to its code-
+   level implementation, showing exactly which components contribute to retrieval perfor-
+   mance and which serve organizational or marketing purposes (§3).
+
+
+                                                     2
+
+=== PDF PAGE 3 ===
+                             Spatial Metaphors for LLM Memory
+
+
+
+2.Benchmark analysis:   We provide an independent analysis of MemPalace’s Long-
+   MemEval results, disambiguating the contribution of verbatim storage, ChromaDB em-
+   beddings, palace metadata filtering, and AAAK compression (§4).
+
+3.Competitive landscape: We systematically compare MemPalace against seven com-
+   peting systems across architecture, performance, cost, and maturity dimensions (§4).
+
+4.Cognitive science evaluation:  We assess the scientific validity of applying spatial
+   memory metaphors to AI systems, drawing on neuroscience literature (§2).
+
+5.Novelty assessment: We identify what is genuinely novel in MemPalace versus what
+   is standard practice presented under a new metaphor (§5).
+
+
+2 Background and Related Work
+2.1 The AI Memory Problem
+The context window limitation of transformer-based LLMs creates a fundamental tension
+between breadth and recency. The literature has converged on several approaches:
+Extraction-basedsystemsuseanLLMtoreadconversationsandextractstructuredfacts.
+Mem0 (Mem0 AI,2024) pioneered this approach, using GPT-series models to maintain a
+fact store consulted at the start of each session. The advantage is compact representation;
+the disadvantage is information loss—the LLM must decideat write timewhat will be
+relevantat read time, a fundamentally impossible task for open-ended conversations.
+
+Knowledge graph systemsbuild structured entity-relationship graphs from conversa-
+tions.  Zep’s Graphiti (Zep AI,2024) uses Neo4j to maintain temporal knowledge graphs
+with entity resolution and multi-hop traversal.
+Tiered memory systemsmaintain multiple levels of memory with different retention
+policies.  Letta (Packer et al.,2023) implements a three-tier system (core, archival, recall
+memory) where the AI itself manages what gets promoted or demoted.
+
+Retrieval-augmented generation (RAG)(Lewis et al.,2020) is the most general ap-
+proach:  store information in a vector database, retrieve relevant passages at query time,
+and inject them into the LLM’s context.  MemPalace falls squarely in this category, with
+the addition of a hierarchical metadata layer.
+
+2.2 The Method of Loci: From Simonides to Silicon
+Themethod of loci(MoL),alsoknownasthememorypalacetechnique, istheoldestsystem-
+atically documented mnemonic strategy in Western civilization.  Its origin is traditionally
+attributed to the Greek poet Simonides of Ceos (c. 556–468BC), as recorded by Cicero
+inDe Oratore(55BC). The technique works by associating items to be remembered with
+specific locations (loci) along a mentally visualized route through a familiar building. Re-
+trieval proceeds by mentally “walking” the route and “seeing” the items at each location.
+The technique exploits the brain’s spatial navigation system—phylogenetically ancient and
+highly robust—to scaffold memory for non-spatial content (O’Keefe and Nadel,1978).
+
+
+                                                     3
+
+=== PDF PAGE 4 ===
+                                         Dey and Viradecha
+
+
+
+2.2.1 Neuroscience of Spatial Memory
+Modern neuroimaging has confirmed the neural basis of the MoL’s effectiveness.  The key
+finding,establishedbyDresleretal.(2017)andconfirmedinsubsequentwork(Ondˇrejetal.,
+2025), is that the MoL activates spatial memory circuits not engaged by rote memorization:
+
+    •Hippocampus: Contains place cells and grid cells that encode spatial position and
+      are also critical for episodic memory formation (Moser et al.,2008).
+
+    •Parahippocampal cortex: Processes spatial scene perception and contextual asso-
+      ciations.
+
+    •Retrosplenial cortex:  Translates between egocentric and allocentric spatial refer-
+      ence frames.
+
+    •Posterior parietal cortex:  Encodes spatial relationships and supports spatial at-
+      tention.
+
+Dresleretal.(2017)demonstratedthat6weeksofMoLtrainingproduceddurablechangesin
+functional brain connectivity, with na¨ıve participants’ connectivity patterns shifting toward
+those of world-class memory athletes. Performance quadrupled (from∼26 to∼62 words in
+a standard list task), and these gains persisted at 4-month follow-up.
+
+A 2025 systematic review and meta-analysis byOndˇrej et al.(2025) evaluated the effective-
+ness, cognitive mechanisms, and neurobiological correlates of the MoL, confirming spatial
+memory circuit activation during MoL use.
+
+2.2.2 The Transfer Problem
+A critical question for MemPalace’s scientific foundation is whether the MoL’s benefits
+transfer from human cognition to AI systems.   The answer requires careful distinction
+between two levels:
+
+For the AI’s retrieval mechanism:  The MoL works for humans because spatial nav-
+igation circuits in the hippocampus provide powerful, evolutionarily optimized content-
+addressable retrieval.   LLMs do not have hippocampi, place cells, or spatial navigation
+circuits.  ChromaDB’s approximate nearest neighbor search (HNSW algorithm) operates
+on a fundamentally different principle—computing cosine similarity in a 384-dimensional
+embedding space.  The spatial metaphor does not and cannot improve the mathematical
+quality of this retrieval operation. A “Wing” in MemPalace is a string metadata filter on a
+ChromaDB query, not a spatial location that activates neural navigation circuits.
+
+For the human user’s mental model: The MoL may genuinely helpusersorganize and
+navigate their AI’s memory. A user who conceptualizes their AI’s knowledge as organized
+into Wings (domains) and Rooms (topics) may find it easier to formulate effective queries
+and to maintain the memory structure over time.  This is a human-computer interaction
+improvement, not a retrieval algorithm improvement.  It is real and valuable but distinct
+from the claims typically made about MemPalace’s architecture.
+
+
+                                                     4
+
+=== PDF PAGE 5 ===
+                              Spatial Metaphors for LLM Memory
+
+
+
+2.3 Hierarchical Organization in Memory Science
+MemPalace’s hierarchical structure (Wings→Rooms→Drawers) invokes a well-established
+principle in cognitive science:  hierarchical organization improves memory encoding and
+retrieval.
+Collins and Quillian(1969) proposed that concepts are stored in a taxonomy where proper-
+ties are inherited downward.Collins and Loftus(1975) extended this with spreading acti-
+vation theory.Bartlett(1932) proposed schema theory, showing that hierarchical schemas
+improve both encoding efficiency and retrieval accuracy.Schapiro et al.(2017) showed that
+complementary learning systems in the hippocampus reconcile episodic memory with statis-
+tical learning, supporting the view that hierarchical organization is fundamental to memory.
+Collin et al.(2020) showed the hippocampus encodes hierarchical organizations of related
+memories.
+Application to MemPalace:  The cognitive science evidence strongly supports hierar-
+chical organization as beneficial for memory systems.   However, MemPalace’s hierarchy
+operatesonmetadata labels, notneural-like associative networks. Inhumanmemory, hierar-
+chical structure enables inheritance and spreading activation. In MemPalace, the hierarchy
+enables metadata filtering. These are related concepts but different mechanisms.
+
+2.4 Vector Database Memory Systems
+The technical substrate of MemPalace—storing text chunks as vector embeddings and
+retrieving them via cosine similarity search—is the standard architecture of RAG sys-
+tems (Lewis et al.,2020).  ChromaDB (Chroma,2023) provides:  automatic text embed-
+ding via Sentence Transformers (default: all-MiniLM-L6-v2, 384 dimensions), approximate
+nearest neighbor search via HNSW (Malkov and Yashunin,2020), metadata filtering via
+whereclauses, and persistent local storage.  These are standard features available in any
+modern vector database.  Thesearch            memories()function insearcher.pyis 72 lines of
+straightforward ChromaDB query code with optional wing/room filtering.
+
+2.5 The MCP Protocol Ecosystem
+The Model Context Protocol (MCP) (Anthropic,2024), introduced by Anthropic in late
+2024, provides a standardized interface for LLMs to interact with external tools and data
+sources.  MemPalace implements an MCP server with 29 tools (19+ at v3.1.0, expanded
+to 29 in v3.3.x), enabling any MCP-compatible LLM to directly query, store, and manage
+memories. ThePALACE         PROTOCOLdirective embedded in the MCP status output is a form
+of system prompt injection that instructs the LLM how to use the palace effectively—a
+practical optimization that improves retrieval quality by guiding query formulation.
+
+
+3 System Architecture
+3.1 Overview
+MemPalace(version3.1.0,asanalyzed;currentreleaseisv3.3.1)consistsof32Pythonsource
+files totaling approximately 11,139 lines of code, with 44 test files. The runtime dependency
+
+
+                                                     5
+
+=== PDF PAGE 6 ===
+                                            Dey and Viradecha
+
+
+
+                                  Table 1: MemPalace functional layers
+
+        Layer            Components                             Purpose
+        Ingestionminer,  convo               miner,  normalizeConvert files/convos to drawers
+        Storage    palace,  backends/chromaChromaDB collection mgmt
+        Organizationgeneral           extractor,  room    detectorAuto-classify into wings/rooms
+        Search                 searcher                              Similarity + metadata filtering
+        KG                      knowledgegraph,  entity   registrySQLite entity-rel. triples
+        Compressiondialect                                  AAAK summarization
+        Memory Stack  layers                                     4-layer progressive loading
+        Interface   mcp          server,  cli                           MCP tools and CLI
+        Maintenancededup,  repair,  migrate        Data integrity and migration
+
+                      Table 2: Palace hierarchy: metaphor vs. implementation
+
+          Level     Implementation        ChromaDB Mapping   Cognitive Analog
+          Palace     ChromaDB collectionmempalace                drawersThe building
+          Wing       Metadata field         where={wing:v}              Major section
+          Room      Metadata field         where={room:v}              Room in a wing
+          Hall         Optional metadatawhere={hall:v}              Corridor (optional)
+          Closet     Pointer index (v3.3+)    Compact lookup layer       Shelf in a room∗
+          Drawer    ChromaDB document    Individual document ID    Specific memory
+
+
+footprint is minimal:chromadbandpyyaml.  The system runs entirely locally—no cloud
+services, no API keys, no subscription fees.
+
+Table1summarizes the functional layers.
+
+3.2 The Palace Hierarchy
+MemPalace’s central metaphor maps the method of loci’s architectural structure to a data
+hierarchy (Table2).
+
+A critical finding:the palace hierarchy is entirely flat in storage. All drawers exist
+in a single ChromaDB collection (mempalace                 drawers). The hierarchical structure is repre-
+sented solely through metadata fields. This is functionally equivalent to tagging documents
+withcategorylabelsandfilteringonthoselabelsduringsearch—astandardpatterninevery
+vector database deployment guide.
+
+3.3 Ingestion Pipeline
+MemPalace provides two ingestion paths:
+
+Project Mining(miner.py): Reads files from a project directory, applies fixed chunking
+(800 characters per chunk, 100 characters overlap), and stores each chunk as a drawer.
+These parameters are within the standard RAG range—LangChain’s defaultRecursive-
+CharacterTextSplitteruses 1000/200.
+
+
+                                                          6
+
+=== PDF PAGE 7 ===
+                             Spatial Metaphors for LLM Memory
+
+
+
+Conversation Mining(convo             miner.py): Ingests conversation exports, chunking by ex-
+changepair(oneuserturnplustheAI’sresponse). Thispreservesconversationalcoherence—
+a thoughtful design choice.
+Bothpathsproduceidenticaloutput: ChromaDBdocumentswithmetadatafieldsspecifying
+wing, room, source file, and timestamp. The drawer ID is deterministic:
+                         drawer    {wing}   {room}   {md5(content)[:12]}
+
+providing natural deduplication for identical content.
+
+3.4 Search Mechanism
+The search implementation insearcher.pyis straightforward:
+
+ def search_memories(query,  palace_path,  wing=None,  room=None,
+                             n_results=5,   max_distance=0.0):
+       col  =  get_collection(palace_path,  create=False)
+       where  =  build_where_filter(wing,  room)
+       results  =  col.query(
+            query_texts=[query],
+            n_results=n_results,
+            include=["documents","metadatas","distances"],
+            **({’where’:  where}if where else {})
+      )
+      #... format and return results
+                           Listing 1: Core search function (simplified)
+
+Thebuild     where   filter()function constructs a ChromaDBwhereclause from wing and
+room parameters.  This is the mechanism behind MemPalace’s claimed “+34% retrieval
+improvement from palace structure.”  The improvement comes fromnarrowing the search
+spacewhen you know the relevant wing—standard metadata filtering, available as a first-
+class feature in ChromaDB, Pinecone, Weaviate, and every other major vector database.
+
+3.5 Knowledge Graph
+The knowledge graph (knowledge          graph.py, 401 LOC) stores entity-relationship triples in
+SQLite:
+ CREATE TABLE entities  (
+      idTEXT PRIMARYKEY,  nameTEXT,  typeTEXT,
+       properties TEXT,  created_at TEXT
+ );
+ CREATE TABLE triples  (
+      idTEXT PRIMARYKEY,  subject TEXT,  predicate TEXT,  object TEXT,
+       valid_from TEXT,  valid_to TEXT,  confidence REAL,
+       source_closet TEXT,  source_file TEXT,  extracted_at TEXT
+ );
+                                Listing 2: Knowledge graph schema
+
+Thegraphsupportstemporalqueries, entity-centrictraversal, andrelationship-typequeries.
+However, compared to Zep’s Graphiti (Neo4j with entity resolution, multi-hop traversal,
+
+
+                                                    7
+
+=== PDF PAGE 8 ===
+                                         Dey and Viradecha
+
+
+
+                                  Table 3: Four-layer memory stack
+
+        Layer                 Content                                    Size                   Loading
+        L0: Identity           User-written identity text       ∼100 tok              Always
+        L1: Essential         Auto-generated from top drawers ∼500–800 tok       Always
+        L2: On-Demand    Topic/wing-specific context     ∼200–500/topic    On detect
+        L3: Deep Search    Full semantic search results             Unlimited             Per query
+
+
+
+community detection), MemPalace’s knowledge graph is a flat triple store supporting only
+single-hop lookups.   Genuine contradiction detection—e.g., recognizing that “Max loves
+chess” contradicts “Max hates chess”—is not implemented; only exact-match deduplication
+exists.
+
+3.6 AAAK Compression Dialect
+The AAAK dialect (dialect.py, 1,075 LOC) is a structured summarization format that
+extracts entities, topics, key sentences, emotions, and flags from plain text.   Its header
+comment correctly states:“AAAK is NOT lossless compression. The original text cannot
+be reconstructed from AAAK output.”Thiscorrectionwasaddedaftertheinitialbenchmark
+controversy (see§4.2).  Benchmark testing shows AAAK mode achieves 84.2% Recall@5
+versus 96.6% for verbatim mode—a 12.4 percentage point drop.
+
+3.7 Four-Layer Memory Stack
+Thememorystack(layers.py, 493LOC)isoneofMemPalace’smostpracticalinnovations
+(Table3).
+
+Thecombinedwake-upcostofL0+L1isapproximately170tokens—notablylowcompared
+to many memory systems that require thousands of tokens to initialize.
+
+3.8 MCP Server
+The MCP server (mcp        server.py, 784+ LOC) exposes 29 tools (19+ at time of initial anal-
+ysis; expanded in v3.3.x) including:recall(semantic search),remember(store a memory),
+rooms(listroomsinawing),palace              status(returnsummarywithPALACE                 PROTOCOLdirec-
+tive), and knowledge graph operations. ThePALACE               PROTOCOLdirective is a form of prompt
+engineering that materially improves retrieval quality by guiding LLM query formulation.
+
+
+4 Evaluation and Benchmarks
+4.1 LongMemEval Results
+LongMemEval (Wu et al.,2024) is a benchmark designed to test long-term memory in con-
+versational AI. It consists of 500 questions about conversations spanning multiple sessions.
+MemPalace reports the results shown in Table4.
+
+
+                                                      8
+
+=== PDF PAGE 9 ===
+                              Spatial Metaphors for LLM Memory
+
+
+
+                       Table 4: MemPalace performance on LongMemEval
+
+  Mode                                Recall@5   LLM Required   Notes
+  Raw (verbatim ChromaDB)   96.6%           None                      Default embeddings
+  Hybrid v4 held-out                 98.4%           Yes                         450 held-out questions†
+  AAAK compression                84.2%           None                      Lossy summarization
+  Room-based boosting              89.4%           None                      Metadata-filtered
+
+
+
+†Note: The MemPalace maintainers subsequently replaced the 100% headline with 98.4%
+R@5 on 450 held-out questions (tuned on 50 dev), noting that “the last 0.6% was reached
+by inspecting specific wrong answers,” which they flagged as teaching to the test.  This
+self-correction is a positive example of responsible benchmarking.
+
+The 96.6% figure—the most widely cited—isrecall                   any@5:  at least one of the five re-
+turned results contains the correct answer session. This is a legitimate metric, but the most
+generous variant of recall.
+
+4.2 The Benchmark Controversy
+In April 2026, independent researcher dial481 filed GitHub Issue #29 (dial481 and lhl,
+2026), providing a detailed audit of MemPalace’s benchmark claims.  The audit identified
+six concerns subsequently acknowledged by the maintainers:
+
+1. Attributionofperformance: The96.6%Recall@5istheperformanceofChromaDB’s
+defaultembeddingmodel(all-MiniLM-L6-v2)appliedtoverbatimtextchunks. Independent
+testing confirms this is reproducible with a minimal ChromaDB setup—no palace structure
+required.
+2.   The 100% claim:  Achieving 100% (500/500) on LongMemEval required multiple
+iterations with LLM reranking.  Presenting this as a single-run benchmark score without
+disclosing the iterative process was misleading.
+
+3.  LoCoMo benchmark: The 100% LoCoMo claim was achieved withtop                               k=50, effec-
+tively retrieving the entire conversation.  Honest LoCoMo performance with reasonablek
+values is 60.3% Recall@10 (raw) or 88.9% (hybrid with reranking).
+4. AAAK compression claims: “30x compression, zero information loss” was shown to
+be lossy summarization (84.2% vs. 96.6% recall).
+5.  Contradiction detection: Documentation claimed semantic contradiction detection;
+the code implements only exact-match deduplication.
+6.  The “+34% boost”:  Represents standard metadata filtering benefit, not a novel
+retrieval mechanism.
+The MemPalace maintainer responded constructively, acknowledging all points and retiring
+the disputed numbers.  This demonstrates intellectual honesty, even if the initial claims
+were overstated.
+
+
+                                                     9
+
+=== PDF PAGE 10 ===
+                                            Dey and Viradecha
+
+
+
+                           Table 5: MemPalace honest performance profile
+
+         Metric                                  Value                 Context
+         LongMemEval Recall@5 (raw)   96.6%                     ChromaDB + verbatim
+         LongMemEval QA accuracy∼67.2%                  End-to-end QA
+         LoCoMo Recall@10 (raw)           60.3%                     Without reranking
+         LoCoMo Recall@10 (hybrid)      88.9%                     With LLM reranking
+         AAAK mode recall                     84.2%                     Lossy summarization
+         Wake-up cost                  ∼170–900 tokens   L0 + L1 combined
+         Write latency                              Deterministic         Zero API cost
+
+
+
+                    Table 6: AI memory systems comparison on LongMemEval
+
+             System                      R@5   Architecture                Write   Price
+             MemPalace(raw)       96.6%    ChromaDB + verbatim    None      Free
+             Supermemory ASMR∼99%    Multi-agent agentic          LLM      Paid
+             Mastra                          94.9%    GPT-5-mini observ.          LLM      Paid
+             Mem0 (token-eff.)         93.4%    Hierarchical extract          LLM$19–249
+             Hindsight                      91.4%    Retain/Recall/Reflect      LLM      Paid
+             Zep/Graphiti∼85%    Temporal KG (Neo4j)      LLM$25+
+             Mem0 (pre-2026)∼49%    LLM fact extraction         LLM$19–249
+             LangMem                        N/R    LangChain primitives       LLM      Usage
+             Letta                               N/R    3-tier self-editing              LLM      Open
+
+
+
+4.3 Honest Performance Assessment
+Basedonindependentanalysis,MemPalace’shonestperformanceprofileisshowninTable5.
+
+4.4 Comparison with Competing Systems
+Table6compares MemPalace against seven competing systems.
+
+
+MemPalace’s competitive position is noteworthy: it achieves the highest published no-LLM
+score on LongMemEval, at zero cost, with a fully deterministic write path.   Note that
+Mem0’s new token-efficient algorithm (93.4%) has substantially narrowed this gap;  the
+verbatim advantage is now most pronounced in zero-cost, offline scenarios.
+
+
+Note on cross-system comparisons: The MemPalace maintainers themselves removed their
+cross-system comparison tables in v3.3.0 after recognizing a category error (R@5 retrieval
+recall listed alongside QA accuracy from competing systems under a single column).  Our
+Table6compares R@5 throughout, but this context underscores the difficulty of fair cross-
+system evaluation in this rapidly evolving field.
+
+
+                                                        10
+
+=== PDF PAGE 11 ===
+                              Spatial Metaphors for LLM Memory
+
+
+
+5 Discussion
+5.1 What Is Genuinely Novel
+After thorough analysis, we identify six genuinely novel contributions:
+
+1.  The verbatim-first philosophy.MemPalace’s most important insight is philosophi-
+cal:store everything, never summarize, solve retrieval separately.This directly contradicts
+the consensus approach (Mem0, Zep, LangMem all extract and summarize). At the time of
+initial analysis, verbatim storage (96.6% R@5) outperformed extraction-based approaches
+(Mem0 at∼49%) by a wide margin.  However, Mem0’s April 2026 “token-efficient mem-
+ory algorithm” raised their LongMemEval score to 93.4% (and 85.0% on LoCoMo), sub-
+stantially narrowing this gap.  The theoretical justification for verbatim storage remains
+sound—extraction is a lossy operation performed under uncertainty about future query
+distributions—but the empirical advantage is now modest rather than decisive. The verba-
+tim approach retains a clear advantage in zero-cost, zero-LLM-call scenarios.
+
+2. The spatial metaphor as organizing principle.MemPalace is the first AI memory
+system to systematically apply the method of loci as an organizational framework. While
+the metaphor does not improve vector similarity search mathematically, it provides a co-
+herent mental model for users managing their AI’s memory—a genuine human-computer
+interaction contribution.
+
+3.  Zero-LLM write path.MemPalace’s ingestion pipeline requires no LLM inference,
+enabling zero API cost for memory writes, deterministic reproducible behavior, fully offline
+operation, andnoratelimitsorvendorlock-in. Inamarketwhereeverycompetitorcharges
+per-token for memory writes, this is a significant practical advantage.
+
+4. Minimal wake-up cost.The four-layer memory stack achieves∼170–900 token wake-
+up cost—among the lowest published figures for any memory system. By deferring detailed
+retrieval to L2 and L3, MemPalace preserves the majority of the LLM’s context window for
+the user’s actual task.
+
+5.  Per-agent diary system.MemPalace supports multiple “specialist” agents, each
+with a persistent diary accumulating across sessions.   The implementation is unusually
+lightweight and well-integrated with the palace structure.
+
+6.PALACE     PROTOCOLprompt engineering.ThePALACE                    PROTOCOLdirective is a practical
+innovation in prompt engineering for memory-augmented LLMs. By instructing the LLM
+to “search before claiming ignorance,” it improves retrieval quality without changing the
+underlying search mechanism—behavioraloptimization rather thanalgorithmicoptimiza-
+tion.
+
+5.2 What Is Not Novel
+Equally important is an honest assessment of what MemPalace presents as novel but is
+standard practice:
+
+
+                                                    11
+
+=== PDF PAGE 12 ===
+                                         Dey and Viradecha
+
+
+
+1.   Metadata filteringon vector databases.   The “+34% retrieval improvement from
+palace structure” is metadata-scoped search—a first-class feature documented in every vec-
+tor database’s getting-started tutorial.
+
+2. Embedding-based semantic search.The 96.6% Recall@5 is achievable with a bare
+ChromaDB collection and verbatim text, without any palace structure.
+
+3.  Fixed-size text chunking.The 800-character chunks are standard RAG practice.
+LangChain, LlamaIndex, and dozens of other frameworks provide equivalent strategies.
+
+4. Simple knowledge graph.The SQLite triple store is simpler than Zep’s Graphiti and
+comparable to undergraduate database course examples.
+
+5. Agent-specificmemory.Per-agentpersistentmemoryexistsinByteRover,ClawVault,
+and other systems.
+
+5.3 The Marketing-Science Gap
+MemPalaceexhibitsapatterncommoninsuccessfulopen-sourceprojects: marketingclaims
+outrun scientific rigor.  The specific instances include:  96.6% presented without sufficient
+attribution to ChromaDB’s embedding model; 100% LongMemEval without disclosing iter-
+ative test-fix methodology; “30x compression, zero information loss” for a lossy summariza-
+tion format; “contradiction detection” for exact-match deduplication; and 100% LoCoMo
+withtop    k=50.
+
+To the maintainers’ credit, all these claims were corrected when challenged.  This distin-
+guishes MemPalace from projects that double down on disputed claims. However, the ini-
+tial overclaiming had consequences: the project’s rapid growth (now>48,000 stars) began
+during the period of maximum claim inflation.
+
+5.4 The Cognitive Science Verdict
+Does MemPalace’s method of loci metaphor have scientific validity?
+
+As a computational technique: No.  The spatial metaphor does not improve retrieval
+accuracy, reduce latency, or enable capabilities that a flat vector database cannot provide.
+Thebrain’shippocampalplacecellsystemandChromaDB’sHNSWindexarenotanalogous
+mechanisms.
+
+As a cognitive ergonomic: Yes, with caveats. The palace metaphor provides a coherent,
+intuitive mental model for non-technical users.  The hierarchy (domains→topics→specific
+memories) maps to how humans naturally organize knowledge.
+
+As a design principle: Partially.  Hierarchical organization genuinely improves memory
+systems—the cognitive science evidence is strong (Collins and Quillian,1969;Collins and
+Loftus,1975;Schapiro et al.,2017;Collin et al.,2020).  But MemPalace implements hier-
+archy as metadata tagging, capturing thestructuralbenefit (scoped retrieval) without the
+associativebenefit (spreading activation, inheritance, priming).
+
+
+                                                    12
+
+=== PDF PAGE 13 ===
+                              Spatial Metaphors for LLM Memory
+
+
+
+5.5 The Verbatim Insight in Context
+MemPalace’s verbatim-first philosophy deserves deeper examination because it challenges
+a field-wide assumption. The consensus approach uses LLMs for extraction: read the con-
+versation, identify key facts, store those facts.  MemPalace’s benchmark results show this
+reasoning is wrong for retrieval tasks. The extraction step introduces two forms of error:
+
+1.False negatives: The LLM fails to extract information that will be relevant to a future
+   query. Since future queries are unknown at extraction time, any extraction is a bet on
+   future relevance.
+
+2.Semantic distortion:  The LLM’s restatement of facts introduces subtle changes in
+   wording that degrade embedding similarity with the future query.  Verbatim text is a
+   better embedding target because it preserves the original language the user will likely
+   echo.
+
+This insight—that the retrieval problem is better solved at read time than write time—
+is analogous to the database community’s shift from pre-computed views to query-time
+aggregation. It is not revolutionary computer science, but it is a useful corrective to the AI
+memory field’s premature optimization of the write path.
+
+5.6 Scalability Considerations
+MemPalace’s architecture raises legitimate scalability questions.Single collection de-
+sign:  All drawers exist in a single ChromaDB collection.   Very large collections (>1M
+documents) may benefit from collection sharding. As of v3.2.0, a backend abstraction layer
+(backends/base.py) has shipped, enabling pluggable storage backends (see§5.8).Knowl-
+edge graph scaling: The SQLite knowledge graph lacks indexes for multi-hop queries and
+has no partition strategy for very large entity graphs.
+
+5.7 MemPalace v4.0.0-alpha: Emerging Directions
+The project’s stated roadmap includes:  a local NLP pipeline to replace regex-based clas-
+sification; hierarchical embeddings that could bring the palace metaphor closer to compu-
+tational reality; and further security hardening.  Several items previously on the roadmap
+(swappable backends, hybrid BM25 search) have already shipped in v3.2.0–v3.3.0.
+
+5.8 Post-Analysis Developments (v3.2.0–v3.3.1)
+The MemPalace ecosystem has evolved rapidly since our analysis of v3.1.0. Several devel-
+opments are significant enough to note:
+
+Backend abstraction (v3.2.0).The pluggable storage backend predicted by the v4.0.0-
+alpha roadmap shipped ahead of schedule in v3.2.0.  The retrieval layer is now defined by
+an abstract interface inbackends/base.py, with ChromaDB as the default. This validates
+our prediction (§5.6) that collection sharding would be addressed, and opens the door to
+LanceDB, PostgreSQL with pgvector, or community backends.
+
+
+                                                     13
+
+=== PDF PAGE 14 ===
+                                        Dey and Viradecha
+
+
+
+Closet layer and BM25 hybrid search (v3.3.0).A new “Closet” organizational layer
+wasaddedbetweenRoomsandDrawers,providingacompactsearchableindexofpointersto
+verbatim drawers. BM25 keyword search was integrated alongside semantic similarity, with
+closets boosting ranking while drawers remain the source of truth.  Cross-wing “tunnels”
+were also added, enabling links between related drawers across different wings.
+
+Thehnsw:space=cosinebugfix (v3.3.0).A critical bug was disclosed:  prior versions
+did not sethnsw:space=cosinemetadata on ChromaDB collection creation, meaning the
+database defaulted to L2 (Euclidean) distance rather than cosine similarity.   Since all-
+MiniLM-L6-v2 embeddings are normalized, L2 and cosine rankings are equivalent for this
+model, but the fix is methodologically important and the 96.6% benchmark result should
+be understood as having been measured under L2 distance.
+
+Self-correction on benchmarks (v3.3.0).The maintainers replaced their 100% Long-
+MemEvalheadlinewith98.4%R@5onheld-outdata,andremovedcross-systemcomparison
+tables that they acknowledged contained category errors (mixing R@5 retrieval recall with
+QA accuracy from other systems).  This responsible self-correction is commendable and
+supports the project’s maturation.
+
+Internationalization (v3.2.0–v3.3.1).Support for 13 languages with multi-language
+entity detection, reflecting growing global adoption.
+
+Competitive landscape shift.Mem0’s April 2026 “token-efficient memory algorithm”
+raised their LongMemEval score from∼49% to 93.4%, substantially challenging the narra-
+tive that extraction-based approaches are inherently inferior to verbatim storage. The gap
+between MemPalace (96.6%) and Mem0 (93.4%) is now within statistical noise for many
+practical applications, though MemPalace retains its unique advantage of zero LLM cost at
+write time.
+
+Growth.GitHub stars grew from∼42,000 at initial analysis to>47,900 by April 19, 2026,
+confirming sustained community interest beyond the initial viral adoption period.
+
+
+6 Related Systems in Detail
+SupermemoryASMR(SupermemoryAI,2025)achieves∼99%onLongMemEvalthrough
+a multi-agent architecture combining semantic, temporal, and entity search with LLM-
+guided reranking.  Every operation involves LLM inference, making it significantly more
+expensive than MemPalace.
+
+Mem0(Mem0 AI,2024) is the most widely deployed AI memory system (>24,000 GitHub
+stars). ItsoriginalLongMemEvalperformance(∼49%)wassignificantlybelowMemPalace’s,
+supporting the critique that extraction loses information.  However, in April 2026, Mem0
+released a “token-efficient memory algorithm” using single-pass hierarchical extraction and
+multi-signal retrieval, raising their LongMemEval score to 93.4% (also 85.0% on LoCoMo
+and 62% on BEAM-1M). This result substantially challenges the narrative that extraction-
+based approaches are inherently inferior, though MemPalace retains its advantage in zero-
+cost, offline scenarios.
+
+
+                                                    14
+
+=== PDF PAGE 15 ===
+                              Spatial Metaphors for LLM Memory
+
+
+
+ Table 7: Evaluation dimensions for AI memory systems (MemPalace scores in column 3)
+
+      Dimension              Definition                         MemPalace
+      Fidelity                        Information preservation⋆⋆⋆⋆⋆(verbatim)
+      Retrieval Acc.              Search result quality           ⋆⋆⋆⋆◦(96.6% R@5)
+      Write Cost                   Storage resource usage  ⋆⋆⋆⋆⋆(zero LLM)
+      Read Cost                   Retrieval resource usage⋆⋆⋆⋆◦(embedding only)
+      Wake-up Cost              Context for initialization⋆⋆⋆⋆⋆(∼170 tokens)
+      Relational Depth         Relationship query ability   ⋆⋆◦◦◦(flat triples)
+      Temporal Reasoning   Time-bounded fact support⋆⋆⋆◦◦(valid                         from/to)
+      Scalability                   Large data performance⋆⋆⋆◦◦(single collection)
+      Privacy                        Data locality and control ⋆⋆⋆⋆⋆(fully local)
+      Deployability               Ease of setup               ⋆⋆⋆⋆⋆(2 dependencies)
+
+
+
+Zep/Graphiti(Zep AI,2024) builds temporal knowledge graphs using Neo4j, with entity
+resolution, multi-hop traversal, and community detection. Its knowledge graph capabilities
+aresignificantlymoresophisticatedthanMemPalace’sflattriplestore. Zepachievesapprox-
+imately 85% on LongMemEval-like tasks. For relationship-centric queries, Zep is superior.
+For verbatim recall queries, MemPalace is more effective.
+
+Mastra(Mastra AI,2026) uses GPT-5-mini in an “observational” mode, achieving 94.87%
+on LongMemEval—nearly matching MemPalace’s verbatim approach—but requiring con-
+tinuous LLM inference.
+
+Hindsight(Hindsight AI,2025) implements a Retain→Recall→Reflect pipeline achieving
+91.4% on LongMemEval, demonstrating that structured reflection can improve retrieval
+quality at the cost of multiple LLM passes.
+
+
+
+7 A Framework for Evaluating AI Memory Systems
+Basedonouranalysis,weproposeamulti-dimensionalevaluationframeworkforAImemory
+systems (Table7).
+
+No single system excels on all dimensions.  MemPalace optimizes for fidelity, write cost,
+privacy, and deployability at the expense of relational depth and scalability. Zep optimizes
+for relational depth at the expense of cost.  Supermemory ASMR optimizes for retrieval
+accuracy at the expense of everything else.
+
+ThissuggeststheAImemorylandscapewillnotconvergeonasinglearchitecture—apattern
+familiarfromthedatabaseworld(relational,document,graph,time-seriesdatabasescoexist
+because they optimize for different workloads).
+
+
+                                                     15
+
+=== PDF PAGE 16 ===
+                                        Dey and Viradecha
+
+
+
+8 Conclusion
+8.1 Is MemPalace Revolutionary?
+The evidence supports a nuanced conclusion:
+
+MemPalace is not architecturally revolutionary.  Its core retrieval mechanism is
+standard vector database similarity search with metadata filtering.  Its knowledge graph
+is a simple triple store.  The palace metaphor maps to well-established vector database
+features rather than novel algorithmic mechanisms.
+
+MemPalace is philosophically significant.Its verbatim-first insight—that raw stor-
+age plus good embeddings outperforms LLM-mediated extraction—is empirically validated,
+practically important, and genuinely contrarian. In a field converging on extraction-based
+architectures, MemPalace demonstrated that the simpler approach works better for recall
+tasks.
+
+MemPalace is ergonomically innovative.The spatial metaphor provides a coherent
+usermentalmodel. Thefour-layermemorystack,thePALACE                    PROTOCOLpromptengineering,
+and the MCP tool integration are practical engineering innovations that improve the user
+experience of memory-augmented AI.
+
+8.2 Recommendations
+For the MemPalace project:
+
+1.Separate marketing from benchmarks.  Attribute performance to specific components
+   (embeddings, verbatim storage, metadata filtering) rather than to the palace metaphor
+   generically.
+
+2.Invest in the knowledge graph. Multi-hop traversal, entity resolution, and genuine con-
+   tradiction detection would differentiate MemPalace from pure vector search solutions.
+
+3.Explore hierarchical embeddings.  The cognitive science literature suggests embedding
+   spaces could be hierarchically structured, bringing the palace metaphor closer to compu-
+   tational reality.
+
+4.Publish honest benchmarks.  Report multiple metrics (R@1, R@5, R@10, NDCG, end-
+   to-end QA accuracy) with ablation studies.
+For the AI memory research community:
+
+1.Revisit the extraction assumption.   MemPalace’s results suggest that the default ap-
+   proach (extract-then-store) may be dominated by store-then-retrieve for many use cases.
+
+2.Developstandardizedbenchmarks. LongMemEvaltestsretrieval,notend-to-endmemory
+   utility.  The field needs benchmarks that evaluate memory systems in realistic multi-
+   session conversation scenarios.
+
+3.Study human factors.  The user’s ability to understand, configure, and maintain their
+   AI’s memory is at least as important as retrieval accuracy.
+
+
+                                                    16
+
+=== PDF PAGE 17 ===
+                             Spatial Metaphors for LLM Memory
+
+
+
+8.3 Final Assessment
+MemPalace is best understood assignificant architectural insight wrapped in over-
+stated claims—a pattern endemic to rapidly adopted open-source projects where com-
+munity growth velocity incentivizes marketing over scientific precision. The insight is real:
+verbatim storage, zero-cost writes, minimal wake-up cost, and spatial organization for user
+comprehension are genuine contributions to the AI memory design space. The overclaims
+have been largely corrected by the maintainers in response to community scrutiny.
+The project’s extraordinary adoption (>48,000 stars in two weeks) reflects genuine user
+need more than technical revolution.  MemPalace offers a simple, free, private, effective
+solution.  That this solution is built on standard primitives rather than novel algorithms
+does not diminish its practical utility—it merely contextualizes its scientific contribution.
+ThegreatestlegacyofMemPalacemaynotbethepalacemetaphoritselfbutthedemonstra-
+tionthattheAImemoryproblemiseasierthanthefieldassumed. Youdon’tneedknowledge
+graphs, entity extraction, or multi-agent agentic search to achieve 96.6% retrieval accuracy.
+You need to store everything, embed it well, and search it honestly.  The rest—the wings,
+rooms, and drawers—is how you help humans understand what the machine remembers.
+
+
+References
+Anthropic. Model context protocol (MCP), 2024. URLhttps://modelcontextprotocol.
+  io. Accessed April 2026.
+
+Frederic C. Bartlett.Remembering: A Study in Experimental and Social Psychology. Cam-
+  bridge University Press, Cambridge, UK, 1932.
+
+Chroma. ChromaDB: The AI-native open-source embedding database, 2023. URLhttps:
+  //www.trychroma.com. Accessed April 2026.
+
+SimonH.P.Collin, BrankaMilivojevic, andChristianF.Doeller. Hippocampalhierarchical
+  organization of related memories.Proceedings of the National Academy of Sciences, 117
+  (14):7981–7987, 2020. doi: 10.1073/pnas.1921033117.
+
+Allan M. Collins and Elizabeth F. Loftus.  A spreading-activation theory of semantic pro-
+  cessing.Psychological Review, 82(6):407–428, 1975. doi: 10.1037/0033-295X.82.6.407.
+
+Allan M. Collins and M. Ross Quillian. Retrieval time from semantic memory.Journal of
+  Verbal Learning and Verbal Behavior, 8(2):240–247, 1969.  doi:  10.1016/S0022-5371(69)
+  80069-1.
+
+dial481 and lhl. Independent analysis: agentic-memory benchmark reproduction. GitHub
+  Issue #29, mempalace repository, 2026. Filed April 2026.
+
+Martin Dresler, William R. Shirer, Boris N. Konrad, Nicola S. M¨uller, Isabella C. Wagner,
+  GuillenFernandez,MichaelD.Greicius,andMichaelCzisch. Mnemonictrainingreshapes
+  brainnetworkstosupportsuperiormemory.Neuron,93(5):1227–1235,2017. doi: 10.1016/
+  j.neuron.2017.02.003.
+
+
+                                                    17
+
+=== PDF PAGE 18 ===
+                                        Dey and Viradecha
+
+
+
+Hindsight AI. Retain–recall–reflect: Three-phase memory architecture, 2025. URLhttps:
+  //hindsight.ai. Accessed April 2026.
+
+Milla Jovovich. MemPalace: Method of loci for AI memory, 2026. URLhttps://github.
+  com/MemPalace/mempalace.   MIT License. Accessed April 2026. Originally athttps:
+  //github.com/milla-jovovich/mempalace, migrated to MemPalace organization.
+
+LangChain  Inc.    LangMem:   Memory  primitives  for  LangChain,  2025.    URLhttps:
+  //langchain.com. Accessed April 2026.
+
+PatrickLewis,EthanPerez,AleksandraPiktus,FabioPetroni,VladimirKarpukhin,Naman
+  Goyal, Heinrich K¨uttler, Mike Lewis, Wen-tau Yih, Tim Rockt¨aschel, Sebastian Riedel,
+  andDouweKiela. Retrieval-augmentedgenerationforknowledge-intensiveNLPtasks. In
+  Advances in Neural Information Processing Systems (NeurIPS), volume 33, pages 9459–
+  9474, 2020.
+
+Yury A. Malkov and Dmitry A. Yashunin. Efficient and robust approximate nearest neigh-
+  bor search using hierarchical navigable small world graphs.IEEE Transactions on Pat-
+  tern Analysis and Machine Intelligence, 42(4):824–836, 2020. doi: 10.1109/TPAMI.2018.
+  2889473.
+
+Mastra AI.   Observational memory with GPT-5-mini, 2026.   URLhttps://mastra.ai.
+  Accessed April 2026.
+
+Mem0 AI. Mem0: AI memory for personalized AI, 2024. URLhttps://mem0.ai. Accessed
+  April 2026.
+
+Edvard I. Moser, Emilio Kropff, and May-Britt Moser.   Place cells, grid cells, and the
+  brain’s spatial representation system.Annual Review of Neuroscience, 31:69–89, 2008.
+  doi: 10.1146/annurev.neuro.31.061307.090723.
+
+John O’Keefe and Lynn Nadel.The Hippocampus as a Cognitive Map. Oxford University
+  Press, Oxford, UK, 1978.
+
+Jan Ondˇrej et al. The method of loci in the context of psychological research: A systematic
+  reviewandmeta-analysis.BritishJournalofPsychology,116:930–986,2025. doi: 10.1111/
+  bjop.12799. Evaluates effectiveness, cognitive mechanisms, and neurobiological correlates
+  of the method of loci.
+
+Charles Packer, Vivian Fang, Shishir G. Patil, Kevin Lyu, Ruoxi Zhu, and Joseph E. Gon-
+  zalez. MemGPT: Towards LLMs as operating systems, 2023.
+
+Anna C. Schapiro, Nicholas B. Turk-Browne, Matthew M. Botvinick, and Kenneth A. Nor-
+  man. Complementary learning systems within the hippocampus: A neural network mod-
+  ellingapproachtoreconcilingepisodicandstatisticallearning.Philosophical Transactions
+  of the Royal Society B, 372(1711):20160049, 2017.  doi: 10.1098/rstb.2016.0049.  Recon-
+  cilesepisodicmemorywithstatisticallearningviacomplementarylearningsystemsinthe
+  hippocampus.
+
+
+                                                   18
+
+=== PDF PAGE 19 ===
+                               Spatial Metaphors for LLM Memory
+
+
+
+Supermemory  AI.    ASMR:  Agentic  search  memory  retrieval,  2025.    URLhttps://
+  supermemory.com. Accessed April 2026.
+
+Yi Wu, Xin Wang, Liwei Jin, Penghao Hu, Denny Yang, and Brian M. Sadler.   Long-
+  MemEval: Benchmarking long-term memory in AI assistants, 2024.
+
+Zep AI.  Graphiti: Temporal knowledge graphs for AI, 2024.  URLhttps://www.getzep.
+  com. Accessed April 2026.
+
+
+Appendix A. Code Statistics
+
+        Table 8: MemPalace codebase statistics (v3.1.0 as analyzed; current: v3.3.1)
+
+           Metric                                Value
+           Python source files                    32
+           Lines of code (source)  ∼11,139
+           Test files                                    44
+           Runtime dependencies              2 (chromadb, pyyaml)
+           MCP tools                                 19+ (v3.1.0); 29 (v3.3.x)
+           ChromaDB collections              1 primary + 1 optional (compressed)
+           Embedding model                     all-MiniLM-L6-v2 (384 dimensions)
+           Embedding distance metric      Cosine (HNSW space)‡
+           Chunk size                                800 chars (project mining)
+           Chunk overlap                           100 chars
+           Knowledge graph storage          SQLite (2 tables)
+           Drawer ID format           drawer                {wing}    {room}   {md5[:12]}
+           GitHub stars (Apr. 19, 2026)    47,900+
+           GitHub forks (Apr. 19, 2026)   6,000+
+           Version analyzed                       3.1.0 (current: 3.3.1 as of April 19, 2026)
+    ‡The v3.3.0 changelog revealed that prior versions did not sethnsw:space=cosine
+  metadata on collection creation, meaning ChromaDB used L2 distance by default. The
+    96.6% benchmark may have been measured under L2, not cosine distance (see§5.8).
+
+
+Appendix B. Benchmark Reproduction Notes
+The following conditions are required to reproduce the 96.6% LongMemEval Recall@5:
+
+1.Use ChromaDB with default settings (all-MiniLM-L6-v2 embeddings, cosine distance).
+2.Store verbatim conversation text (no summarization, no extraction).
+
+3.Use the LongMemEval standard dataset (500 questions, multiple sessions per question).
+
+4.Evaluaterecall         any@5: at least one of the top-5 retrieved sessions matches a ground-
+   truth answer session.
+
+
+                                                      19
+
+=== PDF PAGE 20 ===
+                                        Dey and Viradecha
+
+
+
+5.Ingest complete haystack sessions for each question before querying.
+Important:  The palace structure (wings, rooms) is not required for this score.   It is
+achievable with a bare ChromaDB collection and basic text chunking.  The 96.6% figure
+should be understood as a property of verbatim storage plus all-MiniLM-L6-v2 embeddings,
+not of the palace hierarchy.
+
+
+Appendix C. Glossary
+AAAKMemPalace’s lossy summarization dialect (Adapted Abbreviation for AI Knowl-
+      edge).
+ChromaDBOpen-source embedding database used as MemPalace’s storage backend.
+ClosetCompact searchable index layer between Rooms and Drawers (added in v3.3.0).
+DrawerAtomic memory unit in MemPalace—a text chunk with metadata.
+HNSWHierarchical Navigable Small World graph—approximate nearest neighbor search
+      algorithm.
+LongMemEvalBenchmark for evaluating long-term memory in conversational AI (500
+      questions).
+LoCoMoLong Conversation Memory benchmark.
+MCPModel Context Protocol—Anthropic’s standard for LLM↔tool communication.
+Method of Loci (MoL)Ancient mnemonic technique using spatial locations to organize
+      memories.
+PalaceMemPalace’s hierarchical organization structure (Wings→Rooms→Drawers).
+R@kRecall at rankk—fraction of queries with at least one correct answer in top-kresults.
+RAGRetrieval-Augmented Generation—pattern of augmenting LLM input with retrieved
+      context.
+RoomTopic-level organizational unit within a MemPalace Wing.
+WingDomain-level organizational unit in MemPalace (top of hierarchy).
+
+
+Appendix D. Disclosure
+This analysis was conducted independently using a fork of the MemPalace codebase. The
+primary analysis was performed on MemPalace v3.1.0. Post-analysis developments through
+v3.3.1 were incorporated via changelog review and documentation updates, not full re-
+analysis.  The benchmark reproduction scripts and integration code are available in the
+accompanying repository.1
+
+
+
+1.https://github.com/web3guru888/mempalace-scientific-analysis
+
+
+                                                   20

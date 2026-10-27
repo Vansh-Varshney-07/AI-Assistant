@@ -1,0 +1,43 @@
+{
+  "paired_questions": 528,
+  "actual_generated_answers": 1056,
+  "grading_counts": {
+    "dmr": {
+      "n": 100,
+      "ironweb_correct": 7,
+      "baseline_correct": 6
+    },
+    "locomo": {
+      "n": 328,
+      "ironweb_correct": 10,
+      "baseline_correct": 10
+    },
+    "longmemeval": {
+      "n": 100,
+      "ironweb_correct": 8,
+      "baseline_correct": 10
+    }
+  },
+  "finish_reasons": {
+    "stop": 1041,
+    "length": 15
+  },
+  "source_hashes_unchanged": 56,
+  "independent_scipy_checks": [
+    {
+      "benchmark": "DMR",
+      "scipy_p": 1.0
+    },
+    {
+      "benchmark": "LoCoMo",
+      "scipy_p": 1.0
+    },
+    {
+      "benchmark": "LongMemEval",
+      "scipy_p": 0.625
+    }
+  ],
+  "reader_stopped": true,
+  "reported_tables_have_no_imputed_missing_values": true,
+  "external_inference_calls": 0
+}
