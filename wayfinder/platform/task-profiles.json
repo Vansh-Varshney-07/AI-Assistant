@@ -1,0 +1,261 @@
+{
+  "contract": "wayfinder.task-profiles/1",
+  "version": "1",
+  "main": {
+    "id": "M00",
+    "name": "Main Wayfinder Assistant",
+    "role": "One task-routing owner; no separate autonomous runtime or qualified general chat service.",
+    "permissions": "Trusted services retain authority; profile choice does not grant tools."
+  },
+  "profiles": [
+    {
+      "id": "A01",
+      "name": "Research & Verification",
+      "version": "1",
+      "worker_references": [
+        "W08",
+        "W09",
+        "W10",
+        "W11",
+        "W12",
+        "W19",
+        "W20"
+      ],
+      "eligible_connections": [
+        "web",
+        "selected_files",
+        "notion",
+        "drive",
+        "github",
+        "scoped_context"
+      ],
+      "limitation": "Selected-source research only. Live retrieval needs a qualified connector."
+    },
+    {
+      "id": "A02",
+      "name": "Planning & Productivity",
+      "version": "1",
+      "worker_references": [
+        "W13",
+        "W14",
+        "W15",
+        "W16",
+        "W17",
+        "W18",
+        "W39"
+      ],
+      "eligible_connections": [
+        "calendar",
+        "tasks",
+        "gmail",
+        "notion",
+        "scoped_context"
+      ],
+      "limitation": "Account reads and planning adapter remain unqualified."
+    },
+    {
+      "id": "A03",
+      "name": "Communications",
+      "version": "1",
+      "worker_references": [
+        "W16",
+        "W29",
+        "W30",
+        "W31",
+        "W32"
+      ],
+      "eligible_connections": [
+        "gmail",
+        "calendar",
+        "tasks",
+        "selected_files"
+      ],
+      "limitation": "No qualified content reader, draft workflow or send handler is enabled."
+    },
+    {
+      "id": "A04",
+      "name": "Software Development",
+      "version": "1",
+      "worker_references": [
+        "W19",
+        "W20",
+        "W21",
+        "W22",
+        "W23",
+        "W24",
+        "W25",
+        "W43",
+        "W45"
+      ],
+      "eligible_connections": [
+        "local_repository",
+        "github",
+        "restricted_tests",
+        "web"
+      ],
+      "limitation": "Repository editing/tests and hosted GitHub actions require separate qualification."
+    },
+    {
+      "id": "A05",
+      "name": "Knowledge & Learning",
+      "version": "1",
+      "worker_references": [
+        "W08",
+        "W09",
+        "W10",
+        "W11",
+        "W12",
+        "W34",
+        "W35",
+        "W39"
+      ],
+      "eligible_connections": [
+        "selected_files",
+        "notion",
+        "drive",
+        "docs",
+        "sheets",
+        "web",
+        "scoped_context"
+      ],
+      "limitation": "First qualified variant uses one selected UTF-8 file through existing W35. W10 is not aliased to W35."
+    },
+    {
+      "id": "A06",
+      "name": "Files & Desktop",
+      "version": "1",
+      "worker_references": [
+        "W33",
+        "W34",
+        "W35",
+        "W36",
+        "W37"
+      ],
+      "eligible_connections": [
+        "selected_files",
+        "shared_images",
+        "desktop"
+      ],
+      "limitation": "File analysis only. W33/W36 surfaces excluded; W37 disconnected and no capture/clipboard route."
+    },
+    {
+      "id": "A07",
+      "name": "Memory & Personalization",
+      "version": "1",
+      "worker_references": [
+        "W02",
+        "W38",
+        "W39",
+        "W40",
+        "W41",
+        "W42"
+      ],
+      "eligible_connections": [
+        "orchestrator_context_gateway"
+      ],
+      "limitation": "Use the existing scoped Memory view. Full forget/maintenance and complex profile execution remain unfinished."
+    },
+    {
+      "id": "A08",
+      "name": "Fitness & Habits",
+      "version": "1",
+      "worker_references": [
+        "W26",
+        "W27",
+        "W28",
+        "W13",
+        "W14",
+        "W15",
+        "W39"
+      ],
+      "eligible_connections": [
+        "fitness_later",
+        "calendar",
+        "scoped_context"
+      ],
+      "limitation": "Deferred. No fitness provider is selected."
+    }
+  ],
+  "presets": [
+    {
+      "id": "P01",
+      "name": "Google Workspace Assistant",
+      "version": "1",
+      "lead": "A02",
+      "helpers": [
+        "A03",
+        "A05"
+      ],
+      "required_connections": [
+        "calendar",
+        "tasks",
+        "gmail",
+        "drive",
+        "docs",
+        "sheets"
+      ]
+    },
+    {
+      "id": "P02",
+      "name": "Gmail Assistant",
+      "version": "1",
+      "lead": "A03",
+      "helpers": [
+        "A02"
+      ],
+      "required_connections": [
+        "gmail"
+      ]
+    },
+    {
+      "id": "P03",
+      "name": "Calendar & Tasks Assistant",
+      "version": "1",
+      "lead": "A02",
+      "helpers": [],
+      "required_connections": [
+        "calendar",
+        "tasks"
+      ]
+    },
+    {
+      "id": "P04",
+      "name": "Notion Workspace Assistant",
+      "version": "1",
+      "lead": "A05",
+      "helpers": [
+        "A02"
+      ],
+      "required_connections": [
+        "notion"
+      ]
+    },
+    {
+      "id": "P05",
+      "name": "GitHub Project Assistant",
+      "version": "1",
+      "lead": "A04",
+      "helpers": [
+        "A01",
+        "A02"
+      ],
+      "required_connections": [
+        "github"
+      ]
+    },
+    {
+      "id": "P06",
+      "name": "Drive, Docs & Sheets Assistant",
+      "version": "1",
+      "lead": "A05",
+      "helpers": [
+        "A01"
+      ],
+      "required_connections": [
+        "drive",
+        "docs",
+        "sheets"
+      ]
+    }
+  ]
+}

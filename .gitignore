@@ -18,6 +18,7 @@ backups/
 *.vhd
 *.pem
 *.key
+*.zip
 credentials.json
 token.json
 client_secret*.json
@@ -28,3 +29,13 @@ wayfinder/atlas/registry/snapshot_*.json
 
 # Generated local desktop scenarios and runtime evidence
 workbench/scenarios/
+
+# Isolated desktop integration build products
+desktop-app/node_modules/
+desktop-app/dist/
+desktop-app/release/*
+!desktop-app/release/README.md
+!desktop-app/release/START-HERE-*.md
+!desktop-app/release/*-verification.json
+!desktop-app/release/*.sha256
+desktop-app/test-results/

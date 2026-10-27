@@ -1,0 +1,260 @@
+{
+  "version": "0.3.0",
+  "source_base_commit": "b2d87f0",
+  "source_normalization": "CRLF normalized to LF for text; package hashes are raw",
+  "package": {
+    "build": "wayfinder-desktop/0.3.0",
+    "variant": "workspace-parity",
+    "generated": "2026-10-26T15:11:55.320Z",
+    "scope": "static package inspection plus separately reported hidden packaged application, rendered fixture, Node bridge and live synthetic tiers",
+    "checks": [
+      {
+        "name": "packaged:/dist/main/index.js",
+        "passed": true
+      },
+      {
+        "name": "packaged:/dist/preload/index.cjs",
+        "passed": true
+      },
+      {
+        "name": "packaged:/dist/renderer/index.html",
+        "passed": true
+      },
+      {
+        "name": "esm_main_entry",
+        "passed": true
+      },
+      {
+        "name": "no_private_runtime_or_fixture_in_archive",
+        "passed": true
+      },
+      {
+        "name": "renderer_isolation_flags",
+        "passed": true
+      },
+      {
+        "name": "production_csp_no_network_or_inline_script",
+        "passed": true
+      },
+      {
+        "name": "no_renderer_bootstrap_secret_or_bearer",
+        "passed": true
+      },
+      {
+        "name": "packaged_backend_matches_source",
+        "passed": true
+      },
+      {
+        "name": "only_host_and_build_manifest_packaged",
+        "passed": true
+      },
+      {
+        "name": "matching_manifest_in_renderer_host_and_package",
+        "passed": true
+      },
+      {
+        "name": "declared_variant_and_version",
+        "passed": true
+      },
+      {
+        "name": "local_font_assets_present",
+        "passed": true
+      },
+      {
+        "name": "font_license:geist",
+        "passed": true
+      },
+      {
+        "name": "font_license:spacegrotesk",
+        "passed": true
+      },
+      {
+        "name": "font_license:jetbrainsmono",
+        "passed": true
+      },
+      {
+        "name": "windows_pe_executable",
+        "passed": true
+      },
+      {
+        "name": "frontend_test_report_passed",
+        "passed": true
+      },
+      {
+        "name": "real_neural_and_hermes_evidence",
+        "passed": true
+      },
+      {
+        "name": "production_node_bridge_evidence",
+        "passed": true
+      },
+      {
+        "name": "actual_hidden_packaged_test_passed",
+        "passed": true
+      },
+      {
+        "name": "hidden_test_matches_this_archive",
+        "passed": true
+      },
+      {
+        "name": "rendered_matrix_without_remote_requests",
+        "passed": true
+      }
+    ],
+    "passed": 23,
+    "frontend": {
+      "passed": 40,
+      "failed": 0
+    },
+    "real_neural_hermes_checks": 18,
+    "production_node_bridge_checks": 7,
+    "hidden_packaged_checks": 16,
+    "rendered_configurations": 6,
+    "packaged_host_sha256": "0aed49e867b0e21e25d7df4a9a0533dad5421879624451cc2bd7326599655cb8",
+    "asar_sha256": "ab0e50b7440ac839da04f7cc3c3b1277c3c6ce66425d7cfced1a8f87f0a78248",
+    "executable_sha256": "14684cb28194a548882ad864aeb5aa08b40e5977725ced780137450d98002f8d",
+    "application_version": "0.3.0",
+    "native_desktop_tests_run": false,
+    "manual_accessibility_tests_run": false,
+    "google_account_tests_run": false
+  },
+  "backend": {
+    "passed": 298,
+    "skipped": 2,
+    "deselected": 1
+  },
+  "oauth_helper": {
+    "tests_passed": 12,
+    "client_present": false,
+    "token_present": false,
+    "live_qualified": false
+  },
+  "profiles": {
+    "main": "M00",
+    "defined": 8,
+    "presets": 6,
+    "selected_file_variants": [
+      "A01",
+      "A05",
+      "A06"
+    ],
+    "provider_presets_qualified": 0
+  },
+  "full_plan_complete": false,
+  "code_sha256": {
+    "desktop-app/backend/host.py": "cc6cb5a7349e4bd0fe8ce387c5af1c19a12b9c2f4b05dd080c7279051b65dd42",
+    "desktop-app/backend/test_host.py": "d18bbcaed4debafdb7d1a8578392ae33e87ae848685ae3f15a4e6eef5280cfdb",
+    "desktop-app/backend/verify_transport.py": "24f130dfa709919f9d03af176d0bd24fa8c5e8bd862cc765eb280830213df581",
+    "desktop-app/FEATURES.json": "f307df270f7595f7afd1179e95ed1027c997fd935d091d2290b13bafa96479fa",
+    "desktop-app/package-lock.json": "232ed4144fae7fcbf881f3a56cb020b8c9967a7cb52fa5f615de309d10d882cb",
+    "desktop-app/package.json": "c7a4e276cead602286efb6a4fab5866078b9f6e793fa72d778f4a222ef8b354d",
+    "desktop-app/scripts/build.mjs": "2d2218face6145142c6544a17d905af4c8ac18f99dc50be75cb3370771c5a431",
+    "desktop-app/scripts/check-package.mjs": "50a9c98b89f1ac8ee93eae8da9baf7963c04d49ee06606d748451edfde0e3486",
+    "desktop-app/scripts/create_icon.py": "2e7502ce6b538e09026ccdcdb4cac1cfa12e8575b3dfefd865bbc6e90f1a5f99",
+    "desktop-app/scripts/Start-Demo.ps1": "7edf9aef6ccfd657b802bedc15ad2b0667d68eccab1730550b1c770e455e6dcd",
+    "desktop-app/scripts/Test-Backend.ps1": "71583d94fd4e248ee73b10c12965d98e0d1c6326fb01176be3bc7cae21caed18",
+    "desktop-app/scripts/verify-node-bridge.mjs": "4245fdde48922990307aa30a63d29758663a8746576431575901b56743d7b39c",
+    "desktop-app/scripts/verify-packaged.mjs": "5f5478ed620815b1863e3a8974a7dc18d1be5616d880643713d4224dad2a1733",
+    "desktop-app/scripts/verify-renderer.mjs": "a411f688c9d3a52d4cb7168499a50c080095be13c9750a21b0f4352d505e019d",
+    "desktop-app/src/main/bridge.ts": "5643ef2175568338e886013d55353f45284989d4da15b7a06b9921a4d23e5381",
+    "desktop-app/src/main/broker.ts": "90067e7096fb45180fdd72e1bfe5d64c08e6cfaf5146bfd13e8b5df976ef2490",
+    "desktop-app/src/main/index.ts": "36af082eb84b2815b4baf9fd4d3addd04c2a3a6129261d2701058bdf68fb79d3",
+    "desktop-app/src/main/runtime-path.ts": "5831efe1bcac8cb2ae967cbc4caa990079a65737cfb833e04b6201e71f5be71e",
+    "desktop-app/src/main/sender.ts": "ba07a811a53513c28f8796490ccdbf80c36d384d5a1b0cfa100e9aca66154657",
+    "desktop-app/src/preload/index.ts": "0e6d8254bc3fd41ec7070e57d10ce545b10530ccb95eb86b26fd02d923157ad0",
+    "desktop-app/src/renderer/Agents.tsx": "cd786e408624d6a5b4c77acdeef54ce3ce14ec8135da1c18b4d27c29fab6d56c",
+    "desktop-app/src/renderer/App.tsx": "4fa6a548052069362a5d991cedea1ee8a2366498e60b68758908d2867b7db1e6",
+    "desktop-app/src/renderer/design.css": "d0f0581d15ccc55ddb923bc436f418e9b63c1fe723ebbcc88e072928c702ee59",
+    "desktop-app/src/renderer/index.html": "6ece2de533c2d24e11d4856a999080655ece8bd5d10d238ed670129b2cda5fd0",
+    "desktop-app/src/renderer/main.tsx": "aa3001c36a4f62dd94209df621afcdec8251bea7dd4840daca97647611576667",
+    "desktop-app/src/renderer/styles.css": "0f8e65f41ad4aa69b9d1786b2b8a4d04e460f3d681ddb18c3c552c09bdcaac3d",
+    "desktop-app/src/renderer/Workspace.tsx": "d574fea870ae4e2a78f3d9074dbdb55f606dee9c127bd0b1b3e789087a760885",
+    "desktop-app/src/shared/types.ts": "d567ac05ee5293fe7c156abd5b52b42beefa192e2c603cf4060a131b03cf5a93",
+    "desktop-app/tests/agents.test.tsx": "a626f1d9b24c81fb2f806714110908788d7771e23cd353dccea6f06e6dd286a7",
+    "desktop-app/tests/api-surface.test.ts": "f19fa25d5c4902f16d95dc7bc26a43e2c4959841d21efd2f4d3e5923cb685417",
+    "desktop-app/tests/app.test.tsx": "5446d8d8792144a40cef29a527cd87157ec444f054b89fbc7ec19f01d4879aec",
+    "desktop-app/tests/bridge.test.ts": "f80254aaf752ce0607eed3bc2574a88f070629bcf3e306e6e9bee78f12b282c0",
+    "desktop-app/tests/broker.test.ts": "7fc2df2d01e0da37367fcb653849a961a120c3f88b5dd9465f5168afce55b078",
+    "desktop-app/tests/runtime-path.test.ts": "ce88fc327ef8f42783d6e278ff68983a39e72b62b8ed78d4bcfd6d31994c95bc",
+    "desktop-app/tests/sender.test.ts": "e12109d32bf965746a72fa75c7c7a6848ab044fed3ec37b3d1338959eb0fe39b",
+    "desktop-app/tests/setup.ts": "cfe58799832d616ac5e12d7729fcc7c98ba4c9000164d5a475c1a03602e997ba",
+    "desktop-app/tests/workspace.test.tsx": "bdd0406e8340692e93747431cbe22fb6a5ff0c59efe95b3abfb3408b3788ead4",
+    "Start-Wayfinder.ps1": "9ceaebc38e7503089c448e39814c68080cceb0b289a91a813bbcad7956b5c732",
+    "Test-Wayfinder.ps1": "176dfc7a7bd3735e5f061e2068c3cc88b0b1b930bd41ca3129edb28b67ad63d1",
+    "tests/test_task_profiles.py": "195748e1b6e1ba19124736181db89f78cdb7e648465ba645a7f9de18d4561b26",
+    "wayfinder/platform/__init__.py": "b3ea377a90ad14d7b353cec527ef770b1042804e25618c0f6f585a36ae02cf70",
+    "wayfinder/platform/activity.py": "a7ce47587924e3a78cc4dc0ce3702b2b4c5d278b137b44ed11cf9a57d863dad1",
+    "wayfinder/platform/catalog.py": "fc62caba7f578668f107bed916b779220fc39cec2747463fbd6d286fd421282b",
+    "wayfinder/platform/connectors.py": "6a15b4db2179dafb10cbd64943e56a5b0ee2d555389776197e7bae9e4a6bb5ce",
+    "wayfinder/platform/context.py": "ad6324770d62430c0ef72f8fe8e1b2241d9e125f457f7c27a275eccd4999b3aa",
+    "wayfinder/platform/contracts.py": "16bd9f722d308852868d5666c9c799b4f2b1257cbb548d8628e3866e4f578812",
+    "wayfinder/platform/evaluation.py": "babdb835228f09adad9aa6f4c9310f70c4819e1a24274dabec66ddbca88f9b0e",
+    "wayfinder/platform/git_connector.py": "a9800cdbf945b55b9a9a55ac5c8a75a4b5fe5976eabcdd863fb8fad6c9a22344",
+    "wayfinder/platform/google_read.py": "7e7f65a58f156519c98e8454448a291b205df2d9d784b32823c7903e2f67aeec",
+    "wayfinder/platform/memory_control.py": "9fb26e86a807a5964970c869727fe75226b437e8ec97695ed6c79581a5aec273",
+    "wayfinder/platform/runtime.py": "0948c495446687d8c43b7c8fdfa084ada0a36f0ea7c3a81b35882e9700658dde",
+    "wayfinder/platform/runtime_probe.py": "82bf02a0bf23602b271f3485f817a20f977664806430fb7aa341b2677df5a95f",
+    "wayfinder/platform/service.py": "87b3ffa6452b04b27530991aeafdd047758c18794e1a7ba3bb206e4cccafcdbb",
+    "wayfinder/platform/task-profiles.json": "f10f20df439cd4a3a573766de2b6ce11d4c4ef92e4348c613cdd4af5d0cc146a",
+    "wayfinder/platform/task_profiles.py": "8c0626b009cccb029b0765cad61e2f7d3c50021f71f64508b117b06797bd9b0b",
+    "wayfinder/workers/__init__.py": "00684a6764eaf0f4be5f942dd5423e2a7637ca3e0c7b501c0e6808f80da6c72d",
+    "wayfinder/workers/actions.py": "68622cc4932db8be329f3f3c0f992a826850f968b4b29c78086b6cc803968b60",
+    "wayfinder/workers/cua_fixture.py": "89f8a1aa4c4ca1bf4d036886895c4fc87bd11c0476c389f32b81bc70ecadc597",
+    "wayfinder/workers/files.py": "d37e38d1d0ebd3244eb11ddec88a49aadc4680a35ebee64260ecbd13adf59c5d",
+    "wayfinder/workers/hermes.py": "5db6977bd963f92d30531ffc3bfa63f784c5019838326a8b7637f1d15c83c00d",
+    "wayfinder/workers/hermes_runner.py": "0694865188ab6bcc126264e393c8963493764ed7c2f21d6cbdfa956bd5cf1e36",
+    "wayfinder/workers/hub.py": "08aea77c5861b38ce4ffb5eed7b12614222737d0cf0ff6f208cc8908c7ab56e7",
+    "wayfinder/workers/run_tests.py": "02fbf5654460c29ce11f902ca4576f0e42a377a3e6fa57c1c897e2b6e91c53d5",
+    "wayfinder/workers/schemas.py": "f146dc782efbec2069e7d55c33f030c499c01de26f2c10e9502d8905194bed84",
+    "wayfinder/workers/W01_intent_analyst/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "wayfinder/workers/W01_intent_analyst/definition.yaml": "f6cf5a7e10fdd1600d3b7f870445cf8aad501a9597d5e9d881aec764831506af",
+    "wayfinder/workers/W01_intent_analyst/fixtures.py": "2f9537f8ceeb5d584cd4b1661026e817be87db694708d242b14733e848cefbdb",
+    "wayfinder/workers/W01_intent_analyst/schemas.py": "0760d81bf70f12e14bcc4c27b2152b649a0209a1b611da2666e0c22f6d761ec9",
+    "wayfinder/workers/W01_intent_analyst/test_worker.py": "0f372bd8533785d4c868e9c76228fd6389de90aa02c881af4ae49cb284c5e93b",
+    "wayfinder/workers/W03_task_planner/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "wayfinder/workers/W03_task_planner/definition.yaml": "3e9d9984db3be7325f1ec6bf8cd1f48b28d8d7a8404930a27f8408c30895c56f",
+    "wayfinder/workers/W03_task_planner/test_worker.py": "4ba60131b08f5a1ffda35b6ae8d28351898ec7cb864a3d2913a948561cfe2021",
+    "wayfinder/workers/W06_result_validator/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "wayfinder/workers/W06_result_validator/definition.yaml": "8025045f8295f5d53766a6c0fa3ded7ce678141c68fb8ea58b3252b69e94be7e",
+    "wayfinder/workers/W06_result_validator/test_worker.py": "d5ca1dde42b1185098674cf8d7e8e03ae086654a25676d6b7ed9b00ffbd69c07",
+    "wayfinder/workers/W07_synthesis_worker/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "wayfinder/workers/W07_synthesis_worker/definition.yaml": "752af58073a35ad4011b4b81d524c96af8593307187b7ee1c974f8bfe749a2c7",
+    "wayfinder/workers/W07_synthesis_worker/test_worker.py": "5a27320c9fc17946352f463cc50d8defb6bdd0c80dd068c179975b7b501d2ee3",
+    "wayfinder/workers/W08_web_researcher/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "wayfinder/workers/W08_web_researcher/definition.yaml": "0adddd3525aafb084f49de59b05b1f58374d95ab805c14e7fe4d679ac4b0bf00",
+    "wayfinder/workers/W08_web_researcher/test_worker.py": "9136f69b5b4517b30b43855526235e0e5321ef51eab8030a195316291ce03827",
+    "wayfinder/workers/W09_source_verifier/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "wayfinder/workers/W09_source_verifier/definition.yaml": "ba12498742074a7b9975324255a562bd2e3f729859402b4aaafaf468e2dd5a57",
+    "wayfinder/workers/W09_source_verifier/test_worker.py": "3670cf8843c85059567cc0c266a5552afffd5184e94e3412718b8f130a4c42bf",
+    "wayfinder/workers/W10_document_analyst/__init__.py": "fcb55e0ac8fce430ad5f82f39ef2660a4b8f594f78d8e193cac94b13c8dde6da",
+    "wayfinder/workers/W10_document_analyst/definition.yaml": "97b15adda1d0d7dfde18b09ab796322a54196adb6f140b1bc8259ed90aa86919",
+    "wayfinder/workers/W10_document_analyst/test_worker.py": "c6cf730ad4e95266e011a04533f48bb72d3df42b79120e1d0ac4232582d183f6",
+    "wayfinder/workers/W11_data_analyst/__init__.py": "2871534d5d0fd3b22884fece09364a775f27e639696a247fef27adb92465d2f8",
+    "wayfinder/workers/W11_data_analyst/definition.yaml": "858838a53417a3d170bab157a4a6147cf8a28d7127cf6ae7de5e787a5ef32097",
+    "wayfinder/workers/W11_data_analyst/test_worker.py": "147fa1eb13de9816a9513e5f76b1559ddee852cbc346b9860ad9f1ac34ce8d40",
+    "wayfinder/workers/W12_knowledge_synthesizer/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "wayfinder/workers/W12_knowledge_synthesizer/definition.yaml": "724c7359028c928c8298b2940a48082b431af5283a6c8ebf400df7c200037f8f",
+    "wayfinder/workers/W12_knowledge_synthesizer/test_worker.py": "3c464169c04d12e7e475a68516ed709cfc4a370054ff884e2acd38fc94d046db",
+    "wayfinder/workers/W13_calendar_analyst/__init__.py": "3d614ff4453ce5366d21c5612a5062de996a1fd4a9b8420bff17a6a4a0cc4b25",
+    "wayfinder/workers/W13_calendar_analyst/definition.yaml": "15cd01e985437afc0c6b28e4a3c952b0309f9d4b0ddf716cff0394f90a987d9a",
+    "wayfinder/workers/W13_calendar_analyst/test_worker.py": "cfc134c9995dc8ee95bb635771dc8d785aa080ba4633d140d043cf977383ff4e",
+    "wayfinder/workers/W14_task_manager/__init__.py": "3eba79e147ca6265d507383783c3e558d2018f7c662faaf4cb0f019f7b279d84",
+    "wayfinder/workers/W14_task_manager/definition.yaml": "9e4b94695a041e667d019ac7a874f713fa259c8b908236bc3052e715b9a2728a",
+    "wayfinder/workers/W14_task_manager/test_worker.py": "c52b81eaf34b157cbf4d5c2156f6cb57a47076693b3d891ac75f508384a416fb",
+    "wayfinder/workers/W15_schedule_optimizer/__init__.py": "94bf8f62ffc1950784c2e8e63f3e899228b2548f2bfcd8abe3aeb2356c684033",
+    "wayfinder/workers/W15_schedule_optimizer/definition.yaml": "d6ddba156ef3c973f77ccb32524ff5dbe428eb0d6daf77dc9a77515342187daf",
+    "wayfinder/workers/W15_schedule_optimizer/test_worker.py": "6ed60d295fe93f7518f1b919501ec95e36208121bb116caa095992e741b04c36",
+    "wayfinder/workers/W16_commitment_tracker/__init__.py": "1bb7c4184b0bc0f7563eda192eaa4b208ed5208dc81411c24a93d7a5408eeab4",
+    "wayfinder/workers/W16_commitment_tracker/definition.yaml": "fb5514956188bf481a0ff94cb0052e8f3db17a8f01fff412860eb1d22d95665d",
+    "wayfinder/workers/W16_commitment_tracker/test_worker.py": "33dee3c401fd123becba7cdffaa6618ac717adbc17d4fec485d7b9f0e907798c",
+    "wayfinder/workers/W18_meeting_prep_worker/__init__.py": "c39c8cbcce8d045ec5dec4ab18f7952ee69c8498866c15397a276d6dad83d863",
+    "wayfinder/workers/W18_meeting_prep_worker/definition.yaml": "100245604b03ca05deed05fdc2a30767a1abb5d138980d35851e4c6b6673c106",
+    "wayfinder/workers/W18_meeting_prep_worker/test_worker.py": "9e6b30c3bfe70d6c73d2e6633002b155eaf38a1665093ada1324acf80f3e8f42",
+    "wayfinder/workers/W19_repository_analyst/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "wayfinder/workers/W19_repository_analyst/definition.yaml": "6a44eacbc4b0deb2b486a5f010bfc8bd98381a98f3425078cb5e9c692cd7f365",
+    "wayfinder/workers/W19_repository_analyst/test_worker.py": "6fa9e8f781f5c7f65147c6aaf6cbc111944f11b22b865fe000cc99a36454b8b7",
+    "wayfinder/workers/W24_code_reviewer/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "wayfinder/workers/W24_code_reviewer/definition.yaml": "e390bd03bdf54bc09ecfb9779af41c50438f05e85b80d2ca859313b2fcf29fa1",
+    "wayfinder/workers/W24_code_reviewer/test_worker.py": "4feceb0cc6715d70bb97c1195bf47e4e6e226269ca404b4fb63be5eea33e52f8"
+  }
+}

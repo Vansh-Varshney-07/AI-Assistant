@@ -2,6 +2,7 @@
 
 import base64
 import json
+import os
 from pathlib import Path
 import subprocess
 import threading
@@ -50,6 +51,7 @@ class HermesBridge:
         try:
             process = subprocess.Popen(
                 self.command,
+                env={k:v for k,v in os.environ.items() if not k.startswith(("FALKORDB_","WAYFINDER_"))},
                 stdin=subprocess.PIPE,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,

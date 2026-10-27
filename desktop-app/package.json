@@ -1,16 +1,17 @@
 {
   "name": "wayfinder-desktop",
-  "version": "0.1.0",
+  "version": "0.4.1",
   "private": true,
   "license": "UNLICENSED",
-  "description": "Wayfinder desktop client for completed scoped backend capabilities",
+  "description": "Wayfinder GitHub interface connected to the existing scoped application backend",
   "main": "dist/main/index.js",
   "scripts": {
     "build": "node scripts/build.mjs",
     "start": "electron .",
     "check": "tsc --noEmit",
     "test": "vitest run",
-    "package": "npm run build && electron-builder --win --dir --publish never"
+    "package": "npm run build && electron-builder --win portable --x64 --publish never",
+    "backend": "python scripts/freeze-backend.py"
   },
   "build": {
     "appId": "local.wayfinder.desktop",
@@ -21,22 +22,56 @@
     },
     "files": [
       "dist/**/*",
-      "package.json"
+      "package.json",
+      "FEATURES.json"
     ],
     "extraResources": [
       {
-        "from": "backend",
+        "from": ".cache/bundle/backend",
         "to": "backend",
         "filter": [
-          "host.py"
+          "**/*",
+          "!**/*.debug-original",
+          "!**/__pycache__/**"
         ]
       },
-      { "from": "resources/wayfinder.png", "to": "wayfinder.png" }
+      {
+        "from": ".cache/bundle/backend-project",
+        "to": "backend-project",
+        "filter": [
+          "**/*.py",
+          "**/*.json",
+          "**/*.yaml",
+          "**/*.yml",
+          "**/*.toml",
+          "!**/snapshot_*.json"
+        ]
+      },
+      {
+        "from": ".cache/bundle/models",
+        "to": "models"
+      },
+      {
+        "from": "resources/wayfinder.png",
+        "to": "wayfinder.png"
+      },
+      {
+        "from": "resources/licenses",
+        "to": "licenses"
+      }
     ],
     "win": {
-      "target": "dir",
+      "target": [
+        "portable"
+      ],
       "signExecutable": false,
       "icon": "resources/wayfinder.ico"
+    },
+    "electronDist": "node_modules/electron/dist",
+    "artifactName": "Wayfinder-${version}-Windows-x64.${ext}",
+    "portable": {
+      "artifactName": "Wayfinder-${version}-Windows-x64.exe",
+      "useZip": true
     }
   },
   "dependencies": {

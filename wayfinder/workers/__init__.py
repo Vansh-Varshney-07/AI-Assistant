@@ -1,3 +1,6 @@
+# wayfinder/workers — Worker definitions, schemas, and fixtures.
+# Each subdirectory is one bounded worker configuration.
+
 """Scoped desktop worker integration. Hermes owns reasoning and model execution."""
 
 ROLES = {

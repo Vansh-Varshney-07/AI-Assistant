@@ -1,0 +1,38 @@
+id: W13
+name: Calendar Analyst
+status: fixture-tested
+
+responsibility: >
+  Reviews upcoming calendar events, meeting commitments, and attendee lists.
+  Detects overlapping schedule conflicts and calculates free availability
+  intervals using deterministic calendar helpers.
+  Strictly read-only; does NOT write or reschedule events (that is W15).
+
+implementation_approach: hermes_instructions + shared_calendar_helpers + google_calendar_adapter
+new_code_needed: false
+
+capabilities:
+  - google.calendar_read     # retrieve events for a specified date range
+
+denied_capabilities:
+  - google.calendar_write    # analyst is strictly read-only
+  - google.gmail_send
+  - system.*
+  - whatsapp.*
+  - agent.delegate_task
+
+analysis_procedure:
+  1: Query google.calendar_read for target window [start_date, end_date]
+  2: Resolve calendar timezone from response metadata
+  3: Normalize event timestamps (handling all-day events and cross-midnight boundaries)
+  4: Run detect_conflicts() to identify overlapping commitments
+  5: Run calculate_availability() to determine available free blocks
+  6: If multiple relevant calendars exist but only primary was queried, set is_partial=True
+  7: Return structured CalendarAnalysis record
+
+output_contract: CalendarAnalysis  # see wayfinder/workers/schemas.py
+
+acceptance_criteria:
+  - Timezone must be explicitly specified in output
+  - Availability gaps and detected conflicts must match deterministic calculation
+  - Read-only operations only

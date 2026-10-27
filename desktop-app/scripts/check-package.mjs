@@ -26,7 +26,12 @@ const scripts = files.filter(p => p.startsWith('/dist/renderer/') && p.endsWith(
 check('no_renderer_bootstrap_secret_or_bearer', !scripts.includes('WAYFINDER_HOST_SECRET') && !scripts.includes('Bearer '));
 const sourceHost = path.join(root, 'backend/host.py'), packagedHost = path.join(packaged, 'resources/backend/host.py');
 check('packaged_backend_matches_source', await hash(sourceHost) === await hash(packagedHost));
-check('only_host_python_packaged', JSON.stringify((await readdir(path.dirname(packagedHost))).sort()) === JSON.stringify(['host.py']));
+check('only_host_and_build_manifest_packaged', JSON.stringify((await readdir(path.dirname(packagedHost))).sort()) === JSON.stringify(['FEATURES.json','host.py']));
+const release = JSON.parse(await readFile(path.join(root,'FEATURES.json'),'utf8'));
+check('matching_manifest_in_renderer_host_and_package', await hash(path.join(root,'FEATURES.json')) === await hash(path.join(packaged,'resources/backend/FEATURES.json')) && JSON.stringify(JSON.parse(fromArchive('dist/release.json').toString())) === JSON.stringify(release));
+check('declared_variant_and_version',release.variant==='workspace-parity' && release.version===metadata.version);
+check('local_font_assets_present',files.filter(p=>p.startsWith('/dist/renderer/assets/')&&p.endsWith('.ttf')).length===3);
+for (const name of ['geist','spacegrotesk','jetbrainsmono']) check('font_license:'+name,(await readFile(path.join(packaged,'resources/licenses',name+'-OFL.txt'),'utf8')).includes('SIL OPEN FONT LICENSE'));
 const executable = path.join(packaged, 'Wayfinder.exe');
 const handle = await open(executable); const signature = Buffer.alloc(2); await handle.read(signature, 0, 2, 0); await handle.close();
 check('windows_pe_executable', signature.toString() === 'MZ');
@@ -36,6 +41,11 @@ const live = JSON.parse(await readFile(path.join(root, 'test-results/actual-tran
 const node = JSON.parse(await readFile(path.join(root, 'test-results/node-bridge.json'), 'utf8'));
 check('real_neural_and_hermes_evidence', live.actual_neural_embeddings && live.live_hermes?.status === 'completed' && live.checks.every(c => c.passed));
 check('production_node_bridge_evidence', node.checks.every(c => c.passed));
-const evidence = { build: 'wayfinder-desktop/0.1', generated: new Date().toISOString(), scope: 'static package inspection; Electron was not launched', checks, passed: checks.length, frontend: { passed: ui.numPassedTests, failed: ui.numFailedTests }, real_neural_hermes_checks: live.passed, production_node_bridge_checks: node.passed, packaged_host_sha256: await hash(packagedHost), asar_sha256: await hash(archive), executable_sha256: await hash(executable), application_version: metadata.version, native_or_visual_tests_run: false, google_account_tests_run: false };
+const actual=JSON.parse(await readFile(path.join(root,'test-results/packaged.json'),'utf8'));
+const rendered=JSON.parse(await readFile(path.join(root,'test-results/rendered/report.json'),'utf8'));
+check('actual_hidden_packaged_test_passed',actual.checks.every(c=>c.passed)&&actual.passed>0);
+check('hidden_test_matches_this_archive',actual.asar_sha256===await hash(archive));
+check('rendered_matrix_without_remote_requests',rendered.results.length===6&&rendered.results.every(c=>c.passed)&&!rendered.blocked.length&&!rendered.faults.length);
+const evidence = { build: release.build, variant:release.variant, generated: new Date().toISOString(), scope: 'static package inspection plus separately reported hidden packaged application, rendered fixture, Node bridge and live synthetic tiers', checks, passed: checks.length, frontend: { passed: ui.numPassedTests, failed: ui.numFailedTests }, real_neural_hermes_checks: live.passed, production_node_bridge_checks: node.passed, hidden_packaged_checks:actual.passed, rendered_configurations:rendered.results.length, packaged_host_sha256: await hash(packagedHost), asar_sha256: await hash(archive), executable_sha256: await hash(executable), application_version: metadata.version, native_desktop_tests_run: false, manual_accessibility_tests_run:false, google_account_tests_run: false };
 await writeFile(path.join(root, 'build-evidence.json'), JSON.stringify(evidence, null, 2) + '\n');
 console.log(JSON.stringify(evidence));

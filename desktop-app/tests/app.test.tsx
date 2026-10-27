@@ -13,11 +13,11 @@ function mockAPI() {
   api.snapshot.mockResolvedValue({ actions: [], workflows: [], jobs: [], metrics: {} });
   window.wayfinder = api as DesktopAPI; return api;
 }
-async function mount() { const api = mockAPI(); render(<App />); await screen.findByPlaceholderText('Enter a field, e.g. retention_days'); return api; }
+async function mount() { const api = mockAPI(); render(<App />); await screen.findByRole('heading', { name: 'Home', level: 1 }); await userEvent.click(screen.getAllByRole('button', { name: 'Memory' })[0]); await screen.findByPlaceholderText('Enter a field, e.g. retention_days'); return api; }
 describe('Actual React app with contract fixtures', () => {
   it('renders usable connected navigation without unfinished product tabs', async () => {
     await mount(); expect(screen.getByRole('heading', { name: 'Memory', level: 1 })).toBeTruthy();
-    expect(screen.queryByRole('button', { name: 'Scheduler' })).toBeNull(); expect(screen.queryByRole('button', { name: 'Chat' })).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Scheduler' })).toBeNull(); expect(screen.getByRole('button', { name: 'Chat' })).toBeTruthy();
     expect(screen.getByText('Backend connected')).toBeTruthy();
   });
   it('sends exact scoped recall and renders attributed evidence', async () => {

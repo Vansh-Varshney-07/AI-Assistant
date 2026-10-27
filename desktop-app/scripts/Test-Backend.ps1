@@ -1,8 +1,8 @@
-param([switch]$Live, [switch]$Neural, [switch]$NodeBridge, [switch]$ClientOnly)
+param([switch]$Live, [switch]$Neural, [switch]$NodeBridge, [switch]$ClientOnly, [switch]$Packaged, [switch]$Chat)
 $ErrorActionPreference = 'Stop'
 $appRoot = Split-Path $PSScriptRoot -Parent
 $projectRoot = Split-Path $appRoot -Parent
-$python = @((Join-Path $projectRoot '.venv\Scripts\python.exe'), (Join-Path (Split-Path $projectRoot -Parent) 'reserchpaper\.venv\Scripts\python.exe')) | Where-Object { Test-Path -LiteralPath $_ } | Select-Object -First 1
+$python = @($env:WAYFINDER_PYTHON, (Join-Path $projectRoot '.venv\Scripts\python.exe'), (Join-Path (Split-Path $projectRoot -Parent) 'reserchpaper\.venv\Scripts\python.exe')) | Where-Object { $_ -and (Test-Path -LiteralPath $_) } | Select-Object -First 1
 if (-not $python) { throw 'Existing configured Python environment required.' }
 $testIdentity = [Guid]::NewGuid().ToString('N')
 $containerName = 'wayfinder-electron-tests-' + $testIdentity
@@ -30,12 +30,17 @@ try {
         Start-Sleep -Milliseconds 250
     }
     if (-not $ready) { throw 'Isolated database not ready.' }
-    $files = @('desktop-app/backend/test_host.py', 'tests/test_wayfinder_app.py', 'tests/test_desktop_workers.py', 'tests/test_platform_integration.py', 'tests/test_platform_git.py', 'tests/test_platform_memory.py', 'tests/test_platform_sources.py', 'tests/test_google_setup.py')
+    $files = @('desktop-app/backend/test_host.py', 'tests/test_wayfinder_app.py', 'tests/test_desktop_workers.py', 'tests/test_platform_integration.py', 'tests/test_platform_git.py', 'tests/test_platform_memory.py', 'tests/test_platform_sources.py', 'tests/test_google_setup.py', 'tests/test_approval_service.py', 'tests/test_atlas_helpers.py', 'tests/test_integration_action_safety.py', 'wayfinder/workers')
+    $files += @('tests/test_task_profiles.py','tests/test_chat.py','tests/test_connections.py','tests/test_connection_boundaries.py')
     $selection = @('-k', 'not desktop_worker_controls_and_space_switch')
     $reportName = 'backend.xml'
+    if ($Chat) { $files = @('tests/test_chat.py'); $reportName = 'chat-contract.xml' }
     if ($ClientOnly) { $files = @('desktop-app/backend/test_host.py'); $reportName = 'client-adapter.xml' }
     if ($Live) { $env:WAYFINDER_PLATFORM_LIVE = '1'; $selection = @('-k', 'live_installed_hermes_read_workflow'); $reportName = 'live-hermes.xml' }
-    if ($NodeBridge) {
+    if ($Packaged) {
+        New-Item -ItemType Directory -Force -Path $testRoot | Out-Null
+        node (Join-Path $appRoot 'scripts\verify-packaged.mjs') (Join-Path $testRoot 'packaged-runtime') (Join-Path $reports 'packaged.json')
+    } elseif ($NodeBridge) {
         New-Item -ItemType Directory -Force -Path $testRoot | Out-Null
         node (Join-Path $appRoot 'scripts\verify-node-bridge.mjs') (Join-Path $testRoot 'node-runtime') (Join-Path $reports 'node-bridge.json')
     } elseif ($Neural) {

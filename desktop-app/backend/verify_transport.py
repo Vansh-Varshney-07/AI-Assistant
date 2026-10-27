@@ -100,6 +100,20 @@ def main():
             check("selected_file_independently_checked", job["result"]["evidence"]["file"]["sha256"] == hashlib.sha256(selected.read_bytes()).hexdigest())
             check("one_live_dispatch_no_effect", job["result"]["metrics"]["worker_invocations"] == 1 and job["result"]["executed"] is False)
             live_result = dict(runtime_version=inspected["runtime"]["version"], status=job["status"], metrics=job["result"]["metrics"], verification=job["result"]["verification"])
+            catalog=call('platform_profiles',scope)
+            check('profile_and_preset_inventory',len(catalog['profiles'])==8 and len(catalog['presets'])==6 and all(not p['available'] for p in catalog['presets']))
+            task=call('platform_profile_start',dict(scope,request=dict(request_id='live-study-guide-once',profile_id='A05',profile_version='1',reference=ref,goal='Create a concise study guide from the supplied synthetic document. State the retention value, explain its meaning and include one practice question. Cite the source; do not invent missing context.')))
+            task_deadline=time.monotonic()+115
+            while time.monotonic()<task_deadline:
+                task=call('platform_profile_result',dict(scope,id=task['id']))
+                if task['status'] not in {'running','reserved'}:break
+                time.sleep(.3)
+            check('live_knowledge_task_completed',task['status']=='completed' and '42' in task['result']['text'])
+            check('live_task_source_verified',task['result']['sources'][0]['sha256']==hashlib.sha256(selected.read_bytes()).hexdigest())
+            check('single_existing_worker_no_helpers_or_effects',task['metrics']['worker_invocations']==1 and task['metrics']['delegations']==0 and task['effects_executed'] is False)
+            replay=call('platform_profile_start',dict(scope,request=dict(request_id='live-study-guide-once',profile_id='A05',profile_version='1',reference=ref,goal='Create a concise study guide from the supplied synthetic document. State the retention value, explain its meaning and include one practice question. Cite the source; do not invent missing context.')))
+            check('live_task_duplicate_did_not_redispatch',replay['id']==task['id'] and replay['job']==task['job'])
+            live_result['knowledge_task']=dict(status=task['status'],profile=task['profile_id'],metrics=task['metrics'],source_verified=True)
         report = dict(scope="actual private Python stdio adapter + authenticated API + actual cached ONNX embeddings + disposable Iron Web", checks=checks, passed=len(checks), elapsed_seconds=round(time.monotonic() - started, 3), actual_neural_embeddings=True, live_hermes=live_result, gui_tested=False, native_tested=False, google_account_tested=False, held_out_memory_quality_tested=False)
         Path(args.report).write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
         print(json.dumps(report))

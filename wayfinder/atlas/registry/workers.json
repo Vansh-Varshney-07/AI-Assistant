@@ -4,7 +4,10 @@
       "id": "email_analyst",
       "name": "Email Analyst",
       "description": "Categorizes emails, extracts requests, identifies commitments and deadlines, and prepares context for briefings. Read-only by default.",
-      "permitted_tool_groups": ["google_workspace_read", "memory"],
+      "permitted_tool_groups": [
+        "google_workspace_read",
+        "memory"
+      ],
       "permitted_tools": [
         "google.gmail_read",
         "memory.recall",
@@ -16,7 +19,12 @@
         "system.*",
         "whatsapp.*"
       ],
-      "capabilities": ["email_categorization", "request_extraction", "deadline_identification", "thread_analysis"],
+      "capabilities": [
+        "email_categorization",
+        "request_extraction",
+        "deadline_identification",
+        "thread_analysis"
+      ],
       "workflow_role": "Input: search query or thread ID. Output: categorized emails, action items, deadlines, relevant correspondence. Does not send emails.",
       "request_tools_through_orchestrator": true
     },
@@ -24,7 +32,10 @@
       "id": "calendar_analyst",
       "name": "Calendar Analyst",
       "description": "Reviews calendar events, attendee schedules, upcoming commitments, and identifies scheduling conflicts. Read-only.",
-      "permitted_tool_groups": ["google_workspace_read", "memory"],
+      "permitted_tool_groups": [
+        "google_workspace_read",
+        "memory"
+      ],
       "permitted_tools": [
         "google.calendar_read",
         "memory.recall",
@@ -36,7 +47,12 @@
         "system.*",
         "whatsapp.*"
       ],
-      "capabilities": ["calendar_review", "event_analysis", "conflict_detection", "attendee_inspection"],
+      "capabilities": [
+        "calendar_review",
+        "event_analysis",
+        "conflict_detection",
+        "attendee_inspection"
+      ],
       "workflow_role": "Input: date range or event title. Output: scheduled events, meeting times, attendees, potential conflicts.",
       "request_tools_through_orchestrator": true
     },
@@ -44,7 +60,11 @@
       "id": "schedule_optimizer",
       "name": "Schedule Optimizer",
       "description": "Proposes optimal schedules using calendar events and task priorities. Proposes event updates; writes strictly approval-gated.",
-      "permitted_tool_groups": ["google_workspace", "planning", "memory"],
+      "permitted_tool_groups": [
+        "google_workspace",
+        "planning",
+        "memory"
+      ],
       "permitted_tools": [
         "google.calendar_read",
         "google.tasks_read",
@@ -59,7 +79,11 @@
         "system.*",
         "whatsapp.*"
       ],
-      "capabilities": ["schedule_optimization", "time_blocking", "priority_scheduling"],
+      "capabilities": [
+        "schedule_optimization",
+        "time_blocking",
+        "priority_scheduling"
+      ],
       "workflow_role": "Input: tasks, priorities, available calendar slots. Output: proposed optimized schedule. Creating/modifying events requires approval.",
       "request_tools_through_orchestrator": true
     },
@@ -67,7 +91,13 @@
       "id": "document_analyst",
       "name": "Document Analyst",
       "description": "Reads and investigates source material. Uses Google Drive and Docs for workspace files, tavily_extract and crawl for web documents, and local file tools.",
-      "permitted_tool_groups": ["google_workspace_read", "tavily_docs", "filesystem_read", "memory", "planning"],
+      "permitted_tool_groups": [
+        "google_workspace_read",
+        "tavily_docs",
+        "filesystem_read",
+        "memory",
+        "planning"
+      ],
       "permitted_tools": [
         "google.drive_read",
         "google.docs_read",
@@ -88,7 +118,12 @@
         "system.terminal_exec",
         "whatsapp.*"
       ],
-      "capabilities": ["document_reading", "drive_search", "web_extraction", "fact_extraction"],
+      "capabilities": [
+        "document_reading",
+        "drive_search",
+        "web_extraction",
+        "fact_extraction"
+      ],
       "workflow_role": "Extracts structured facts, summaries, and references from Drive files, Google Docs, web pages, and local files.",
       "request_tools_through_orchestrator": true
     },
@@ -96,7 +131,14 @@
       "id": "data_analyst",
       "name": "Data Analyst",
       "description": "Analyzes spreadsheet data and figures. Reads Google Sheets, searches online data via Tavily, and calculates statistics using Python code evaluation.",
-      "permitted_tool_groups": ["google_workspace", "tavily_search_only", "sandbox_exec", "filesystem", "memory", "planning"],
+      "permitted_tool_groups": [
+        "google_workspace",
+        "tavily_search_only",
+        "sandbox_exec",
+        "filesystem",
+        "memory",
+        "planning"
+      ],
       "permitted_tools": [
         "google.sheets_read",
         "tavily_search",
@@ -118,7 +160,12 @@
         "system.terminal_exec",
         "whatsapp.*"
       ],
-      "capabilities": ["sheets_analysis", "statistical_computation", "table_generation", "trend_analysis"],
+      "capabilities": [
+        "sheets_analysis",
+        "statistical_computation",
+        "table_generation",
+        "trend_analysis"
+      ],
       "workflow_role": "Calculates statistics, extracts metrics from Google Sheets, identifies trends, and produces tables.",
       "request_tools_through_orchestrator": true
     },
@@ -126,7 +173,11 @@
       "id": "task_manager",
       "name": "Task Manager",
       "description": "Extracts, organizes, prioritizes, and tracks tasks across Google Tasks and internal todos. Task modifications require approval.",
-      "permitted_tool_groups": ["google_workspace", "planning", "memory"],
+      "permitted_tool_groups": [
+        "google_workspace",
+        "planning",
+        "memory"
+      ],
       "permitted_tools": [
         "google.tasks_read",
         "planning.todo_manage",
@@ -141,7 +192,11 @@
         "system.terminal_exec",
         "whatsapp.*"
       ],
-      "capabilities": ["task_tracking", "todo_organization", "deadline_monitoring"],
+      "capabilities": [
+        "task_tracking",
+        "todo_organization",
+        "deadline_monitoring"
+      ],
       "workflow_role": "Input: task lists and context. Output: organized task status, upcoming deadlines, proposed task completions.",
       "request_tools_through_orchestrator": true
     },
@@ -149,7 +204,10 @@
       "id": "contact_lookup_worker",
       "name": "Contact Lookup Worker",
       "description": "Finds relevant contact details, email addresses, and phone numbers from Google Contacts for permitted tasks. Read-only.",
-      "permitted_tool_groups": ["google_workspace_read", "memory"],
+      "permitted_tool_groups": [
+        "google_workspace_read",
+        "memory"
+      ],
       "permitted_tools": [
         "google.contacts_read",
         "memory.recall",
@@ -160,7 +218,10 @@
         "system.*",
         "whatsapp.*"
       ],
-      "capabilities": ["contact_lookup", "address_book_query"],
+      "capabilities": [
+        "contact_lookup",
+        "address_book_query"
+      ],
       "workflow_role": "Input: person name or organization. Output: verified contact details, email addresses, phone numbers.",
       "request_tools_through_orchestrator": true
     },
@@ -168,7 +229,11 @@
       "id": "meeting_prep_worker",
       "name": "Meeting Preparation Worker",
       "description": "Synthesizes comprehensive meeting briefings by orchestrating Calendar, Email, Drive/Docs, and Tasks. Read-only access to selected sources.",
-      "permitted_tool_groups": ["google_workspace_read", "memory", "planning"],
+      "permitted_tool_groups": [
+        "google_workspace_read",
+        "memory",
+        "planning"
+      ],
       "permitted_tools": [
         "google.calendar_read",
         "google.gmail_read",
@@ -185,7 +250,11 @@
         "system.terminal_exec",
         "whatsapp.*"
       ],
-      "capabilities": ["meeting_briefing", "multi_source_synthesis", "action_item_aggregation"],
+      "capabilities": [
+        "meeting_briefing",
+        "multi_source_synthesis",
+        "action_item_aggregation"
+      ],
       "workflow_role": "Input: meeting title or time. Output: structured executive briefing, participant backgrounds, related email context, relevant documents, and outstanding to-dos.",
       "request_tools_through_orchestrator": true
     },
@@ -193,7 +262,12 @@
       "id": "web_researcher",
       "name": "Web Researcher",
       "description": "Performs web research: search -> collect -> synthesize. Finds candidate sources, reads promising pages, conducts broad multi-step research, and investigates domains.",
-      "permitted_tool_groups": ["tavily", "memory", "filesystem", "planning"],
+      "permitted_tool_groups": [
+        "tavily",
+        "memory",
+        "filesystem",
+        "planning"
+      ],
       "permitted_tools": [
         "tavily_search",
         "tavily_extract",
@@ -214,7 +288,13 @@
         "whatsapp.*",
         "agent.delegate_task"
       ],
-      "capabilities": ["web_search", "source_collection", "research_synthesis", "site_mapping", "crawling"],
+      "capabilities": [
+        "web_search",
+        "source_collection",
+        "research_synthesis",
+        "site_mapping",
+        "crawling"
+      ],
       "workflow_role": "Search candidate sources, read promising pages via tavily_extract, run broad research via tavily_research, map/crawl specific domains. Returns findings, URLs, excerpts, and open questions.",
       "request_tools_through_orchestrator": true
     },
@@ -222,7 +302,11 @@
       "id": "source_verifier",
       "name": "Source Verifier",
       "description": "Checks claims against raw evidence rather than repeating findings. Extracts source text, searches for independent corroboration or contradictions, compares claim vs evidence, and returns structured verdicts.",
-      "permitted_tool_groups": ["tavily_verification", "memory", "planning"],
+      "permitted_tool_groups": [
+        "tavily_verification",
+        "memory",
+        "planning"
+      ],
       "permitted_tools": [
         "tavily_extract",
         "tavily_search",
@@ -239,7 +323,13 @@
         "filesystem.patch_file",
         "whatsapp.*"
       ],
-      "capabilities": ["evidence_extraction", "fact_checking", "corroboration", "contradiction_detection", "verdict_generation"],
+      "capabilities": [
+        "evidence_extraction",
+        "fact_checking",
+        "corroboration",
+        "contradiction_detection",
+        "verdict_generation"
+      ],
       "workflow_role": "1. Receive claim + cited URL from Web Researcher -> 2. Extract source text via tavily_extract -> 3. Search corroboration/contradictions via tavily_search -> 4. Compare evidence & dates -> 5. Return verdict with excerpts and confidence.",
       "notes": "Restricted to search and extract only. Broad research tasks must be delegated back to Web Researcher.",
       "request_tools_through_orchestrator": true
@@ -248,7 +338,10 @@
       "id": "message_analyst",
       "name": "Message Analyst",
       "description": "Reads incoming WhatsApp messages and permitted context; classifies intent (question, request, reminder, commitment, information, casual conversation), extracts entities, assesses urgency, and suggests next step.",
-      "permitted_tool_groups": ["whatsapp_read", "memory"],
+      "permitted_tool_groups": [
+        "whatsapp_read",
+        "memory"
+      ],
       "permitted_tools": [
         "whatsapp.receive_event",
         "whatsapp.process_voice",
@@ -264,7 +357,12 @@
         "system.*",
         "filesystem.patch_file"
       ],
-      "capabilities": ["intent_classification", "entity_extraction", "urgency_scoring", "voice_transcription"],
+      "capabilities": [
+        "intent_classification",
+        "entity_extraction",
+        "urgency_scoring",
+        "voice_transcription"
+      ],
       "workflow_role": "Read-only intake analysis. Input: incoming message and permitted context. Output: intent, entities, urgency, suggested next step.",
       "request_tools_through_orchestrator": true
     },
@@ -272,7 +370,10 @@
       "id": "commitment_tracker",
       "name": "Commitment Tracker",
       "description": "Detects commitments, promises, and deadlines from conversation context (e.g., 'I will submit report by Friday', 'Remind me to call Rahul tomorrow'). Proposes task and memory updates.",
-      "permitted_tool_groups": ["planning", "memory"],
+      "permitted_tool_groups": [
+        "planning",
+        "memory"
+      ],
       "permitted_tools": [
         "planning.todo_manage",
         "memory.store",
@@ -286,7 +387,12 @@
         "system.*",
         "tavily_*"
       ],
-      "capabilities": ["commitment_detection", "deadline_extraction", "task_proposal", "memory_update_proposal"],
+      "capabilities": [
+        "commitment_detection",
+        "deadline_extraction",
+        "task_proposal",
+        "memory_update_proposal"
+      ],
       "workflow_role": "Input: message text and relevant context. Output: proposed task, deadline, owner, source message ID, confidence. No external writes without approval.",
       "request_tools_through_orchestrator": true
     },
@@ -294,7 +400,10 @@
       "id": "response_drafter",
       "name": "Response Drafter",
       "description": "Drafts candidate WhatsApp replies based on incoming message, user preferences, and authorized Iron Web context. Flags assumptions explicitly.",
-      "permitted_tool_groups": ["memory", "filesystem_read"],
+      "permitted_tool_groups": [
+        "memory",
+        "filesystem_read"
+      ],
       "permitted_tools": [
         "memory.recall",
         "memory.session_search",
@@ -307,7 +416,11 @@
         "whatsapp.proactive_notify",
         "system.*"
       ],
-      "capabilities": ["reply_drafting", "tone_adaptation", "context_synthesis"],
+      "capabilities": [
+        "reply_drafting",
+        "tone_adaptation",
+        "context_synthesis"
+      ],
       "workflow_role": "Draft-only. Input: incoming message, response goal, authorized context. Output: proposed reply with flagged assumptions. Does NOT send.",
       "request_tools_through_orchestrator": true
     },
@@ -315,7 +428,9 @@
       "id": "communication_reviewer",
       "name": "Communication Reviewer",
       "description": "Quality assurance and safety guardrail for proposed replies. Checks factual accuracy, tone, missing context, privacy leakage, and unintended commitments.",
-      "permitted_tool_groups": ["memory"],
+      "permitted_tool_groups": [
+        "memory"
+      ],
       "permitted_tools": [
         "memory.recall",
         "memory.session_search",
@@ -327,7 +442,12 @@
         "whatsapp.proactive_notify",
         "system.*"
       ],
-      "capabilities": ["reply_review", "privacy_checking", "commitment_safeguard", "tone_validation"],
+      "capabilities": [
+        "reply_review",
+        "privacy_checking",
+        "commitment_safeguard",
+        "tone_validation"
+      ],
       "workflow_role": "Review-only. Input: original message, proposed reply, context. Output: approved-for-review | revise | reject with concrete reasons. Cannot send messages.",
       "request_tools_through_orchestrator": true
     },
@@ -335,7 +455,9 @@
       "id": "message_action_worker",
       "name": "Message Action Worker",
       "description": "Approval-gated execution worker. Dispatches text replies, media attachments, or scheduled notifications strictly after explicit Wayfinder authorization.",
-      "permitted_tool_groups": ["whatsapp_actions"],
+      "permitted_tool_groups": [
+        "whatsapp_actions"
+      ],
       "permitted_tools": [
         "whatsapp.reply_text",
         "whatsapp.send_media",
@@ -347,7 +469,11 @@
         "system.*",
         "tavily_*"
       ],
-      "capabilities": ["message_dispatch", "media_dispatch", "proactive_notification"],
+      "capabilities": [
+        "message_dispatch",
+        "media_dispatch",
+        "proactive_notification"
+      ],
       "workflow_role": "Send-only execution. Input: approved recipient, content, action params. Output: delivery result and message ID/status. No unrestricted history or memory access.",
       "request_tools_through_orchestrator": true,
       "notes": "Every action strictly requires orchestrator approval token before execution."
@@ -382,15 +508,26 @@
       "id": "repository_analyst",
       "name": "Repository Analyst",
       "description": "Analyzes local codebase structure, dependencies, and git metadata. No default web access.",
-      "permitted_tool_groups": ["filesystem_read", "sandbox_exec", "memory"],
+      "permitted_tool_groups": [
+        "filesystem_read",
+        "sandbox_exec",
+        "memory"
+      ],
       "permitted_tools": [
         "filesystem.read_file",
         "system.code_eval",
         "memory.recall",
         "agent.clarify"
       ],
-      "denied_tools": ["tavily_*", "system.terminal_exec", "whatsapp.*"],
-      "capabilities": ["code_analysis", "architecture_inspection"],
+      "denied_tools": [
+        "tavily_*",
+        "system.terminal_exec",
+        "whatsapp.*"
+      ],
+      "capabilities": [
+        "code_analysis",
+        "architecture_inspection"
+      ],
       "request_tools_through_orchestrator": true,
       "notes": "No default Tavily access. Can request web research through the orchestrator if needed."
     },
@@ -398,15 +535,25 @@
       "id": "error_investigator",
       "name": "Error Investigator",
       "description": "Investigates runtime errors, tracebacks, and logs locally. No default web access.",
-      "permitted_tool_groups": ["filesystem_read", "memory"],
+      "permitted_tool_groups": [
+        "filesystem_read",
+        "memory"
+      ],
       "permitted_tools": [
         "filesystem.read_file",
         "memory.session_search",
         "memory.recall",
         "agent.clarify"
       ],
-      "denied_tools": ["tavily_*", "system.terminal_exec", "whatsapp.*"],
-      "capabilities": ["log_investigation", "traceback_analysis"],
+      "denied_tools": [
+        "tavily_*",
+        "system.terminal_exec",
+        "whatsapp.*"
+      ],
+      "capabilities": [
+        "log_investigation",
+        "traceback_analysis"
+      ],
       "request_tools_through_orchestrator": true,
       "notes": "No default Tavily access. Requests web documentation lookups via orchestrator."
     },
@@ -414,15 +561,24 @@
       "id": "memory_query_worker",
       "name": "Memory Query Worker",
       "description": "Searches, queries, and aggregates persistent and session memory. No default web access.",
-      "permitted_tool_groups": ["memory"],
+      "permitted_tool_groups": [
+        "memory"
+      ],
       "permitted_tools": [
         "memory.recall",
         "memory.store",
         "memory.session_search",
         "agent.clarify"
       ],
-      "denied_tools": ["tavily_*", "system.*", "whatsapp.*"],
-      "capabilities": ["memory_query", "memory_aggregation"],
+      "denied_tools": [
+        "tavily_*",
+        "system.*",
+        "whatsapp.*"
+      ],
+      "capabilities": [
+        "memory_query",
+        "memory_aggregation"
+      ],
       "request_tools_through_orchestrator": true,
       "notes": "No default Tavily access. Operates exclusively on internal memory."
     },
@@ -430,7 +586,13 @@
       "id": "knowledge_worker",
       "name": "General Knowledge Worker",
       "description": "General-purpose knowledge and documentation worker operating across Notion, Google Docs, Drive, and local notes through the KnowledgeProvider harness. Searches and reads notes automatically; creating or updating pages is approval-gated.",
-      "permitted_tool_groups": ["notion_read", "google_workspace_read", "filesystem_read", "memory", "planning"],
+      "permitted_tool_groups": [
+        "notion_read",
+        "google_workspace_read",
+        "filesystem_read",
+        "memory",
+        "planning"
+      ],
       "permitted_tools": [
         "notion.search_pages",
         "notion.read_page",
@@ -451,7 +613,12 @@
         "system.terminal_exec",
         "whatsapp.*"
       ],
-      "capabilities": ["knowledge_search", "document_synthesis", "note_organization", "content_drafting"],
+      "capabilities": [
+        "knowledge_search",
+        "document_synthesis",
+        "note_organization",
+        "content_drafting"
+      ],
       "workflow_role": "Unified knowledge interface across Notion and Google Docs. Finds references, reads documents, and drafts structured notes.",
       "request_tools_through_orchestrator": true
     },
@@ -459,7 +626,11 @@
       "id": "task_and_schedule_worker",
       "name": "General Task & Schedule Worker",
       "description": "General-purpose planning worker managing tasks, commitments, and calendar events across Google Tasks, Google Calendar, and future task tools via TaskProvider harness. Reads auto; scheduling and task writes are approval-gated.",
-      "permitted_tool_groups": ["google_workspace", "planning", "memory"],
+      "permitted_tool_groups": [
+        "google_workspace",
+        "planning",
+        "memory"
+      ],
       "permitted_tools": [
         "google.tasks_read",
         "google.calendar_read",
@@ -476,7 +647,12 @@
         "system.terminal_exec",
         "whatsapp.*"
       ],
-      "capabilities": ["task_coordination", "calendar_scheduling", "conflict_detection", "daily_planning"],
+      "capabilities": [
+        "task_coordination",
+        "calendar_scheduling",
+        "conflict_detection",
+        "daily_planning"
+      ],
       "workflow_role": "Unified task and calendar interface. Aggregates to-dos from Google Tasks, cross-checks deadlines with Calendar, and proposes daily agendas.",
       "request_tools_through_orchestrator": true
     },
@@ -484,7 +660,12 @@
       "id": "communication_worker",
       "name": "General Communication Worker",
       "description": "General-purpose communication harness worker managing messaging across WhatsApp, Gmail, and future chat platforms via MessagingProvider harness. Reads and analyzes inbound messages auto; outbound dispatch is strictly approval-gated.",
-      "permitted_tool_groups": ["whatsapp_read", "google_workspace_read", "memory", "planning"],
+      "permitted_tool_groups": [
+        "whatsapp_read",
+        "google_workspace_read",
+        "memory",
+        "planning"
+      ],
       "permitted_tools": [
         "whatsapp.receive_event",
         "whatsapp.process_voice",
@@ -503,7 +684,12 @@
       "denied_tools": [
         "system.terminal_exec"
       ],
-      "capabilities": ["message_intake", "intent_classification", "communication_review", "controlled_reply"],
+      "capabilities": [
+        "message_intake",
+        "intent_classification",
+        "communication_review",
+        "controlled_reply"
+      ],
       "workflow_role": "Unified communications interface. Ingests messages from WhatsApp and Gmail, extracts requests and commitments, drafts replies, and dispatches only with user approval.",
       "request_tools_through_orchestrator": true
     },
@@ -511,7 +697,12 @@
       "id": "research_and_verification_worker",
       "name": "General Research & Verification Worker",
       "description": "General-purpose external intelligence worker combining web search, content extraction, crawling, and independent evidence verification via Tavily CLI and skills.",
-      "permitted_tool_groups": ["tavily", "memory", "filesystem", "planning"],
+      "permitted_tool_groups": [
+        "tavily",
+        "memory",
+        "filesystem",
+        "planning"
+      ],
       "permitted_tools": [
         "tavily_search",
         "tavily_extract",
@@ -532,7 +723,12 @@
         "whatsapp.*",
         "agent.delegate_task"
       ],
-      "capabilities": ["web_research", "source_extraction", "fact_verification", "corroboration"],
+      "capabilities": [
+        "web_research",
+        "source_extraction",
+        "fact_verification",
+        "corroboration"
+      ],
       "workflow_role": "Searches external web sources, extracts structured content, verifies claims against independent sources, and produces cited evidence briefs.",
       "request_tools_through_orchestrator": true
     },
@@ -540,7 +736,11 @@
       "id": "desktop_execution_worker",
       "name": "General Desktop Execution Worker",
       "description": "General-purpose desktop automation worker operating on Windows OS via DesktopProvider harness. Finds local files, inspects documents, manages clipboard, sends notifications, and launches allowlisted applications.",
-      "permitted_tool_groups": ["desktop_automation", "filesystem_read", "memory"],
+      "permitted_tool_groups": [
+        "desktop_automation",
+        "filesystem_read",
+        "memory"
+      ],
       "permitted_tools": [
         "desktop.find_files",
         "desktop.read_document",
@@ -559,7 +759,13 @@
         "system.terminal_exec",
         "whatsapp.*"
       ],
-      "capabilities": ["desktop_file_discovery", "document_text_extraction", "clipboard_management", "notification_dispatch", "allowlisted_app_launch"],
+      "capabilities": [
+        "desktop_file_discovery",
+        "document_text_extraction",
+        "clipboard_management",
+        "notification_dispatch",
+        "allowlisted_app_launch"
+      ],
       "workflow_role": "Bridges AI workflows to the local desktop environment. Searches documents, handles clipboard transfers, and sends OS notifications.",
       "request_tools_through_orchestrator": true
     },
@@ -567,7 +773,11 @@
       "id": "orchestrator",
       "name": "Orchestrator",
       "description": "Top-level planning and policy enforcement agent. Decomposes user goals, checks capability registry and permissions, delegates tasks to workers, and synthesizes final responses.",
-      "permitted_tool_groups": ["agent", "planning", "memory"],
+      "permitted_tool_groups": [
+        "agent",
+        "planning",
+        "memory"
+      ],
       "permitted_tools": [
         "agent.delegate_task",
         "agent.clarify",
@@ -576,8 +786,15 @@
         "memory.store",
         "memory.session_search"
       ],
-      "denied_tools": ["*"],
-      "capabilities": ["planning", "delegation", "workflow_composition", "permission_enforcement"],
+      "denied_tools": [
+        "*"
+      ],
+      "capabilities": [
+        "planning",
+        "delegation",
+        "workflow_composition",
+        "permission_enforcement"
+      ],
       "request_tools_through_orchestrator": false,
       "notes": "Checks capability availability and policy permissions before delegating to workers."
     },

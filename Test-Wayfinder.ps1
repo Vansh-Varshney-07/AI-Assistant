@@ -1,40 +1,28 @@
-param([string]$ReportDirectory = (Join-Path $PSScriptRoot '.local\verification'))
-$ErrorActionPreference = 'Stop'
-$candidates = @((Join-Path $PSScriptRoot '.venv\Scripts\python.exe'), 'D:\Opencode_\reserchpaper\.venv\Scripts\python.exe')
-$python = $candidates | Where-Object { Test-Path -LiteralPath $_ } | Select-Object -First 1
-if (-not $python) { throw 'Install requirements.txt into .venv first.' }
-$testId = [Guid]::NewGuid().ToString('N').Substring(0,12)
-$container = 'wayfinder-tests-' + $testId
-$priorPort = $env:FALKORDB_PORT
-$priorHost = $env:FALKORDB_HOST
-$reportPath = [System.IO.Path]::GetFullPath($ReportDirectory)
-$exitCode = 1
-Push-Location $PSScriptRoot
-try {
-    Write-Output 'Quit Wayfinder before this run so its global hotkey is available to the native UI test.'
-    New-Item -ItemType Directory -Force -Path $reportPath | Out-Null
-    docker image inspect falkordb/falkordb:v4.20.7 --format '{{.Id}}'
-    if ($LASTEXITCODE -ne 0) { throw 'The pinned FalkorDB image must already be installed.' }
-    docker run -d --name $container -p '127.0.0.1::6379' --tmpfs /data -e 'REDIS_ARGS=--appendonly no --save ""' -e 'BROWSER=0' falkordb/falkordb:v4.20.7
-    if ($LASTEXITCODE -ne 0) { throw 'Could not create the disposable test database.' }
-    $portText = docker port $container 6379/tcp
-    if ($portText -notmatch '^127\.0\.0\.1:(\d+)$') { throw 'Unexpected database binding.' }
-    $env:FALKORDB_PORT = $Matches[1]
-    $env:FALKORDB_HOST = '127.0.0.1'
-    $ready = $false
-    for ($attempt=0; $attempt -lt 20; $attempt++) {
-        if ((docker exec $container redis-cli ping 2>$null) -eq 'PONG') { $ready = $true; break }
-        Start-Sleep -Milliseconds 250
+param([ValidateSet('Regression','Frontend','Build','NeuralLive','NodeBridge','Packaged','Rendered')][string]$Mode='Regression',[string]$Python)
+$ErrorActionPreference='Stop'
+$appRoot=Join-Path $PSScriptRoot 'desktop-app'
+if(-not $Python){$Python=@($env:WAYFINDER_PYTHON,(Join-Path $PSScriptRoot '.venv/Scripts/python.exe'),'D:\Opencode_\reserchpaper\.venv\Scripts\python.exe')|Where-Object{$_ -and(Test-Path -LiteralPath $_)}|Select-Object -First 1}
+$oldPython=$env:WAYFINDER_PYTHON;$oldPlaywright=$env:WAYFINDER_PLAYWRIGHT_MODULE;$oldChrome=$env:WAYFINDER_CHROME
+try{
+    if($Python){$env:WAYFINDER_PYTHON=$Python}
+    $bundled=Join-Path $env:USERPROFILE '.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/package.json'
+    if(-not $env:WAYFINDER_PLAYWRIGHT_MODULE -and(Test-Path -LiteralPath $bundled)){$env:WAYFINDER_PLAYWRIGHT_MODULE=$bundled}
+    if(-not $env:WAYFINDER_CHROME){$env:WAYFINDER_CHROME=Join-Path $env:ProgramFiles 'Google/Chrome/Application/chrome.exe'}
+    if($Mode -in @('Frontend','Build','Rendered')){
+        Push-Location $appRoot
+        try{
+            if($Mode -eq 'Frontend'){npm run check;if($LASTEXITCODE -ne 0){exit $LASTEXITCODE};npm test -- --reporter=json --outputFile=test-results/ui.json}
+            elseif($Mode -eq 'Build'){npm run package}
+            else{node scripts/verify-renderer.mjs}
+            $result=$LASTEXITCODE
+        }finally{Pop-Location}
+    }else{
+        $options=@{}
+        if($Mode -eq 'NeuralLive'){$options.Neural=$true;$options.Live=$true}
+        if($Mode -eq 'NodeBridge'){$options.NodeBridge=$true}
+        if($Mode -eq 'Packaged'){$options.Packaged=$true}
+        & (Join-Path $appRoot 'scripts/Test-Backend.ps1') @options
+        $result=$LASTEXITCODE
     }
-    if (-not $ready) { throw 'Disposable database did not become ready.' }
-    $baseTemp = Join-Path $PSScriptRoot ('.local\pytest-' + $testId)
-    & $python -m pytest -q --tb=short --basetemp $baseTemp --junitxml (Join-Path $reportPath 'regression.xml')
-    $exitCode = $LASTEXITCODE
-} finally {
-    # Only this invocation's unique disposable container; never a live volume.
-    docker rm -f -v $container 2>$null | Out-Null
-    $env:FALKORDB_PORT = $priorPort
-    $env:FALKORDB_HOST = $priorHost
-    Pop-Location
-}
-exit $exitCode
+}finally{$env:WAYFINDER_PYTHON=$oldPython;$env:WAYFINDER_PLAYWRIGHT_MODULE=$oldPlaywright;$env:WAYFINDER_CHROME=$oldChrome}
+exit $result

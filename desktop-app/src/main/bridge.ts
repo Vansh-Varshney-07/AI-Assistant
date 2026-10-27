@@ -1,8 +1,10 @@
 import { spawn, type ChildProcessWithoutNullStreams } from 'node:child_process';
-import { randomBytes, randomUUID } from 'node:crypto';
+import { createHash, randomBytes, randomUUID } from 'node:crypto';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import type { BackendState, Row } from '../shared/types';
+import release from '../../FEATURES.json';
+const releaseHash = createHash('sha256').update(JSON.stringify(release)).digest('hex');
 
 export interface Transport { call(operation: string, body?: Row): Promise<any> }
 export class BackendBridge implements Transport {
@@ -12,15 +14,25 @@ export class BackendBridge implements Transport {
   private pending = new Map<string, { resolve: (data: any) => void; reject: (error: Error) => void; timer: ReturnType<typeof setTimeout> }>();
   private connecting?: Promise<BackendState>;
   state: BackendState = { state: 'offline' };
-  constructor(readonly project: string, readonly host: string, readonly runtime: string) {}
+  private options: {executable?: string; environment?: NodeJS.ProcessEnv} = {};
+  constructor(readonly project: string, readonly host: string, readonly runtime: string, private bootstrapError?: string) {}
+  configure(options: {executable: string; environment: NodeJS.ProcessEnv}) {
+    if (this.child) throw new Error('Close the current backend before changing its private connection.');
+    this.options=options;
+  }
   async connect(): Promise<BackendState> {
     if (this.connecting) return this.connecting;
     if (this.state.state === 'ready') return this.state;
     this.state = { state: 'starting' };
     this.connecting = (async () => {
       try {
+        if (this.bootstrapError) throw new Error(this.bootstrapError);
         if (!this.child) this.launch();
         this.state = await this.call('boot', {}, 120000);
+        if (this.state.release?.sha256 !== releaseHash || typeof this.state.instance_generation !== 'string' || !this.state.instance_generation) {
+          await this.close();
+          throw new Error('The owned host does not match this build manifest. No operation was enabled. Rebuild or select the matching project.');
+        }
       } catch (error) {
         this.state = { state: 'offline', runtime: this.runtime, error: error instanceof Error ? error.message : 'Backend is unavailable.' };
       } finally { this.connecting = undefined; }
@@ -30,11 +42,11 @@ export class BackendBridge implements Transport {
   }
   private launch() {
     const candidates = [process.env.WAYFINDER_PYTHON, path.join(this.project, '.venv', 'Scripts', 'python.exe'), path.resolve(this.project, '..', 'reserchpaper', '.venv', 'Scripts', 'python.exe')];
-    const python = candidates.find(p => p && existsSync(p));
+    const python = this.options.executable || candidates.find(p => p && existsSync(p));
     if (!python) throw new Error('Configured Python environment missing. Set WAYFINDER_PYTHON to the existing project environment; nothing was installed automatically.');
-    this.child = spawn(python, ['-B', '-u', this.host, '--project', this.project, '--runtime', this.runtime], {
+    this.child = spawn(python, [...(this.options.executable ? [] : ['-B', '-u', this.host]), '--project', this.project, '--runtime', this.runtime], {
       cwd: this.project, windowsHide: true, stdio: ['pipe', 'pipe', 'pipe'],
-      env: { ...process.env, WAYFINDER_HOST_SECRET: this.secret, PYTHONDONTWRITEBYTECODE: '1', HF_HUB_OFFLINE: '1', TRANSFORMERS_OFFLINE: '1' },
+      env: { ...process.env, ...this.options.environment, WAYFINDER_HOST_SECRET: this.secret, PYTHONDONTWRITEBYTECODE: '1', HF_HUB_OFFLINE: '1', TRANSFORMERS_OFFLINE: '1' },
     });
     this.child.stdout.setEncoding('utf8');
     this.child.stdout.on('data', (chunk: string) => this.receive(chunk));
@@ -49,25 +61,27 @@ export class BackendBridge implements Transport {
   }
   private receive(chunk: string) {
     this.buffer += chunk;
-    if (this.buffer.length > 8 * 1024 * 1024) { this.child?.kill(); this.stopped('Backend response exceeded the bounded transport.'); return; }
     let newline: number;
     while ((newline = this.buffer.indexOf('\n')) >= 0) {
       const line = this.buffer.slice(0, newline); this.buffer = this.buffer.slice(newline + 1);
+      if (Buffer.byteLength(line, 'utf8') + 1 > 65536) { this.child?.kill(); this.buffer = ''; this.stopped('Backend response exceeded the bounded transport.'); return; }
       if (!line.startsWith('WAYFINDER_DESKTOP=')) continue;
       try {
         const value = JSON.parse(line.slice('WAYFINDER_DESKTOP='.length));
+        if (!value || typeof value.id !== 'string' || typeof value.ok !== 'boolean' || Object.keys(value).some(key => !['id','ok','data','error'].includes(key))) throw new Error('Invalid response envelope');
         const p = this.pending.get(value.id); if (!p) continue;
         this.pending.delete(value.id); clearTimeout(p.timer);
         value.ok ? p.resolve(value.data) : p.reject(new Error(typeof value.error === 'string' ? value.error : 'Backend rejected the request.'));
-      } catch { this.stopped('Invalid backend transport response.'); }
+      } catch { this.child?.kill(); this.buffer = ''; this.stopped('Invalid backend transport response.'); return; }
     }
+    if (Buffer.byteLength(this.buffer, 'utf8') > 65536) { this.child?.kill(); this.buffer = ''; this.stopped('Backend response exceeded the bounded transport.'); }
   }
-  call(operation: string, body: Row = {}, timeout = 40000): Promise<any> {
+  call(operation: string, body: Row = {}, timeout = ['platform_external_read','platform_connections_check'].includes(operation)?90000:40000): Promise<any> {
     const child = this.child; if (!child?.stdin.writable) return Promise.reject(new Error('Backend offline. Retry connection in Settings.'));
     if (this.pending.size >= 16) return Promise.reject(new Error('Too many pending requests. Wait for current work.'));
     const id = randomUUID();
     const raw = JSON.stringify({ id, secret: this.secret, operation, body }) + '\n';
-    if (Buffer.byteLength(raw) > 131072) return Promise.reject(new Error('Request exceeds the desktop limit.'));
+    if (Buffer.byteLength(raw) > 65536) return Promise.reject(new Error('Request exceeds the desktop limit.'));
     return new Promise((resolve, reject) => {
       const timer = setTimeout(() => { this.pending.delete(id); reject(new Error('Request timed out; outcome may be unconfirmed. Inspect Runs before trying any effect again.')); }, timeout);
       this.pending.set(id, { resolve, reject, timer });

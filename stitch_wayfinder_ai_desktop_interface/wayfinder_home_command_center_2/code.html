@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=JetBrains+Mono:wght@100..900&amp;family=Space+Grotesk:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"surface-bright": "#f4fafc", "inverse-primary": "#35d9ee", "on-error-container": "#93000a", "inverse-surface": "#2b3233", "on-tertiary-fixed-variant": "#653e00", "on-primary-container": "#005761", "tertiary-container": "#ffb043", tertiary: "#855400", "on-error": "#ffffff", "inverse-on-surface": "#ebf2f3", surface: "#f4fafc", "surface-container": "#e8eff0", "on-secondary-fixed": "#001f24", "on-primary": "#ffffff", "surface-dim": "#d5dbdc", error: "#ba1a1a", "surface-container-low": "#eef5f6", "secondary-fixed-dim": "#9dcfd8", "on-tertiary": "#ffffff", "on-secondary-container": "#396a72", "primary-container": "#29d3e8", background: "#f4fafc", "surface-container-high": "#e3e9eb", "on-surface": "#161d1e", "on-secondary-fixed-variant": "#194d55", "secondary-fixed": "#b9ebf4", "surface-tint": "#006874", "secondary-container": "#b6e8f1", "on-primary-fixed-variant": "#004f58", secondary: "#34666d", "on-surface-variant": "#3c494b", "on-primary-fixed": "#001f24", "surface-variant": "#dde4e5", "surface-container-highest": "#dde4e5", "on-secondary": "#ffffff", "tertiary-fixed-dim": "#ffb95e", "primary-fixed": "#97f0ff", "primary-fixed-dim": "#35d9ee", "outline-variant": "#bbc9cc", "surface-container-lowest": "#ffffff", "on-tertiary-container": "#6f4500", outline: "#6c797c", "tertiary-fixed": "#ffddb7", "error-container": "#ffdad6", "on-tertiary-fixed": "#2a1700", primary: "#006874", "on-background": "#161d1e"}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}, spacing: {"space-xs": "0.25rem", "space-lg": "1rem", gutter: "0.75rem", "space-xl": "1.5rem", "space-sm": "0.5rem", "space-md": "0.75rem", margin: "1rem"}, fontFamily: {"headline-md": ["Space Grotesk"], "body-lg": ["Geist"], "headline-sm": ["Space Grotesk"], "headline-lg": ["Space Grotesk"], "body-sm": ["Geist"], "display-lg": ["Space Grotesk"], "body-md": ["Geist"], "label-lg": ["JetBrains Mono"], "label-md": ["JetBrains Mono"], "label-sm": ["JetBrains Mono"], "code-stream": ["JetBrains Mono"], headline: ["Space Grotesk"], display: ["Space Grotesk"], body: ["Geist"], label: ["JetBrains Mono"]}, fontSize: {"headline-md": ["18px", {lineHeight: "24px", letterSpacing: "-0.01em", fontWeight: "500"}], "body-lg": ["15px", {lineHeight: "24px", fontWeight: "400"}], "headline-sm": ["15px", {lineHeight: "20px", fontWeight: "500"}], "headline-lg": ["24px", {lineHeight: "32px", letterSpacing: "-0.015em", fontWeight: "600"}], "body-sm": ["12px", {lineHeight: "16px", fontWeight: "400"}], "display-lg": ["32px", {lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "600"}], "body-md": ["13px", {lineHeight: "20px", fontWeight: "400"}], "label-lg": ["13px", {lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "500"}], "label-md": ["11px", {lineHeight: "14px", letterSpacing: "0.04em", fontWeight: "500"}], "label-sm": ["10px", {lineHeight: "12px", letterSpacing: "0.06em", fontWeight: "500"}], "code-stream": ["12px", {lineHeight: "18px", fontWeight: "400"}]}}}};</script></head><body class="bg-background font-body-md text-on-surface antialiased min-h-screen selection:bg-primary-container selection:text-on-primary-container"><aside class="fixed left-0 top-0 h-full w-60 bg-surface-container-lowest border-r border-outline-variant z-50 flex flex-col justify-between select-none"><div class="flex flex-col h-full"><div class="h-8 px-space-md border-b border-outline-variant flex items-center justify-between bg-surface-container-lowest"><div class="flex items-center gap-space-xs"><span class="w-1.5 h-1.5 bg-primary rounded-none"></span><span class="font-label-sm text-label-sm text-primary uppercase tracking-widest">WAYFINDER.SYS</span></div><span class="font-label-sm text-label-sm text-on-surface-variant">v2.4</span></div><div class="p-space-md border-b border-outline-variant flex items-center gap-space-sm bg-surface-container-low"><img alt="Wayfinder Navigational Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1XKn2foPdfaOyEmEcyjibVQxTi6nb8pt4KhwacqsFWlGSWqtwz37bp7yxjZzLbtg8UPcCDI4M9O4Pkt-QZFL0gJN-4l651gmEMTlbCJ_bggddxY7uog2m60ZDybErC2kjei5_ERrh-ZayypS2pRcao3ilf71CWI_r1ClsC3VNG1c7i4xlygUFtuQyb-Zse36pJcuW3Zpbmwu5GXSfjaDgPzNJ80UQs4i9soEKSvMAlmPSbI1rWuhD9rOA"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm font-bold tracking-tight text-on-surface leading-none">WAYFINDER</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase mt-0.5">AI Workspace</span></div></div><div class="flex-1 overflow-y-auto px-space-sm py-space-md flex flex-col gap-space-md"><div class="flex flex-col"><span class="px-space-sm pb-space-xs font-label-sm text-label-sm text-outline uppercase tracking-wider">WORKSPACE</span><nav class="flex flex-col gap-0.5" data-active-classes="bg-surface-container border-l-2 border-primary text-on-surface font-headline-sm"><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded-none text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="home" href="#"><span class="material-symbols-outlined text-base">grid_view</span><span>Home</span></a><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded-none text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="planner" href="#"><span class="material-symbols-outlined text-base">calendar_month</span><span>Planner</span></a><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded-none text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="notion" href="#"><span class="material-symbols-outlined text-base">description</span><span>Notion</span></a></nav></div><div class="flex flex-col"><span class="px-space-sm pb-space-xs font-label-sm text-label-sm text-outline uppercase tracking-wider">AUTOMATION</span><nav class="flex flex-col gap-0.5" data-active-classes="bg-surface-container border-l-2 border-primary text-on-surface font-headline-sm"><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded-none text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="workflows" href="#"><span class="material-symbols-outlined text-base">account_tree</span><span>Workflows</span></a><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded-none text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="activity" href="#"><span class="material-symbols-outlined text-base">pulse_alert</span><span>Activity</span></a></nav></div><div class="flex flex-col"><span class="px-space-sm pb-space-xs font-label-sm text-label-sm text-outline uppercase tracking-wider">INTEGRATIONS</span><nav class="flex flex-col gap-0.5" data-active-classes="bg-surface-container border-l-2 border-primary text-on-surface font-headline-sm"><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded-none text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="connections" href="#"><span class="material-symbols-outlined text-base">hub</span><span>Connections</span></a></nav></div><div class="flex flex-col"><span class="px-space-sm pb-space-xs font-label-sm text-label-sm text-outline uppercase tracking-wider">CONTROL</span><nav class="flex flex-col gap-0.5" data-active-classes="bg-surface-container border-l-2 border-primary text-on-surface font-headline-sm"><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded-none text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="permissions-and-security" href="#"><span class="material-symbols-outlined text-base">shield_lock</span><span>Permissions &amp; Security</span></a><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded-none text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="pet-and-widget" href="#"><span class="material-symbols-outlined text-base">smart_toy</span><span>Pet &amp; Widget</span></a></nav></div><div class="flex flex-col"><span class="px-space-sm pb-space-xs font-label-sm text-label-sm text-outline uppercase tracking-wider">SYSTEM</span><nav class="flex flex-col gap-0.5" data-active-classes="bg-surface-container border-l-2 border-primary text-on-surface font-headline-sm"><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded-none text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="memory-and-knowledge" href="#"><span class="material-symbols-outlined text-base">neurology</span><span>Memory &amp; Knowledge</span></a><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded-none text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="settings-and-diagnostics" href="#"><span class="material-symbols-outlined text-base">tune</span><span>Settings &amp; Diagnostics</span></a></nav></div></div><div class="p-space-md border-t border-outline-variant bg-surface-container-low"><div class="flex items-center justify-between mb-space-xs"><span class="font-label-sm text-label-sm text-outline uppercase">HOST STATUS</span><span class="w-1.5 h-1.5 bg-tertiary-fixed rounded-none animate-pulse"></span></div><div class="font-label-sm text-label-sm text-on-surface-variant flex flex-col gap-0.5"><div class="flex justify-between"><span>CPU LOAD</span><span class="text-primary font-bold">12%</span></div><div class="flex justify-between"><span>MEM ALLOC</span><span class="text-primary font-bold">1.4 GB</span></div><div class="flex justify-between"><span>ACTIVE NODES</span><span class="text-tertiary font-bold">8 ONLINE</span></div></div></div></div></aside><div class="pl-60 flex flex-col min-h-screen"><header class="fixed top-0 left-60 right-0 z-40 bg-surface-container-lowest border-b border-outline-variant flex flex-col"><div class="h-8 w-full border-b border-outline-variant/60 flex items-center justify-between px-space-md select-none bg-surface-container-lowest"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-sm text-primary">terminal</span><span class="font-label-sm text-label-sm tracking-wider text-on-surface-variant uppercase">WAYFINDER // AI WORKSPACE v2.4</span></div><div class="h-3 w-px bg-outline-variant"></div><div class="flex items-center gap-space-xs"><span class="w-1.5 h-1.5 bg-tertiary-fixed rounded-none"></span><span class="font-label-sm text-label-sm text-tertiary-fixed uppercase">SYSTEM ONLINE • 14ms latency</span></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs bg-surface-container-low px-space-sm py-0.5 border border-outline-variant"><span class="material-symbols-outlined text-xs text-outline">search</span><span class="font-label-sm text-label-sm text-outline">Quick Search</span><kbd class="font-label-sm text-label-sm text-primary bg-surface-container-high px-1 py-0 border border-outline-variant ml-space-xs">Ctrl+K</kbd></div><div class="flex items-center"><button aria-label="Minimize" class="w-6 h-6 flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-sm">remove</span></button><button aria-label="Maximize" class="w-6 h-6 flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-sm">crop_square</span></button><button aria-label="Close" class="w-6 h-6 flex items-center justify-center text-on-surface-variant hover:bg-error-container hover:text-on-error-container transition-colors" type="button"><span class="material-symbols-outlined text-sm">close</span></button></div></div></div><div class="h-12 w-full px-space-lg flex items-center justify-between bg-surface-container-low"><div class="flex items-center gap-space-md"><span class="font-label-md text-label-md text-outline uppercase tracking-wider">COMMAND PORTAL</span><div class="h-3 w-px bg-outline-variant"></div><span class="px-space-xs py-0.5 bg-surface-container border border-outline-variant font-label-sm text-label-sm text-on-surface-variant">ACTIVE RUNTIME: LOCAL-HOST-01</span></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-1 bg-surface-container border border-outline-variant"><span class="material-symbols-outlined text-xs text-primary">pets</span><span class="font-label-sm text-label-sm text-primary font-bold">ƒ ⌥ SPACE to Summon Pet</span></div><div class="flex items-center gap-space-xs"><div class="relative flex items-center"><img alt="Profile" class="w-7 h-7 rounded-none object-cover border border-outline-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBN4OyKPduiyWTLg52PaIwT-F7b-kZlw0xnLBPqFyGzUSV3CN4slvMWYX6aPgZUm9xUr4f0NIioSuvRvjBEVtfhzaELkw4Wk5aH6h9BM-gRRM7y1OACwIxAVlPg0Hs551ZLFk_tgMBKfTk7KE9MrZ_MTYqI56716eIzpD1xr90ZVsoLHhEmPzqzC4UsLjmgqXpYBz-KYpf5mlfcTJjApMESbERyaB53-zA7EG_QN6vzFgNqRNutRwEQ"/><span class="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-tertiary border border-surface-container-low"></span></div><div class="flex flex-col ml-space-xs"><span class="font-label-sm text-label-sm font-bold text-on-surface leading-tight">SYS_ADMIN</span><span class="font-label-sm text-label-sm text-tertiary leading-none">ACTIVE</span></div></div></div></div></header><main class="w-full pt-20 px-space-lg pb-space-xl flex-1 bg-background"><div class="flex flex-col w-full gap-space-lg">
+<!-- 1. CONTEXT & GREETING HEADER -->
+<section class="flex flex-col md:flex-row md:items-end justify-between gap-space-md pb-space-xs border-b border-outline-variant/40">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-widest flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 bg-primary"></span>
+          WAYFINDER // COMMAND_STATION
+        </span>
+<span class="text-outline-variant font-label-sm">/</span>
+<span class="px-1.5 py-0.5 bg-surface-container font-label-sm text-label-sm text-on-surface-variant rounded-none border border-outline-variant/60">
+          WORKSPACE: PRIMARY_CORE
+        </span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface font-semibold tracking-tight mt-1">
+        Good afternoon, Alex
+      </h1>
+<p class="font-body-md text-body-md text-on-surface-variant">
+        Your workspace, tasks and automations in one place.
+      </p>
+</div>
+<!-- Quick Status Chips & Date -->
+<div class="flex flex-wrap items-center gap-space-sm select-none">
+<div class="px-space-sm py-1 bg-surface-container-low border border-outline-variant/80 flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-xs text-outline">calendar_today</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Wednesday, 24 Oct</span>
+</div>
+<div class="px-space-sm py-1 bg-tertiary/10 border border-tertiary/40 flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 bg-tertiary"></span>
+<span class="font-label-sm text-label-sm text-tertiary font-bold tracking-wider">LOCAL DAEMON: ACTIVE</span>
+</div>
+<div class="px-space-sm py-1 bg-primary/10 border border-primary/40 flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 bg-primary animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-primary font-bold tracking-wider">PET: HOVER_STANDBY</span>
+</div>
+</div>
+</section>
+<!-- 2. PRIMARY ASSISTANT VISUAL ANCHOR (CHAT WITH WAYFINDER) -->
+<section class="relative bg-surface-container-low border border-outline-variant p-space-lg flex flex-col lg:flex-row items-stretch justify-between gap-space-lg overflow-hidden">
+<!-- Corner Tick Marks -->
+<span class="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-primary pointer-events-none"></span>
+<span class="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-primary pointer-events-none"></span>
+<!-- Left / Center-Left Command Area -->
+<div class="flex-1 flex flex-col justify-between gap-space-md z-10">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-base text-primary">auto_awesome</span>
+<span class="font-headline-md text-headline-md text-on-surface font-semibold tracking-tight">Chat with Wayfinder</span>
+<span class="ml-space-xs px-1.5 py-0.5 bg-surface-container border border-outline-variant font-label-sm text-label-sm text-primary uppercase">vLLM • INT8</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">
+          Your assistant for desktop tasks, research, planning, and workflows.
+        </p>
+</div>
+<!-- Main Input Command Box -->
+<div class="flex flex-col gap-space-xs">
+<div class="relative flex items-center bg-surface-container border border-outline-variant hover:border-primary/80 focus-within:border-primary transition-colors">
+<span class="pl-space-md text-primary font-code-stream text-code-stream font-bold select-none">&gt;</span>
+<input class="w-full py-2.5 px-space-sm bg-transparent font-code-stream text-code-stream text-on-surface placeholder:text-outline focus:outline-none" placeholder="Ask Wayfinder to do something..." type="text"/>
+<div class="flex items-center gap-1.5 pr-space-md">
+<kbd class="px-1.5 py-0.5 bg-surface-container-high border border-outline-variant font-label-sm text-label-sm text-primary">⌘K</kbd>
+<button class="px-space-md py-1 bg-primary text-on-primary-container font-label-md text-label-md font-bold hover:bg-primary-fixed transition-colors flex items-center gap-1" type="button">
+<span>Send</span>
+<span class="material-symbols-outlined text-xs">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Quick Action Pills -->
+<div class="flex flex-wrap items-center gap-space-xs pt-1">
+<span class="font-label-sm text-label-sm text-outline uppercase mr-1">Suggested:</span>
+<button class="px-space-sm py-0.5 bg-surface-container border border-outline-variant hover:border-primary hover:text-primary text-on-surface-variant font-label-sm text-label-sm transition-colors flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-xs">crop</span>
+<span>Analyze screen [Explicit crop]</span>
+</button>
+<button class="px-space-sm py-0.5 bg-surface-container border border-outline-variant hover:border-primary hover:text-primary text-on-surface-variant font-label-sm text-label-sm transition-colors flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-xs">folder_open</span>
+<span>Find a file</span>
+</button>
+<button class="px-space-sm py-0.5 bg-surface-container border border-outline-variant hover:border-primary hover:text-primary text-on-surface-variant font-label-sm text-label-sm transition-colors flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-xs">account_tree</span>
+<span>Create workflow</span>
+</button>
+<button class="px-space-sm py-0.5 bg-surface-container border border-outline-variant hover:border-primary hover:text-primary text-on-surface-variant font-label-sm text-label-sm transition-colors flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-xs">event_available</span>
+<span>Plan my day</span>
+</button>
+</div>
+</div>
+<!-- Action Link Triggers -->
+<div class="flex flex-wrap items-center gap-space-md pt-2">
+<button class="px-space-md py-1.5 bg-primary text-on-primary-container font-label-md text-label-md font-bold tracking-wide hover:bg-primary-fixed transition-all flex items-center gap-1.5 shadow-sm" type="button">
+<span>Open assistant</span>
+<span class="material-symbols-outlined text-xs">north_east</span>
+<span class="ml-1 px-1 py-0 bg-on-primary-container/20 text-on-primary-container text-[9px] font-mono">⌥␣</span>
+</button>
+<button class="px-space-md py-1.5 bg-transparent border border-outline-variant hover:border-primary text-on-surface hover:text-primary font-label-md text-label-md transition-colors flex items-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-xs text-primary">pets</span>
+<span>Summon Pet</span>
+<span class="font-label-sm text-label-sm text-outline">ƒ ⌥ SPACE</span>
+</button>
+</div>
+</div>
+<!-- Right: Distinctive Geometric Wayfinder Compass / Reticle SVG Anchor -->
+<div class="relative w-full lg:w-64 flex items-center justify-center border-t lg:border-t-0 lg:border-l border-outline-variant/60 pt-space-md lg:pt-0 lg:pl-space-lg select-none">
+<div class="relative w-44 h-44 flex items-center justify-center">
+<!-- Technical Crosshair Hairlines -->
+<span class="absolute w-full h-px bg-outline-variant/40"></span>
+<span class="absolute h-full w-px bg-outline-variant/40"></span>
+<!-- SVG Orbital Reticle -->
+<svg class="w-40 h-40 transform animate-[spin_60s_linear_infinite]" viewbox="0 0 160 160">
+<!-- Outer Dash Ring -->
+<circle class="text-outline-variant" cx="80" cy="80" fill="none" r="74" stroke="currentColor" stroke-dasharray="3,3" stroke-width="1"></circle>
+<!-- Radial Compass Arc -->
+<circle class="text-primary/40" cx="80" cy="80" fill="none" r="60" stroke="currentColor" stroke-dasharray="8 4 2 4" stroke-width="1.5"></circle>
+<!-- Mid Target Ring -->
+<circle class="text-primary" cx="80" cy="80" fill="none" r="42" stroke="currentColor" stroke-width="1"></circle>
+<!-- Inner Core Reticle -->
+<circle class="text-secondary" cx="80" cy="80" fill="none" r="22" stroke="currentColor" stroke-dasharray="4,2" stroke-width="1.5"></circle>
+<!-- Coordinate Ticks -->
+<line class="text-primary" stroke="currentColor" stroke-width="2" x1="80" x2="80" y1="2" y2="10"></line>
+<line class="text-primary" stroke="currentColor" stroke-width="2" x1="80" x2="80" y1="150" y2="158"></line>
+<line class="text-primary" stroke="currentColor" stroke-width="2" x1="2" x2="10" y1="80" y2="80"></line>
+<line class="text-primary" stroke="currentColor" stroke-width="2" x1="150" x2="158" y1="80" y2="80"></line>
+</svg>
+<!-- Static Center Node Badge -->
+<div class="absolute inset-0 m-auto w-16 h-16 bg-surface-container border border-primary/60 flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-primary text-base">explore</span>
+<span class="font-label-sm text-[9px] text-primary font-bold uppercase tracking-tighter">NAV.SYS</span>
+</div>
+<!-- Telemetry Data Readout Overlays -->
+<span class="absolute top-1 left-1 font-label-sm text-[8px] text-outline font-mono">LAT: 37.7749</span>
+<span class="absolute bottom-1 right-1 font-label-sm text-[8px] text-outline font-mono">AZM: 142.8°</span>
+<span class="absolute top-1 right-1 flex items-center gap-1 font-label-sm text-[8px] text-tertiary">
+<span class="w-1 h-1 bg-tertiary"></span>LIVE
+        </span>
+</div>
+</div>
+</section>
+<!-- 3. SECONDARY QUICK ACTIONS -->
+<section class="grid grid-cols-2 md:grid-cols-4 gap-space-sm">
+<button class="group px-space-md py-2.5 bg-surface-container-low border border-outline-variant hover:border-primary hover:bg-surface-container transition-all flex items-center justify-between text-left" type="button">
+<div class="flex items-center gap-space-sm min-w-0">
+<span class="material-symbols-outlined text-base text-primary group-hover:scale-110 transition-transform">account_tree</span>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md font-bold text-on-surface truncate">+ Create Workflow</span>
+<span class="font-label-sm text-label-sm text-outline truncate">Automate tasks</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-xs text-outline group-hover:text-primary transition-colors">chevron_right</span>
+</button>
+<button class="group px-space-md py-2.5 bg-surface-container-low border border-outline-variant hover:border-primary hover:bg-surface-container transition-all flex items-center justify-between text-left" type="button">
+<div class="flex items-center gap-space-sm min-w-0">
+<span class="material-symbols-outlined text-base text-tertiary group-hover:scale-110 transition-transform">check_box</span>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md font-bold text-on-surface truncate">+ Add Task</span>
+<span class="font-label-sm text-label-sm text-outline truncate">Assign or triage</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-xs text-outline group-hover:text-primary transition-colors">chevron_right</span>
+</button>
+<button class="group px-space-md py-2.5 bg-surface-container-low border border-outline-variant hover:border-primary hover:bg-surface-container transition-all flex items-center justify-between text-left" type="button">
+<div class="flex items-center gap-space-sm min-w-0">
+<span class="material-symbols-outlined text-base text-secondary group-hover:scale-110 transition-transform">edit_note</span>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md font-bold text-on-surface truncate">✎ Quick Note</span>
+<span class="font-label-sm text-label-sm text-outline truncate">Scratchpad / buffer</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-xs text-outline group-hover:text-primary transition-colors">chevron_right</span>
+</button>
+<button class="group px-space-md py-2.5 bg-surface-container-low border border-outline-variant hover:border-primary hover:bg-surface-container transition-all flex items-center justify-between text-left" type="button">
+<div class="flex items-center gap-space-sm min-w-0">
+<span class="material-symbols-outlined text-base text-primary-fixed-dim group-hover:scale-110 transition-transform">calendar_add_on</span>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md font-bold text-on-surface truncate">◷ Schedule Meeting</span>
+<span class="font-label-sm text-label-sm text-outline truncate">Google Cal / Zoom</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-xs text-outline group-hover:text-primary transition-colors">chevron_right</span>
+</button>
+</section>
+<!-- 4. TODAY'S OVERVIEW (SIDE-BY-SIDE PANELS) -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-space-md">
+<!-- PANEL A: TODAY'S TASKS -->
+<div class="bg-surface-container-low border border-outline-variant flex flex-col justify-between">
+<!-- Header -->
+<div class="h-10 px-space-md border-b border-outline-variant flex items-center justify-between bg-surface-container">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-sm text-primary">task_alt</span>
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">Today's Tasks</span>
+<span class="px-1.5 py-0.2 bg-surface-container-high text-primary font-label-sm text-label-sm border border-outline-variant">3 PENDING</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="px-space-xs py-0.5 text-on-surface-variant hover:text-primary font-label-sm text-label-sm flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-xs">add</span>Task
+          </button>
+<span class="text-outline-variant">|</span>
+<a class="font-label-sm text-label-sm text-primary hover:underline flex items-center gap-0.5" href="#">
+<span>View all</span>
+<span class="material-symbols-outlined text-xs">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Task Items List -->
+<div class="p-space-md flex flex-col gap-space-xs">
+<!-- Task Item 1: Overdue -->
+<div class="p-space-sm bg-surface-container border border-error/40 flex items-start justify-between gap-space-sm group hover:border-error transition-colors">
+<div class="flex items-start gap-space-sm min-w-0">
+<input class="mt-1 rounded-none accent-primary cursor-pointer" type="checkbox"/>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs flex-wrap">
+<span class="px-1 py-0 bg-error/10 border border-error/40 text-error font-label-sm text-[9px] font-bold uppercase tracking-wider">
+                  OVERDUE • 11:00
+                </span>
+<span class="font-body-md text-body-md font-medium text-on-surface truncate">
+                  Sign off SLA SecOps container build
+                </span>
+</div>
+<div class="flex items-center gap-2 mt-1 text-on-surface-variant font-label-sm text-label-sm">
+<span class="flex items-center gap-1 text-outline">
+<span class="material-symbols-outlined text-[11px]">shield_person</span>
+                  Wayfinder SecOps
+                </span>
+<span>•</span>
+<span class="text-outline">Assigned: DevSecOps Gate</span>
+</div>
+</div>
+</div>
+<button class="px-space-xs py-0.5 bg-error/10 border border-error/30 hover:border-error text-error font-label-sm text-label-sm whitespace-nowrap" type="button">
+            Sign Off
+          </button>
+</div>
+<!-- Task Item 2: High Priority -->
+<div class="p-space-sm bg-surface-container border border-outline-variant/60 flex items-start justify-between gap-space-sm group hover:border-primary transition-colors">
+<div class="flex items-start gap-space-sm min-w-0">
+<input class="mt-1 rounded-none accent-primary cursor-pointer" type="checkbox"/>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs flex-wrap">
+<span class="px-1 py-0 bg-secondary/15 border border-secondary/40 text-secondary font-label-sm text-[9px] font-bold uppercase tracking-wider">
+                  HIGH • 15:30
+                </span>
+<span class="font-body-md text-body-md font-medium text-on-surface truncate">
+                  Review PR #412 Architecture RFC
+                </span>
+</div>
+<div class="flex items-center gap-2 mt-1 text-on-surface-variant font-label-sm text-label-sm">
+<span class="flex items-center gap-1 text-outline">
+<span class="material-symbols-outlined text-[11px]">terminal</span>
+                  GitHub: org/engine
+                </span>
+<span>•</span>
+<span class="text-outline">+240 / -34 diff</span>
+</div>
+</div>
+</div>
+<button class="px-space-xs py-0.5 bg-surface-container-high border border-outline-variant hover:border-primary text-on-surface font-label-sm text-label-sm whitespace-nowrap" type="button">
+            Review
+          </button>
+</div>
+<!-- Task Item 3: Normal Priority -->
+<div class="p-space-sm bg-surface-container border border-outline-variant/60 flex items-start justify-between gap-space-sm group hover:border-primary transition-colors">
+<div class="flex items-start gap-space-sm min-w-0">
+<input class="mt-1 rounded-none accent-primary cursor-pointer" type="checkbox"/>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs flex-wrap">
+<span class="px-1 py-0 bg-surface-container-high border border-outline-variant text-on-surface-variant font-label-sm text-[9px] font-bold uppercase tracking-wider">
+                  NORMAL • 17:00
+                </span>
+<span class="font-body-md text-body-md font-medium text-on-surface truncate">
+                  Sync Notion roadmap database schema
+                </span>
+</div>
+<div class="flex items-center gap-2 mt-1 text-on-surface-variant font-label-sm text-label-sm">
+<span class="flex items-center gap-1 text-outline">
+<span class="material-symbols-outlined text-[11px]">description</span>
+                  Notion: Engineering-Wiki
+                </span>
+</div>
+</div>
+</div>
+<button class="px-space-xs py-0.5 bg-surface-container-high border border-outline-variant hover:border-primary text-on-surface font-label-sm text-label-sm whitespace-nowrap" type="button">
+            Sync
+          </button>
+</div>
+<!-- Task Item 4: Completed -->
+<div class="p-space-sm bg-surface-container/50 border border-outline-variant/40 flex items-start justify-between gap-space-sm opacity-60">
+<div class="flex items-start gap-space-sm min-w-0">
+<input checked="" class="mt-1 rounded-none accent-primary cursor-pointer" type="checkbox"/>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs flex-wrap">
+<span class="px-1 py-0 bg-tertiary/10 border border-tertiary/30 text-tertiary font-label-sm text-[9px] font-bold uppercase tracking-wider">
+                  COMPLETED
+                </span>
+<span class="font-body-md text-body-md line-through text-on-surface-variant truncate">
+                  Triage Jira v2.4 dependency alerts
+                </span>
+</div>
+<div class="flex items-center gap-2 mt-0.5 text-outline font-label-sm text-[10px]">
+<span>Done at 13:22 • Jira Cloud</span>
+</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-sm text-tertiary">done</span>
+</div>
+</div>
+</div>
+<!-- PANEL B: UPCOMING MEETINGS -->
+<div class="bg-surface-container-low border border-outline-variant flex flex-col justify-between">
+<!-- Header -->
+<div class="h-10 px-space-md border-b border-outline-variant flex items-center justify-between bg-surface-container">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-sm text-secondary">videocam</span>
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">Upcoming Meetings</span>
+<span class="px-1.5 py-0.2 bg-tertiary/10 text-tertiary border border-tertiary/40 font-label-sm text-label-sm flex items-center gap-1">
+<span class="w-1 h-1 bg-tertiary"></span>CALENDAR SYNCED
+          </span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="px-space-xs py-0.5 text-on-surface-variant hover:text-primary font-label-sm text-label-sm flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-xs">add</span>Schedule
+          </button>
+<span class="text-outline-variant">|</span>
+<a class="font-label-sm text-label-sm text-primary hover:underline flex items-center gap-0.5" href="#">
+<span>Open Calendar</span>
+<span class="material-symbols-outlined text-xs">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Meetings List -->
+<div class="p-space-md flex flex-col gap-space-xs">
+<!-- Meeting 1: Next Up with Cyan Border Highlight -->
+<div class="p-space-sm bg-surface-container border border-outline-variant/60 border-l-4 border-l-primary flex items-center justify-between gap-space-sm">
+<div class="flex flex-col min-w-0 gap-0.5">
+<div class="flex items-center gap-space-xs">
+<span class="px-1.5 py-0.5 bg-primary/10 border border-primary/40 font-label-sm text-label-sm text-primary font-bold">
+                14:30 - 15:15
+              </span>
+<span class="font-label-sm text-[9px] text-primary uppercase font-bold tracking-wider animate-pulse">
+                [NEXT UP • IN 12M]
+              </span>
+</div>
+<span class="font-headline-sm text-headline-sm font-semibold text-on-surface truncate">
+              Core Architecture Sync
+            </span>
+<div class="flex items-center gap-space-md text-on-surface-variant font-label-sm text-label-sm">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-xs text-outline">group</span>
+                4 attendees
+              </span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-xs text-outline">link</span>
+                Google Meet
+              </span>
+</div>
+</div>
+<a class="px-space-md py-1 bg-primary text-on-primary-container font-label-md text-label-md font-bold tracking-wide hover:bg-primary-fixed transition-colors flex items-center gap-1 whitespace-nowrap" href="#">
+<span>Join</span>
+<span class="material-symbols-outlined text-xs">open_in_new</span>
+</a>
+</div>
+<!-- Meeting 2 -->
+<div class="p-space-sm bg-surface-container border border-outline-variant/60 flex items-center justify-between gap-space-sm">
+<div class="flex flex-col min-w-0 gap-0.5">
+<div class="flex items-center gap-space-xs">
+<span class="px-1.5 py-0.5 bg-surface-container-high border border-outline-variant font-label-sm text-label-sm text-on-surface-variant font-medium">
+                16:00 - 16:30
+              </span>
+</div>
+<span class="font-headline-sm text-headline-sm font-semibold text-on-surface truncate">
+              Weekly DevOps Standup
+            </span>
+<div class="flex items-center gap-space-md text-on-surface-variant font-label-sm text-label-sm">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-xs text-outline">tag</span>
+                Slack Huddle
+              </span>
+<span>•</span>
+<span class="text-outline">Room: Dev-Bridge</span>
+</div>
+</div>
+<button class="px-space-sm py-1 bg-surface-container-high border border-outline-variant hover:border-primary text-on-surface font-label-sm text-label-sm whitespace-nowrap" type="button">
+            Details
+          </button>
+</div>
+<!-- Meeting 3 -->
+<div class="p-space-sm bg-surface-container border border-outline-variant/60 flex items-center justify-between gap-space-sm">
+<div class="flex flex-col min-w-0 gap-0.5">
+<div class="flex items-center gap-space-xs">
+<span class="px-1.5 py-0.5 bg-surface-container-high border border-outline-variant font-label-sm text-label-sm text-on-surface-variant font-medium">
+                17:30 - 18:00
+              </span>
+</div>
+<span class="font-headline-sm text-headline-sm font-semibold text-on-surface truncate">
+              Sprint Retrospective Q4
+            </span>
+<div class="flex items-center gap-space-md text-on-surface-variant font-label-sm text-label-sm">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-xs text-outline">calendar_month</span>
+                Google Calendar
+              </span>
+<span>•</span>
+<span class="text-outline">All Hands Eng</span>
+</div>
+</div>
+<button class="px-space-sm py-1 bg-surface-container-high border border-outline-variant hover:border-primary text-on-surface font-label-sm text-label-sm whitespace-nowrap" type="button">
+            Details
+          </button>
+</div>
+</div>
+</div>
+</section>
+<!-- 5. FIVE CONFIGURABLE PINNED WORKFLOW TILES (DESKTOP PET SHORTCUTS) -->
+<section class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-1.5 h-1.5 bg-primary"></span>
+<h2 class="font-label-md text-label-md uppercase tracking-wider text-outline font-bold">
+          PINNED WORKFLOW SHORTCUTS
+        </h2>
+<span class="font-label-sm text-label-sm text-on-surface-variant">(SYNCED TO DESKTOP PET BAR)</span>
+</div>
+<a class="font-label-sm text-label-sm text-primary hover:underline flex items-center gap-0.5" href="#">
+<span>Manage shortcuts</span>
+<span class="material-symbols-outlined text-xs">arrow_forward</span>
+</a>
+</div>
+<!-- Exact 5-Slot Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-space-sm">
+<!-- Slot 1: READY TO RUN -->
+<div class="p-space-md bg-surface-container-low border border-outline-variant hover:border-primary/80 transition-all flex flex-col justify-between gap-space-md relative">
+<span class="absolute top-0 right-0 px-1.5 py-0.5 bg-surface-container font-label-sm text-[9px] text-outline border-l border-b border-outline-variant">#01</span>
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="material-symbols-outlined text-lg text-primary">fork_right</span>
+<span class="px-1.5 py-0.2 bg-tertiary/10 border border-tertiary/40 font-label-sm text-[9px] text-tertiary font-bold tracking-wider uppercase">
+              READY TO RUN
+            </span>
+</div>
+<span class="font-headline-sm text-headline-sm font-semibold text-on-surface truncate">
+            PR Review &amp; Static Audit
+          </span>
+<span class="font-code-stream text-code-stream text-outline text-[11px] truncate">
+            GitHub → Sonar → Discord
+          </span>
+</div>
+<button class="w-full py-1.5 bg-primary text-on-primary-container font-label-md text-label-md font-bold hover:bg-primary-fixed transition-colors flex items-center justify-center gap-1" type="button">
+<span class="material-symbols-outlined text-xs">play_arrow</span>
+<span>Run</span>
+</button>
+</div>
+<!-- Slot 2: RUNNING (64%) -->
+<div class="p-space-md bg-surface-container-low border border-primary/60 transition-all flex flex-col justify-between gap-space-md relative">
+<span class="absolute top-0 right-0 px-1.5 py-0.5 bg-surface-container font-label-sm text-[9px] text-outline border-l border-b border-outline-variant">#02</span>
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="material-symbols-outlined text-lg text-primary animate-spin">sync</span>
+<span class="px-1.5 py-0.2 bg-primary/10 border border-primary/40 font-label-sm text-[9px] text-primary font-bold tracking-wider uppercase">
+              RUNNING (64%)
+            </span>
+</div>
+<span class="font-headline-sm text-headline-sm font-semibold text-on-surface truncate">
+            Daily Standup Synthesizer
+          </span>
+<span class="font-code-stream text-code-stream text-outline text-[11px] truncate">
+            Slack → Notion → Digest
+          </span>
+<!-- Micro Progress Bar -->
+<div class="w-full bg-surface-container h-1.5 overflow-hidden mt-1">
+<div class="bg-primary h-full w-[64%]"></div>
+</div>
+</div>
+<button class="w-full py-1.5 bg-surface-container-high border border-outline-variant hover:border-primary text-primary font-label-md text-label-md font-bold transition-colors flex items-center justify-center gap-1" type="button">
+<span class="material-symbols-outlined text-xs">visibility</span>
+<span>Inspect</span>
+</button>
+</div>
+<!-- Slot 3: APPROVAL REQUIRED -->
+<div class="p-space-md bg-surface-container-low border border-outline-variant hover:border-secondary transition-all flex flex-col justify-between gap-space-md relative">
+<span class="absolute top-0 right-0 px-1.5 py-0.5 bg-surface-container font-label-sm text-[9px] text-outline border-l border-b border-outline-variant">#03</span>
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="material-symbols-outlined text-lg text-secondary">security</span>
+<span class="px-1.5 py-0.2 bg-secondary/10 border border-secondary/40 font-label-sm text-[9px] text-secondary font-bold tracking-wider uppercase animate-pulse">
+              APPROVAL REQ
+            </span>
+</div>
+<span class="font-headline-sm text-headline-sm font-semibold text-on-surface truncate">
+            Production Release Deployer
+          </span>
+<span class="font-code-stream text-code-stream text-outline text-[11px] truncate">
+            Docker Bake → SecOps → K8s
+          </span>
+</div>
+<button class="w-full py-1.5 bg-secondary text-on-secondary font-label-md text-label-md font-bold hover:bg-secondary-container transition-colors flex items-center justify-center gap-1" type="button">
+<span class="material-symbols-outlined text-xs">gavel</span>
+<span>Review</span>
+</button>
+</div>
+<!-- Slot 4: FAILED -->
+<div class="p-space-md bg-surface-container-low border border-error/50 transition-all flex flex-col justify-between gap-space-md relative">
+<span class="absolute top-0 right-0 px-1.5 py-0.5 bg-surface-container font-label-sm text-[9px] text-outline border-l border-b border-outline-variant">#04</span>
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="material-symbols-outlined text-lg text-error">warning</span>
+<span class="px-1.5 py-0.2 bg-error/10 border border-error/40 font-label-sm text-[9px] text-error font-bold tracking-wider uppercase truncate">
+              FAILED (Auth Expired)
+            </span>
+</div>
+<span class="font-headline-sm text-headline-sm font-semibold text-on-surface truncate">
+            Notion Knowledge Ingest
+          </span>
+<span class="font-code-stream text-code-stream text-outline text-[11px] truncate">
+            Docs → Vector DB → Index
+          </span>
+</div>
+<button class="w-full py-1.5 bg-error/10 border border-error/40 hover:border-error text-error font-label-md text-label-md font-bold transition-colors flex items-center justify-center gap-1" type="button">
+<span class="material-symbols-outlined text-xs">replay</span>
+<span>Retry / Log</span>
+</button>
+</div>
+<!-- Slot 5: EMPTY SLOT -->
+<div class="p-space-md bg-surface-container-low/40 border border-dashed border-outline-variant hover:border-primary/60 transition-all flex flex-col justify-between gap-space-md group">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="material-symbols-outlined text-lg text-outline group-hover:text-primary transition-colors">add_box</span>
+<span class="font-label-sm text-[9px] text-outline uppercase font-mono">SLOT #05</span>
+</div>
+<span class="font-headline-sm text-headline-sm font-semibold text-on-surface-variant group-hover:text-on-surface transition-colors truncate">
+            + Add Pinned Workflow
+          </span>
+<span class="font-label-sm text-label-sm text-outline">
+            Empty shortcut slot • Syncs to Desktop Pet
+          </span>
+</div>
+<button class="w-full py-1.5 bg-surface-container border border-outline-variant hover:border-primary text-on-surface font-label-md text-label-md font-medium transition-colors flex items-center justify-center gap-1" type="button">
+<span class="material-symbols-outlined text-xs">tune</span>
+<span>Configure Slot</span>
+</button>
+</div>
+</div>
+</section>
+<!-- 6. NEEDS ATTENTION PANEL -->
+<section class="bg-surface-container-low border border-outline-variant p-space-md flex flex-col gap-space-sm">
+<div class="flex items-center justify-between border-b border-outline-variant/60 pb-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-base text-error">notification_important</span>
+<span class="font-label-md text-label-md uppercase tracking-wider text-on-surface font-bold">NEEDS ATTENTION</span>
+<span class="px-1.5 py-0.2 bg-error/10 text-error border border-error/30 font-label-sm text-label-sm font-mono">3 ESCALATIONS</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline">Requires manual administrative confirmation</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-sm pt-1">
+<!-- Alert 1: Warning/Amber -->
+<div class="p-space-sm bg-surface-container border border-secondary/40 flex flex-col justify-between gap-space-sm">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="px-1.5 py-0.5 bg-secondary/15 border border-secondary/40 font-label-sm text-label-sm text-secondary font-bold uppercase">
+              WORKFLOW BLOCKED
+            </span>
+<span class="font-label-sm text-label-sm text-outline font-mono">#04</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface font-medium leading-tight">
+            Production Deployer #04 awaiting cryptographic admin sign-off.
+          </p>
+</div>
+<button class="w-full py-1 bg-secondary/10 border border-secondary/40 hover:bg-secondary/20 text-secondary font-label-sm text-label-sm font-bold transition-colors flex items-center justify-center gap-1" type="button">
+<span class="material-symbols-outlined text-xs">verified_user</span>
+<span>Review Gate</span>
+</button>
+</div>
+<!-- Alert 2: Coral Error -->
+<div class="p-space-sm bg-surface-container border border-error/40 flex flex-col justify-between gap-space-sm">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="px-1.5 py-0.5 bg-error/10 border border-error/40 font-label-sm text-label-sm text-error font-bold uppercase">
+              CONNECTION DEGRADED
+            </span>
+<span class="font-label-sm text-label-sm text-outline font-mono">OAUTH</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface font-medium leading-tight">
+            Google Workspace OAuth token expired (Calendar &amp; Drive sync suspended).
+          </p>
+</div>
+<button class="w-full py-1 bg-error/10 border border-error/40 hover:bg-error/20 text-error font-label-sm text-label-sm font-bold transition-colors flex items-center justify-center gap-1" type="button">
+<span class="material-symbols-outlined text-xs">key</span>
+<span>Reconnect</span>
+</button>
+</div>
+<!-- Alert 3: Coral Task Overdue -->
+<div class="p-space-sm bg-surface-container border border-error/40 flex flex-col justify-between gap-space-sm">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="px-1.5 py-0.5 bg-error/10 border border-error/40 font-label-sm text-label-sm text-error font-bold uppercase">
+              TASK OVERDUE
+            </span>
+<span class="font-label-sm text-label-sm text-outline font-mono">11:00 UTC</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface font-medium leading-tight">
+            SLA SecOps container sign-off past deadline (11:00 UTC).
+          </p>
+</div>
+<button class="w-full py-1 bg-error/10 border border-error/40 hover:bg-error/20 text-error font-label-sm text-label-sm font-bold transition-colors flex items-center justify-center gap-1" type="button">
+<span class="material-symbols-outlined text-xs">arrow_forward</span>
+<span>Triage Task</span>
+</button>
+</div>
+</div>
+</section>
+<!-- 7. CONNECTION HEALTH & INTEGRATIONS -->
+<section class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-1.5 h-1.5 bg-primary"></span>
+<h2 class="font-label-md text-label-md uppercase tracking-wider text-outline font-bold">
+          CONNECTION HEALTH &amp; INTEGRATIONS
+        </h2>
+</div>
+<a class="font-label-sm text-label-sm text-primary hover:underline flex items-center gap-0.5" href="#">
+<span>Manage connections</span>
+<span class="material-symbols-outlined text-xs">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-space-sm">
+<!-- Notion -->
+<div class="px-space-md py-2 bg-surface-container-low border border-outline-variant flex items-center justify-between">
+<div class="flex items-center gap-space-xs min-w-0">
+<span class="material-symbols-outlined text-base text-outline">description</span>
+<span class="font-label-md text-label-md text-on-surface font-medium truncate">Notion API</span>
+</div>
+<span class="font-label-sm text-[10px] text-tertiary font-mono font-bold flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-tertiary"></span>24ms
+        </span>
+</div>
+<!-- GitHub -->
+<div class="px-space-md py-2 bg-surface-container-low border border-outline-variant flex items-center justify-between">
+<div class="flex items-center gap-space-xs min-w-0">
+<span class="material-symbols-outlined text-base text-outline">code</span>
+<span class="font-label-md text-label-md text-on-surface font-medium truncate">GitHub Enterprise</span>
+</div>
+<span class="font-label-sm text-[10px] text-tertiary font-mono font-bold flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-tertiary"></span>41ms
+        </span>
+</div>
+<!-- Slack -->
+<div class="px-space-md py-2 bg-surface-container-low border border-outline-variant flex items-center justify-between">
+<div class="flex items-center gap-space-xs min-w-0">
+<span class="material-symbols-outlined text-base text-outline">chat</span>
+<span class="font-label-md text-label-md text-on-surface font-medium truncate">Slack Hub</span>
+</div>
+<span class="font-label-sm text-[10px] text-tertiary font-mono font-bold flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-tertiary"></span>18ms
+        </span>
+</div>
+<!-- Google Workspace (Degraded) -->
+<div class="px-space-md py-2 bg-surface-container-low border border-error/50 flex items-center justify-between">
+<div class="flex items-center gap-space-xs min-w-0">
+<span class="material-symbols-outlined text-base text-error">cloud_sync</span>
+<span class="font-label-md text-label-md text-on-surface font-medium truncate">Google Workspace</span>
+</div>
+<span class="font-label-sm text-[10px] text-error font-mono font-bold uppercase truncate">
+          AUTH RE-GRANT
+        </span>
+</div>
+<!-- Local Ollama/vLLM -->
+<div class="px-space-md py-2 bg-surface-container-low border border-outline-variant flex items-center justify-between">
+<div class="flex items-center gap-space-xs min-w-0">
+<span class="material-symbols-outlined text-base text-primary">memory</span>
+<span class="font-label-md text-label-md text-on-surface font-medium truncate">vLLM Engine</span>
+</div>
+<span class="font-label-sm text-[10px] text-primary font-mono font-bold">
+          RTX 4090 • 0.8GB
+        </span>
+</div>
+</div>
+</section>
+<!-- 8. RECENT ACTIVITY TIMELINE -->
+<section class="bg-surface-container-low border border-outline-variant p-space-md flex flex-col gap-space-sm mb-space-lg">
+<div class="flex items-center justify-between border-b border-outline-variant/60 pb-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-base text-primary">history</span>
+<span class="font-label-md text-label-md uppercase tracking-wider text-on-surface font-bold">RECENT ACTIVITY AUDIT STREAM</span>
+</div>
+<a class="font-label-sm text-label-sm text-primary hover:underline flex items-center gap-0.5" href="#">
+<span>View full activity audit log</span>
+<span class="material-symbols-outlined text-xs">arrow_forward</span>
+</a>
+</div>
+<!-- Chronological Micro-Log List -->
+<div class="flex flex-col gap-1 font-code-stream text-code-stream">
+<!-- Log 1 -->
+<div class="py-1 px-space-sm bg-surface-container/60 hover:bg-surface-container flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-l border-primary transition-colors">
+<div class="flex items-center gap-space-sm min-w-0">
+<span class="text-outline font-mono text-[11px]">[14:02:18]</span>
+<span class="w-1.5 h-1.5 bg-tertiary"></span>
+<span class="text-on-surface truncate">Notion sync completed</span>
+<span class="text-on-surface-variant text-[11px]">(1,280 pages indexed)</span>
+</div>
+<span class="font-label-sm text-[10px] text-outline uppercase font-mono">SYS_NOTION_DAEMON</span>
+</div>
+<!-- Log 2 -->
+<div class="py-1 px-space-sm bg-surface-container/60 hover:bg-surface-container flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-l border-primary transition-colors">
+<div class="flex items-center gap-space-sm min-w-0">
+<span class="text-outline font-mono text-[11px]">[13:45:00]</span>
+<span class="w-1.5 h-1.5 bg-tertiary"></span>
+<span class="text-on-surface truncate">PR Review audit executed successfully</span>
+<span class="text-on-surface-variant text-[11px]">for org/mono-repo</span>
+</div>
+<span class="font-label-sm text-[10px] text-outline uppercase font-mono">WORKFLOW_RUNNER_01</span>
+</div>
+<!-- Log 3 -->
+<div class="py-1 px-space-sm bg-surface-container/60 hover:bg-surface-container flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-l border-secondary transition-colors">
+<div class="flex items-center gap-space-sm min-w-0">
+<span class="text-outline font-mono text-[11px]">[13:10:04]</span>
+<span class="w-1.5 h-1.5 bg-secondary"></span>
+<span class="text-on-surface truncate">GitHub Webhook received: release tag v2.40.1</span>
+</div>
+<span class="font-label-sm text-[10px] text-outline uppercase font-mono">INGRESS_GATE</span>
+</div>
+<!-- Log 4 -->
+<div class="py-1 px-space-sm bg-surface-container/60 hover:bg-surface-container flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-l border-tertiary transition-colors">
+<div class="flex items-center gap-space-sm min-w-0">
+<span class="text-outline font-mono text-[11px]">[12:00:22]</span>
+<span class="w-1.5 h-1.5 bg-tertiary"></span>
+<span class="text-on-surface truncate">Container build passed all security scans</span>
+</div>
+<span class="font-label-sm text-[10px] text-outline uppercase font-mono">SECOPS_PIPELINE</span>
+</div>
+</div>
+</section>
+</div></main></div></body></html>

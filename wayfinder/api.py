@@ -110,7 +110,7 @@ class Client:
             },
         )
         try:
-            with urlopen(request, timeout=30) as response:
+            with urlopen(request, timeout=125 if operation == "platform_inspect" else 80 if operation in {"platform_external_read","platform_connections_check"} else 30) as response:
                 result = json.load(response)
         except HTTPError as error:
             result = json.load(error)

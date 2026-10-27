@@ -1,0 +1,37 @@
+{
+  "main_code_commit": "e6995fd83554b8fa141c4a033356552d4e6e8085",
+  "main_before": "b2d87f01ddc8d45cab524f40d8c574236b20263c",
+  "branches": [
+    {
+      "branch": "codex/consolidated-agent-profiles",
+      "commit": "e6995fd83554b8fa141c4a033356552d4e6e8085",
+      "contained_in_main": true
+    },
+    {
+      "branch": "codex/platform-integration",
+      "commit": "4913ee9b41442a71fe2630eb59664d57649129ca",
+      "contained_in_main": true
+    },
+    {
+      "branch": "codex/platform-preserved-20261026",
+      "commit": "488683b61f916f5f8e0e16c3e57a69bad5a96178",
+      "contained_in_main": true
+    },
+    {
+      "branch": "codex/ui-backend-integration",
+      "commit": "b2d87f01ddc8d45cab524f40d8c574236b20263c",
+      "contained_in_main": true
+    },
+    {
+      "branch": "main",
+      "commit": "e6995fd83554b8fa141c4a033356552d4e6e8085",
+      "contained_in_main": true
+    }
+  ],
+  "remote_head_at_initial_inspection": "7b59c06d817a08b53d1f139764a757ac9acfdbd9",
+  "original_checkout_head_preserved": "4913ee9b41442a71fe2630eb59664d57649129ca",
+  "stash_preserved": true,
+  "original_index_untouched": true,
+  "private_runtime_and_build_outputs_excluded": true,
+  "publication": "Verify the remote ref or final push receipt; local ancestry alone does not prove publication."
+}

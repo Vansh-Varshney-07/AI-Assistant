@@ -1,0 +1,51 @@
+{
+  "build": "wayfinder-desktop/0.4.0",
+  "generated": "2026-10-26T16:59:35.399569+00:00",
+  "platform": "Windows x64",
+  "unsigned_local_build": true,
+  "portable_sha256": "aaa51a14f14d1c138274bfd96f87c7eca341b5b3e8f59b8301bf0e272b315a63",
+  "portable_bytes": 544042780,
+  "asar_sha256": "bddfd9afb85f9bb77476b018ad712be7f2d53b8c7add89907f3bf0e1d4eb4f81",
+  "backend_sha256": "1811b2d7837d3d3b3670334fc0be572383f91e59f444e7f264e243ea4fb44606",
+  "tests": {
+    "backend_fixture": {
+      "passed": 304,
+      "skipped": 1,
+      "deselected_ui": 1
+    },
+    "frontend": {
+      "passed": 44
+    },
+    "actual_packaged_hermes_and_restart": {
+      "passed": 18
+    },
+    "actual_portable_launcher": {
+      "passed": 9
+    },
+    "static_package_integrity": {
+      "passed": 29
+    }
+  },
+  "prerequisites": [
+    "Docker Desktop local Linux engine",
+    "Existing managed Hermes/OpenShell installation with configured provider"
+  ],
+  "bundled": [
+    "Python backend runtime",
+    "Existing Wayfinder/Iron Web source and native dependencies",
+    "Public BGE small CPU memory model",
+    "Public redistribution notices"
+  ],
+  "not_qualified": [
+    "Google live account access",
+    "Notion",
+    "Hosted GitHub effects",
+    "Fitness",
+    "Scheduling",
+    "Native desktop actions"
+  ],
+  "native_desktop_automation": false,
+  "desktop_or_clipboard_capture": false,
+  "external_provider_credentials_packaged": false,
+  "pushed_to_github": false
+}

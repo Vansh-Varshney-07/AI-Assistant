@@ -1,0 +1,11 @@
+{
+  "planning_artifacts_only": true,
+  "acceptance_cases": 182,
+  "risk_items": 40,
+  "worker_ids": 47,
+  "supplied_upstream_definitions": 16,
+  "source_fingerprints": 58,
+  "authored_links_checked": true,
+  "all_application_acceptance": "Not run",
+  "app_code_executed": false
+}

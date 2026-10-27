@@ -7,7 +7,9 @@ the renderer gets named intents, never this transport or the API bearer token.
 import argparse
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import redirect_stdout
+import hashlib
 import hmac
+import uuid
 import json
 import os
 from pathlib import Path
@@ -15,27 +17,24 @@ import sys
 from threading import Lock
 
 TASK = "general"
-MAX_FRAME = 131072
+MAX_FRAME = 65536
 MARKER = "WAYFINDER_DESKTOP="
-ALLOWED = {
-    "status", "spaces", "create_space", "inventory", "source", "recall", "settings",
-    "worker_status", "worker_grant", "worker_search", "worker_revoke", "worker_start",
-    "worker_jobs", "worker_result", "worker_cancel", "worker_forget",
-    "platform_inspect", "platform_capabilities", "platform_context", "platform_validate_context",
-    "platform_read_start", "platform_read_result", "platform_read_cancel", "platform_audit",
-    "platform_workflow_evaluate", "platform_workflow_metrics", "platform_read_clear", "platform_read_retry",
-    "platform_memory_preview", "platform_memory_propose", "platform_memory_result",
-    "platform_memory_decide", "platform_memory_revoke", "platform_memory_reconcile", "platform_memory_audit",
-    "platform_git_grant", "platform_git_revoke", "platform_git_observe", "platform_git_propose",
-    "platform_action_decide", "platform_action_revoke", "platform_action_result",
-    "platform_action_reconcile", "platform_action_audit", "platform_activity_read", "platform_google_status",
-}
+# Build inclusion is shared with navigation/preload/main, never supplied by a worker.
+manifest_path = Path(__file__).with_name('FEATURES.json')
+if not manifest_path.exists():
+    manifest_path = Path(__file__).parent.parent / 'FEATURES.json'
+RELEASE = json.loads(manifest_path.read_text(encoding='utf-8'))
+if RELEASE.get('schema') != 'wayfinder.desktop-inclusion/v1' or RELEASE.get('variant') != 'workspace-parity':
+    raise RuntimeError('Unsupported desktop inclusion manifest.')
+RELEASE_HASH = hashlib.sha256(json.dumps(RELEASE, separators=(',', ':'), ensure_ascii=False).encode()).hexdigest()
+ALLOWED = frozenset(RELEASE['backend_operations'])
 
 
 class Session:
     def __init__(self, runtime, factory=None):
         self.runtime = Path(runtime).resolve()
         self.factory = factory
+        self.generation = uuid.uuid4().hex
         self.service = self.server = self.client = None
         self.lifecycle = Lock()
 
@@ -73,14 +72,16 @@ class Session:
         self.require()
         current = self.service.platform.inspector.current()
         return dict(
-            state="ready", version="0.1.0", backend=self.client.call("status"),
+            state="ready", version=RELEASE["version"], backend=self.client.call("status"),
+            release=dict(schema=RELEASE["schema"], variant=RELEASE["variant"], sha256=RELEASE_HASH),
+            instance_generation=self.generation,
             runtime=str(self.runtime), owner=self.service.owner,
             capabilities=dict(
                 memory=True, files=True, activity_csv=True,
                 documents=bool(current.get("compatible")),
                 comparison=bool(current.get("compatible")),
                 git_branch=bool(self.service.platform.connectors.git.available),
-                general_chat=False, google_live=False, scheduler=False,
+                general_chat=bool(current.get("compatible") and self.service.chat.approved_model and current.get("isolation",{}).get("model_info")==self.service.chat.approved_model), google_live=self.service.platform.connections.qualified('google'), tavily_search=self.service.platform.connections.qualified('tavily'), notion_read=self.service.platform.connections.qualified('notion'), scheduler=False,
                 workflow_builder=False, local_tasks=False, native_desktop=False,
             ),
             runtime_inspection=current,
@@ -124,6 +125,10 @@ class Session:
             if body:
                 raise ValueError("Boot has no caller-controlled configuration.")
             return self.start()
+        if operation == 'connections_configure':
+            self.require()
+            if set(body)!={'connections'}:raise ValueError('Invalid private connection bootstrap.')
+            return self.service.platform.connections.configure(body['connections'])
         if operation == "describe":
             if body:
                 raise ValueError("Status has no inputs.")
@@ -180,8 +185,20 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--project", required=True)
     parser.add_argument("--runtime", required=True)
+    parser.add_argument('--diagnose',choices=['memory','hermes'])
     args = parser.parse_args()
     sys.path.insert(0, str(Path(args.project).resolve()))
+    if args.diagnose:
+        with redirect_stdout(sys.stderr):
+            if args.diagnose=='memory':
+                from memory.embeddings.embedder import get_embedder
+                vector=get_embedder(cache_dir=os.environ.get('WAYFINDER_MODELS_ROOT'),use_gpu=False).embed_single('Wayfinder first-run memory check')
+                report=dict(ready=len(vector)==384,model='BAAI/bge-small-en-v1.5',dimensions=len(vector))
+            else:
+                from wayfinder.platform.runtime import RuntimeInspector
+                result=RuntimeInspector().inspect()
+                report=dict(ready=bool(result.get('compatible') and result.get('isolation',{}).get('supports_history')),version=result.get('runtime',{}).get('version'),tools=result.get('isolation',{}).get('effective_tools'),memory=result.get('isolation',{}).get('memory'),model_info=result.get('isolation',{}).get('model_info'))
+        print('WAYFINDER_DIAGNOSTIC='+json.dumps(report));return
     secret = os.environ.pop("WAYFINDER_HOST_SECRET", "")
     if len(secret) < 32:
         raise SystemExit("Owned bootstrap required.")
@@ -205,7 +222,7 @@ def main():
 
     def respond(message):
         raw = json.dumps(message, ensure_ascii=True, allow_nan=False)
-        if len(raw) > 4 * 1024 * 1024:
+        if len((MARKER + raw + '\n').encode('utf-8')) > MAX_FRAME:
             raw = json.dumps(dict(id=message.get("id"), ok=False, error="Result exceeds desktop display limit. Narrow the request."))
         with output_lock:
             output.write(MARKER + raw + "\n")

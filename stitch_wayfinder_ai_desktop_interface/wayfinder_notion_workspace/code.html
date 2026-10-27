@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Wayfinder // Notion Workspace: Connected Knowledge &amp; Notes</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    /* Technical scrollbars */
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0B1020;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2B3A52;
+      border-radius: 2px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #3A4E6E;
+    }
+  </style>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "secondary": "#204ed6",
+            "on-tertiary-container": "#005a41",
+            "tertiary-fixed-dim": "#4cdeab",
+            "error-container": "#ffdad6",
+            "surface-bright": "#faf8ff",
+            "on-primary-container": "#005761",
+            "on-surface-variant": "#3c494b",
+            "surface-variant": "#dee1f9",
+            "primary-container": "#29d3e8",
+            "surface-container-low": "#f3f3ff",
+            "primary-fixed": "#97f0ff",
+            "surface-dim": "#d5d9f0",
+            "secondary-fixed-dim": "#b7c4ff",
+            "on-secondary-fixed-variant": "#0038b6",
+            "background": "#faf8ff",
+            "surface-container-lowest": "#ffffff",
+            "on-tertiary-fixed-variant": "#00513a",
+            "on-primary-fixed": "#001f24",
+            "on-tertiary-fixed": "#002115",
+            "secondary-fixed": "#dce1ff",
+            "secondary-container": "#4269f0",
+            "surface-container-highest": "#dee1f9",
+            "surface": "#faf8ff",
+            "inverse-primary": "#35d9ee",
+            "tertiary": "#006c4e",
+            "primary-fixed-dim": "#35d9ee",
+            "inverse-surface": "#2b3041",
+            "on-error": "#ffffff",
+            "tertiary-fixed": "#6dfbc6",
+            "on-secondary-container": "#fffbff",
+            "outline": "#6c797c",
+            "primary": "#006874",
+            "error": "#ba1a1a",
+            "surface-tint": "#006874",
+            "on-secondary-fixed": "#001552",
+            "on-tertiary": "#ffffff",
+            "surface-container": "#ebedff",
+            "on-primary-fixed-variant": "#004f58",
+            "on-primary": "#ffffff",
+            "inverse-on-surface": "#eff0ff",
+            "on-secondary": "#ffffff",
+            "on-background": "#161b2b",
+            "surface-container-high": "#e3e7fe",
+            "outline-variant": "#bbc9cc",
+            "on-error-container": "#93000a",
+            "tertiary-container": "#45d8a6",
+            "on-surface": "#161b2b"
+          },
+          fontFamily: {
+            "headline-sm": ["Space Grotesk", "sans-serif"],
+            "headline-lg": ["Space Grotesk", "sans-serif"],
+            "label-lg": ["JetBrains Mono", "monospace"],
+            "code-stream": ["JetBrains Mono", "monospace"],
+            "display-lg": ["Space Grotesk", "sans-serif"],
+            "body-sm": ["Geist", "sans-serif"],
+            "label-md": ["JetBrains Mono", "monospace"],
+            "body-lg": ["Geist", "sans-serif"],
+            "label-sm": ["JetBrains Mono", "monospace"],
+            "headline-md": ["Space Grotesk", "sans-serif"],
+            "body-md": ["Geist", "sans-serif"]
+          },
+          fontSize: {
+            "headline-sm": ["15px", { lineHeight: "20px", fontWeight: "500" }],
+            "headline-lg": ["24px", { lineHeight: "32px", letterSpacing: "-0.015em", fontWeight: "600" }],
+            "label-lg": ["13px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "500" }],
+            "code-stream": ["12px", { lineHeight: "18px", fontWeight: "400" }],
+            "display-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "600" }],
+            "body-sm": ["12px", { lineHeight: "16px", fontWeight: "400" }],
+            "label-md": ["11px", { lineHeight: "14px", letterSpacing: "0.04em", fontWeight: "500" }],
+            "body-lg": ["15px", { lineHeight: "24px", fontWeight: "400" }],
+            "label-sm": ["10px", { lineHeight: "12px", letterSpacing: "0.06em", fontWeight: "500" }],
+            "headline-md": ["18px", { lineHeight: "24px", letterSpacing: "-0.01em", fontWeight: "500" }],
+            "body-md": ["13px", { lineHeight: "20px", fontWeight: "400" }]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-[#0B1020] text-[#F2F6FC] font-['Geist'] selection:bg-[#29D3E8]/30 selection:text-[#29D3E8] antialiased min-h-screen flex flex-col overflow-hidden">
+<!-- TOP APP BAR / BRAND HEADER -->
+<header class="h-14 bg-[#141F33] border-b border-[#2B3A52] px-4 flex items-center justify-between shrink-0 select-none z-20">
+<div class="flex items-center gap-6">
+<!-- System Identity -->
+<div class="flex items-center gap-2.5">
+<div class="w-6 h-6 rounded-[3px] bg-[#29D3E8]/10 border border-[#29D3E8]/40 flex items-center justify-center text-[#29D3E8]">
+<svg class="w-4 h-4" fill="currentColor" viewbox="0 0 48 48">
+<path clip-rule="evenodd" d="M24 18.4228L42 11.475V34.3663C42 34.7796 41.7457 35.1504 41.3601 35.2992L24 42V18.4228Z" fill="currentColor"></path>
+<path clip-rule="evenodd" d="M24 8.18819L33.4123 11.574L24 15.2071L14.5877 11.574L24 8.18819ZM9 15.8487L21 20.4805V37.6263L9 32.9945V15.8487ZM27 37.6263V20.4805L39 15.8487V32.9945L27 37.6263ZM25.354 2.29885C24.4788 1.98402 23.5212 1.98402 22.646 2.29885L4.98454 8.65208C3.7939 9.08038 3 10.2097 3 11.475V34.3663C3 36.0196 4.01719 37.5026 5.55962 38.098L22.9197 44.7987C23.6149 45.0671 24.3851 45.0671 25.0803 44.7987L42.4404 38.098C43.9828 37.5026 45 36.0196 45 34.3663V11.475C45 10.2097 44.2061 9.08038 43.0155 8.65208L25.354 2.29885Z" fill="currentColor"></path>
+</svg>
+</div>
+<span class="font-['Space_Grotesk'] text-[15px] font-bold tracking-tight text-[#F2F6FC]">
+          WAYFINDER <span class="text-[#29D3E8]">//</span> NOTION
+        </span>
+</div>
+<!-- Navigation links -->
+<nav class="hidden md:flex items-center gap-1 text-[12px] font-['JetBrains_Mono'] tracking-wide">
+<a class="px-2.5 py-1 text-[#A0AEC2] hover:text-[#F2F6FC] hover:bg-[#1B2940] rounded-[3px] transition-colors" href="#">OVERVIEW</a>
+<a class="px-2.5 py-1 text-[#29D3E8] bg-[#29D3E8]/10 border border-[#29D3E8]/30 rounded-[3px]" href="#">PAGES &amp; DBS</a>
+<a class="px-2.5 py-1 text-[#A0AEC2] hover:text-[#F2F6FC] hover:bg-[#1B2940] rounded-[3px] transition-colors" href="#">KNOWLEDGE MESH</a>
+<a class="px-2.5 py-1 text-[#A0AEC2] hover:text-[#F2F6FC] hover:bg-[#1B2940] rounded-[3px] transition-colors" href="#">SYNC ENGINE</a>
+<a class="px-2.5 py-1 text-[#A0AEC2] hover:text-[#F2F6FC] hover:bg-[#1B2940] rounded-[3px] transition-colors" href="#">AUDIT LOGS</a>
+</nav>
+</div>
+<!-- Right Global Controls -->
+<div class="flex items-center gap-3 font-['JetBrains_Mono'] text-[11px]">
+<div class="hidden lg:flex items-center gap-2 px-2 py-1 bg-[#0B1020] border border-[#2B3A52] rounded-[3px] text-[#A0AEC2]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#42D6A4] animate-pulse"></span>
+<span class="text-[#F2F6FC]">34 Repos</span>
+<span class="text-[#2B3A52]">|</span>
+<span>1,280 Pages Indexed</span>
+</div>
+<div class="flex items-center gap-1.5">
+<button class="h-8 px-2 bg-[#1B2940] hover:bg-[#2B3A52] text-[#A0AEC2] hover:text-[#F2F6FC] border border-[#2B3A52] rounded-[3px] flex items-center gap-1.5 transition-colors" title="Force Sync">
+<span class="material-symbols-outlined text-[15px] animate-spin" style="animation-duration: 6s;">sync</span>
+<span class="hidden sm:inline">FORCE SYNC</span>
+</button>
+<button class="h-8 px-3 bg-[#29D3E8] hover:bg-[#29D3E8]/90 text-[#0B1020] font-bold rounded-[3px] flex items-center gap-1.5 shadow-[0_0_12px_rgba(41,211,232,0.2)] transition-all">
+<span class="material-symbols-outlined text-[16px] font-bold">add</span>
+<span>+ NEW PAGE</span>
+</button>
+</div>
+<div class="w-7 h-7 rounded-[3px] bg-[#1B2940] border border-[#2B3A52] overflow-hidden ml-1">
+<img class="w-full h-full object-cover" data-alt="Technical avatar headshot of an engineering systems architect with sharp lighting, cool deep navy and cyan studio background, cyberpunk technical profile portrait." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtd-FWmFubJ3zhsdpce9TihAbSJCu2cLrGwhFqM4-iKpgqLc3PF8cCa6HuL3La6EBnAncnMZJogCqJC8ZrH0rFzwquY1IBR2Yv9yvF5SYUYU-vgoR6ZZX_v4yuuA6gaMhMaABdFFk8bnmfPk4SgtvoDNugCOnnAZvVk5vLnmqwA4B808sKxbM4Asc-2BTymq2CZP4zmIL-ammUFqBKlJZyy_qnlk5gaS1aGALyE6xRCknXkr4f39Y0"/>
+</div>
+</div>
+</header>
+<!-- WORKSPACE SUB-BAR / TELEMETRY HERO -->
+<div class="bg-[#0F172A] border-b border-[#2B3A52] px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 shrink-0">
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-2 font-['JetBrains_Mono'] text-[10px] text-[#A0AEC2] tracking-wider uppercase">
+<span class="hover:text-[#29D3E8] cursor-pointer">NOTION</span>
+<span class="text-[#2B3A52]">//</span>
+<span class="hover:text-[#29D3E8] cursor-pointer">KNOWLEDGE MESH</span>
+<span class="text-[#2B3A52]">/</span>
+<span class="text-[#F2F6FC]">WORKSPACE: ENG-CORE-V2</span>
+<span class="text-[#2B3A52]">/</span>
+<span class="text-[#29D3E8] bg-[#29D3E8]/10 px-1 py-0.5 rounded-[2px] border border-[#29D3E8]/20">REPO_ID: NOTION-WSS-402</span>
+</div>
+<div class="flex items-center gap-3">
+<h1 class="font-['Space_Grotesk'] text-lg font-bold tracking-tight text-[#F2F6FC] flex items-center gap-2.5">
+          Notion Workspace
+          <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[3px] bg-[#42D6A4]/10 border border-[#42D6A4]/30 text-[#42D6A4] text-[10px] font-['JetBrains_Mono'] font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-[#42D6A4]"></span>
+            READ &amp; WRITE SYNCED • 15m INTERVAL
+          </span>
+</h1>
+<span class="text-[12px] text-[#A0AEC2] hidden xl:inline">
+          Connected knowledge base, technical documentation, specs &amp; autonomous note bridge.
+        </span>
+</div>
+</div>
+<!-- Search Input & Fast Shortcuts -->
+<div class="flex items-center gap-2">
+<div class="relative w-64 md:w-80">
+<span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-[16px] text-[#A0AEC2]">search</span>
+<input class="w-full h-8 pl-8 pr-16 bg-[#141F33] border border-[#2B3A52] rounded-[3px] text-[12px] text-[#F2F6FC] placeholder-[#A0AEC2]/60 focus:outline-none focus:border-[#29D3E8] transition-colors font-['Geist']" placeholder="Search workspace index..." type="text"/>
+<kbd class="absolute right-2 top-1/2 -translate-y-1/2 px-1.5 py-0.5 text-[9px] font-['JetBrains_Mono'] text-[#A0AEC2] bg-[#1B2940] border border-[#2B3A52] rounded-[2px]">Ctrl+/</kbd>
+</div>
+</div>
+</div>
+<!-- MAIN 3-ZONE TECHNICAL WORKSPACE LAYOUT -->
+<main class="flex-1 flex overflow-hidden">
+<!-- ZONE 1: INTERNAL NOTION NAVIGATION PANEL (240px) -->
+<aside class="w-[240px] shrink-0 bg-[#141F33] border-r border-[#2B3A52] flex flex-col justify-between select-none">
+<div class="overflow-y-auto flex-1 p-3 space-y-5">
+<!-- Quick Access Section -->
+<div>
+<div class="flex items-center justify-between text-[10px] font-['JetBrains_Mono'] font-bold text-[#A0AEC2] tracking-wider uppercase mb-2">
+<span>QUICK ACCESS</span>
+<span class="text-[#2B3A52] text-[9px]">FAV/REC</span>
+</div>
+<!-- Favorites -->
+<div class="space-y-0.5">
+<div class="text-[10px] font-['JetBrains_Mono'] text-[#A0AEC2]/60 px-2 py-0.5">FAVORITES</div>
+<a class="flex items-center gap-2 px-2 py-1.5 text-[12px] rounded-[3px] bg-[#1B2940]/50 hover:bg-[#1B2940] text-[#F2F6FC] transition-colors border border-transparent hover:border-[#2B3A52]" href="#">
+<span class="text-[#29D3E8] text-[13px]">★</span>
+<span class="truncate">AI Architecture RFC v2.4</span>
+</a>
+<a class="flex items-center gap-2 px-2 py-1.5 text-[12px] rounded-[3px] hover:bg-[#1B2940] text-[#A0AEC2] hover:text-[#F2F6FC] transition-colors" href="#">
+<span class="material-symbols-outlined text-[14px] text-[#FFBF5B]">bolt</span>
+<span class="truncate">Distributed Consensus Spec</span>
+</a>
+<a class="flex items-center gap-2 px-2 py-1.5 text-[12px] rounded-[3px] hover:bg-[#1B2940] text-[#A0AEC2] hover:text-[#F2F6FC] transition-colors" href="#">
+<span class="material-symbols-outlined text-[14px] text-[#A0AEC2]">build</span>
+<span class="truncate">vLLM Kernel Benchmarks</span>
+</a>
+</div>
+<!-- Recently Opened -->
+<div class="space-y-0.5 mt-3">
+<div class="text-[10px] font-['JetBrains_Mono'] text-[#A0AEC2]/60 px-2 py-0.5">RECENTLY OPENED</div>
+<a class="flex items-center gap-2 px-2 py-1 text-[12px] rounded-[3px] hover:bg-[#1B2940] text-[#A0AEC2] hover:text-[#F2F6FC] transition-colors" href="#">
+<span class="material-symbols-outlined text-[14px]">edit_note</span>
+<span class="truncate">Core Platform Roadmap Q4</span>
+</a>
+<a class="flex items-center gap-2 px-2 py-1 text-[12px] rounded-[3px] hover:bg-[#1B2940] text-[#A0AEC2] hover:text-[#F2F6FC] transition-colors" href="#">
+<span class="material-symbols-outlined text-[14px]">checklist</span>
+<span class="truncate">SecOps Container Checklist</span>
+</a>
+</div>
+<!-- Recently Updated -->
+<div class="space-y-0.5 mt-3">
+<div class="text-[10px] font-['JetBrains_Mono'] text-[#A0AEC2]/60 px-2 py-0.5">RECENTLY UPDATED</div>
+<a class="flex items-center gap-2 px-2 py-1 text-[12px] rounded-[3px] hover:bg-[#1B2940] text-[#A0AEC2] hover:text-[#F2F6FC] transition-colors" href="#">
+<span class="material-symbols-outlined text-[14px]">inventory_2</span>
+<span class="truncate">Microservice Mesh Topology</span>
+</a>
+</div>
+</div>
+<!-- Workspace Directory Tree -->
+<div class="pt-3 border-t border-[#2B3A52]/60">
+<div class="flex items-center justify-between text-[10px] font-['JetBrains_Mono'] font-bold text-[#A0AEC2] tracking-wider uppercase mb-2">
+<span>WORKSPACE DIRECTORY</span>
+<span class="text-[#29D3E8] text-[9px] cursor-pointer hover:underline">+ TREE</span>
+</div>
+<div class="space-y-0.5 text-[12px] font-['Geist']">
+<!-- Parent: Eng-Wiki Expanded -->
+<div>
+<div class="flex items-center gap-1.5 px-1.5 py-1 text-[#F2F6FC] font-medium cursor-pointer hover:bg-[#1B2940] rounded-[3px]">
+<span class="material-symbols-outlined text-[14px] text-[#A0AEC2]">arrow_drop_down</span>
+<span class="material-symbols-outlined text-[14px] text-[#29D3E8]">folder_open</span>
+<span class="truncate">Eng-Wiki</span>
+</div>
+<!-- Children -->
+<div class="pl-4 space-y-0.5 mt-0.5 border-l border-[#2B3A52] ml-2.5">
+<div class="flex items-center gap-1.5 px-2 py-1 text-[#A0AEC2] hover:text-[#F2F6FC] cursor-pointer hover:bg-[#1B2940] rounded-[3px]">
+<span class="material-symbols-outlined text-[12px]">arrow_right</span>
+<span class="truncate">Architecture Specs (3)</span>
+</div>
+<div class="flex items-center gap-1.5 px-2 py-1 text-[#A0AEC2] hover:text-[#F2F6FC] cursor-pointer hover:bg-[#1B2940] rounded-[3px]">
+<span class="material-symbols-outlined text-[12px]">arrow_right</span>
+<span class="truncate">Deployment Guides (8)</span>
+</div>
+<!-- SELECTED CHILD -->
+<div class="flex items-center gap-2 px-2 py-1.5 rounded-[3px] bg-[#29D3E8]/10 text-[#29D3E8] border border-[#29D3E8]/40 font-medium">
+<span class="material-symbols-outlined text-[13px]">description</span>
+<span class="truncate">AI Research Notes</span>
+</div>
+<div class="flex items-center gap-2 px-2 py-1 text-[#A0AEC2] hover:text-[#F2F6FC] cursor-pointer hover:bg-[#1B2940] rounded-[3px]">
+<span class="material-symbols-outlined text-[13px]">description</span>
+<span class="truncate">Incident Runbooks</span>
+</div>
+</div>
+</div>
+<!-- Product Specs -->
+<div class="flex items-center gap-1.5 px-1.5 py-1 text-[#A0AEC2] hover:text-[#F2F6FC] cursor-pointer hover:bg-[#1B2940] rounded-[3px]">
+<span class="material-symbols-outlined text-[14px]">arrow_right</span>
+<span class="material-symbols-outlined text-[14px] text-[#FFBF5B]">database</span>
+<span class="truncate">Product Specs (DBs)</span>
+</div>
+<!-- Team Notes -->
+<div class="flex items-center gap-1.5 px-1.5 py-1 text-[#A0AEC2] hover:text-[#F2F6FC] cursor-pointer hover:bg-[#1B2940] rounded-[3px]">
+<span class="material-symbols-outlined text-[14px]">arrow_right</span>
+<span class="material-symbols-outlined text-[14px] text-[#5278FF]">group</span>
+<span class="truncate">Team Notes (Shared)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Zone 1 Telemetry Footer -->
+<div class="p-2.5 bg-[#0B1020] border-t border-[#2B3A52] font-['JetBrains_Mono'] text-[10px] text-[#A0AEC2] flex flex-col gap-1">
+<div class="flex justify-between items-center text-[10px]">
+<span class="text-[#F2F6FC]">CACHE USAGE</span>
+<span class="text-[#29D3E8]">25.6%</span>
+</div>
+<div class="w-full bg-[#1B2940] h-1.5 rounded-[1px] overflow-hidden">
+<div class="bg-[#29D3E8] h-full w-[25.6%]"></div>
+</div>
+<p class="text-[#A0AEC2]/80 leading-tight pt-1">
+          1,280 / 5,000 blocks cached<br/>
+<span class="text-[#42D6A4]">Vector Latency 3.2ms</span>
+</p>
+</div>
+</aside>
+<!-- ZONE 2: PAGE LIST / BROWSER & DATABASE QUERY MATRIX (330px) -->
+<section class="w-[330px] shrink-0 bg-[#141F33] border-r border-[#2B3A52] flex flex-col justify-between">
+<!-- Filter and Query Header -->
+<div class="p-3 border-b border-[#2B3A52] space-y-2 bg-[#0F172A]">
+<!-- Segmented Filter Pills -->
+<div class="grid grid-cols-4 gap-1 p-0.5 bg-[#0B1020] border border-[#2B3A52] rounded-[3px] font-['JetBrains_Mono'] text-[10px]">
+<button class="py-1 text-center bg-[#1B2940] text-[#29D3E8] font-bold rounded-[2px]">All (14)</button>
+<button class="py-1 text-center text-[#A0AEC2] hover:text-[#F2F6FC]">Docs (8)</button>
+<button class="py-1 text-center text-[#A0AEC2] hover:text-[#F2F6FC]">DBs (4)</button>
+<button class="py-1 text-center text-[#A0AEC2] hover:text-[#F2F6FC]">★ (2)</button>
+</div>
+<!-- Fast Filter Input -->
+<div class="relative">
+<span class="material-symbols-outlined absolute left-2 top-1/2 -translate-y-1/2 text-[14px] text-[#A0AEC2]">filter_list</span>
+<input class="w-full h-7 pl-7 pr-3 bg-[#141F33] border border-[#2B3A52] rounded-[3px] text-[11px] text-[#F2F6FC] placeholder-[#A0AEC2]/50 focus:outline-none focus:border-[#29D3E8] font-['Geist']" placeholder="Filter pages... (Ctrl+F)" type="text"/>
+</div>
+<div class="flex items-center justify-between text-[10px] font-['JetBrains_Mono'] text-[#A0AEC2]">
+<span>INDEX RESULTS: 14</span>
+<button class="hover:text-[#F2F6FC] flex items-center gap-0.5 text-[#29D3E8]">
+<span>Sort: Last Edited</span>
+<span class="material-symbols-outlined text-[13px]">expand_more</span>
+</button>
+</div>
+</div>
+<!-- Rich Page Items List -->
+<div class="flex-1 overflow-y-auto divide-y divide-[#2B3A52]/50">
+<!-- ITEM 1: Selected Item -->
+<div class="p-3 bg-[#1B2940] border-l-2 border-l-[#29D3E8] cursor-pointer hover:bg-[#1f2f49] transition-all relative">
+<div class="flex items-start justify-between gap-1 mb-1">
+<span class="font-['JetBrains_Mono'] text-[10px] text-[#29D3E8] tracking-wider uppercase">Eng-Wiki / Research</span>
+<span class="text-[9px] font-['JetBrains_Mono'] text-[#A0AEC2]">14:15 UTC</span>
+</div>
+<h2 class="font-['Space_Grotesk'] text-[13px] font-bold text-[#F2F6FC] leading-snug mb-1 flex items-center gap-1.5">
+<span class="text-[#29D3E8]">📄</span> AI Research Notes: vLLM Spec &amp; Kernel Optimizations
+          </h2>
+<p class="text-[11px] text-[#A0AEC2] line-clamp-2 leading-relaxed mb-2 font-['Geist']">
+            Benchmark analysis on NV-H100 instance evaluating KV-cache quantization, dynamic token dispatch latencies...
+          </p>
+<div class="flex items-center justify-between text-[10px] font-['JetBrains_Mono'] pt-1">
+<div class="flex items-center gap-1.5">
+<span class="px-1.5 py-0.5 rounded-[2px] bg-[#29D3E8]/10 text-[#29D3E8] border border-[#29D3E8]/30 font-semibold">AI_SYNCED</span>
+<span class="px-1.5 py-0.5 rounded-[2px] bg-[#FFBF5B]/10 text-[#FFBF5B] border border-[#FFBF5B]/30 font-semibold">STARRED</span>
+</div>
+<span class="text-[#A0AEC2]">@alex</span>
+</div>
+</div>
+<!-- ITEM 2 -->
+<div class="p-3 hover:bg-[#1B2940]/40 cursor-pointer transition-all border-l-2 border-l-transparent">
+<div class="flex items-start justify-between gap-1 mb-1">
+<span class="font-['JetBrains_Mono'] text-[10px] text-[#A0AEC2] tracking-wider uppercase">Product / Milestones</span>
+<span class="text-[9px] font-['JetBrains_Mono'] text-[#A0AEC2]">Yesterday</span>
+</div>
+<h2 class="font-['Space_Grotesk'] text-[13px] font-semibold text-[#F2F6FC] leading-snug mb-1 flex items-center gap-1.5">
+<span class="text-[#5278FF]">📊</span> Project Roadmap Q4: Autonomous Agents
+          </h2>
+<p class="text-[11px] text-[#A0AEC2] line-clamp-2 leading-relaxed mb-2 font-['Geist']">
+            Quarterly sprint targets, tool-use evaluation matrices, and human-in-the-loop escalation bounds for daemon agents.
+          </p>
+<div class="flex items-center justify-between text-[10px] font-['JetBrains_Mono']">
+<span class="px-1.5 py-0.5 rounded-[2px] bg-[#5278FF]/10 text-[#5278FF] border border-[#5278FF]/30 font-semibold">NOTION_DB</span>
+<span class="text-[#A0AEC2]">@devops-lead</span>
+</div>
+</div>
+<!-- ITEM 3 -->
+<div class="p-3 hover:bg-[#1B2940]/40 cursor-pointer transition-all border-l-2 border-l-transparent">
+<div class="flex items-start justify-between gap-1 mb-1">
+<span class="font-['JetBrains_Mono'] text-[10px] text-[#A0AEC2] tracking-wider uppercase">Workspace / Transcripts</span>
+<span class="text-[9px] font-['JetBrains_Mono'] text-[#A0AEC2]">Oct 24</span>
+</div>
+<h2 class="font-['Space_Grotesk'] text-[13px] font-semibold text-[#F2F6FC] leading-snug mb-1 flex items-center gap-1.5">
+<span class="text-[#42D6A4]">🎙</span> Meeting Notes: Core Architecture Sync
+          </h2>
+<p class="text-[11px] text-[#A0AEC2] line-clamp-2 leading-relaxed mb-2 font-['Geist']">
+            Automated sync with Google Calendar. Review of gRPC proto definitions, RPC serialization bottleneck fixes.
+          </p>
+<div class="flex items-center justify-between text-[10px] font-['JetBrains_Mono']">
+<span class="px-1.5 py-0.5 rounded-[2px] bg-[#42D6A4]/10 text-[#42D6A4] border border-[#42D6A4]/30 font-semibold">LINKED_TO_GCAL</span>
+<span class="text-[#A0AEC2]">Wayfinder Daemon</span>
+</div>
+</div>
+<!-- ITEM 4 -->
+<div class="p-3 hover:bg-[#1B2940]/40 cursor-pointer transition-all border-l-2 border-l-transparent">
+<div class="flex items-start justify-between gap-1 mb-1">
+<span class="font-['JetBrains_Mono'] text-[10px] text-[#A0AEC2] tracking-wider uppercase">SecOps / Compliance</span>
+<span class="text-[9px] font-['JetBrains_Mono'] text-[#A0AEC2]">Oct 22</span>
+</div>
+<h2 class="font-['Space_Grotesk'] text-[13px] font-semibold text-[#F2F6FC] leading-snug mb-1 flex items-center gap-1.5">
+<span class="text-[#ba1a1a]">🛡</span> Security &amp; SOC2 Runbook
+          </h2>
+<p class="text-[11px] text-[#A0AEC2] line-clamp-2 leading-relaxed mb-2 font-['Geist']">
+            Hardened access criteria, key rotation cycles for Notion integration secret, and audit pipeline verification.
+          </p>
+<div class="flex items-center justify-between text-[10px] font-['JetBrains_Mono']">
+<span class="px-1.5 py-0.5 rounded-[2px] bg-[#ba1a1a]/10 text-[#ff8080] border border-[#ba1a1a]/40 font-semibold">RESTRICTED</span>
+<span class="text-[#A0AEC2]">SecOps Team</span>
+</div>
+</div>
+</div>
+<!-- Fast Pagination / Status Footer -->
+<div class="p-2 border-t border-[#2B3A52] bg-[#0B1020] flex items-center justify-between text-[10px] font-['JetBrains_Mono'] text-[#A0AEC2]">
+<span>PAGE 1 OF 3</span>
+<div class="flex gap-1">
+<button class="px-2 py-0.5 bg-[#1B2940] hover:bg-[#2B3A52] rounded-[2px] text-[#F2F6FC]">Prev</button>
+<button class="px-2 py-0.5 bg-[#1B2940] hover:bg-[#2B3A52] rounded-[2px] text-[#F2F6FC]">Next</button>
+</div>
+</div>
+</section>
+<!-- ZONE 3: SELECTED DOCUMENT PREVIEW & WAYFINDER AI BRIDGE (Remaining flex-1) -->
+<section class="flex-1 flex overflow-hidden bg-[#0B1020]">
+<!-- Primary Document Canvas Area -->
+<div class="flex-1 flex flex-col overflow-y-auto">
+<!-- Document Header Bar -->
+<div class="p-4 bg-[#141F33] border-b border-[#2B3A52] shrink-0 sticky top-0 z-10 space-y-3">
+<div class="flex flex-wrap items-center justify-between gap-2">
+<div class="flex items-center gap-1.5 text-[11px] font-['JetBrains_Mono'] text-[#A0AEC2]">
+<span class="hover:text-[#29D3E8] cursor-pointer">Eng-Wiki</span>
+<span class="text-[#2B3A52]">&gt;</span>
+<span class="hover:text-[#29D3E8] cursor-pointer">Architecture Specs</span>
+<span class="text-[#2B3A52]">&gt;</span>
+<span class="text-[#29D3E8]">AI Research Notes</span>
+</div>
+<div class="flex items-center gap-1.5 font-['JetBrains_Mono'] text-[11px]">
+<a class="h-7 px-2.5 bg-[#1B2940] hover:bg-[#2B3A52] text-[#F2F6FC] border border-[#2B3A52] rounded-[3px] flex items-center gap-1 transition-colors" href="https://notion.so" target="_blank">
+<span>Open in Notion</span>
+<span class="material-symbols-outlined text-[13px]">open_in_new</span>
+</a>
+<button class="h-7 px-2 bg-[#1B2940] hover:bg-[#2B3A52] text-[#FFBF5B] border border-[#2B3A52] rounded-[3px] flex items-center gap-1 transition-colors">
+<span>★ Favorite</span>
+</button>
+<button class="h-7 px-1.5 bg-[#1B2940] hover:bg-[#2B3A52] text-[#A0AEC2] border border-[#2B3A52] rounded-[3px]">
+<span class="material-symbols-outlined text-[14px]">more_horiz</span>
+</button>
+<button class="h-7 px-3 bg-[#29D3E8]/10 hover:bg-[#29D3E8]/20 text-[#29D3E8] border border-[#29D3E8]/50 rounded-[3px] flex items-center gap-1 font-semibold transition-all">
+<span class="material-symbols-outlined text-[14px]">explore</span>
+<span>Ask Wayfinder</span>
+<kbd class="ml-1 px-1 bg-[#29D3E8]/20 rounded-[2px] text-[9px]">⌘J</kbd>
+</button>
+</div>
+</div>
+<div>
+<h2 class="font-['Space_Grotesk'] text-xl font-bold tracking-tight text-[#F2F6FC] flex items-center gap-2">
+<span>📄</span> AI Research Notes: vLLM Spec &amp; Kernel Optimizations
+            </h2>
+<div class="flex items-center gap-3 font-['JetBrains_Mono'] text-[10px] text-[#A0AEC2] mt-1">
+<span class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-[#42D6A4]"></span>
+                Last synced from Notion 14:02 UTC
+              </span>
+<span class="text-[#2B3A52]">•</span>
+<span>Notion ID: <code class="text-[#29D3E8]">#notion-9f48-a92</code></span>
+<span class="text-[#2B3A52]">•</span>
+<span>SHA: <code class="text-[#A0AEC2]">8c39e2f</code></span>
+</div>
+</div>
+<!-- Linked Wayfinder Context Bar (AI Bridge Banner) -->
+<div class="p-2 bg-[#0B1020] border border-[#2B3A52] rounded-[3px] flex flex-wrap items-center gap-2 text-[11px] font-['JetBrains_Mono']">
+<span class="text-[#29D3E8] font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">hub</span>
+              Wayfinder Bridge Links:
+            </span>
+<a class="px-2 py-0.5 rounded-[2px] bg-[#1B2940] hover:bg-[#2B3A52] border border-[#2B3A52] text-[#F2F6FC] flex items-center gap-1 transition-colors" href="#">
+<span class="text-[#FFBF5B] font-bold">[HIGH]</span>
+<span>🔗 Review PR #412 Architecture RFC</span>
+</a>
+<div class="px-2 py-0.5 rounded-[2px] bg-[#1B2940] border border-[#42D6A4]/30 text-[#42D6A4] flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-[#42D6A4] animate-ping"></span>
+<span>⚡ AUT-04 Knowledge Ingest (Running)</span>
+</div>
+<div class="px-2 py-0.5 rounded-[2px] bg-[#1B2940] border border-[#2B3A52] text-[#A0AEC2] flex items-center gap-1">
+<span>📅 Core Arch Sync (14:30 UTC)</span>
+</div>
+</div>
+</div>
+<!-- Main Document Reader Area -->
+<article class="p-6 max-w-4xl space-y-6">
+<div>
+<h3 class="font-['Space_Grotesk'] text-lg font-bold text-[#F2F6FC] border-b border-[#2B3A52] pb-2 mb-3">
+              vLLM Inference Optimization &amp; Memory Hierarchy
+            </h3>
+<p class="text-[14px] text-[#F2F6FC]/90 font-['Geist'] leading-relaxed">
+              Autonomous agent execution requires predictable token dispatch latencies. Below are empirical throughput measurements taken across dynamic context windows ranging from 2k to 32k tokens on distributed clusters.
+            </p>
+</div>
+<!-- Callout box -->
+<div class="p-3.5 bg-[#1B2940] border-l-2 border-l-[#29D3E8] border border-[#2B3A52] rounded-[3px] flex items-start gap-3">
+<span class="text-[18px] leading-none select-none">💡</span>
+<div class="text-[12px] font-['Geist'] leading-relaxed text-[#F2F6FC]">
+<span class="font-['JetBrains_Mono'] text-[#29D3E8] font-semibold text-[11px] block mb-0.5">NOTE / HARDWARE CONSTRAINTS</span>
+              Benchmarked using FlashAttention-2 and FP8 quantization kernels on dual H100 SXM5 nodes. Outbound telemetry strictly isolated through VPC peering gateways.
+            </div>
+</div>
+<!-- Code Block with Syntax Styling -->
+<div class="rounded-[3px] border border-[#2B3A52] bg-[#0B1020] overflow-hidden">
+<div class="px-3 py-1.5 bg-[#141F33] border-b border-[#2B3A52] flex items-center justify-between text-[11px] font-['JetBrains_Mono']">
+<span class="text-[#A0AEC2]">runner_vllm_bench.py</span>
+<button class="text-[#29D3E8] hover:underline flex items-center gap-1 text-[10px]">
+<span class="material-symbols-outlined text-[12px]">content_copy</span> Copy Snippet
+              </button>
+</div>
+<pre class="p-3 font-['JetBrains_Mono'] text-[12px] leading-relaxed text-[#A0AEC2] overflow-x-auto"><span class="text-[#5278FF]"># Kernel bench runner snippet</span>
+<span class="text-[#29D3E8]">from</span> wayfinder_core.vllm <span class="text-[#29D3E8]">import</span> EngineArgs, LLMEngine
+
+engine = LLMEngine.from_engine_args(
+    EngineArgs(
+        model=<span class="text-[#42D6A4]">"mistral-7b-instruct-v0.3"</span>,
+        gpu_memory_utilization=<span class="text-[#FFBF5B]">0.92</span>,
+        enforce_eager=<span class="text-[#FFBF5B]">False</span>,
+        kv_cache_dtype=<span class="text-[#42D6A4]">"fp8"</span>
+    )
+)</pre>
+</div>
+<!-- Checklist / Action Items -->
+<div class="space-y-2 pt-2">
+<h4 class="font-['Space_Grotesk'] text-[14px] font-bold text-[#F2F6FC]">
+              Sync Verification Checklist
+            </h4>
+<div class="space-y-1.5 font-['Geist'] text-[13px]">
+<label class="flex items-center gap-2.5 p-1.5 rounded-[3px] hover:bg-[#141F33] cursor-pointer">
+<input checked="" class="rounded-[2px] bg-[#0B1020] border-[#2B3A52] text-[#29D3E8] focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
+<span class="line-through text-[#A0AEC2]">Implement continuous batching scheduler in node-sg-091a</span>
+</label>
+<label class="flex items-center gap-2.5 p-1.5 rounded-[3px] hover:bg-[#141F33] cursor-pointer">
+<input class="rounded-[2px] bg-[#0B1020] border-[#2B3A52] text-[#29D3E8] focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
+<span class="text-[#F2F6FC]">Sign off on cryptographic container build (SecOps Gate #4.1)</span>
+</label>
+<label class="flex items-center gap-2.5 p-1.5 rounded-[3px] hover:bg-[#141F33] cursor-pointer">
+<input class="rounded-[2px] bg-[#0B1020] border-[#2B3A52] text-[#29D3E8] focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
+<span class="text-[#F2F6FC]">Re-index Notion embeddings via Vector DB pipeline</span>
+</label>
+</div>
+</div>
+<!-- Table: Benchmark Throughput -->
+<div class="space-y-2 pt-2 pb-8">
+<div class="flex items-center justify-between">
+<h4 class="font-['Space_Grotesk'] text-[14px] font-bold text-[#F2F6FC]">
+                Benchmark Throughput (Tokens/sec)
+              </h4>
+<span class="font-['JetBrains_Mono'] text-[10px] text-[#A0AEC2]">FP8 TensorRT-LLM</span>
+</div>
+<div class="border border-[#2B3A52] rounded-[3px] overflow-hidden">
+<table class="w-full text-left font-['JetBrains_Mono'] text-[11px]">
+<thead class="bg-[#141F33] text-[#A0AEC2] border-b border-[#2B3A52]">
+<tr>
+<th class="p-2.5 font-medium">Batch Size</th>
+<th class="p-2.5 font-medium">Context Length</th>
+<th class="p-2.5 font-medium">TTFT (ms)</th>
+<th class="p-2.5 font-medium text-right">Throughput (tps)</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#2B3A52] bg-[#0F172A]/70">
+<tr class="hover:bg-[#141F33]/50">
+<td class="p-2.5 text-[#F2F6FC]">1</td>
+<td class="p-2.5 text-[#A0AEC2]">4,096</td>
+<td class="p-2.5 text-[#42D6A4]">12.4ms</td>
+<td class="p-2.5 text-right font-bold text-[#29D3E8]">148.2 tps</td>
+</tr>
+<tr class="hover:bg-[#141F33]/50">
+<td class="p-2.5 text-[#F2F6FC]">4</td>
+<td class="p-2.5 text-[#A0AEC2]">8,192</td>
+<td class="p-2.5 text-[#42D6A4]">18.6ms</td>
+<td class="p-2.5 text-right font-bold text-[#29D3E8]">382.0 tps</td>
+</tr>
+<tr class="hover:bg-[#141F33]/50">
+<td class="p-2.5 text-[#F2F6FC]">16</td>
+<td class="p-2.5 text-[#A0AEC2]">32,768</td>
+<td class="p-2.5 text-[#FFBF5B]">44.1ms</td>
+<td class="p-2.5 text-right font-bold text-[#29D3E8]">910.4 tps</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</article>
+</div>
+<!-- Docked Context Drawer / AI Assistant & Bridge (300px) -->
+<aside class="w-[300px] shrink-0 bg-[#141F33] border-l border-[#2B3A52] flex flex-col justify-between overflow-y-auto">
+<div class="p-3.5 space-y-4">
+<!-- Dock Title -->
+<div class="flex items-center justify-between pb-2 border-b border-[#2B3A52]">
+<div class="flex items-center gap-1.5 font-['Space_Grotesk'] text-[13px] font-bold text-[#F2F6FC]">
+<span class="material-symbols-outlined text-[16px] text-[#29D3E8]">auto_awesome</span>
+<span>WAYFINDER AI DOCK</span>
+</div>
+<span class="px-1.5 py-0.5 rounded-[2px] bg-[#42D6A4]/10 text-[#42D6A4] text-[9px] font-['JetBrains_Mono']">LIVE</span>
+</div>
+<!-- Section: Save AI Synthesis to Notion -->
+<div class="space-y-2.5 bg-[#0B1020] p-3 border border-[#2B3A52] rounded-[3px]">
+<span class="font-['JetBrains_Mono'] text-[10px] text-[#29D3E8] font-bold tracking-wider uppercase block">
+              SAVE AI SYNTHESIS TO NOTION
+            </span>
+<div class="space-y-1">
+<label class="text-[10px] font-['JetBrains_Mono'] text-[#A0AEC2]">TARGET PAGE</label>
+<select class="w-full h-7 bg-[#141F33] border border-[#2B3A52] rounded-[2px] text-[11px] text-[#F2F6FC] px-2 font-['Geist'] focus:ring-0 focus:border-[#29D3E8]">
+<option>AI Research Notes: vLLM Spec</option>
+<option>Microservice Mesh Topology</option>
+<option>Meeting Notes: Core Arch Sync</option>
+</select>
+</div>
+<div class="space-y-1">
+<label class="text-[10px] font-['JetBrains_Mono'] text-[#A0AEC2]">ACTION TYPE</label>
+<div class="grid grid-cols-3 gap-1 text-[9px] font-['JetBrains_Mono']">
+<button class="py-1 bg-[#1B2940] border border-[#29D3E8]/50 text-[#29D3E8] rounded-[2px]">Append</button>
+<button class="py-1 bg-[#141F33] border border-[#2B3A52] text-[#A0AEC2] hover:text-[#F2F6FC] rounded-[2px]">Overwrite</button>
+<button class="py-1 bg-[#141F33] border border-[#2B3A52] text-[#A0AEC2] hover:text-[#F2F6FC] rounded-[2px]">Child Pg</button>
+</div>
+</div>
+<!-- Preview Box -->
+<div class="space-y-1">
+<label class="text-[10px] font-['JetBrains_Mono'] text-[#A0AEC2]">DAEMON OUTPUT PREVIEW</label>
+<div class="p-2 bg-[#141F33] border border-[#2B3A52] rounded-[2px] text-[11px] text-[#A0AEC2] font-['Geist'] leading-relaxed">
+<span class="text-[#42D6A4] font-['JetBrains_Mono'] text-[10px] block mb-0.5">✓ Daemon Run #4092:</span>
+                Summary: Validated 12% inference latency improvement with Q4_K_M kernels. Continuous batching pipeline aligned.
+              </div>
+</div>
+<button class="w-full h-8 bg-[#5278FF] hover:bg-[#5278FF]/90 text-[#F2F6FC] font-['JetBrains_Mono'] text-[11px] font-semibold rounded-[3px] flex items-center justify-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+<span>Confirm Write to Notion (AES-256)</span>
+</button>
+</div>
+<!-- Section: Ask Wayfinder about this Doc -->
+<div class="space-y-2 pt-1">
+<span class="font-['JetBrains_Mono'] text-[10px] text-[#A0AEC2] font-bold tracking-wider uppercase block">
+              ASK WAYFINDER ABOUT THIS DOC
+            </span>
+<div class="space-y-1.5">
+<button class="w-full text-left p-2 rounded-[3px] bg-[#1B2940] hover:bg-[#2B3A52] border border-[#2B3A52] text-[11px] text-[#F2F6FC] flex items-center justify-between transition-colors">
+<span class="flex items-center gap-1.5">
+<span class="text-[#29D3E8]">⚡</span> Summarize findings
+                </span>
+<span class="text-[9px] font-['JetBrains_Mono'] text-[#A0AEC2]">1-Click</span>
+</button>
+<button class="w-full text-left p-2 rounded-[3px] bg-[#1B2940] hover:bg-[#2B3A52] border border-[#2B3A52] text-[11px] text-[#F2F6FC] flex items-center justify-between transition-colors">
+<span class="flex items-center gap-1.5">
+<span class="text-[#FFBF5B]">📋</span> Extract action items to Planner
+                </span>
+<span class="text-[9px] font-['JetBrains_Mono'] text-[#A0AEC2]">Auto</span>
+</button>
+<button class="w-full text-left p-2 rounded-[3px] bg-[#1B2940] hover:bg-[#2B3A52] border border-[#2B3A52] text-[11px] text-[#F2F6FC] flex items-center justify-between transition-colors">
+<span class="flex items-center gap-1.5">
+<span class="text-[#42D6A4]">🧪</span> Verify code snippet syntax
+                </span>
+<span class="text-[9px] font-['JetBrains_Mono'] text-[#A0AEC2]">PyAST</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Footer status bar inside dock -->
+<div class="p-3 bg-[#0B1020] border-t border-[#2B3A52] text-[10px] font-['JetBrains_Mono'] text-[#A0AEC2] flex items-center justify-between">
+<span class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-[#29D3E8]"></span>
+            BRIDGE PROTOCOL V4.2
+          </span>
+<span class="text-[#29D3E8]">UPTIME 99.98%</span>
+</div>
+</aside>
+</section>
+</main>
+</body></html>

@@ -1,0 +1,39 @@
+id: W14
+name: Task Manager
+status: fixture-tested
+
+responsibility: >
+  Finds tasks, normalizes task status across Google Tasks and internal lists,
+  and prepares proposed task mutations.
+  Enforces duplicate detection before proposing new task creation.
+  Strictly approval-gated: all creation, completion, modification, or deletion
+  actions generate a proposed preview and require an orchestrator approval token.
+
+implementation_approach: hermes_instructions + task_provider_harness + google_tasks_adapter
+new_code_needed: false
+
+capabilities:
+  - google.tasks_read        # list task lists and inspect tasks
+
+approval_gated_capabilities:
+  - google.tasks_write       # create, complete, or update tasks
+
+denied_capabilities:
+  - system.terminal_exec
+  - whatsapp.*
+  - agent.delegate_task
+
+management_procedure:
+  1: Retrieve tasks from google.tasks_read across accessible lists
+  2: Classify tasks into pending, completed, and overdue categories
+  3: If task creation is requested, run duplicate check against existing tasks
+  4: Generate a detailed action preview (title, notes, due date, action type)
+  5: Request user approval prior to invoking google.tasks_write
+  6: Return structured TaskInventory
+
+output_contract: TaskInventory  # see wayfinder/workers/schemas.py
+
+acceptance_criteria:
+  - Reads and categorization are automatic
+  - Any proposed mutation must have requires_approval=True
+  - Generates clear diffs for updates

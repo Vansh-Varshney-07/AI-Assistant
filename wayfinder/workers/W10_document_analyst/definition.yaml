@@ -1,0 +1,48 @@
+id: W10
+name: Document Analyst
+status: fixture-tested
+
+responsibility: >
+  Answers questions about documents with traceable evidence rather than
+  unsupported summaries. Inspects Google Drive files, Google Docs, Notion
+  pages, and permitted local documents.
+  Employs heading-aware chunking and requires citation of document ID,
+  title, quote, and section for every finding. Flags unsupported claims
+  and partial reads explicitly.
+
+implementation_approach: hermes_instructions + shared_document_helpers + workspace_adapters
+new_code_needed: false
+
+capabilities:
+  - google.drive_read        # search and list drive files
+  - google.docs_read         # read structured Google Docs content
+  - notion.search_pages      # search workspace Notion pages
+  - notion.read_page         # read Notion page blocks
+  - filesystem.read_file     # read permitted local files
+  - desktop.read_document    # read local document text (.pdf, .docx, .csv, .md)
+
+approval_gated_capabilities:
+  - google.docs_write        # creating or updating docs requires explicit approval
+
+denied_capabilities:
+  - tavily_research          # broad open-ended web research reserved for W08
+  - system.terminal_exec     # arbitrary shell execution denied
+  - whatsapp.*
+  - agent.delegate_task
+
+analysis_procedure:
+  1: Locate relevant document via Drive, Docs, Notion, or local file search
+  2: Retrieve document content and metadata using read adapter
+  3: If content is truncated, flag partial=True and record truncation warning
+  4: Chunk text using heading-aware chunker, preserving line numbers and section titles
+  5: Extract exact supporting quotes for each finding
+  6: If evidence is absent or insufficient, add statement to unsupported_claims list
+  7: Return structured DocumentAnalysisReport
+
+output_contract: DocumentAnalysisReport  # see wayfinder/workers/schemas.py
+
+acceptance_criteria:
+  - Every finding must cite document_id and an exact evidence quote
+  - Unsupported claims are explicitly recorded, never fabricated
+  - Truncated documents must set partial=True
+  - Read-only by default; mutations strictly require approval token

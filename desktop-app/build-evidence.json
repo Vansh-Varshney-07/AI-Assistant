@@ -1,7 +1,8 @@
 {
-  "build": "wayfinder-desktop/0.1",
-  "generated": "2026-10-26T05:03:20.275Z",
-  "scope": "static package inspection; Electron was not launched",
+  "build": "wayfinder-desktop/0.3.0",
+  "variant": "workspace-parity",
+  "generated": "2026-10-26T15:11:55.320Z",
+  "scope": "static package inspection plus separately reported hidden packaged application, rendered fixture, Node bridge and live synthetic tiers",
   "checks": [
     {
       "name": "packaged:/dist/main/index.js",
@@ -40,7 +41,31 @@
       "passed": true
     },
     {
-      "name": "only_host_python_packaged",
+      "name": "only_host_and_build_manifest_packaged",
+      "passed": true
+    },
+    {
+      "name": "matching_manifest_in_renderer_host_and_package",
+      "passed": true
+    },
+    {
+      "name": "declared_variant_and_version",
+      "passed": true
+    },
+    {
+      "name": "local_font_assets_present",
+      "passed": true
+    },
+    {
+      "name": "font_license:geist",
+      "passed": true
+    },
+    {
+      "name": "font_license:spacegrotesk",
+      "passed": true
+    },
+    {
+      "name": "font_license:jetbrainsmono",
       "passed": true
     },
     {
@@ -58,19 +83,34 @@
     {
       "name": "production_node_bridge_evidence",
       "passed": true
+    },
+    {
+      "name": "actual_hidden_packaged_test_passed",
+      "passed": true
+    },
+    {
+      "name": "hidden_test_matches_this_archive",
+      "passed": true
+    },
+    {
+      "name": "rendered_matrix_without_remote_requests",
+      "passed": true
     }
   ],
-  "passed": 14,
+  "passed": 23,
   "frontend": {
-    "passed": 25,
+    "passed": 40,
     "failed": 0
   },
-  "real_neural_hermes_checks": 13,
+  "real_neural_hermes_checks": 18,
   "production_node_bridge_checks": 7,
-  "packaged_host_sha256": "774518d4a25fd2cfec52a8a81714a9ecc62e966909e8c2c9332b34b93116df7c",
-  "asar_sha256": "33a09f139d0175deeaa5d7ce18027ea81bda216966a236004ab04917ce946487",
-  "executable_sha256": "5f2e89f6752aecd2e0eac7bb70c64500cb10ec2e9b7c5ff9a5ea7e69650588f8",
-  "application_version": "0.1.0",
-  "native_or_visual_tests_run": false,
+  "hidden_packaged_checks": 16,
+  "rendered_configurations": 6,
+  "packaged_host_sha256": "0aed49e867b0e21e25d7df4a9a0533dad5421879624451cc2bd7326599655cb8",
+  "asar_sha256": "ab0e50b7440ac839da04f7cc3c3b1277c3c6ce66425d7cfced1a8f87f0a78248",
+  "executable_sha256": "14684cb28194a548882ad864aeb5aa08b40e5977725ced780137450d98002f8d",
+  "application_version": "0.3.0",
+  "native_desktop_tests_run": false,
+  "manual_accessibility_tests_run": false,
   "google_account_tests_run": false
 }

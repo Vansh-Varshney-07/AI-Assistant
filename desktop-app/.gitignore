@@ -1,6 +1,10 @@
 node_modules/
 dist/
-release/
+release/*
+!release/README.md
+!release/START-HERE-*.md
+!release/*-verification.json
+!release/*.sha256
 .cache/
 test-results/
 *.log

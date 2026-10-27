@@ -1,0 +1,40 @@
+id: W19
+name: Repository Analyst
+status: fixture-tested
+
+responsibility: >
+  Inspect a code repository or project directory to identify its language,
+  key modules, entry points, dependencies, architectural patterns, and
+  test coverage. Produces a structured RepositoryInsight record.
+  Does NOT modify files or review diffs — that is W24 Code Reviewer.
+
+implementation_approach: hermes_instructions + filesystem_read_capabilities
+new_code_needed: false   # Uses existing filesystem and find_files capabilities
+
+capabilities:
+  - filesystem.read_file     # examine source code, package manifests, configs
+  - desktop.find_files       # discover project files matching glob patterns
+  - system.code_eval         # run syntax or AST analysis in sandbox if needed
+
+denied_capabilities:
+  - filesystem.patch_file    # strictly read-only; no modifications
+  - notion.*
+  - google.*
+  - whatsapp.*
+  - agent.delegate_task
+
+analysis_procedure:
+  1: Locate configuration and dependency files (pyproject.toml, package.json, requirements.txt)
+  2: Identify primary language, frameworks, and entry points
+  3: Scan directory hierarchy to enumerate key functional modules
+  4: Inspect test directories to evaluate test organization and coverage
+  5: Check for security and credential exposure patterns
+  6: Produce structured RepositoryInsight
+
+output_contract: RepositoryInsight  # see wayfinder/workers/schemas.py
+
+acceptance_criteria:
+  - key_modules must be non-empty
+  - architectural_notes must be non-empty
+  - Read-only operations only: zero modifications to repository files
+  - Handles missing test suites gracefully by documenting in test_coverage_notes

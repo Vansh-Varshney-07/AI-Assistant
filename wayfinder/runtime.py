@@ -1,6 +1,7 @@
 """One-owner runtime factory and checksummed cold snapshots."""
 
 import hashlib
+import os
 import json
 from pathlib import Path
 import re
@@ -19,7 +20,7 @@ def engine_for(root):
     return MemoryEngine(
         qdrant_path=str(root / "vectors"),
         graph_name=graph,
-        config={"extraction_policy": "none", "retrieval": {"reranker_enabled": False}},
+        config={"extraction_policy": "none", "retrieval": {"reranker_enabled": False}, "embeddings":{"cache_dir":os.environ.get("WAYFINDER_MODELS_ROOT")}},
     )
 
 

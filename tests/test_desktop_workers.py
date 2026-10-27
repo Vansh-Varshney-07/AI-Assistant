@@ -367,11 +367,13 @@ def test_crash_marks_unknown_without_replay_and_restart_expires_grants(tmp_path)
     driver = FixtureDriver()
     driver.crash = True
     gate = ActionGate(connect, driver)
+    pending = gate.propose(SCOPE, plan())
     item = gate.propose(SCOPE, plan())
     assert gate.decide(SCOPE, item["id"], True)["status"] == "outcome_unknown"
     gate.decide(SCOPE, item["id"], True)
     assert len(driver.effects) == 1
-    pending = gate.propose(SCOPE, plan())
+    with pytest.raises(ValueError, match="unresolved"):
+        gate.propose(SCOPE, plan())
     replacement = ActionGate(connect, driver)
     assert replacement.get(SCOPE, pending["id"])["status"] == "expired"
 

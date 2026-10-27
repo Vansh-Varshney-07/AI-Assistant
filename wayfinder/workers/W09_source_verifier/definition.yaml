@@ -1,0 +1,47 @@
+id: W09
+name: Source Verifier
+status: fixture-tested
+
+responsibility: >
+  Given a specific claim and a cited source URL, independently verify
+  whether the source actually supports the claim.
+  Uses Tavily extract to retrieve raw content from the cited URL,
+  then uses Tavily search to find independent corroborating or
+  contradicting evidence.
+  Returns a VerificationResult with verdict, evidence items, and reasoning.
+  This is NOT a web researcher — it checks a specific assertion, not a topic.
+
+implementation_approach: hermes_instructions + existing_tavily_capabilities
+new_code_needed: false   # Tavily already registered and verified
+
+capabilities:
+  - tavily_extract       # primary: read the cited URL directly
+  - tavily_search        # corroboration: find independent sources
+  - tavily_dynamic_search  # optional: filtered corroboration search
+
+denied_capabilities:
+  - tavily_research      # too broad; verifier uses targeted extraction only
+  - tavily_crawl
+  - notion.*
+  - google.*
+  - desktop.*
+  - whatsapp.*
+  - filesystem.*
+  - agent.delegate_task
+
+verification_procedure:
+  1: Extract content from the cited_url using tavily_extract
+  2: Search for independent sources using tavily_search with a claim-derived query
+  3: Compare extracted content against the claim
+  4: Check independent sources for corroboration or contradiction
+  5: Produce verdict (SUPPORTED / CONTRADICTED / PARTIALLY_SUPPORTED / UNVERIFIED)
+
+output_contract: VerificationResult  # see wayfinder/workers/schemas.py
+
+acceptance_criteria:
+  - UNVERIFIED verdict used only when no extraction succeeded
+  - SUPPORTED requires at least one evidence item with supports_claim=true
+  - CONTRADICTED requires at least one evidence item with contradicts_claim=true
+  - reasoning is always non-empty
+  - confidence is in [0.0, 1.0]
+  - A cited URL that returns 404/403 produces UNVERIFIED, not an exception

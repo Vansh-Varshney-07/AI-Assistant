@@ -1,0 +1,38 @@
+{
+  "version": "0.4.1",
+  "backend_regression": {
+    "passed": 304,
+    "skipped": 1
+  },
+  "connection_source_contracts": {
+    "passed": 44,
+    "skipped": 0
+  },
+  "desktop_tests": 51,
+  "packaged_checks": 35,
+  "portable_checks": 11,
+  "live_checks": 15,
+  "providers": [
+    "Google Workspace",
+    "Tavily through installed Hermes",
+    "Notion"
+  ],
+  "llm_models": [
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "nvidia/nemotron-3-ultra-550b-a55b"
+  ],
+  "provider_writes": false,
+  "native_desktop_automation": false,
+  "credentials_bundled": false,
+  "source_secret_scan_passed": true,
+  "portable_sha256": "c15604c496db4051353a8dfd5b951ed135e3f510e28daa541133186992e72518",
+  "portable_bytes": 547246484,
+  "app_asar_sha256": "66b699d48001f26d9a903b314a348ca691defa1b94a1c7c97a471dd92fd4b601",
+  "limits": [
+    "Docs and Sheets metadata only",
+    "No automatic account access from chat",
+    "Docker Desktop and existing managed Hermes/OpenShell required",
+    "Native file picker/dialog interactions not qualified by these hidden tests",
+    "W37 remains unavailable"
+  ]
+}

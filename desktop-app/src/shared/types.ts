@@ -1,14 +1,44 @@
 export type Row = Record<string, any>;
 export interface BackendState {
-  state: 'starting' | 'ready' | 'offline';
+  state: 'starting' | 'ready' | 'offline' | 'setup';
   error?: string;
   runtime?: string;
   owner?: string;
   backend?: Row;
   capabilities?: Record<string, boolean>;
   runtime_inspection?: Row;
+  release?: { schema: string; variant: string; sha256: string };
+  instance_generation?: string;
 }
 export interface DesktopAPI {
+  importConnections():Promise<Row|null>;
+  disconnectConnection(provider:'google'|'tavily'|'notion'):Promise<Row>;
+  connectionsStatus(space:string):Promise<Row>;
+  checkConnection(space:string,provider:'google'|'tavily'|'notion'):Promise<Row>;
+  googleGrant(space:string,request:Row):Promise<Row>;
+  googleRead(space:string,grant:string):Promise<Row>;
+  googleRevoke(space:string,grant:string):Promise<Row>;
+  externalGrant(space:string,request:Row):Promise<Row>;
+  externalRead(space:string,grant:string):Promise<Row>;
+  externalRevoke(space:string,grant:string):Promise<Row>;
+  setupStatus(): Promise<Row>;
+  setupDatabase(download: boolean): Promise<Row>;
+  setupMemory(): Promise<Row>;
+  setupModel(): Promise<Row>;
+  setupFinish(name: string, consent: boolean): Promise<BackendState>;
+  chats(space: string): Promise<Row[]>;
+  newChat(space: string): Promise<Row>;
+  chat(space: string, conversation: string, before?: string): Promise<Row>;
+  sendChat(space: string, conversation: string, request: string, message: string): Promise<Row>;
+  cancelChat(space: string, conversation: string, turn: string): Promise<Row>;
+  lookupChat(space: string, conversation: string, request: string): Promise<Row>;
+  deleteChat(space: string, conversation: string): Promise<Row>;
+  profiles(space: string): Promise<Row>;
+  startProfileTask(space: string, profile: string, reference: string, goal: string): Promise<Row>;
+  profileTask(space: string, id: string): Promise<Row>;
+  profileTasks(space: string): Promise<Row[]>;
+  cancelProfileTask(space: string, id: string): Promise<Row>;
+  clearProfileTask(space: string, id: string): Promise<Row>;
   status(): Promise<BackendState>;
   connect(): Promise<BackendState>;
   listSpaces(): Promise<Row[]>;

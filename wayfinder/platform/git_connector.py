@@ -69,6 +69,7 @@ class GitConnector:
         self.dispatches = 0
         self.scope = None  # Invocation scope is bound by the trusted service.
         self.approval_expires = None
+        self.authorization_current = None
 
     def _layout(self, root):
         root = checked_path(root)
@@ -170,6 +171,8 @@ class GitConnector:
                 self.scope is None
                 or self.approval_expires is None
                 or self.clock() >= self.approval_expires
+                or not self.authorization_current
+                or not self.authorization_current()
             ):
                 raise GitFailure(
                     "approval_expired",

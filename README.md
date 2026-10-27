@@ -1,13 +1,15 @@
 # AI assistant
 
-This folder is self-contained source for the FalkorDB + embedded Qdrant memory system. It contains the memory engine, three-tier context runtime, authenticated headless API, lifecycle rules, receipt queue, backup utility and focused tests. No files from the parent project are needed to install or run it. The base package contains no application frontend, travel agents, browser automation, private credentials, copied databases or downloaded models. A minimal local Memory Testing Workbench is included for manual validation; see below.
+**Windows desktop:** [Download Wayfinder 0.4.1](https://github.com/aarush-srivastava7812/AI-Assistant/releases/tag/v0.4.1). The [release folder](desktop-app/release/README.md) contains download links, SHA-256 checksums and build verification reports.
+
+This folder is self-contained source for the FalkorDB + embedded Qdrant memory system. It contains the memory engine, three-tier context runtime, authenticated headless API, lifecycle rules, receipt queue, backup utility and focused tests. No files from the parent project are needed to install or run it. The base memory package is separate from the included Electron application; private credentials, copied databases and downloaded models remain outside Git. A minimal local Memory Testing Workbench is included for manual validation; see below.
 
 
 ## Assistant stack setup
 
-The canonical project folder is `D:\Opencode_\AI assistant`. See [ops/SETUP.md](ops/SETUP.md) for the dedicated Ubuntu environment, Hermes/NemoClaw/OpenShell installation steps, verified migration checks and remaining setup work.
+The managed stack was originally configured from `D:\Opencode_\AI assistant`; use the current `main` checkout for this app, as shown in the [test guide](docs/platform/TESTING-APP.md). See [ops/SETUP.md](ops/SETUP.md) for the dedicated Ubuntu environment, Hermes/NemoClaw/OpenShell installation steps, verified migration checks and remaining setup work.
 
-The native Wayfinder app now includes scoped file discovery, Hermes file analysis, explicit image sharing, and reviewable desktop planning. Launch `Start-Wayfinder.ps1` and open **Desktop workers**. See [desktop worker usage and limits](docs/desktop-workers/README.md). Windows action execution remains locked pending a verified host driver connection.
+The current Wayfinder app uses the new GitHub Electron UI and existing scoped backend. Launch `Start-Wayfinder.ps1 -Demo` for isolated manual testing, then open **Agents & apps**. See the [test guide](docs/platform/TESTING-APP.md) and [implementation results](docs/platform/CONSOLIDATED-IMPLEMENTATION.md). Legacy desktop-worker sources are preserved; W33/W36 UI and W37 native actions are not enabled by the current launcher.
 
 The first trusted platform workflow connects Atlas selection, scoped Iron Web recall, and the existing Hermes W35 worker through the authenticated API. See the [platform results](docs/platform/RESULTS.md), [platform interfaces](docs/platform/INTERFACES.md), and [controlled local Git qualification](docs/platform/CONTROLLED-GIT.md). Platform testing defaults to terminal-only; native UI testing remains disabled.
 
@@ -15,7 +17,9 @@ The [platform expansion](docs/platform/EXPANSION.md) adds scoped memory previews
 
 Google Calendar/Tasks and Gmail are selected. The [Google connection setup](docs/platform/GOOGLE-SETUP.md) explains the prepared OAuth helper and the account-consent steps still required from the user. Fitness remains deferred.
 
-The [consolidated agent and app plan](docs/platform/CONSOLIDATED-AGENT-PLAN.md) defines the main assistant, eight task-agent profiles, six app-focused presets, shared connections and researched implementation gates. These profiles are proposed, not activated.
+The [consolidated agent and app plan](docs/platform/CONSOLIDATED-AGENT-PLAN.md) defines the main assistant, eight task-agent profiles, six app-focused presets, shared connections and researched implementation gates. Versioned M00/A01–A08/P01–P06 definitions and the selected-file A01/A05/A06 adapter are now implemented. Provider presets and other variants remain unqualified; Fitness stays deferred.
+
+The desktop 0.4.1 [connections report](docs/platform/connections-041.md) records scoped Google Workspace, Tavily and Notion read integration and its qualification limits. Account writes, scheduling, fitness and W37 native actions remain unavailable.
 
 ## Architecture
 
@@ -92,19 +96,53 @@ Stop the API before taking a cold backup:
 Restore refuses existing targets and uses fresh graph names. Backups contain private source data and credentials. Optional GPU card matching is configured with `context.use_gpu`; its dependencies are listed in `requirements/context-gpu.txt`. GPU matching holds retrieval vectors, not a generative model KV cache.
 
 
-## Memory Testing Workbench
+## Wayfinder AI Desktop Interface & Memory Workbench
 
-This loopback-only interface uses the existing engine and configured stores. It provides manual ingestion/retrieval, actual source and claim inspection, saved memory-space selection, scoped record inspection, diagnostics and clean shutdown. Evidence-only mode returns actual engine evidence and receipts. Explicit --nvidia mode adds validated Nemotron Lightning/Ultra extraction and evidence-grounded answers while retaining the same memory engine and stores.
+The project now includes the full **Wayfinder AI Desktop Interface** (merged from the `stitch_wayfinder_ai_desktop_interface` design system) alongside the existing dual-store FalkorDB + Qdrant memory testing engine.
 
-On this machine, reuse the existing virtual environment:
+### Integrated Subsystems & Screens
 
+The interface is served locally via `workbench_server.py` and provides a responsive, single-page application with dark/light themes, keyboard shortcuts (`Ctrl+K` for Quick Search, `Alt+Space` for Companion Pet), real-time host telemetry, and 10 integrated views:
+
+1. **Home Command Center** (`#home`): Chat with Wayfinder, diurnal schedule summary, animated compass reticle, quick action pills, and active automations.
+2. **Planner Matrix** (`#planner`): Operating schedule timeline (08:00–18:00), priority task queue, and telemetry gates.
+3. **Notion Connected Knowledge** (`#notion`): Workspace documents tree, architecture specifications, and database cards.
+4. **Workflows Automation Engine** (`#workflows`): Workflow catalog, triggers, and visual DAG state-machine node canvas.
+5. **Activity & Execution Monitor** (`#activity`): Live status of the 16 Wayfinder agent workers (`W01` to `W24`), execution logs, and trace inspector.
+6. **Connections & Data Bridges** (`#connections`): Service bridges for FalkorDB, Qdrant, SQLite Journal, Notion, GitHub, Linear, Google Calendar, and NVIDIA NIM.
+7. **Permissions & Security** (`#permissions`): SecOps matrix, enforced policy engine, human sign-off gates, and sandbox status.
+8. **Memory & Knowledge Workbench** (`#memory`): Full FalkorDB + Qdrant testing workbench with isolated memory spaces, prompt ingestion/retrieval, assertion confirmations, explicit JSON claims, live inventory filters, and record inspectors.
+9. **Settings & Diagnostics** (`#settings`): Service status, loopback checks, telemetry auto-refresh, and clean shutdown.
+10. **Pet & Desktop Companion** (`#pet`): Contextual summon overlay accessible via `Alt+Space`.
+
+### Running the Desktop Interface
+
+#### 1. Full Mode (Live FalkorDB + Qdrant Memory Engine)
 ```powershell
-Set-Location 'D:\Opencode_\AI assistant'
-docker compose up -d --pull never falkordb
-& 'D:\Opencode_\reserchpaper\.venv\Scripts\python.exe' .\workbench_server.py
+# Start FalkorDB
+docker compose up -d falkordb
+
+# Start the Desktop Interface Server
+.\.venv\Scripts\python.exe .\workbench_server.py
+```
+Open [http://127.0.0.1:3352](http://127.0.0.1:3352) in your browser.
+
+#### 2. Preview / UI-Only Mode (Offline / No Docker Required)
+You can explore and test the entire UI, workers, and simulated memory spaces without starting Docker:
+```powershell
+python .\workbench_server.py --preview
 ```
 
-Open http://127.0.0.1:3352. Stop using the Stop workbench button or Ctrl+C. No test facts are inserted at startup. The eight manual scenarios remain unrun until submitted by the user.
+#### 3. Standalone Stitch Design Screens
+Any individual Stitch mockup screen can also be viewed directly in isolation:
+- [http://127.0.0.1:3352/screens/home](http://127.0.0.1:3352/screens/home) — Home Command Center
+- [http://127.0.0.1:3352/screens/planner](http://127.0.0.1:3352/screens/planner) — Planner Today Matrix
+- [http://127.0.0.1:3352/screens/notion](http://127.0.0.1:3352/screens/notion) — Connected Notion Workspace
+- [http://127.0.0.1:3352/screens/workflows](http://127.0.0.1:3352/screens/workflows) — Workflow Editor
+- [http://127.0.0.1:3352/screens/activity](http://127.0.0.1:3352/screens/activity) — Activity Execution Monitor
+- [http://127.0.0.1:3352/screens/connections](http://127.0.0.1:3352/screens/connections) — Data Bridges
+- [http://127.0.0.1:3352/screens/permissions](http://127.0.0.1:3352/screens/permissions) — Security & Permissions
+- [http://127.0.0.1:3352/screens/list](http://127.0.0.1:3352/screens/list) — Catalog of all Stitch source screens
 
 - [Inspection report](docs/workbench-inspection.md)
 - [Startup and all eight manual scenarios](docs/workbench-guide.md)

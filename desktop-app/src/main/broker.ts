@@ -51,7 +51,32 @@ export function createHandlers(transport: Transport, ui: NativeUI, lifecycle: { 
       return request(`${prefix}_decide`, sid, { id: aid, digest: proposal.digest, approve: approved });
     } finally { activeReviews.delete(key); }
   }
-  const handlers: { [K in keyof DesktopAPI]: (...args: any[]) => Promise<any> } = {
+  const handlers: { [K in Exclude<keyof DesktopAPI, `setup${string}` | 'importConnections' | 'disconnectConnection'>]: (...args: any[]) => Promise<any> } = {
+    connectionsStatus:space=>request('platform_connections_status',space),
+    checkConnection:(space,provider)=>request('platform_connections_check',space,{provider:kind(provider,['google','tavily','notion'])}),
+    googleGrant:(space,input)=>request('platform_google_grant',space,object(input,['service','resource','limit','time_min','time_max'])),
+    googleRead:(space,grant)=>request('platform_google_read',space,{grant:text(grant)}),
+    googleRevoke:(space,grant)=>request('platform_google_revoke',space,{grant:text(grant)}),
+    externalGrant:(space,input)=>request('platform_external_grant',space,object(input,['provider','intent','query','item'])),
+    externalRead:(space,grant)=>request('platform_external_read',space,{grant:text(grant)}),
+    externalRevoke:(space,grant)=>request('platform_external_revoke',space,{grant:text(grant)}),
+    chats: space => transport.call('chat_list',{space:text(space)}),
+    newChat: space => transport.call('chat_new',{space:text(space)}),
+    chat: (space,conversation,before) => transport.call('chat_get',{space:text(space),conversation:text(conversation),...(before?{before:text(before)}:{})}),
+    sendChat: (space,conversation,request,message) => transport.call('chat_send',{space:text(space),conversation:text(conversation),request_id:text(request,100),message:text(message,4000)}),
+    cancelChat: (space,conversation,turn) => transport.call('chat_cancel',{space:text(space),conversation:text(conversation),turn:text(turn)}),
+    lookupChat: (space,conversation,request) => transport.call('chat_lookup',{space:text(space),conversation:text(conversation),request_id:text(request,100)}),
+    deleteChat: (space,conversation) => transport.call('chat_delete',{space:text(space),conversation:text(conversation)}),
+    profiles: space => request('platform_profiles', space),
+    startProfileTask: async (space, profile, reference, goal) => {
+      const pid=kind(profile,['A01','A05','A06']);
+      await disclose(space,reference,text(goal,1000));
+      return request('platform_profile_start',space,{request:{request_id:randomUUID(),profile_id:pid,profile_version:'1',reference:text(reference),goal:text(goal,1000)}});
+    },
+    profileTask: (space,id) => request('platform_profile_result',space,{id:text(id)}),
+    profileTasks: space => request('platform_profile_runs',space),
+    cancelProfileTask: (space,id) => request('platform_profile_cancel',space,{id:text(id)}),
+    clearProfileTask: (space,id) => request('platform_profile_clear',space,{id:text(id)}),
     status: () => lifecycle.status(), connect: () => lifecycle.connect(),
     listSpaces: () => transport.call('spaces'),
     createSpace: name => transport.call('create_space', { name: text(name, 100) }),

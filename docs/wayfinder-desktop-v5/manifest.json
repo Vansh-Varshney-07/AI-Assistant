@@ -1,0 +1,188 @@
+{
+  "design_version": "5.0",
+  "date": "2026-10-26",
+  "status": "proposed_not_implemented",
+  "executable": false,
+  "upstream_commit": "7b59c06d817a08b53d1f139764a757ac9acfdbd9",
+  "integration_branch": "codex/ui-backend-integration",
+  "host_candidate": "existing_thin_electron_react_typescript",
+  "backend": "existing_authenticated_AppService_and_managed_Hermes",
+  "contracts": {
+    "reference": [
+      "C01",
+      "C02",
+      "C03",
+      "C04",
+      "C05",
+      "C06",
+      "C07",
+      "C08",
+      "C09",
+      "C10",
+      "C11",
+      "C12",
+      "C13",
+      "C14",
+      "C15",
+      "C16",
+      "C17",
+      "C18",
+      "C19",
+      "C20",
+      "C21",
+      "C22",
+      "C23"
+    ],
+    "additions": [
+      "U01",
+      "U02",
+      "U03",
+      "U04",
+      "U05",
+      "U06",
+      "U07",
+      "U08",
+      "U09",
+      "U10",
+      "U11",
+      "U12"
+    ]
+  },
+  "milestone_order": [
+    "I0",
+    "I1",
+    "R1",
+    "R2",
+    "R3",
+    "R4",
+    "R5",
+    "R6",
+    "R7"
+  ],
+  "milestones": {
+    "I0": {
+      "scope": "source_and_compatibility_baseline",
+      "product_acceptance": false
+    },
+    "I1": {
+      "scope": "internal_workspace_parity_in_new_github_design",
+      "product_acceptance": "only_declared_parity_features; not_core_R1_R2"
+    },
+    "R1": {
+      "features": [
+        "chat",
+        "runs",
+        "settings"
+      ],
+      "tools": "closed",
+      "automatic_memory": false,
+      "background": false
+    },
+    "R2": {
+      "features": [
+        "scoped_memory",
+        "privacy_complete_forget",
+        "selected_documents"
+      ],
+      "requires": [
+        "R1"
+      ]
+    },
+    "R3": {
+      "features": [
+        "google_read",
+        "local_tasks"
+      ],
+      "requires": [
+        "R2"
+      ],
+      "gmail": "references_only",
+      "two_way_sync": false
+    },
+    "R4": {
+      "features": [
+        "versioned_linear_read_workflows"
+      ],
+      "requires": [
+        "R3"
+      ],
+      "max_steps": 6,
+      "max_model_calls": 2
+    },
+    "R5": {
+      "features": [
+        "qualified_daily_read_schedule",
+        "quick_chat"
+      ],
+      "requires": [
+        "R4"
+      ],
+      "background_default": false
+    },
+    "R6": {
+      "features": [
+        "reconciled_worker_catalogue",
+        "reviewed_binding_versions"
+      ],
+      "requires": [
+        "R5"
+      ]
+    },
+    "R7": {
+      "features": [
+        "qualified_read_only_project_review"
+      ],
+      "requires": [
+        "R6"
+      ]
+    }
+  },
+  "limits": {
+    "initial_document_count": 1,
+    "initial_document_bytes": 2097152,
+    "initial_document_formats": [
+      "utf8_txt",
+      "utf8_md"
+    ],
+    "model_calls_active_global": 1,
+    "foreground_queue": 3,
+    "chat_deadline_seconds": 120,
+    "automatic_command_retries": 0,
+    "frame_target_bytes": 65536,
+    "reorder_frames": 128,
+    "reorder_bytes": 1048576,
+    "provider_page_limit": "operation-specific qualified bound",
+    "workflow_deadline_seconds": 600,
+    "provider_read_attempts_max": 3,
+    "source_freshness_seconds": 300,
+    "standing_read_days_max": 30,
+    "schedule_lateness_seconds_max": 60
+  },
+  "optional_default_off": [
+    "exact_local_branch",
+    "exact_google_write",
+    "gmail_send",
+    "coding_effect",
+    "selected_image",
+    "native_desktop"
+  ],
+  "deferred": [
+    "two_way_task_sync",
+    "notion",
+    "live_research",
+    "fitness",
+    "pet",
+    "voice",
+    "mobile",
+    "cross_device_sync"
+  ],
+  "new_agent_framework": false,
+  "new_memory_engine": false,
+  "new_scheduler": false,
+  "new_desktop_driver": false,
+  "implementation_authorized_by_plan": false,
+  "native_testing_enabled": false,
+  "acceptance_cases": 182,
+  "risk_items": 40,
+  "worker_ids": 47
+}

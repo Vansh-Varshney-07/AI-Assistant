@@ -1,0 +1,657 @@
+{
+  "upstream": "7b59c06d817a08b53d1f139764a757ac9acfdbd9",
+  "source_checkout": "D:\\Opencode_\\AI assistant",
+  "source_imports": [
+    {
+      "path": "desktop-app/.gitignore",
+      "sha256": "a29b4ed321a7de694b795f8e5aa45ae44fd444255d2203cdae574b3e505ff11f",
+      "bytes": 70,
+      "resolution": "add_source"
+    },
+    {
+      "path": "desktop-app/.npmrc",
+      "sha256": "5d2340147702da70cebbcb3b5cd83dd9ded6ae515ce98333daa1d1a3d0ea39d6",
+      "bytes": 76,
+      "resolution": "add_source"
+    },
+    {
+      "path": "desktop-app/backend/host.py",
+      "sha256": "774518d4a25fd2cfec52a8a81714a9ecc62e966909e8c2c9332b34b93116df7c",
+      "bytes": 12537,
+      "resolution": "add_source"
+    },
+    {
+      "path": "desktop-app/backend/test_host.py",
+      "sha256": "d18bbcaed4debafdb7d1a8578392ae33e87ae848685ae3f15a4e6eef5280cfdb",
+      "bytes": 6355,
+      "resolution": "add_source"
+    },
+    {
+      "path": "desktop-app/backend/verify_transport.py",
+      "sha256": "98d636acb0a2a8fdeee19e1706c508eff41e21527a9336aa559d9e5575c3788d",
+      "bytes": 6838,
+      "resolution": "add_source"
+    },
+    {
+      "path": "desktop-app/build-evidence.json",
+      "sha256": "0067e810542ffd219bb204bff5cd68829e009edeb160c55ad9e368e29bc38967",
+      "bytes": 1837,
+      "resolution": "add_source"
+    },
+    {
+      "path": "desktop-app/FEATURES.json",
+      "sha256": "fbddfbe207fc8208d98641c37cb5ebadd83a0aeb31cbb3215dbd9f3590157f70",
+      "bytes": 4570,
+      "resolution": "add_source"
+    },
+    {
+      "path": "desktop-app/package-lock.json",
+      "sha256": "a9a3505699d2316bd6da0c86f7c03c34e74c9e7eea447c082319a8a96a325ad9",
+      "bytes": 204540,
+      "resolution": "add_source"
+    },
+    {
+      "path": "desktop-app/package.json",
+      "sha256": "fa7159887ff074960582282d3c7cbb90e9dc59557014406e1bbb36f0af9ed507",
+      "bytes": 1541,
+      "resolution": "add_source"
+    },
+    {
+      "path": "desktop-app/README.md",
+      "sha256": "6dd2de6355cdb165def353ee0773e09aacbae1c8a8050df54a1e4c1112ea947f",
+      "bytes": 10728,
+      "resolution": "add_source"
+    },
+    {
+      "path": "desktop-app/resources/wayfinder.ico",
+      "sha256": "7877b74b74640ea3661ce9953c98015c52974eaa454427475466bcfd513ebeab",
+      "bytes": 33383,
+      "resolution": "add_source"
+    },
+    {
+      "path": "desktop-app/resources/wayfinder.png",
+      "sha256": "80b74663bd26b941c201d0187f0ae0deddeb195a73ece5f7ea898d2e4f241293",
+      "bytes": 14780,
+      "resolution": "add_source"
+    },
+    {
+      "path": "desktop-app/scripts/build.mjs",
+      "sha256": "b58c708fb8d7b9e52db6acbe29f83fa69376d8dde2c61b44e0a23c28d6650220",
+      "bytes": 893,
+      "resolution": "add_source"
+    },
+    {
+      "path": "desktop-app/scripts/check-package.mjs",
+      "sha256": "942203fa150bb26bd64e0000f45b43f383cf0bc60af60d62ecea8d0532051af1",
+      "bytes": 4115,
+      "resolution": "add_source"
+    },
+    {
+      "path": "desktop-app/scripts/create_icon.py",
+      "sha256": "2e7502ce6b538e09026ccdcdb4cac1cfa12e8575b3dfefd865bbc6e90f1a5f99",
+      "bytes": 981,
+      "resolution": "add_source"
+    },
+    {
+      "path": "desktop-app/scripts/Test-Backend.ps1",
+      "sha256": "d4f7e0c049c5484d5a97c28b5803e0caccc823ae03ee4993233257ddf7cd8cf8",
+      "bytes": 3554,
+      "resolution": "add_source"
+    },
+    {
+      "path": "desktop-app/scripts/verify-node-bridge.mjs",
+      "sha256": "4245fdde48922990307aa30a63d29758663a8746576431575901b56743d7b39c",
+      "bytes": 2118,
+      "resolution": "add_source"
+    },
+    {
+      "path": "desktop-app/src/main/bridge.ts",
+      "sha256": "3a5782f37dc4ddf91178f61905433f70fe57edf6332e056e341b55e054b40a5c",
+      "bytes": 5627,
+      "resolution": "add_source"
+    },
+    {
+      "path": "desktop-app/src/main/broker.ts",
+      "sha256": "b84e0aed34811f0d0b92245d4cb802790e87d98715d5746f4a72657e23430e41",
+      "bytes": 12920,
+      "resolution": "add_source"
+    },
+    {
+      "path": "desktop-app/src/main/index.ts",
+      "sha256": "d239c9c9864c9c5948283636d29e8fff8162d1117075d66b83485b81c172391d",
+      "bytes": 5047,
+      "resolution": "add_source"
+    },
+    {
+      "path": "desktop-app/src/main/sender.ts",
+      "sha256": "ba07a811a53513c28f8796490ccdbf80c36d384d5a1b0cfa100e9aca66154657",
+      "bytes": 403,
+      "resolution": "add_source"
+    },
+    {
+      "path": "desktop-app/src/preload/index.ts",
+      "sha256": "1ad599a0e14f80667c8ea0e7a6e02e5935125f01b5c167e72979280999eabbb8",
+      "bytes": 1185,
+      "resolution": "add_source"
+    },
+    {
+      "path": "desktop-app/src/renderer/App.tsx",
+      "sha256": "2c9ba05e160f45235f565af33f0aff812b977c999b5bdca08410b52460c384c0",
+      "bytes": 41222,
+      "resolution": "add_source"
+    },
+    {
+      "path": "desktop-app/src/renderer/index.html",
+      "sha256": "6ece2de533c2d24e11d4856a999080655ece8bd5d10d238ed670129b2cda5fd0",
+      "bytes": 495,
+      "resolution": "add_source"
+    },
+    {
+      "path": "desktop-app/src/renderer/main.tsx",
+      "sha256": "d0a5075b794eacbb5eafb39174d322f1a3c7e1bcf7b6cce35e37c0d3efea5cc3",
+      "bytes": 225,
+      "resolution": "add_source"
+    },
+    {
+      "path": "desktop-app/src/renderer/styles.css",
+      "sha256": "80b2c63fb3b9167d889475303b658b87ff55b17003352ab2feca222bde67c7e0",
+      "bytes": 18149,
+      "resolution": "add_source"
+    },
+    {
+      "path": "desktop-app/src/shared/types.ts",
+      "sha256": "83ab969a45d2f1e30df8eeafff3cd549febcc55aa76056bfc8d7c85b9c16a15d",
+      "bytes": 2943,
+      "resolution": "add_source"
+    },
+    {
+      "path": "desktop-app/Start.cmd",
+      "sha256": "fb13012f9147ff2dc140d1d0511d81beeb0f6fa4a1ab8976c44df1b6c5b7e5b7",
+      "bytes": 83,
+      "resolution": "add_source"
+    },
+    {
+      "path": "desktop-app/Start.ps1",
+      "sha256": "b2b10a90c49f9a536ddab509b6ebc3622f2158ede0cfbf2943fa55881ce31c08",
+      "bytes": 833,
+      "resolution": "add_source"
+    },
+    {
+      "path": "desktop-app/tests/api-surface.test.ts",
+      "sha256": "f029450f7b7d6e2ae120ad2e494e973f2f4e687e056dd719bd17edbe212d59dc",
+      "bytes": 843,
+      "resolution": "add_source"
+    },
+    {
+      "path": "desktop-app/tests/app.test.tsx",
+      "sha256": "1aaecbfd9d36c37e3c288aff0cad5d6e25c24a3eefc7a66b931aea7cbeee1b99",
+      "bytes": 7717,
+      "resolution": "add_source"
+    },
+    {
+      "path": "desktop-app/tests/bridge.test.ts",
+      "sha256": "75beb2db31ecc8d76213f2b76b3739d584623d8e6ed1dc1f1b626a85d7c22f99",
+      "bytes": 531,
+      "resolution": "add_source"
+    },
+    {
+      "path": "desktop-app/tests/broker.test.ts",
+      "sha256": "7fc2df2d01e0da37367fcb653849a961a120c3f88b5dd9465f5168afce55b078",
+      "bytes": 5751,
+      "resolution": "add_source"
+    },
+    {
+      "path": "desktop-app/tests/sender.test.ts",
+      "sha256": "e12109d32bf965746a72fa75c7c7a6848ab044fed3ec37b3d1338959eb0fe39b",
+      "bytes": 865,
+      "resolution": "add_source"
+    },
+    {
+      "path": "desktop-app/tests/setup.ts",
+      "sha256": "cfe58799832d616ac5e12d7729fcc7c98ba4c9000164d5a475c1a03602e997ba",
+      "bytes": 303,
+      "resolution": "add_source"
+    },
+    {
+      "path": "desktop-app/tsconfig.json",
+      "sha256": "96a2a7360af668bad5e187aa4233d68e804cb10c581ccf2da76a62d2e5b05307",
+      "bytes": 371,
+      "resolution": "add_source"
+    },
+    {
+      "path": "desktop-app/VERIFICATION.md",
+      "sha256": "8c175529da451a3249c96b67d8af4c48848084dcc3b9ca390f8810f806a4a30e",
+      "bytes": 4187,
+      "resolution": "add_source"
+    },
+    {
+      "path": "desktop-app/vite.config.ts",
+      "sha256": "b6763f10c0d9aa212ef523c192881c3bf9dfc3c1f8d0c3373df19df564b238e3",
+      "bytes": 572,
+      "resolution": "add_source"
+    },
+    {
+      "path": "docs/desktop-workers/README.md",
+      "sha256": "430ca03b01d50d513602febf0c29280cc3c0d3a0558e8ed2a43507d06002b531",
+      "bytes": 6963,
+      "resolution": "add_source"
+    },
+    {
+      "path": "docs/desktop-workers/terminal-testing-20261025.md",
+      "sha256": "9f8e03fdd14a3967c32e95048f7d0b89cd06dc893db8d35eaf3007bf67afd081",
+      "bytes": 3562,
+      "resolution": "add_source"
+    },
+    {
+      "path": "docs/desktop-workers/verification.json",
+      "sha256": "8dda30e26745ad9f21687c08fdaba5b7cfa8b5e2234858f3495c4105ff86203e",
+      "bytes": 1666,
+      "resolution": "add_source"
+    },
+    {
+      "path": "docs/desktop-workers/w37-diagnosis.md",
+      "sha256": "b800debd56fd162906df2ecb5ccbc0f3ace4ec04e65b2977c92503cc4a36ec50",
+      "bytes": 3596,
+      "resolution": "add_source"
+    },
+    {
+      "path": "docs/platform/contracts/ActionBinding.schema.json",
+      "sha256": "c5dbd90c5163365bda93fd7cc5b02ec66252ca31dff53c0b3e3a911c77e0e072",
+      "bytes": 952,
+      "resolution": "add_source"
+    },
+    {
+      "path": "docs/platform/contracts/ActivityRecord.schema.json",
+      "sha256": "264fc6379338dfffc4ec029d4fe18ab8a6aa3d80fae16c894ef0477c3fcf11cc",
+      "bytes": 1451,
+      "resolution": "add_source"
+    },
+    {
+      "path": "docs/platform/contracts/ContextPacket.schema.json",
+      "sha256": "6e619999d47f7d1308f3048fa4259a6391a58359d689597b5a205971146ed5aa",
+      "bytes": 1231,
+      "resolution": "add_source"
+    },
+    {
+      "path": "docs/platform/contracts/ContextQuery.schema.json",
+      "sha256": "a7010606e1d01a9cb9fbf97b38c9b89115ef27b414aba6209e2ce0d09666a703",
+      "bytes": 430,
+      "resolution": "add_source"
+    },
+    {
+      "path": "docs/platform/contracts/DesktopPlan.schema.json",
+      "sha256": "285c3311176db7f3cf2c7ad7ec544affd6f38404119965d75f5a606bbeabdc5e",
+      "bytes": 3337,
+      "resolution": "add_source"
+    },
+    {
+      "path": "docs/platform/contracts/EvaluationRequest.schema.json",
+      "sha256": "aa66e233cb0a012c066afa77c6e6358161748538e65162b1f1143b5fe9319773",
+      "bytes": 889,
+      "resolution": "add_source"
+    },
+    {
+      "path": "docs/platform/contracts/GitPlan.schema.json",
+      "sha256": "5053c0e5da89b114dfbbfce1952206fb29b5083790a734502d44adea9b9e095d",
+      "bytes": 2013,
+      "resolution": "add_source"
+    },
+    {
+      "path": "docs/platform/contracts/GitStep.schema.json",
+      "sha256": "90f559c4bb3d328c44ef21cb8f6b951d8a4c5708f71af71acf997ec50160eee7",
+      "bytes": 258,
+      "resolution": "add_source"
+    },
+    {
+      "path": "docs/platform/contracts/MemoryPlan.schema.json",
+      "sha256": "05c91e5a7cfd5409183fdf93c9ba6f98d07655fd54585283c7d439fdf19565d8",
+      "bytes": 2873,
+      "resolution": "add_source"
+    },
+    {
+      "path": "docs/platform/contracts/MemoryStep.schema.json",
+      "sha256": "eec5c11657428b94559829849ef96b48767fe8c794e9e7cc3b673973e1e2874b",
+      "bytes": 263,
+      "resolution": "add_source"
+    },
+    {
+      "path": "docs/platform/contracts/ReadRequest.schema.json",
+      "sha256": "3af3f9257653b94beacce8cd3f8602e1ed627cf0c3623d3baee9034071333552",
+      "bytes": 1631,
+      "resolution": "add_source"
+    },
+    {
+      "path": "docs/platform/contracts/Scope.schema.json",
+      "sha256": "62fa22c8305b0a89a9e816fc26600ed9d2852ef09ed86cfb882792ed58c2dccc",
+      "bytes": 529,
+      "resolution": "add_source"
+    },
+    {
+      "path": "docs/platform/CONTROLLED-GIT.md",
+      "sha256": "199c380244fb20758e6739930b1c686e58303f892b0cfda584573eadc004c460",
+      "bytes": 9047,
+      "resolution": "add_source"
+    },
+    {
+      "path": "docs/platform/EXPANSION.md",
+      "sha256": "d072a4461085d5d1ba9a98612c9d1c818d89c2eba6020458224414e9577f2ac0",
+      "bytes": 12968,
+      "resolution": "add_source"
+    },
+    {
+      "path": "docs/platform/GOOGLE-SETUP.md",
+      "sha256": "f3d845ab8ba94f54df8f4d544d4084aba7ff2146d8d00840dade4c69296f7ebf",
+      "bytes": 5212,
+      "resolution": "add_source"
+    },
+    {
+      "path": "docs/platform/IMPLEMENTATION-PLAN.md",
+      "sha256": "eb507f9fd02f3e1c58b08461ea25c43609b4be4d574f8e62cfe6f2a8831ec1ea",
+      "bytes": 5205,
+      "resolution": "add_source"
+    },
+    {
+      "path": "docs/platform/INTERFACES.md",
+      "sha256": "29dd0890e0b4b163a6d6bafa2a2bde0adff058cad65b5c607748d9b631db57fe",
+      "bytes": 8036,
+      "resolution": "add_source"
+    },
+    {
+      "path": "docs/platform/RESULTS.md",
+      "sha256": "485496f080fda6a32b64f6cee723b514ae6fb17a71c8193fa01b99776cd9f113",
+      "bytes": 7123,
+      "resolution": "add_source"
+    },
+    {
+      "path": "docs/platform/WORKER-CATALOGUE-AUDIT.md",
+      "sha256": "219c55b045ecffb7027fecc332b01ce83fab7b43470ae9e5f3b1aca5ebe83c29",
+      "bytes": 11774,
+      "resolution": "add_source"
+    },
+    {
+      "path": "ops/Test-DesktopWorkers.ps1",
+      "sha256": "be44e41b635bca1d697daa977dc17083156a74bd5e5d5d1fa56b9645a5871a99",
+      "bytes": 3195,
+      "resolution": "add_source"
+    },
+    {
+      "path": "ops/Test-Platform.ps1",
+      "sha256": "56079b9a6837b5eef782153d13d508e006162b42df386f76cc231ab36039de22",
+      "bytes": 202,
+      "resolution": "add_source"
+    },
+    {
+      "path": "requirements/google-connect.txt",
+      "sha256": "48cc12502a8e0cca38280267c9666aebdbeec24e640dfcf7b524ca03f23f9ef3",
+      "bytes": 128,
+      "resolution": "add_source"
+    },
+    {
+      "path": "requirements/platform.txt",
+      "sha256": "5c221736be3acc8592843651c3610a3db4d4273f1d315c20723abd3fa172880b",
+      "bytes": 204,
+      "resolution": "add_source"
+    },
+    {
+      "path": "scripts/auth_google.py",
+      "sha256": "14c951ed3c4cb9b67036a9e3a00ef111936f7690ef8f14f612245a40a46a5802",
+      "bytes": 7396,
+      "resolution": "scoped_existing_OAuth_helper"
+    },
+    {
+      "path": "scripts/test_google_connection.py",
+      "sha256": "5d1d96da5bb74c1946b85ba79bd9338ccffdac2e743ae1ad18ef7ca1058c5e51",
+      "bytes": 3941,
+      "resolution": "add_source"
+    },
+    {
+      "path": "tests/test_cua_fixture.py",
+      "sha256": "a85e8e4462d60cbef37f4ab70247228148ee22fca4f4a11b23df614f5ab78e1f",
+      "bytes": 6306,
+      "resolution": "add_source"
+    },
+    {
+      "path": "tests/test_desktop_workers.py",
+      "sha256": "31fee68a492ad3ed294407e6bfbbfc4d1311a975fbf50c4bde134a4b1f988bdc",
+      "bytes": 19272,
+      "resolution": "add_source"
+    },
+    {
+      "path": "tests/test_google_setup.py",
+      "sha256": "995a318fd2f4c9daa1bb0d429497ecf50458ee550ca6a57ebb912de8bf331ba3",
+      "bytes": 8409,
+      "resolution": "add_source"
+    },
+    {
+      "path": "tests/test_platform_git.py",
+      "sha256": "a773bc24079b4f0a0bff4eb10df75daf3c03900b258ab32b6668f0414106b129",
+      "bytes": 18514,
+      "resolution": "add_source"
+    },
+    {
+      "path": "tests/test_platform_integration.py",
+      "sha256": "bbe40ec5ba9639d3161a2ee1fa1e982b81a4991f3ca6253ab1fd1c6352b6c278",
+      "bytes": 18959,
+      "resolution": "add_source"
+    },
+    {
+      "path": "tests/test_platform_memory.py",
+      "sha256": "31fdc91fca85055846ae565da4171f3cb980f935b8d0aabf9c3fbc18a2af8106",
+      "bytes": 9027,
+      "resolution": "add_source"
+    },
+    {
+      "path": "tests/test_platform_sources.py",
+      "sha256": "224a7176d28206e90704b1ac8ead9c847ea2f093ee2c89b611127b68e7d4e88b",
+      "bytes": 14049,
+      "resolution": "add_source"
+    },
+    {
+      "path": "tests/test_wayfinder_app.py",
+      "sha256": "c14b72b72a2323afc6c90aad5912136145b6d5741b0a50aaa9ce95421ae81e55",
+      "bytes": 14669,
+      "resolution": "add_source"
+    },
+    {
+      "path": "wayfinder/api.py",
+      "sha256": "b95abbd2c080756755a38c7b42f2bfaa05bc395f719312a0672cb627e852165e",
+      "bytes": 5075,
+      "resolution": "add_source"
+    },
+    {
+      "path": "wayfinder/native.py",
+      "sha256": "6f3a58699526552512f33c28eeba28f814ff1c872ba1c4ed94ea1a7f8849a05a",
+      "bytes": 7087,
+      "resolution": "add_source"
+    },
+    {
+      "path": "wayfinder/platform/__init__.py",
+      "sha256": "b3ea377a90ad14d7b353cec527ef770b1042804e25618c0f6f585a36ae02cf70",
+      "bytes": 79,
+      "resolution": "add_source"
+    },
+    {
+      "path": "wayfinder/platform/activity.py",
+      "sha256": "a7ce47587924e3a78cc4dc0ce3702b2b4c5d278b137b44ed11cf9a57d863dad1",
+      "bytes": 6014,
+      "resolution": "add_source"
+    },
+    {
+      "path": "wayfinder/platform/catalog.py",
+      "sha256": "fc62caba7f578668f107bed916b779220fc39cec2747463fbd6d286fd421282b",
+      "bytes": 2175,
+      "resolution": "add_source"
+    },
+    {
+      "path": "wayfinder/platform/connectors.py",
+      "sha256": "6a15b4db2179dafb10cbd64943e56a5b0ee2d555389776197e7bae9e4a6bb5ce",
+      "bytes": 11169,
+      "resolution": "add_source"
+    },
+    {
+      "path": "wayfinder/platform/context.py",
+      "sha256": "ad6324770d62430c0ef72f8fe8e1b2241d9e125f457f7c27a275eccd4999b3aa",
+      "bytes": 3665,
+      "resolution": "add_source"
+    },
+    {
+      "path": "wayfinder/platform/contracts.py",
+      "sha256": "16bd9f722d308852868d5666c9c799b4f2b1257cbb548d8628e3866e4f578812",
+      "bytes": 1816,
+      "resolution": "add_source"
+    },
+    {
+      "path": "wayfinder/platform/evaluation.py",
+      "sha256": "babdb835228f09adad9aa6f4c9310f70c4819e1a24274dabec66ddbca88f9b0e",
+      "bytes": 10772,
+      "resolution": "add_source"
+    },
+    {
+      "path": "wayfinder/platform/git_connector.py",
+      "sha256": "c928f0b241beaa899a4f9a956d6d33923f5a39dee575378b497555bd9dc87366",
+      "bytes": 14147,
+      "resolution": "add_source"
+    },
+    {
+      "path": "wayfinder/platform/google_read.py",
+      "sha256": "7e7f65a58f156519c98e8454448a291b205df2d9d784b32823c7903e2f67aeec",
+      "bytes": 14228,
+      "resolution": "add_source"
+    },
+    {
+      "path": "wayfinder/platform/memory_control.py",
+      "sha256": "392630954132e1ce3a7cf7f44adcd42ef75dae5dc285254d6c964b80fce93d41",
+      "bytes": 13947,
+      "resolution": "add_source"
+    },
+    {
+      "path": "wayfinder/platform/runtime.py",
+      "sha256": "0948c495446687d8c43b7c8fdfa084ada0a36f0ea7c3a81b35882e9700658dde",
+      "bytes": 3317,
+      "resolution": "add_source"
+    },
+    {
+      "path": "wayfinder/platform/runtime_probe.py",
+      "sha256": "82bf02a0bf23602b271f3485f817a20f977664806430fb7aa341b2677df5a95f",
+      "bytes": 1421,
+      "resolution": "add_source"
+    },
+    {
+      "path": "wayfinder/platform/service.py",
+      "sha256": "c2fac0ceabb98d0bf16a7d9c8419f6fbc70c780a301fe28e5370ebce888c9de2",
+      "bytes": 22753,
+      "resolution": "add_source"
+    },
+    {
+      "path": "wayfinder/runtime.py",
+      "sha256": "c0947ce4689bfc91b3d7dd3936cfcc040c6a102f6c21c78439679e6e85cb9394",
+      "bytes": 8328,
+      "resolution": "add_source"
+    },
+    {
+      "path": "wayfinder/service.py",
+      "sha256": "a7aee70f4e2176f8392066c374adb78b294bef6f846806c63c93e30be9419a18",
+      "bytes": 28391,
+      "resolution": "add_source"
+    },
+    {
+      "path": "wayfinder/workers/actions.py",
+      "sha256": "fc06e0384ff966a31bd48f61d4bc1f922fd3c00893ef343ab4cb8da725fbbcaf",
+      "bytes": 8648,
+      "resolution": "add_source"
+    },
+    {
+      "path": "wayfinder/workers/cua_fixture.py",
+      "sha256": "89f8a1aa4c4ca1bf4d036886895c4fc87bd11c0476c389f32b81bc70ecadc597",
+      "bytes": 9982,
+      "resolution": "add_source"
+    },
+    {
+      "path": "wayfinder/workers/files.py",
+      "sha256": "d37e38d1d0ebd3244eb11ddec88a49aadc4680a35ebee64260ecbd13adf59c5d",
+      "bytes": 13039,
+      "resolution": "add_source"
+    },
+    {
+      "path": "wayfinder/workers/hermes.py",
+      "sha256": "5db6977bd963f92d30531ffc3bfa63f784c5019838326a8b7637f1d15c83c00d",
+      "bytes": 3548,
+      "resolution": "add_source"
+    },
+    {
+      "path": "wayfinder/workers/hermes_runner.py",
+      "sha256": "0694865188ab6bcc126264e393c8963493764ed7c2f21d6cbdfa956bd5cf1e36",
+      "bytes": 9641,
+      "resolution": "add_source"
+    },
+    {
+      "path": "wayfinder/workers/hub.py",
+      "sha256": "08aea77c5861b38ce4ffb5eed7b12614222737d0cf0ff6f208cc8908c7ab56e7",
+      "bytes": 14751,
+      "resolution": "add_source"
+    }
+  ],
+  "initializer_resolution": "preserve_upstream_worker_package_plus_existing_local_role_labels",
+  "dependency_resolution": "managed_Hermes_not_similarly_named_Windows_packages; existing_Pillow_pin",
+  "registry_conflicts": [
+    {
+      "registry": "workers.json",
+      "id": "file_discovery_worker",
+      "upstream": {
+        "id": "file_discovery_worker",
+        "name": "File Discovery Worker",
+        "description": "Locates and catalogs files in the local workspace. No default web access.",
+        "permitted_tool_groups": [
+          "filesystem_read",
+          "memory"
+        ],
+        "permitted_tools": [
+          "filesystem.read_file",
+          "memory.recall",
+          "agent.clarify"
+        ],
+        "denied_tools": [
+          "tavily_*",
+          "system.terminal_exec",
+          "whatsapp.*"
+        ],
+        "capabilities": [
+          "file_discovery",
+          "workspace_scanning"
+        ],
+        "request_tools_through_orchestrator": true,
+        "notes": "No default Tavily access. Can request web research through the orchestrator if needed."
+      },
+      "local": {
+        "id": "file_discovery_worker",
+        "name": "File Discovery Worker",
+        "description": "Locates and catalogs files in the local workspace. No default web access.",
+        "permitted_tool_groups": [
+          "wayfinder_scoped_desktop"
+        ],
+        "permitted_tools": [
+          "wayfinder.files.search"
+        ],
+        "denied_tools": [
+          "system.*",
+          "filesystem.*",
+          "memory.*",
+          "whatsapp.*",
+          "tavily_*"
+        ],
+        "capabilities": [
+          "scoped_file_discovery"
+        ],
+        "request_tools_through_orchestrator": true,
+        "notes": "Executable permissions are enforced by the application handlers; registry matching does not authorize execution.",
+        "logical_id": "W34",
+        "runtime": "hermes",
+        "implementation": "wayfinder.workers.hub.WorkerHub"
+      },
+      "resolution": "use existing scoped W34 metadata; broader filesystem and memory tools remain denied"
+    }
+  ],
+  "private_state_copied": false,
+  "original_checkout_modified": false,
+  "excluded_copied_cache_removed": true
+}

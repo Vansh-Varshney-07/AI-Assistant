@@ -47,6 +47,7 @@ class MemoryDriver:
     def __init__(self, app, clock):
         self.app, self.clock = app, clock
         self.who = self.scope = self.expires = None
+        self.authorization_current = None
 
     def proposal(self, plan, scope):
         with self.app.db() as db:
@@ -94,8 +95,7 @@ class MemoryDriver:
         with self.app.lock:
             if self.state(plan, self.scope) != expected:
                 raise ValueError("Memory preconditions changed.")
-            if self.expires is None or self.clock() >= self.expires:
-                raise ValueError("Memory approval expired before dispatch.")
+            self.check_dispatch()
             self.app.decide(
                 self.who,
                 self.scope.space,
@@ -107,7 +107,7 @@ class MemoryDriver:
             return dict(state=expected, **observed)
 
     def check_dispatch(self):
-        if self.expires is None or self.clock() >= self.expires:
+        if self.expires is None or self.clock() >= self.expires or not self.authorization_current or not self.authorization_current():
             raise ValueError(
                 "Memory approval expired at the storage dispatch boundary."
             )

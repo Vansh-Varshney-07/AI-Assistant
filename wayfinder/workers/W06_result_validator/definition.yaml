@@ -1,0 +1,33 @@
+id: W06
+name: Result Validator
+status: fixture-tested
+
+responsibility: >
+  Accepts the output of any upstream worker and validates it against
+  the expected output contract (schema, required fields, business rules).
+  Returns a ValidationResult with pass/fail status, specific check names,
+  and corrective actions when a failure is detected.
+  Gate-keeps: a FAIL result blocks downstream orchestration.
+
+implementation_approach: hermes_instructions
+new_code_needed: false
+
+capabilities:
+  - memory.session_search  # retrieve the expected contract spec
+
+denied_capabilities:
+  - tavily_*
+  - google.*
+  - notion.*
+  - desktop.*
+  - whatsapp.*
+  - filesystem.*
+  - agent.delegate_task
+
+output_contract: ValidationResult  # see wayfinder/workers/schemas.py
+
+acceptance_criteria:
+  - FAIL status always accompanied by at least one corrective_action
+  - PASS status has non-empty checks_passed
+  - confidence is in [0.0, 1.0]
+  - Does not modify or re-execute the upstream output

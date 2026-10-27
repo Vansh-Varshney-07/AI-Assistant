@@ -56,6 +56,7 @@ class ActionGate:
         table="desktop_actions",
         unavailable_message=None,
         bind_envelope=False,
+        monotonic=time.monotonic,
     ):
         if table not in {"desktop_actions", "connector_actions", "memory_actions"}:
             raise ValueError("Unknown trusted action store.")
@@ -66,6 +67,7 @@ class ActionGate:
             or "Windows desktop execution is locked: a verified Hermes Windows driver is not connected."
         )
         self.db, self.driver, self.clock = db, driver, clock
+        self.monotonic, self.deadlines = monotonic, {}
         self.lock, self.stops = RLock(), {}
         with db() as connection:
             connection.execute(f"""CREATE TABLE IF NOT EXISTS {self.table}(
@@ -89,12 +91,28 @@ class ActionGate:
         expires = self.clock() + 120
         fingerprint = self.fingerprint(scope, plan.model_dump(), expires)
         aid = uuid.uuid4().hex
-        with self.db() as connection:
-            connection.execute(
-                f"INSERT INTO {self.table} VALUES (?,?,?,?,?,'pending',NULL)",
-                (aid, json.dumps(scope), raw, fingerprint, expires),
-            )
+        with self.lock, self.db() as connection:
+            connection.execute('BEGIN IMMEDIATE')
+            self._family_clear(connection, scope, plan.model_dump())
+            connection.execute(f"INSERT INTO {self.table} VALUES (?,?,?,?,?,'pending',NULL)", (aid, json.dumps(scope), raw, fingerprint, expires))
+            self.deadlines[aid] = self.monotonic() + 120
         return self.get(scope, aid)
+
+    def expired(self, item):
+        # A backwards wall-clock adjustment cannot prolong a one-shot grant.
+        return item['expires'] <= self.clock() or self.monotonic() >= self.deadlines.get(item['id'], float('-inf'))
+
+    def _family_clear(self, connection, scope, plan, exclude=None):
+        rows = connection.execute(f"SELECT id,scope,body FROM {self.table} WHERE status IN ('executing','outcome_unknown')").fetchall()
+        for row in rows:
+            if row[0] == exclude:
+                continue
+            old_scope, old_plan = json.loads(row[1]), json.loads(row[2])
+            same_family = old_scope[:2] == list(scope)[:2]
+            if self.table == 'connector_actions':
+                same_family = same_family or (old_plan.get('repository_identity') == plan.get('repository_identity') and old_plan.get('git_identity') == plan.get('git_identity'))
+            if same_family:
+                raise ValueError('This operation family has an unresolved outcome. Reconcile the original receipt before another effect.')
 
     def fingerprint(self, scope, plan, expires):
         body = (
@@ -140,6 +158,8 @@ class ActionGate:
                 f"UPDATE {self.table} SET status=?,result=? WHERE id=?",
                 (status, json.dumps(result) if result else None, aid),
             )
+        if status not in {'pending', 'executing'}:
+            self.deadlines.pop(aid, None)
 
     def decide(self, scope, aid, approve):
         if type(approve) is not bool:
@@ -150,7 +170,7 @@ class ActionGate:
             item = self.get(scope, aid)
             if item["status"] != "pending":
                 return item
-            if item["expires"] <= self.clock():
+            if self.expired(item):
                 self._update(aid, "expired")
                 return self.get(scope, aid)
             if self.fingerprint(scope, item["plan"], item["expires"]) != item["digest"]:
@@ -161,6 +181,10 @@ class ActionGate:
             stopped = self.stops.setdefault(aid, Event())
             if stopped.is_set():
                 raise ValueError("Action revoked.")
+            with self.db() as connection:
+                self._family_clear(connection, scope, item['plan'], exclude=aid)
+            if hasattr(self.driver, 'authorization_current'):
+                self.driver.authorization_current = lambda: not self.expired(item) and not stopped.is_set()
             self._update(aid, "executing")
         # No goal-level agent discretion. Validate each exact effect at its dispatch boundary.
         dispatched = False
@@ -170,12 +194,12 @@ class ActionGate:
             expected = plan.state
             for step in plan.steps:
                 with self.lock:
-                    if stopped.is_set() or self.clock() >= item["expires"]:
+                    if stopped.is_set() or self.expired(item):
                         self._update(aid, "stopped", dict(receipts=receipts))
                         return self.get(scope, aid)
                     if self.driver.observe(plan) != expected:
                         raise ValueError("Target changed since review.")
-                    if stopped.is_set() or self.clock() >= item["expires"]:
+                    if stopped.is_set() or self.expired(item):
                         self._update(
                             aid,
                             "stopped" if stopped.is_set() or receipts else "expired",

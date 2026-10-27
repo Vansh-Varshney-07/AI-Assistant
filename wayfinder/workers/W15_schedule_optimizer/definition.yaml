@@ -1,0 +1,43 @@
+id: W15
+name: Schedule Optimizer
+status: fixture-tested
+
+responsibility: >
+  Recommends feasible, conflict-free schedules and time blocks based on
+  calendar availability, deadlines, and task priorities.
+  Enforces hard constraints (zero overlapping appointments, zero deadline
+  violations) and explicitly explains trade-offs.
+  Outputs proposed schedules only; creating or rescheduling calendar events
+  or updating tasks is strictly approval-gated.
+
+implementation_approach: hermes_instructions + shared_schedule_helpers + calendar_adapter
+new_code_needed: false
+
+capabilities:
+  - google.calendar_read     # read calendar commitments and availability
+  - google.tasks_read        # retrieve pending tasks and deadlines
+
+approval_gated_capabilities:
+  - google.calendar_write    # create or reschedule calendar events
+  - google.tasks_write       # update tasks after scheduling
+
+denied_capabilities:
+  - system.terminal_exec
+  - whatsapp.*
+  - agent.delegate_task
+
+optimization_procedure:
+  1: Retrieve existing commitments via google.calendar_read for the target date
+  2: Retrieve high-priority tasks and deadlines via google.tasks_read
+  3: Calculate candidate free intervals via calculate_availability()
+  4: Allocate slots matching task duration and priority order
+  5: Validate plan using validate_schedule_plan() against overlaps and deadline violations
+  6: Score candidate using score_schedule_candidate()
+  7: Return structured ScheduleProposal explaining trade-offs and requiring approval
+
+output_contract: ScheduleProposal  # see wayfinder/workers/schemas.py
+
+acceptance_criteria:
+  - approval_required must always be true
+  - trade_offs_explained must be non-empty
+  - Proposed slots must be validated against hard calendar collisions

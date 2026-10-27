@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>WAYFINDER // OS ENGINE - Workflows</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;family=Geist:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-tertiary-container": "#005a41",
+            "on-tertiary-fixed-variant": "#00513a",
+            "on-primary-fixed": "#001f24",
+            "primary": "#006874",
+            "surface-container": "#ebedff",
+            "outline": "#6c797c",
+            "on-primary": "#ffffff",
+            "primary-container": "#29d3e8",
+            "surface": "#faf8ff",
+            "error-container": "#ffdad6",
+            "on-secondary-container": "#fffbff",
+            "secondary-container": "#4269f0",
+            "surface-bright": "#faf8ff",
+            "on-surface-variant": "#3c494b",
+            "on-secondary": "#ffffff",
+            "surface-container-low": "#f3f3ff",
+            "secondary-fixed": "#dce1ff",
+            "on-tertiary": "#ffffff",
+            "secondary-fixed-dim": "#b7c4ff",
+            "outline-variant": "#bbc9cc",
+            "surface-container-highest": "#dee1f9",
+            "on-background": "#161b2b",
+            "surface-variant": "#dee1f9",
+            "error": "#ba1a1a",
+            "primary-fixed-dim": "#35d9ee",
+            "on-primary-fixed-variant": "#004f58",
+            "tertiary-container": "#45d8a6",
+            "on-secondary-fixed": "#001552",
+            "on-secondary-fixed-variant": "#0038b6",
+            "surface-container-high": "#e3e7fe",
+            "inverse-on-surface": "#eff0ff",
+            "surface-tint": "#006874",
+            "background": "#faf8ff",
+            "inverse-surface": "#2b3041",
+            "tertiary-fixed": "#6dfbc6",
+            "on-error-container": "#93000a",
+            "on-primary-container": "#005761",
+            "on-tertiary-fixed": "#002115",
+            "tertiary-fixed-dim": "#4cdeab",
+            "inverse-primary": "#35d9ee",
+            "on-surface": "#161b2b",
+            "primary-fixed": "#97f0ff",
+            "secondary": "#204ed6",
+            "on-error": "#ffffff",
+            "tertiary": "#006c4e",
+            "surface-container-lowest": "#ffffff",
+            "surface-dim": "#d5d9f0"
+          },
+          borderRadius: {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          spacing: {
+            "margin": "1rem",
+            "space-lg": "1rem",
+            "gutter": "0.75rem",
+            "space-md": "0.75rem",
+            "space-xs": "0.25rem",
+            "space-sm": "0.5rem",
+            "space-xl": "1.5rem"
+          },
+          fontFamily: {
+            "code-stream": ["JetBrains Mono"],
+            "headline-md": ["Space Grotesk"],
+            "headline-sm": ["Space Grotesk"],
+            "display-lg": ["Space Grotesk"],
+            "label-sm": ["JetBrains Mono"],
+            "headline-lg": ["Space Grotesk"],
+            "body-md": ["Geist"],
+            "body-lg": ["Geist"],
+            "body-sm": ["Geist"],
+            "label-lg": ["JetBrains Mono"],
+            "label-md": ["JetBrains Mono"]
+          },
+          fontSize: {
+            "code-stream": ["12px", { lineHeight: "18px", fontWeight: "400" }],
+            "headline-md": ["18px", { lineHeight: "24px", letterSpacing: "-0.01em", fontWeight: "500" }],
+            "headline-sm": ["15px", { lineHeight: "20px", fontWeight: "500" }],
+            "display-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "600" }],
+            "label-sm": ["10px", { lineHeight: "12px", letterSpacing: "0.06em", fontWeight: "500" }],
+            "headline-lg": ["24px", { lineHeight: "32px", letterSpacing: "-0.015em", fontWeight: "600" }],
+            "body-md": ["13px", { lineHeight: "20px", fontWeight: "400" }],
+            "body-lg": ["15px", { lineHeight: "24px", fontWeight: "400" }],
+            "body-sm": ["12px", { lineHeight: "16px", fontWeight: "400" }],
+            "label-lg": ["13px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "500" }],
+            "label-md": ["11px", { lineHeight: "14px", letterSpacing: "0.04em", fontWeight: "500" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 20px;
+      line-height: 1;
+      display: inline-block;
+      text-transform: none;
+      letter-spacing: normal;
+      word-wrap: normal;
+      white-space: nowrap;
+      direction: ltr;
+    }
+    
+    /* Aerospace Dark OS Engine Custom Palettes */
+    :root {
+      --aerospace-bg: #0B1020;
+      --aerospace-sidebar: #0E1628;
+      --aerospace-panel: #141F33;
+      --aerospace-surface: #1B2940;
+      --aerospace-border: #2B3A52;
+      --cyan-accent: #29D3E8;
+      --blue-accent: #5278FF;
+      --mint-success: #42D6A4;
+      --amber-warning: #FFBF5B;
+      --coral-error: #FF687A;
+    }
+
+    body {
+      background-color: var(--aerospace-bg);
+      color: #E2E8F0;
+      font-family: 'Geist', sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      user-select: none;
+    }
+
+    /* Windows Native Window Bar Simulation */
+    .win-caption-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 32px;
+      transition: background-color 0.15s ease;
+      color: #94A3B8;
+    }
+    .win-caption-btn:hover {
+      background-color: rgba(255, 255, 255, 0.08);
+      color: #FFFFFF;
+    }
+    .win-caption-btn.btn-close:hover {
+      background-color: #E81123;
+      color: #FFFFFF;
+    }
+
+    /* Custom Technical Scrollbar */
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0B1020;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2B3A52;
+      border-radius: 2px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #415573;
+    }
+  </style>
+</head>
+<body class="h-screen w-screen flex flex-col bg-[#0B1020] text-slate-100 antialiased overflow-hidden select-none">
+<!-- ================= WINDOWS APPLICATION TITLEBAR ================= -->
+<div class="h-8 bg-[#090D1A] border-b border-[#2B3A52] flex items-center justify-between px-3 select-none text-[11px] font-mono tracking-wider text-slate-400 z-50">
+<div class="flex items-center gap-2">
+<span class="text-[#29D3E8] font-bold">WF//WIN-HOST</span>
+<span class="text-[#2B3A52]">|</span>
+<span class="text-slate-300 font-sans text-xs">WAYFINDER OS — Automation Execution Engine</span>
+<span class="text-[9px] bg-[#141F33] text-[#29D3E8] px-1.5 py-0.5 rounded border border-[#2B3A52]">v2.4.19</span>
+</div>
+<div class="flex items-center text-xs">
+<div class="flex items-center gap-1.5 px-3 py-1 bg-[#141F33] rounded mr-4 border border-[#2B3A52]/60 text-[10px] text-slate-300 font-mono">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-[#42D6A4] animate-pulse"></span>
+<span>DAEMON LOCAL-LLM: ONLINE</span>
+</div>
+<div class="flex items-center -mr-3">
+<div class="win-caption-btn" title="Minimize">
+<svg fill="currentColor" height="1" viewbox="0 0 10 1" width="10"><rect height="1" width="10"></rect></svg>
+</div>
+<div class="win-caption-btn" title="Maximize">
+<svg fill="none" height="10" stroke="currentColor" viewbox="0 0 10 10" width="10"><rect height="9" width="9" x="0.5" y="0.5"></rect></svg>
+</div>
+<div class="win-caption-btn btn-close" title="Close">
+<svg fill="currentColor" height="10" viewbox="0 0 10 10" width="10"><path d="M0.5 0.5L9.5 9.5M9.5 0.5L0.5 9.5" stroke="currentColor" stroke-width="1.2"></path></svg>
+</div>
+</div>
+</div>
+</div>
+<!-- ================= TOP NAVIGATION BAR (SHARED COMPONENT ADAPTED FOR DESKTOP ENGINE) ================= -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-[#2B3A52] bg-[#0E1628] px-6 py-2.5 z-40 text-slate-200">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3">
+<div class="size-6 text-[#29D3E8] flex items-center justify-center">
+<svg class="w-5 h-5" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M13.8261 30.5736C16.7203 29.8826 20.2244 29.4783 24 29.4783C27.7756 29.4783 31.2797 29.8826 34.1739 30.5736C36.9144 31.2278 39.9967 32.7669 41.3563 33.8352L24.8486 7.36089C24.4571 6.73303 23.5429 6.73303 23.1514 7.36089L6.64374 33.8352C8.00331 32.7669 11.0856 31.2278 13.8261 30.5736Z" fill="currentColor"></path>
+<path clip-rule="evenodd" d="M39.998 35.764C39.9944 35.7463 39.9875 35.7155 39.9748 35.6706C39.9436 35.5601 39.8949 35.4259 39.8346 35.2825C39.8168 35.2403 39.7989 35.1993 39.7813 35.1602C38.5103 34.2887 35.9788 33.0607 33.7095 32.5189C30.9875 31.8691 27.6413 31.4783 24 31.4783C20.3587 31.4783 17.0125 31.8691 14.2905 32.5189C12.0012 33.0654 9.44505 34.3104 8.18538 35.1832C8.17384 35.2075 8.16216 35.233 8.15052 35.2592C8.09919 35.3751 8.05721 35.4886 8.02977 35.589C8.00356 35.6848 8.00039 35.7333 8.00004 35.7388C8.00004 35.739 8 35.7393 8.00004 35.7388C8.00004 35.7641 8.0104 36.0767 8.68485 36.6314C9.34546 37.1746 10.4222 37.7531 11.9291 38.2772C14.9242 39.319 19.1919 40 24 40C28.8081 40 33.0758 39.319 36.0709 38.2772C37.5778 37.7531 38.6545 37.1746 39.3151 36.6314C39.9006 36.1499 39.9857 35.8511 39.998 35.764ZM4.95178 32.7688L21.4543 6.30267C22.6288 4.4191 25.3712 4.41909 26.5457 6.30267L43.0534 32.777C43.0709 32.8052 43.0878 32.8338 43.104 32.8629L41.3563 33.8352C43.104 32.8629 43.1038 32.8626 43.104 32.8629L43.1051 32.865L43.1065 32.8675L43.1101 32.8739L43.1199 32.8918C43.1276 32.906 43.1377 32.9246 43.1497 32.9473C43.1738 32.9925 43.2062 33.0545 43.244 33.1299C43.319 33.2792 43.4196 33.489 43.5217 33.7317C43.6901 34.1321 44 34.9311 44 35.7391C44 37.4427 43.003 38.7775 41.8558 39.7209C40.6947 40.6757 39.1354 41.4464 37.385 42.0552C33.8654 43.2794 29.133 44 24 44C18.867 44 14.1346 43.2794 10.615 42.0552C8.86463 41.4464 7.30529 40.6757 6.14419 39.7209C4.99695 38.7775 3.99999 37.4427 3.99999 35.7391C3.99999 34.8725 4.29264 34.0922 4.49321 33.6393C4.60375 33.3898 4.71348 33.1804 4.79687 33.0311C4.83898 32.9556 4.87547 32.8935 4.9035 32.8471C4.91754 32.8238 4.92954 32.8043 4.93916 32.7889L4.94662 32.777L4.95178 32.7688ZM35.9868 29.004L24 9.77997L12.0131 29.004C12.4661 28.8609 12.9179 28.7342 13.3617 28.6282C16.4281 27.8961 20.0901 27.4783 24 27.4783C27.9099 27.4783 31.5719 27.8961 34.6383 28.6282C35.082 28.7342 35.5339 28.8609 35.9868 29.004Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-white text-sm font-bold font-mono tracking-tight">WAYFINDER // OS ENGINE</h2>
+</div>
+<nav class="hidden md:flex items-center gap-7 text-xs font-mono">
+<a class="text-slate-400 hover:text-white transition-colors" href="#">Dashboard</a>
+<a class="text-[#29D3E8] font-bold border-b-2 border-[#29D3E8] pb-1 -mb-1" href="#">Workflows</a>
+<a class="text-slate-400 hover:text-white transition-colors" href="#">Agents</a>
+<a class="text-slate-400 hover:text-white transition-colors" href="#">Data Vault</a>
+<a class="text-slate-400 hover:text-white transition-colors" href="#">Telemetry</a>
+</nav>
+</div>
+<div class="flex items-center gap-3">
+<!-- Search Input in Topbar -->
+<label class="flex flex-col min-w-40 h-8 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded bg-[#141F33] border border-[#2B3A52] h-full focus-within:border-[#29D3E8]">
+<div class="text-[#29D3E8] flex items-center justify-center pl-2.5" data-icon="magnifying_glass">
+<span class="material-symbols-outlined text-[16px]">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded bg-transparent text-slate-100 focus:outline-0 focus:ring-0 border-none h-full placeholder:text-slate-500 px-2 text-xs font-mono leading-normal" placeholder="Command [Ctrl+K]..." value=""/>
+</div>
+</label>
+<button class="flex cursor-pointer items-center justify-center rounded h-8 px-3 bg-[#29D3E8] text-[#0B1020] text-xs font-bold font-mono tracking-wide hover:bg-[#35d9ee] transition-colors">
+<span class="truncate">Run Active</span>
+</button>
+<!-- Pet Slots Badge -->
+<div class="flex items-center gap-1.5 px-2.5 h-8 rounded bg-[#141F33] border border-[#29D3E8]/40 text-[#29D3E8] text-xs font-mono font-medium">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">pets</span>
+<span>Pet Slots: 3/5</span>
+</div>
+<!-- User avatar -->
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-8 border border-[#2B3A52]" data-alt="A futuristic minimalist operator avatar portrait with high-contrast tactical visor and electric cyan holographic UI highlights set in a dark cybernetic command room." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBobQmLmlnJazBlpspeQ8RVREi8vIKXhdGf9js6KRQXIC9C9j24PryLjT05YKI3-xcvzB90nK_BE46AwZziBrlIbAiIOrtSO-1KNDcNytgVv6_LN6Cgkb10mZRwJC0VHio3vPaMyOMn80toclLHPPuMBKTW2QECwrzszx2P-7EpAN-Or4JlAuW8R8wHvwJnyv0DIzDjKrXnjqNqFceyuC25sukvIywShsuBKuVYlNYfr5SYX1xMgkaU");'></div>
+</div>
+</header>
+<!-- ================= MAIN LAYOUT WITH SIDEBAR + 2-PANEL WORKFLOW ENGINE ================= -->
+<div class="flex flex-1 overflow-hidden">
+<!-- ================= LEFT APP SIDEBAR (AEROSPACE NAVIGATION) ================= -->
+<aside class="w-56 bg-[#0E1628] border-r border-[#2B3A52] flex flex-col justify-between select-none">
+<div class="flex flex-col py-3">
+<!-- Automation Section Group -->
+<div class="px-4 py-1.5 text-[10px] font-mono tracking-widest text-[#29D3E8]/70 uppercase font-semibold">
+          // AUTOMATION
+        </div>
+<div class="flex flex-col space-y-0.5 px-2 mt-1">
+<!-- Inactive sub-item -->
+<a class="flex items-center gap-2.5 px-3 py-2 rounded text-xs text-slate-400 hover:text-slate-100 hover:bg-[#141F33]/50 transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">terminal</span>
+<span>Execution Queue</span>
+</a>
+<!-- ACTIVE ITEM: Workflows -->
+<a class="flex items-center justify-between px-3 py-2 rounded bg-[#141F33] text-[#29D3E8] border-l-2 border-[#29D3E8] font-medium text-xs shadow-sm" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">account_tree</span>
+<span class="font-sans font-semibold">Workflows</span>
+</div>
+<span class="text-[10px] font-mono px-1.5 py-0.2 bg-[#0B1020] text-[#29D3E8] rounded border border-[#2B3A52]">14</span>
+</a>
+<a class="flex items-center gap-2.5 px-3 py-2 rounded text-xs text-slate-400 hover:text-slate-100 hover:bg-[#141F33]/50 transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+<span>Triggers &amp; Cron</span>
+</a>
+<a class="flex items-center gap-2.5 px-3 py-2 rounded text-xs text-slate-400 hover:text-slate-100 hover:bg-[#141F33]/50 transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">bolt</span>
+<span>Event Handlers</span>
+</a>
+</div>
+<!-- System Matrix Section -->
+<div class="px-4 py-2 mt-5 text-[10px] font-mono tracking-widest text-slate-500 uppercase font-semibold">
+          // COMPANIONS &amp; CORES
+        </div>
+<div class="flex flex-col space-y-0.5 px-2">
+<a class="flex items-center justify-between px-3 py-2 rounded text-xs text-slate-400 hover:text-slate-100 hover:bg-[#141F33]/50 transition-colors" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px]">smart_toy</span>
+<span>Desktop Pets</span>
+</div>
+<span class="inline-block w-2 h-2 rounded-full bg-[#42D6A4]"></span>
+</a>
+<a class="flex items-center gap-2.5 px-3 py-2 rounded text-xs text-slate-400 hover:text-slate-100 hover:bg-[#141F33]/50 transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">memory</span>
+<span>Local vLLM Mesh</span>
+</a>
+<a class="flex items-center gap-2.5 px-3 py-2 rounded text-xs text-slate-400 hover:text-slate-100 hover:bg-[#141F33]/50 transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">security</span>
+<span>SecOps Gateways</span>
+</a>
+</div>
+</div>
+<!-- Sidebar Footer Telemetry -->
+<div class="p-3 bg-[#090D1A] border-t border-[#2B3A52] text-[11px] font-mono">
+<div class="flex items-center justify-between text-slate-400 mb-1">
+<span>HOST CPU</span>
+<span class="text-[#29D3E8]">14.2%</span>
+</div>
+<div class="w-full bg-[#1B2940] h-1 rounded-sm overflow-hidden mb-2">
+<div class="bg-[#29D3E8] h-full w-[14%]"></div>
+</div>
+<div class="flex items-center justify-between text-slate-400 mb-1">
+<span>VRAM ALLOC</span>
+<span class="text-[#42D6A4]">7.8 / 12 GB</span>
+</div>
+<div class="w-full bg-[#1B2940] h-1 rounded-sm overflow-hidden">
+<div class="bg-[#42D6A4] h-full w-[65%]"></div>
+</div>
+</div>
+</aside>
+<!-- ================= MAIN CONTENT AREA ================= -->
+<main class="flex-1 flex flex-col bg-[#0B1020] overflow-hidden">
+<!-- Breadcrumbs & Global Control Strip -->
+<div class="px-6 pt-3 pb-2 border-b border-[#2B3A52] bg-[#0E1628]/70 flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2 text-xs font-mono">
+<a class="text-[#29D3E8] hover:underline" href="#">AUTOMATION</a>
+<span class="text-slate-500">/</span>
+<a class="text-slate-300 hover:underline" href="#">WORKFLOWS &amp; EXECUTION ENGINE</a>
+<span class="text-slate-500">/</span>
+<span class="text-white font-bold bg-[#1B2940] px-1.5 py-0.5 rounded border border-[#2B3A52]">WF-RES-09</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#141F33] border border-[#2B3A52] text-xs font-mono text-slate-300">
+<span class="material-symbols-outlined text-[15px] text-[#29D3E8]" style="font-variation-settings: 'FILL' 1;">pets</span>
+<span class="text-slate-400">PET SLOTS:</span>
+<span class="font-bold text-[#29D3E8]">3/5 PINNED</span>
+</div>
+<button class="flex items-center gap-1.5 cursor-pointer rounded px-3 py-1.5 bg-[#29D3E8] text-[#0B1020] text-xs font-bold font-mono tracking-wide hover:bg-[#35d9ee] transition-all shadow-[0_0_12px_rgba(41,211,232,0.35)]">
+<span class="material-symbols-outlined text-[16px]">add</span>
+<span>+ Create Workflow</span>
+</button>
+</div>
+</div>
+<div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+<div>
+<h1 class="text-xl font-bold font-headline-md tracking-tight text-white flex items-center gap-2">
+              Workflows
+              <span class="text-xs font-mono font-normal text-slate-400">Build, run, and manage your AI automations.</span>
+</h1>
+</div>
+<!-- Quick Filter Status Pills -->
+<div class="flex items-center gap-1.5 overflow-x-auto text-xs font-mono py-1">
+<button class="flex items-center gap-1 px-2.5 py-1 rounded bg-[#141F33] text-[#29D3E8] border border-[#29D3E8]/50 font-semibold">
+<span class="material-symbols-outlined text-[14px]">grid_view</span>
+<span>All (14)</span>
+</button>
+<button class="flex items-center gap-1 px-2.5 py-1 rounded bg-[#141F33]/60 text-slate-300 border border-[#2B3A52] hover:border-slate-400 transition-colors">
+<span class="w-1.5 h-1.5 rounded-full bg-[#42D6A4]"></span>
+<span>Ready (6)</span>
+</button>
+<button class="flex items-center gap-1 px-2.5 py-1 rounded bg-[#141F33]/60 text-slate-300 border border-[#2B3A52] hover:border-slate-400 transition-colors">
+<span class="w-1.5 h-1.5 rounded-full bg-[#29D3E8] animate-pulse"></span>
+<span>Running (2)</span>
+</button>
+<button class="flex items-center gap-1 px-2.5 py-1 rounded bg-[#141F33]/60 text-slate-300 border border-[#2B3A52] hover:border-slate-400 transition-colors">
+<span class="w-1.5 h-1.5 rounded-full bg-[#FFBF5B]"></span>
+<span>Needs Approval (1)</span>
+</button>
+<button class="flex items-center gap-1 px-2.5 py-1 rounded bg-[#141F33]/60 text-slate-300 border border-[#2B3A52] hover:border-slate-400 transition-colors">
+<span class="w-1.5 h-1.5 rounded-full bg-[#FF687A]"></span>
+<span>Failed (1)</span>
+</button>
+<button class="flex items-center gap-1 px-2.5 py-1 rounded bg-[#141F33]/60 text-slate-400 border border-[#2B3A52] hover:border-slate-400 transition-colors">
+<span>Drafts (4)</span>
+</button>
+</div>
+</div>
+</div>
+<!-- ================= TWO-PANEL WORKFLOW INTERFACE ================= -->
+<div class="flex-1 flex overflow-hidden">
+<!-- ================= LEFT PANEL: WORKFLOW LIBRARY (390px) ================= -->
+<section class="w-[390px] border-r border-[#2B3A52] bg-[#0E1628]/40 flex flex-col overflow-hidden">
+<!-- Search & Filter Bar -->
+<div class="p-2.5 border-b border-[#2B3A52] bg-[#141F33]/40 flex items-center gap-2">
+<div class="flex-1 flex items-center bg-[#0B1020] border border-[#2B3A52] rounded px-2.5 py-1 focus-within:border-[#29D3E8]">
+<span class="material-symbols-outlined text-[16px] text-slate-400 mr-1.5">search</span>
+<input class="w-full bg-transparent text-xs font-mono text-slate-200 placeholder:text-slate-500 focus:outline-none border-none p-0" placeholder="Search workflows [Ctrl+F]..."/>
+</div>
+<button class="flex items-center gap-1 px-2 py-1 bg-[#141F33] hover:bg-[#1B2940] border border-[#2B3A52] rounded text-slate-300 text-xs font-mono" title="Sort Workflows">
+<span class="material-symbols-outlined text-[14px]">swap_vert</span>
+<span>Sort</span>
+</button>
+</div>
+<!-- Workflow Item List -->
+<div class="flex-1 overflow-y-auto divide-y divide-[#2B3A52]/60">
+<!-- ITEM 1: ACTIVELY SELECTED (WF-RES-09) -->
+<div class="p-3 bg-[#141F33] border-l-4 border-l-[#29D3E8] cursor-pointer hover:bg-[#1B2940]/80 transition-colors relative group">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-center gap-2">
+<div class="size-6 rounded bg-[#29D3E8]/10 border border-[#29D3E8]/40 flex items-center justify-center text-[#29D3E8]">
+<span class="material-symbols-outlined text-[15px]">auto_stories</span>
+</div>
+<div>
+<span class="text-[10px] font-mono font-bold text-[#29D3E8]">WF-01 // WF-RES-09</span>
+<h3 class="text-xs font-bold text-white font-sans">Research Assistant &amp; Ingest</h3>
+</div>
+</div>
+<!-- Pin to pet toggle: ACTIVE -->
+<button class="text-[#29D3E8] p-1 hover:bg-[#2B3A52]/50 rounded transition-colors" title="Pinned to Companion Pet Slot #02">
+<span class="material-symbols-outlined text-[17px]" style="font-variation-settings: 'FILL' 1;">push_pin</span>
+</button>
+</div>
+<p class="text-[11px] text-slate-300 mt-1 line-clamp-1 font-sans">
+                Monitors arXiv specs, synthesizes via vLLM, and pushes digests to Notion.
+              </p>
+<div class="flex items-center justify-between mt-2.5 pt-1 text-[10px] font-mono">
+<!-- Status Pill -->
+<div class="flex items-center gap-1 px-1.5 py-0.5 rounded bg-[#42D6A4]/10 border border-[#42D6A4]/40 text-[#42D6A4]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#42D6A4]"></span>
+<span class="font-bold">READY</span>
+</div>
+<!-- Timestamp & duration -->
+<div class="text-slate-400">Today 13:40 UTC • 42s</div>
+</div>
+</div>
+<!-- ITEM 2: Daily Planning & Calendar Matrix (PINNED, READY) -->
+<div class="p-3 bg-transparent hover:bg-[#141F33]/50 cursor-pointer transition-colors border-l-4 border-l-transparent">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-center gap-2">
+<div class="size-6 rounded bg-[#1B2940] border border-[#2B3A52] flex items-center justify-center text-slate-300">
+<span class="material-symbols-outlined text-[15px]">calendar_month</span>
+</div>
+<div>
+<span class="text-[10px] font-mono text-slate-400">WF-02 // WF-PLAN-01</span>
+<h3 class="text-xs font-semibold text-slate-200">Daily Planning &amp; Calendar Matrix</h3>
+</div>
+</div>
+<!-- Pin: ACTIVE -->
+<button class="text-[#29D3E8] p-1 hover:bg-[#2B3A52]/50 rounded transition-colors" title="Pinned to Companion Pet Slot #01">
+<span class="material-symbols-outlined text-[17px]" style="font-variation-settings: 'FILL' 1;">push_pin</span>
+</button>
+</div>
+<p class="text-[11px] text-slate-400 mt-1 line-clamp-1">
+                Aggregates morning priorities, resolves scheduling conflicts, syncs Google Calendar.
+              </p>
+<div class="flex items-center justify-between mt-2 pt-1 text-[10px] font-mono">
+<div class="flex items-center gap-1 px-1.5 py-0.5 rounded bg-[#42D6A4]/10 border border-[#42D6A4]/40 text-[#42D6A4]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#42D6A4]"></span>
+<span class="font-bold">READY</span>
+</div>
+<div class="text-slate-400">Today 08:00 UTC • 12s</div>
+</div>
+</div>
+<!-- ITEM 3: RUNNING WORKFLOW (File Intelligence & Vector Indexer) -->
+<div class="p-3 bg-transparent hover:bg-[#141F33]/50 cursor-pointer transition-colors border-l-4 border-l-transparent">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-center gap-2">
+<div class="size-6 rounded bg-[#29D3E8]/10 border border-[#29D3E8]/30 flex items-center justify-center text-[#29D3E8]">
+<span class="material-symbols-outlined text-[15px]">database</span>
+</div>
+<div>
+<span class="text-[10px] font-mono text-slate-400">WF-03 // WF-VEC-14</span>
+<h3 class="text-xs font-semibold text-slate-200">File Intelligence &amp; Vector Indexer</h3>
+</div>
+</div>
+<!-- Pin: ACTIVE -->
+<button class="text-[#29D3E8] p-1 hover:bg-[#2B3A52]/50 rounded transition-colors" title="Pinned to Companion Pet Slot #03">
+<span class="material-symbols-outlined text-[17px]" style="font-variation-settings: 'FILL' 1;">push_pin</span>
+</button>
+</div>
+<p class="text-[11px] text-slate-400 mt-1 line-clamp-1">
+                Monitors ~/Downloads &amp; Project dirs, embeds chunked embeddings into ChromaDB.
+              </p>
+<!-- Progress bar running status -->
+<div class="mt-2 pt-1">
+<div class="flex items-center justify-between text-[10px] font-mono mb-1">
+<div class="flex items-center gap-1 px-1.5 py-0.2 rounded bg-[#29D3E8]/10 text-[#29D3E8] border border-[#29D3E8]/30">
+<span class="w-1.5 h-1.5 rounded-full bg-[#29D3E8] animate-ping"></span>
+<span class="font-bold">RUNNING (Step 2/4)</span>
+</div>
+<span class="text-[#29D3E8]">54%</span>
+</div>
+<div class="w-full bg-[#1B2940] h-1 rounded-sm overflow-hidden">
+<div class="bg-[#29D3E8] h-full w-[54%]"></div>
+</div>
+</div>
+</div>
+<!-- ITEM 4: APPROVAL REQUIRED (Meeting Follow-up & Action Dispatcher) -->
+<div class="p-3 bg-transparent hover:bg-[#141F33]/50 cursor-pointer transition-colors border-l-4 border-l-transparent">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-center gap-2">
+<div class="size-6 rounded bg-[#FFBF5B]/10 border border-[#FFBF5B]/30 flex items-center justify-center text-[#FFBF5B]">
+<span class="material-symbols-outlined text-[15px]">forward_to_inbox</span>
+</div>
+<div>
+<span class="text-[10px] font-mono text-slate-400">WF-04 // WF-MEET-03</span>
+<h3 class="text-xs font-semibold text-slate-200">Meeting Follow-up &amp; Action Dispatcher</h3>
+</div>
+</div>
+<!-- Pin: UNPINNED -->
+<button class="text-slate-500 hover:text-slate-300 p-1 hover:bg-[#2B3A52]/50 rounded transition-colors" title="Pin to Pet">
+<span class="material-symbols-outlined text-[17px]">push_pin</span>
+</button>
+</div>
+<p class="text-[11px] text-slate-400 mt-1 line-clamp-1">
+                Whisper audio transcriber generating tasks and Slack draft notices.
+              </p>
+<div class="flex items-center justify-between mt-2 pt-1 text-[10px] font-mono">
+<div class="flex items-center gap-1 px-1.5 py-0.5 rounded bg-[#FFBF5B]/10 border border-[#FFBF5B]/40 text-[#FFBF5B]">
+<span class="material-symbols-outlined text-[11px]" style="font-variation-settings: 'FILL' 1;">warning</span>
+<span class="font-bold">APPROVAL REQUIRED</span>
+</div>
+<div class="text-slate-400">11:15 UTC • Paused</div>
+</div>
+</div>
+<!-- ITEM 5: FAILED WORKFLOW (SecOps Threat Vulnerability Scan) -->
+<div class="p-3 bg-transparent hover:bg-[#141F33]/50 cursor-pointer transition-colors border-l-4 border-l-transparent">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-center gap-2">
+<div class="size-6 rounded bg-[#FF687A]/10 border border-[#FF687A]/30 flex items-center justify-center text-[#FF687A]">
+<span class="material-symbols-outlined text-[15px]">security</span>
+</div>
+<div>
+<span class="text-[10px] font-mono text-slate-400">WF-05 // WF-SEC-88</span>
+<h3 class="text-xs font-semibold text-slate-200">SecOps Threat Vulnerability Scan</h3>
+</div>
+</div>
+<!-- Pin: UNPINNED -->
+<button class="text-slate-500 hover:text-slate-300 p-1 hover:bg-[#2B3A52]/50 rounded transition-colors" title="Pin to Pet">
+<span class="material-symbols-outlined text-[17px]">push_pin</span>
+</button>
+</div>
+<p class="text-[11px] text-slate-400 mt-1 line-clamp-1">
+                Scans outbound sockets, verifies signatures, tests local endpoints.
+              </p>
+<div class="flex items-center justify-between mt-2 pt-1 text-[10px] font-mono">
+<div class="flex items-center gap-1 px-1.5 py-0.5 rounded bg-[#FF687A]/10 border border-[#FF687A]/40 text-[#FF687A]">
+<span class="material-symbols-outlined text-[11px]">error</span>
+<span class="font-bold">FAILED (Auth Timeout)</span>
+</div>
+<div class="text-slate-400">Yesterday • 3m 12s</div>
+</div>
+</div>
+<!-- ITEM 6: DRAFT WORKFLOW (Project Architecture Organizer) -->
+<div class="p-3 bg-transparent hover:bg-[#141F33]/50 cursor-pointer transition-colors border-l-4 border-l-transparent">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-center gap-2">
+<div class="size-6 rounded bg-[#1B2940] border border-[#2B3A52] flex items-center justify-center text-slate-400">
+<span class="material-symbols-outlined text-[15px]">architecture</span>
+</div>
+<div>
+<span class="text-[10px] font-mono text-slate-500">WF-06 // WF-ARCH-02</span>
+<h3 class="text-xs font-semibold text-slate-300">Project Architecture Organizer</h3>
+</div>
+</div>
+<button class="text-slate-600 hover:text-slate-300 p-1 hover:bg-[#2B3A52]/50 rounded transition-colors" title="Pin to Pet">
+<span class="material-symbols-outlined text-[17px]">push_pin</span>
+</button>
+</div>
+<p class="text-[11px] text-slate-500 mt-1 line-clamp-1">
+                Refactors file directory structures based on schema blueprints.
+              </p>
+<div class="flex items-center justify-between mt-2 pt-1 text-[10px] font-mono">
+<div class="flex items-center gap-1 px-1.5 py-0.5 rounded bg-[#1B2940] border border-[#2B3A52] text-slate-400">
+<span>DRAFT</span>
+</div>
+<div class="text-slate-500">Created 3d ago</div>
+</div>
+</div>
+</div>
+<!-- Bottom Library Mini-Footer -->
+<div class="p-2 border-t border-[#2B3A52] bg-[#0E1628] flex items-center justify-between text-[11px] font-mono text-slate-400">
+<span>Showing 6 of 14</span>
+<span class="text-[#29D3E8]">Sync: Auto-Indexed</span>
+</div>
+</section>
+<!-- ================= RIGHT PANEL: SELECTED WORKFLOW DETAILS & STEP PIPELINE ================= -->
+<section class="flex-1 flex flex-col bg-[#0B1020] overflow-hidden">
+<!-- Selected Workflow Header Banner -->
+<div class="p-4 bg-[#141F33] border-b border-[#2B3A52] flex flex-col gap-3">
+<div class="flex items-start justify-between gap-4">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="text-xs font-mono px-2 py-0.5 rounded bg-[#0B1020] text-[#29D3E8] border border-[#29D3E8]/40 font-bold">
+                    MANIFEST ID: WF-RES-09
+                  </span>
+<div class="flex items-center gap-1 px-2 py-0.5 rounded bg-[#42D6A4]/15 border border-[#42D6A4]/40 text-[#42D6A4] text-xs font-mono font-bold">
+<span class="w-2 h-2 rounded-full bg-[#42D6A4]"></span>
+<span>READY TO RUN</span>
+</div>
+<!-- Active Desktop Pet slot badge -->
+<div class="flex items-center gap-1 px-2 py-0.5 rounded bg-[#29D3E8]/15 border border-[#29D3E8]/40 text-[#29D3E8] text-xs font-mono">
+<span class="material-symbols-outlined text-[13px]" style="font-variation-settings: 'FILL' 1;">push_pin</span>
+<span>Pinned to Desktop Pet [Slot #02]</span>
+</div>
+</div>
+<h2 class="text-lg font-bold font-headline-md text-white tracking-tight">Research Assistant &amp; Ingest</h2>
+<p class="text-xs text-slate-300 max-w-2xl mt-0.5 font-sans">
+                  Monitors designated research hubs, extracts PDF &amp; arXiv technical specs, synthesizes findings using local vLLM, and stages action items for Notion.
+                </p>
+</div>
+<!-- Action Controls -->
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-[#29D3E8] hover:bg-[#35d9ee] text-[#0B1020] text-xs font-bold font-mono transition-all shadow-[0_0_15px_rgba(41,211,232,0.4)]">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+<span>▶ Run Workflow</span>
+</button>
+<button class="flex items-center gap-1 px-2.5 py-1.5 rounded bg-[#1B2940] hover:bg-[#233550] border border-[#2B3A52] text-slate-200 text-xs font-mono transition-colors">
+<span class="material-symbols-outlined text-[15px]">edit</span>
+<span>✎ Edit</span>
+</button>
+<button class="p-1.5 rounded bg-[#1B2940] hover:bg-[#233550] border border-[#2B3A52] text-slate-300 text-xs" title="More Options">
+<span class="material-symbols-outlined text-[17px]">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Metrics Telemetry Strip -->
+<div class="flex items-center gap-6 pt-2 border-t border-[#2B3A52]/60 text-xs font-mono">
+<div class="flex items-center gap-1.5 text-slate-400">
+<span class="text-slate-500">Last Execution:</span>
+<span class="text-slate-200 font-semibold">Today 13:40 UTC</span>
+</div>
+<div class="flex items-center gap-1.5 text-slate-400">
+<span class="text-slate-500">Health:</span>
+<span class="text-[#42D6A4] font-semibold">Success (100%)</span>
+</div>
+<div class="flex items-center gap-1.5 text-slate-400">
+<span class="text-slate-500">Avg Runtime:</span>
+<span class="text-slate-200 font-semibold">1m 24s</span>
+</div>
+<div class="flex items-center gap-1.5 text-slate-400">
+<span class="text-slate-500">Target Core:</span>
+<span class="text-[#29D3E8]">Local vLLM (CUDA:0)</span>
+</div>
+</div>
+</div>
+<!-- Workflow View Sub-Navigation Tabs -->
+<div class="px-6 bg-[#0E1628] border-b border-[#2B3A52] flex items-center justify-between">
+<div class="flex items-center gap-6 text-xs font-mono">
+<button class="py-2.5 text-slate-400 hover:text-white transition-colors border-b-2 border-transparent">
+                Overview
+              </button>
+<button class="py-2.5 text-[#29D3E8] font-bold border-b-2 border-[#29D3E8] flex items-center gap-1.5">
+<span>Steps Pipeline</span>
+<span class="px-1.5 py-0.2 text-[10px] bg-[#29D3E8]/15 text-[#29D3E8] rounded-full">4</span>
+</button>
+<button class="py-2.5 text-slate-400 hover:text-white transition-colors border-b-2 border-transparent">
+                Execution History
+              </button>
+<button class="py-2.5 text-slate-400 hover:text-white transition-colors border-b-2 border-transparent">
+                Settings &amp; Secrets
+              </button>
+</div>
+<div class="text-[11px] font-mono text-slate-400">
+<span class="text-slate-500">Mode:</span> <span class="text-[#42D6A4]">Deterministic DAG</span>
+</div>
+</div>
+<!-- STEPS TAB VIEW CONTENT (SCROLLABLE PIPELINE) -->
+<div class="flex-1 overflow-y-auto p-6 bg-[#0B1020]">
+<!-- Pipeline Subheader -->
+<div class="flex items-center justify-between mb-5 pb-2 border-b border-[#2B3A52]/50">
+<div class="text-xs font-mono tracking-wider text-slate-300 font-semibold">
+                ORDERED EXECUTION PIPELINE (4 STEPS) • AUTONOMOUS AGENTS LINKED: 3
+              </div>
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-1 px-2.5 py-1 text-xs font-mono rounded bg-[#141F33] hover:bg-[#1B2940] border border-[#2B3A52] text-slate-300">
+<span class="material-symbols-outlined text-[14px]">tune</span>
+<span>Pipeline Variables</span>
+</button>
+<button class="flex items-center gap-1 px-2.5 py-1 text-xs font-mono rounded bg-[#141F33] hover:bg-[#1B2940] border border-[#29D3E8]/40 text-[#29D3E8]">
+<span class="material-symbols-outlined text-[14px]">add</span>
+<span>Add Step</span>
+</button>
+</div>
+</div>
+<!-- VERTICAL PIPELINE WITH 1PX CONNECTOR LINE -->
+<div class="relative pl-6 max-w-4xl space-y-4">
+<!-- Vertical Connector Line -->
+<div class="absolute left-9 top-6 bottom-8 w-[1px] bg-[#2B3A52] z-0"></div>
+<!-- ================= STEP 01 ================= -->
+<div class="relative z-10">
+<div class="flex items-start gap-4">
+<!-- Node Icon Marker -->
+<div class="size-7 rounded-full bg-[#141F33] border-2 border-[#42D6A4] flex items-center justify-center text-[#42D6A4] text-xs font-mono font-bold shrink-0 mt-2 shadow-[0_0_10px_rgba(66,214,164,0.3)]">
+                    1
+                  </div>
+<!-- Step Card -->
+<div class="flex-1 bg-[#141F33] border border-[#2B3A52] rounded p-3.5 hover:border-[#42D6A4]/50 transition-colors">
+<div class="flex items-start justify-between gap-3">
+<div>
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-mono font-bold text-[#42D6A4] uppercase">STEP 01 // INGESTION</span>
+<span class="text-slate-500">•</span>
+<span class="text-xs font-mono text-[#29D3E8] bg-[#0E1628] px-2 py-0.5 rounded border border-[#2B3A52]">@research-daemon</span>
+</div>
+<h4 class="text-sm font-bold text-white mt-0.5">Source Harvesting</h4>
+<p class="text-xs text-slate-300 mt-1 font-sans">
+                          Collects abstracts and methodology from target query feeds and papers via arXiv &amp; Web Extractor Tool.
+                        </p>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#42D6A4]/15 text-[#42D6A4] border border-[#42D6A4]/40">
+                          VERIFIED
+                        </span>
+<button class="p-1 hover:bg-[#1B2940] rounded text-slate-400 hover:text-white" title="Reorder Handle">
+<span class="material-symbols-outlined text-[16px]">drag_indicator</span>
+</button>
+</div>
+</div>
+<!-- Step IO Parameters -->
+<div class="mt-3 pt-2.5 border-t border-[#2B3A52]/60 grid grid-cols-2 gap-3 text-xs font-mono bg-[#0E1628]/60 p-2.5 rounded">
+<div>
+<span class="text-slate-500 block text-[10px] uppercase">Inputs:</span>
+<div class="text-slate-300 text-[11px] truncate">
+<code>query_topic</code>, <code>date_range</code>, <span class="text-[#29D3E8]">max_papers: 10</span>
+</div>
+</div>
+<div>
+<span class="text-slate-500 block text-[10px] uppercase">Output:</span>
+<div class="text-slate-300 text-[11px] truncate">
+                          Raw Markdown abstracts &amp; citation bibliography
+                        </div>
+</div>
+</div>
+<!-- Step Card Bottom Bar -->
+<div class="mt-2.5 flex items-center justify-between text-[11px] font-mono text-slate-400 pt-1">
+<span class="text-slate-500">Latency: ~8.4s • Tool: ArxivWebScraper-v1</span>
+<button class="text-[#29D3E8] hover:underline flex items-center gap-1">
+<span>Configure Step</span>
+<span class="material-symbols-outlined text-[13px]">settings</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Connector Micro Action: Add Step Between -->
+<div class="relative pl-11 py-0.5 z-10">
+<button class="text-[10px] font-mono text-slate-500 hover:text-[#29D3E8] flex items-center gap-1 transition-colors px-2 py-0.5 rounded bg-[#0B1020] border border-dashed border-[#2B3A52] hover:border-[#29D3E8]">
+<span class="material-symbols-outlined text-[12px]">add</span>
+<span>Insert intermediary transformation step</span>
+</button>
+</div>
+<!-- ================= STEP 02 ================= -->
+<div class="relative z-10">
+<div class="flex items-start gap-4">
+<!-- Node Icon Marker -->
+<div class="size-7 rounded-full bg-[#141F33] border-2 border-[#42D6A4] flex items-center justify-center text-[#42D6A4] text-xs font-mono font-bold shrink-0 mt-2 shadow-[0_0_10px_rgba(66,214,164,0.3)]">
+                    2
+                  </div>
+<!-- Step Card -->
+<div class="flex-1 bg-[#141F33] border border-[#2B3A52] rounded p-3.5 hover:border-[#42D6A4]/50 transition-colors">
+<div class="flex items-start justify-between gap-3">
+<div>
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-mono font-bold text-[#42D6A4] uppercase">STEP 02 // INFERENCE</span>
+<span class="text-slate-500">•</span>
+<span class="text-xs font-mono text-[#5278FF] bg-[#0E1628] px-2 py-0.5 rounded border border-[#2B3A52]">@synthesis-core</span>
+</div>
+<h4 class="text-sm font-bold text-white mt-0.5">Technical Synthesis &amp; Latency Analysis</h4>
+<p class="text-xs text-slate-300 mt-1 font-sans">
+                          Parses kernel benchmark tables and summarizes core architectural findings using Claude 3.5 Sonnet or Local vLLM Fallback.
+                        </p>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#42D6A4]/15 text-[#42D6A4] border border-[#42D6A4]/40">
+                          VERIFIED
+                        </span>
+<button class="p-1 hover:bg-[#1B2940] rounded text-slate-400 hover:text-white" title="Reorder Handle">
+<span class="material-symbols-outlined text-[16px]">drag_indicator</span>
+</button>
+</div>
+</div>
+<!-- Step IO Parameters -->
+<div class="mt-3 pt-2.5 border-t border-[#2B3A52]/60 grid grid-cols-2 gap-3 text-xs font-mono bg-[#0E1628]/60 p-2.5 rounded">
+<div>
+<span class="text-slate-500 block text-[10px] uppercase">Inputs:</span>
+<div class="text-slate-300 text-[11px] truncate">
+                          Ingested paper markdown text (from Step 01)
+                        </div>
+</div>
+<div>
+<span class="text-slate-500 block text-[10px] uppercase">Output:</span>
+<div class="text-slate-300 text-[11px] truncate">
+                          Structured executive briefing + parameter tables
+                        </div>
+</div>
+</div>
+<!-- Step Card Bottom Bar -->
+<div class="mt-2.5 flex items-center justify-between text-[11px] font-mono text-slate-400 pt-1">
+<span class="text-slate-500">Engine: Qwen-2.5-Coder-32B (Local VRAM) • Temperature: 0.2</span>
+<button class="text-[#29D3E8] hover:underline flex items-center gap-1">
+<span>Configure Step</span>
+<span class="material-symbols-outlined text-[13px]">settings</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- ================= STEP 03: HUMAN AUTHORIZATION GATE (ATTENTION STATE) ================= -->
+<div class="relative z-10">
+<div class="flex items-start gap-4">
+<!-- Node Icon Marker with Amber Glow -->
+<div class="size-7 rounded-full bg-[#141F33] border-2 border-[#FFBF5B] flex items-center justify-center text-[#FFBF5B] text-xs font-mono font-bold shrink-0 mt-2 shadow-[0_0_12px_rgba(255,191,91,0.4)] animate-pulse">
+                    3
+                  </div>
+<!-- Step Card with Highlighted Amber Accent -->
+<div class="flex-1 bg-[#141F33] border-2 border-[#FFBF5B] rounded p-3.5 shadow-[0_0_20px_rgba(255,191,91,0.08)]">
+<div class="flex items-start justify-between gap-3">
+<div>
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-mono font-bold text-[#FFBF5B] uppercase flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">lock</span>
+                            STEP 03 // SECURITY BARRIER
+                          </span>
+<span class="text-slate-500">•</span>
+<span class="text-xs font-mono text-[#FFBF5B] bg-[#0E1628] px-2 py-0.5 rounded border border-[#FFBF5B]/40">@security-enforcer</span>
+</div>
+<h4 class="text-sm font-bold text-white mt-0.5 flex items-center gap-2">
+                          Human Authorization Gate
+                          <span class="text-[10px] font-mono bg-[#FFBF5B]/20 text-[#FFBF5B] px-1.5 py-0.2 rounded border border-[#FFBF5B]/40">PAUSE BEFORE WRITE</span>
+</h4>
+<p class="text-xs text-slate-300 mt-1 font-sans">
+                          Halts autonomous execution before persistent storage write. Requires explicit cryptographic confirmation by operator.
+                        </p>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#FFBF5B]/20 text-[#FFBF5B] border border-[#FFBF5B] font-bold">
+                          GATE CONFIGURED
+                        </span>
+<button class="p-1 hover:bg-[#1B2940] rounded text-slate-400 hover:text-white" title="Reorder Handle">
+<span class="material-symbols-outlined text-[16px]">drag_indicator</span>
+</button>
+</div>
+</div>
+<!-- Security Gate Details Box -->
+<div class="mt-3 pt-2.5 border-t border-[#FFBF5B]/30 bg-[#0E1628] p-3 rounded border border-[#FFBF5B]/30 flex flex-col gap-2">
+<div class="flex items-center justify-between text-xs font-mono">
+<span class="text-slate-300 flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-[#FFBF5B]">policy</span>
+                          Enforcement Policy: Operator approval required before writing to Notion Workspace or Slack.
+                        </span>
+<span class="text-[#FFBF5B] text-[11px] font-bold">TIMEOUT: 24h</span>
+</div>
+<div class="flex items-center justify-between text-[11px] font-mono text-slate-400 pt-1 border-t border-[#2B3A52]">
+<span>Notification Target: Desktop Windows Toast + Companion Pet Ping</span>
+<label class="flex items-center gap-1.5 cursor-pointer text-[#29D3E8]">
+<input checked="" class="form-checkbox text-[#29D3E8] rounded bg-[#1B2940] border-[#2B3A52] focus:ring-0 text-xs" type="checkbox"/>
+<span>Auto-Prompt Operator</span>
+</label>
+</div>
+</div>
+<!-- Step Card Bottom Bar -->
+<div class="mt-2.5 flex items-center justify-between text-[11px] font-mono text-slate-400 pt-1">
+<span class="text-[#FFBF5B]">Barrier Status: Active (Stops autonomous runaway writes)</span>
+<button class="text-[#29D3E8] hover:underline flex items-center gap-1">
+<span>Modify Gate Policy</span>
+<span class="material-symbols-outlined text-[13px]">settings</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- ================= STEP 04 ================= -->
+<div class="relative z-10">
+<div class="flex items-start gap-4">
+<!-- Node Icon Marker -->
+<div class="size-7 rounded-full bg-[#141F33] border-2 border-slate-500 flex items-center justify-center text-slate-400 text-xs font-mono font-bold shrink-0 mt-2">
+                    4
+                  </div>
+<!-- Step Card -->
+<div class="flex-1 bg-[#141F33] border border-[#2B3A52] rounded p-3.5 hover:border-slate-400 transition-colors opacity-90">
+<div class="flex items-start justify-between gap-3">
+<div>
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-mono font-bold text-slate-400 uppercase">STEP 04 // DISPATCH</span>
+<span class="text-slate-500">•</span>
+<span class="text-xs font-mono text-slate-300 bg-[#0E1628] px-2 py-0.5 rounded border border-[#2B3A52]">Integrations: Notion DB + G-Cal</span>
+</div>
+<h4 class="text-sm font-bold text-white mt-0.5">Staging to Notion &amp; Planner Notification</h4>
+<p class="text-xs text-slate-300 mt-1 font-sans">
+                          Appends structured research note to Eng-Wiki and creates follow-up review tasks in Planner daemon.
+                        </p>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#1B2940] text-slate-400 border border-[#2B3A52]">
+                          PENDING STEP 03
+                        </span>
+<button class="p-1 hover:bg-[#1B2940] rounded text-slate-400 hover:text-white" title="Reorder Handle">
+<span class="material-symbols-outlined text-[16px]">drag_indicator</span>
+</button>
+</div>
+</div>
+<!-- Step IO Parameters -->
+<div class="mt-3 pt-2.5 border-t border-[#2B3A52]/60 grid grid-cols-2 gap-3 text-xs font-mono bg-[#0E1628]/60 p-2.5 rounded">
+<div>
+<span class="text-slate-500 block text-[10px] uppercase">Inputs:</span>
+<div class="text-slate-300 text-[11px] truncate">
+                          Synthesis markdown + Target Notion Page ID
+                        </div>
+</div>
+<div>
+<span class="text-slate-500 block text-[10px] uppercase">Output:</span>
+<div class="text-slate-300 text-[11px] truncate">
+                          Notion Page URL &amp; 2 Planner Tasks scheduled
+                        </div>
+</div>
+</div>
+<!-- Step Card Bottom Bar -->
+<div class="mt-2.5 flex items-center justify-between text-[11px] font-mono text-slate-400 pt-1">
+<span class="text-slate-500">Destination: Notion DB [ENG-RESEARCH-2025]</span>
+<button class="text-[#29D3E8] hover:underline flex items-center gap-1">
+<span>Configure Step</span>
+<span class="material-symbols-outlined text-[13px]">settings</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- ================= BOTTOM EXECUTION TELEMETRY STRIP ================= -->
+<footer class="h-12 bg-[#0E1628] border-t border-[#2B3A52] px-6 flex items-center justify-between select-none text-xs font-mono">
+<div class="flex items-center gap-4 text-slate-400">
+<div class="flex items-center gap-2">
+<span class="inline-block w-2 h-2 rounded-full bg-[#42D6A4]"></span>
+<span class="text-slate-300 font-semibold">Execution Engine: Active Local Host</span>
+<span class="text-[#2B3A52]">|</span>
+<span class="text-slate-400">Runtime: v2.4.19</span>
+</div>
+<div class="text-slate-500 hidden xl:inline">
+                Last validated DAG: 0 errors, 1 gate verified
+              </div>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-1.5 px-3 py-1 rounded bg-[#1B2940] hover:bg-[#233550] border border-[#2B3A52] text-slate-200 text-xs font-mono transition-colors">
+<span class="material-symbols-outlined text-[15px] text-[#29D3E8]">rule</span>
+<span>Dry Run / Validate Pipeline</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1 rounded bg-[#29D3E8] hover:bg-[#35d9ee] text-[#0B1020] text-xs font-mono font-bold transition-all shadow-sm">
+<span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+<span>Trigger Manifest</span>
+</button>
+</div>
+</footer>
+</section>
+</div>
+</main>
+</div>
+</body></html>

@@ -2,6 +2,7 @@
 
 import hashlib
 import json
+import os
 from pathlib import Path
 import subprocess
 from threading import RLock
@@ -24,6 +25,7 @@ class RuntimeInspector:
             self.snapshot = None  # Failed refresh cannot leave stale evidence usable.
             process = subprocess.run(
                 self.bridge.command,
+                env={k:v for k,v in os.environ.items() if not k.startswith(("FALKORDB_","WAYFINDER_"))},
                 input=source,
                 text=True,
                 capture_output=True,
