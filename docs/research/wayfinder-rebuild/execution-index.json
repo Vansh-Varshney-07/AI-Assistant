@@ -306,5 +306,21 @@
   ],
   "earlier_six_reference_index": "../desktop-reference-rea/execution-index.json",
   "agent_readiness": "agent-readiness.json",
-  "app_code_changed": false
+  "app_code_changed": false,
+  "codex_followup": {
+    "report": "codex.md",
+    "method": "read-only installed ASAR and actual bounded REA JavaScript analysis",
+    "archive_sha256": "04862a659c6a90fc50514d8c0b8016709d97dece58839726c57495ed72f1d9f0",
+    "evidence": [
+      "ev_aa63ecbbf8cd65077121da8a59434fbbe5e3e5f361eb290fab5c428b75f4bba9",
+      "ev_bcb168656fcd5353d19726be31b101db40a625ef65c37e256c0b08562f715094"
+    ],
+    "runtime_behavior_verified": false,
+    "limitations": [
+      "eight unrelated unpacked integrity contradictions preserved",
+      "selected UI member hashes verified",
+      "unselected relationships unresolved",
+      "no private runtime data read"
+    ]
+  }
 }

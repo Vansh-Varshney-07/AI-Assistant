@@ -12,7 +12,7 @@ const files=listPackage(archive).map(p=>p.replaceAll('\\','/')),get=p=>extractFi
 const checks=[],check=(name,ok)=>{assert(ok,name);checks.push({name,passed:true});};
 const metadata=JSON.parse(get('package.json').toString()),release=JSON.parse(await fs.readFile(path.join(root,'FEATURES.json'),'utf8'));
 for(const name of ['main/index.js','preload/index.cjs','renderer/index.html'])check('included_'+name,files.includes('/dist/'+name));
-check('version_and_variant',metadata.version==='0.5.0-preview.1'&&metadata.version===release.version&&release.variant==='workspace-parity');
+check('version_and_variant',metadata.version==='0.5.0-preview.2'&&metadata.version===release.version&&release.variant==='workspace-parity');
 const main=get('dist/main/index.js').toString(),html=get('dist/renderer/index.html').toString();
 check('isolated_renderer',main.includes('contextIsolation: true')&&main.includes('nodeIntegration: false')&&main.includes('sandbox: true'));
 check('no_renderer_network_or_inline_script',html.includes("connect-src 'none'")&&html.includes("script-src 'self'"));
@@ -21,6 +21,7 @@ check('private_bootstrap_not_in_renderer',!renderer.includes('WAYFINDER_HOST_SEC
 check('onboarding_and_chat_inclusion',release.preload_methods.includes('setupFinish')&&release.preload_methods.includes('sendChat')&&release.backend_operations.includes('chat_send'));
 check('no_generic_ipc_or_native_actions',!release.preload_methods.some(n=>['invoke','exec','call'].includes(n))&&!release.backend_operations.includes('worker_action_decide')&&release.native_testing_enabled===false);
 check('manifest_pairing',await hash(path.join(root,'FEATURES.json'))===await hash(path.join(resources,'backend/FEATURES.json'))&&JSON.stringify(JSON.parse(get('dist/release.json').toString()))===JSON.stringify(release));
+check('embedded_frozen_manifest_matches_app',await hash(path.join(root,'FEATURES.json'))===await hash(path.join(resources,'backend/_internal/FEATURES.json')));
 const staged=JSON.parse(await fs.readFile(path.join(root,'.cache/backend-manifest.json'),'utf8'));
 staged.files=Object.fromEntries(Object.entries(staged.files).map(([name,digest])=>[name.replaceAll('\\','/'),digest]));
 const backend=path.join(resources,'backend/WayfinderBackend.exe');

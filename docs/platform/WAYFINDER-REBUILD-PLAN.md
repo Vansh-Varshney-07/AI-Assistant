@@ -2,9 +2,13 @@
 
 Implementation update: [Checkpoint 1 — tested preview and remaining work](REBUILD-CHECKPOINT-01.md). The original plan below remains the full target; this checkpoint does not complete it.
 
-Date: 27 October 2026. Baseline: main `47f0dca`, desktop 0.4.1. Status: **research and planning only; implementation has not started**.
+Date: 27 October 2026. Baseline: main `47f0dca`, desktop 0.4.1. Status: **implementation in progress; preview 1 UI rejected, Codex-informed revision under verification**.
 
 This is the execution plan for the user's expanded request: connect Wayfinder's planned agents, improve the chatbot and workflows, redesign the UI/UX and onboarding, and deliver a Windows executable for direct inspection. It supersedes the narrower UI-only scope of the earlier adaptation plan. Existing native-testing restrictions, provider approvals and the decision to defer fitness remain in force.
+
+Current implementation: [Checkpoint 2 — Codex-informed chat and theme](REBUILD-CHECKPOINT-02.md).
+
+Current UI repair gate: [Codex REA revision and cross-plan acceptance rules](CODEX-REA-UX-REVISION.md).
 
 ## 1. Working documents and execution rule
 

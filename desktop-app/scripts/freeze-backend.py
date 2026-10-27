@@ -33,7 +33,10 @@ for package in ['memory','wayfinder','fastembed','qdrant_client','onnxruntime','
     args+=['--collect-all',package]
 for package in ['torch','tensorflow','transformers','sentence_transformers','pandas','scipy','matplotlib','pytest','IPython','jupyter','onnx','setuptools']:
     args+=['--exclude-module',package]
-if '--stage-only' not in sys.argv:run(args)
+if '--stage-only' in sys.argv:
+    embedded=bundle/'frozen/WayfinderBackend/_internal/FEATURES.json'
+    assert embedded.is_file() and embedded.read_bytes()==(app/'FEATURES.json').read_bytes(), 'Frozen backend manifest differs; run a full freeze before staging'
+else:run(args)
 target=bundle/'backend';target.mkdir(exist_ok=True)
 shutil.copytree(bundle/'frozen/WayfinderBackend',target,dirs_exist_ok=True,ignore=shutil.ignore_patterns('__pycache__','*.pyc','*.debug-original'))
 if trust_file.exists():shutil.copyfile(trust_file,target/'_internal'/trust_file.name)

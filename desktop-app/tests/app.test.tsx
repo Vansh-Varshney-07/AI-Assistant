@@ -6,14 +6,14 @@ import { App } from '../src/renderer/App';
 import type { DesktopAPI, Row } from '../src/shared/types';
 const ready = { state: 'ready' as const, capabilities: { memory: true, documents: false }, runtime: 'isolated-runtime' };
 function mockAPI() {
-  const api: Row = Object.fromEntries(['status','connect','listSpaces','createSpace','inventory','source','recall','context','proposeMemory','reviewMemory','rejectMemory','reconcileMemory','revokeMemory','inspectRuntime','capabilities','selectFiles','fileSelection','searchFiles','revokeFiles','analyze','compare','snapshot','run','cancel','clearRun','audit','evaluate','retryRead','readActivity','selectRepository','repositorySelection','observeRepository','proposeBranch','reviewBranch','rejectBranch','reconcileBranch','revokeRepository','revokeBranch','googleStatus','getSettings','setFontSize'].map(name => [name, vi.fn(async () => ({}))]));
-  api.status.mockResolvedValue(ready); api.connect.mockResolvedValue(ready);
+  const api: Row = Object.fromEntries(['chats','chat','status','connect','listSpaces','createSpace','inventory','source','recall','context','proposeMemory','reviewMemory','rejectMemory','reconcileMemory','revokeMemory','inspectRuntime','capabilities','selectFiles','fileSelection','searchFiles','revokeFiles','analyze','compare','snapshot','run','cancel','clearRun','audit','evaluate','retryRead','readActivity','selectRepository','repositorySelection','observeRepository','proposeBranch','reviewBranch','rejectBranch','reconcileBranch','revokeRepository','revokeBranch','googleStatus','getSettings','setFontSize'].map(name => [name, vi.fn(async () => ({}))]));
+  api.chats.mockResolvedValue([]); api.chat.mockResolvedValue({turns:[]}); api.status.mockResolvedValue(ready); api.connect.mockResolvedValue(ready);
   api.listSpaces.mockResolvedValue([{ id: 'a', name: 'Alpha' }, { id: 'b', name: 'Beta' }]);
   api.fileSelection.mockResolvedValue(null); api.repositorySelection.mockResolvedValue(null); api.inventory.mockResolvedValue({ records: [] }); api.getSettings.mockResolvedValue({ font_size: 14, background: false });
   api.snapshot.mockResolvedValue({ actions: [], workflows: [], jobs: [], metrics: {} });
   window.wayfinder = api as DesktopAPI; return api;
 }
-async function mount() { const api = mockAPI(); render(<App />); await screen.findByRole('heading', { name: 'Home', level: 1 }); await userEvent.click(screen.getAllByRole('button', { name: 'Memory' })[0]); await screen.findByPlaceholderText('Enter a field, e.g. retention_days'); return api; }
+async function mount() { const api = mockAPI(); render(<App />); await screen.findByText('Backend connected'); await userEvent.click(screen.getAllByRole('button', { name: 'Memory' })[0]); await screen.findByPlaceholderText('Enter a field, e.g. retention_days'); return api; }
 describe('Actual React app with contract fixtures', () => {
   it('renders usable connected navigation without unfinished product tabs', async () => {
     await mount(); expect(screen.getByRole('heading', { name: 'Memory', level: 1 })).toBeTruthy();

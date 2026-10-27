@@ -26,13 +26,16 @@ const origin = `http://127.0.0.1:${server.address().port}`;
 const browser = await chromium.launch({ executablePath: process.env.WAYFINDER_CHROME, headless: true });
 const results = [], blocked = [], faults = [];
 function contrast(a,b){
-  const luminance=hex=>{const c=hex.trim().replace('#','').match(/../g).map(value=>parseInt(value,16)/255).map(value=>value<=.04045?value/12.92:((value+.055)/1.055)**2.4);return .2126*c[0]+.7152*c[1]+.0722*c[2];};
+  const luminance=hex=>{let raw=hex.trim().replace('#','');if(raw.length===3)raw=[...raw].map(c=>c+c).join('');const c=raw.match(/../g).map(value=>parseInt(value,16)/255).map(value=>value<=.04045?value/12.92:((value+.055)/1.055)**2.4);return .2126*c[0]+.7152*c[1]+.0722*c[2];};
   const values=[luminance(a),luminance(b)].sort((x,y)=>y-x);return (values[0]+.05)/(values[1]+.05);
 }
 async function checkColors(page){
-  const tokens=await page.locator('.app').evaluate(node=>Object.fromEntries(['--text','--muted','--primary','--knowledge','--agent','--success','--attention','--surface','--panel','--accent-solid'].map(name=>[name,getComputedStyle(node).getPropertyValue(name)])));
+  const tokens=await page.locator('.app').evaluate(node=>Object.fromEntries(['--text','--muted','--primary','--knowledge','--agent','--success','--attention','--surface','--panel','--accent-solid','--accent-text'].map(name=>[name,getComputedStyle(node).getPropertyValue(name)])));
   for(const name of ['--text','--muted','--primary','--knowledge','--agent','--success','--attention'])assert(contrast(tokens[name],tokens['--surface'])>=4.5,`Insufficient text contrast: ${name}`);
-  assert(contrast('#ffffff',tokens['--accent-solid'])>=4.5,'Primary button contrast');
+  assert(contrast(tokens['--accent-text'],tokens['--accent-solid'])>=4.5,'Primary button contrast');
+  const controls=await page.locator('button.primary:not(:disabled)').evaluateAll(nodes=>nodes.map(node=>({label:node.getAttribute('aria-label')||node.textContent,foreground:getComputedStyle(node).color,background:getComputedStyle(node).backgroundColor})));
+  const rgbHex=value=>'#'+value.match(/[\d.]+/g).slice(0,3).map(v=>Math.round(Number(v)).toString(16).padStart(2,'0')).join('');
+  for(const control of controls)assert(contrast(rgbHex(control.foreground),rgbHex(control.background))>=4.5,`Rendered primary contrast: ${control.label}`);
   const unnamed=await page.getByRole('button').evaluateAll(nodes=>nodes.filter(node=>!node.textContent.trim()&&!node.getAttribute('aria-label')).length);
   assert.equal(unnamed,0,'Unlabelled icon button');
 }
@@ -74,13 +77,16 @@ async function fixture(manifest) {
   window.wayfinder = new Proxy(api, { get(target, key) { return key in target ? target[key] : async () => { window.__calls.push(['unsupported', key]); throw new Error(`Fixture does not implement ${String(key)}`); }; } });
 }
 try {
-  for (const [width, height, scale] of [[1440,1000,1],[1280,800,1],[900,1000,1],[600,920,1],[1920,1080,1],[1280,800,1.25],[1280,800,1.5]]) {
+  for (const [width, height, scale] of [[1440,1000,1],[1280,800,1],[900,1000,1],[600,600,1],[900,700,1],[1920,1080,1],[1280,800,1.25],[1280,800,1.5]]) {
     const context = await browser.newContext({ viewport: { width, height }, deviceScaleFactor: scale, reducedMotion: 'reduce' });
     await context.addInitScript(fixture,JSON.parse(await fs.readFile(path.join(root,'../wayfinder/platform/task-profiles.json'),'utf8')));
     const page = await context.newPage();
     page.on('pageerror', error => faults.push(error.message));
     await page.route('**/*', route => { if (new URL(route.request().url()).origin !== origin) { blocked.push(route.request().url()); return route.abort(); } return route.continue(); });
     await page.goto(origin);
+    await page.getByRole('heading', { name: 'A clearer plan', exact:true }).waitFor();
+    await page.keyboard.press('Control+k');
+    await page.getByRole('dialog',{name:'Command palette'}).getByRole('button',{name:/^Home/}).click();
     await page.getByRole('heading', { name: 'A little clarity for your day.' }).waitFor();
     await page.getByRole('option', { name: 'Synthetic UI fixture', exact: true }).waitFor({ state: 'attached' });
     await page.evaluate(() => document.fonts.ready);
@@ -148,7 +154,25 @@ try {
     await page.getByRole('heading',{name:'A manageable next step'}).waitFor();
     assert.equal(await page.locator('img').count(),0);
     assert.equal(await page.locator('.markdown table').count(),1);
+    const bounds=await message.boundingBox();assert(bounds&&bounds.y>=0&&bounds.y+bounds.height<=height,'Composer must remain in viewport');
+    assert.equal(await page.evaluate(()=>document.documentElement.scrollHeight<=innerHeight+1),true,'No outer chat scroll');
+    await message.fill('A draft that survives navigation');
+    await page.getByRole('button',{name:'Open settings'}).click();
+    await page.keyboard.press('Control+k');await palette.getByRole('textbox',{name:'Search destinations'}).fill('Chat');await palette.getByRole('button',{name:/^Chat/}).click();
+    assert.equal(await message.inputValue(),'A draft that survives navigation');
+    await page.locator('.chat-history').evaluate(node=>{node.scrollTop=0;});
     await capture(page,{path:path.join(output,`chat-${width}-${scale}.png`),fullPage:true});
+    await page.getByRole('button',{name:'Use dark theme'}).click();await checkColors(page);
+    await capture(page,{path:path.join(output,`chat-dark-${width}-${scale}.png`),fullPage:true});
+    await page.getByRole('button',{name:'Use light theme'}).click();
+    await page.evaluate(()=>{window.wayfinder.chat=async()=>({turns:[{id:'long',user_text:'Synthetic long reply',status:'running',assistant_text:Array(60).fill('A paragraph for scroll verification.').join('\n\n')}]});});
+    await page.getByRole('button',{name:'Refresh conversation'}).click();
+    const stop=page.getByRole('button',{name:'Stop generating'});await stop.waitFor();const stopBounds=await stop.boundingBox();assert(stopBounds&&stopBounds.y+stopBounds.height<=height,'Stop must stay in viewport');
+    assert.equal(await page.evaluate(()=>document.documentElement.scrollHeight<=innerHeight+1),true,'Long reply has no outer scroll');
+    await page.locator('.chat-history').evaluate(node=>{node.scrollTop=0;});
+    await page.getByRole('button',{name:'Refresh conversation'}).click();
+    assert.equal(await page.locator('.chat-history').evaluate(node=>node.scrollTop),0,'Refresh preserves older reading position');
+    await stop.click();
     await page.getByRole('button', { name: 'Open settings' }).click();
     await page.getByLabel('Reading size').selectOption('20');
     await page.keyboard.press('Control+k');
@@ -194,7 +218,7 @@ try {
     assert.equal(await finish.isEnabled(),true);
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),true);
     await capture(page,{path:path.join(output,`onboarding-review-${width}.png`),fullPage:true});
-    await finish.click();await page.getByRole('heading',{name:'A little clarity for your day.'}).waitFor();
+    await finish.click();await page.getByRole('heading',{name:'A clearer plan',exact:true}).waitFor();
     results.push({width,tier:'rendered-synthetic-onboarding',passed:true,checks:['required checks','exact model consent','explicit finish','optional connections skipped','no horizontal overflow']});
     await context.close();
   }

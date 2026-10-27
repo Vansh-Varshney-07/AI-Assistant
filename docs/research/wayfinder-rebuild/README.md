@@ -56,3 +56,7 @@ Other primary documentation reviewed: [Open WebUI setup](https://docs.openwebui.
 ## Deliverables
 
 The implementation-facing result is the [master rebuild plan](../../platform/WAYFINDER-REBUILD-PLAN.md), [95-task atomic backlog](../../platform/WAYFINDER-REBUILD-TASKS.csv) and [phase test specification](../../platform/WAYFINDER-REBUILD-TESTS.md). Product implementation is not started; all backlog rows remain not started or conditional. The final user checkpoint is a versioned, verified EXE, with native/provider dependencies stated honestly.
+
+## Codex desktop follow-up
+
+[Installed Codex bounded REA evidence and application decisions](codex.md). Static shipped-artifact analysis; no private runtime inspection or vendor assets copied.

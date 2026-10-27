@@ -45,8 +45,8 @@ try{
   const config=JSON.parse(await fs.readFile(path.join(profile,'onboarding.json'),'utf8'));context=config.context;
   check('setup_stores_no_provider_secrets',Object.keys(config.model).sort().join(',')==='endpoint,model,provider'&&!JSON.stringify(config).includes('password'));
   await page.getByRole('button',{name:'Chat',exact:true}).first().click();await page.getByRole('button',{name:'New conversation',exact:true}).click();
-  await page.waitForFunction(()=>document.getElementById('conversation')?.value);
-  const cid=await page.getByLabel('Conversation',{exact:true}).inputValue();const nonce='wayfinder-'+randomUUID().slice(0,8);
+  await page.waitForFunction(()=>document.querySelector('.conversation-workspace')?.dataset.conversationId);
+  const cid=await page.locator('.conversation-workspace').getAttribute('data-conversation-id');const nonce='wayfinder-'+randomUUID().slice(0,8);
   await page.getByLabel('Message',{exact:true}).fill('For this conversation, the synthetic test code is '+nonce+'. Reply with just that code.');await page.getByRole('button',{name:'Send message',exact:true}).click();
   const first=await completed(page,sid,cid,1);check('actual_model_reply_contains_new_nonce',first.turns.at(-1).assistant_text.includes(nonce));
   await page.getByLabel('Message',{exact:true}).fill('What is the synthetic test code I gave you in the previous message? Reply with just that code.');await page.getByRole('button',{name:'Send message',exact:true}).click();

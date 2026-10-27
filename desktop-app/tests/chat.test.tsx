@@ -1,7 +1,7 @@
 import React from 'react';
 import {act,fireEvent,render,screen,waitFor} from '@testing-library/react';
 import {afterEach,beforeEach,expect,it,vi} from 'vitest';
-import {ChatPanel} from '../src/renderer/Chat';
+import {ChatPanel,createConversationSession} from '../src/renderer/Chat';
 
 beforeEach(()=>localStorage.clear());
 afterEach(()=>vi.useRealTimers());
@@ -66,4 +66,40 @@ it('does not let an older poll undo a confirmed local cancellation',async()=>{
   expect(screen.queryByRole('button',{name:'Stop generating'})).toBeNull();
   await act(async()=>{finish(running);});
   expect(screen.queryByRole('button',{name:'Stop generating'})).toBeNull();
+});
+
+it('preserves a draft across route unmount without storing prompt text',async()=>{
+  const api=client(),session=createConversationSession();let view=render(<ChatPanel api={api} space="a" qualified session={session}/>);
+  await waitFor(()=>expect((screen.getByRole('textbox',{name:'Message'}) as HTMLTextAreaElement).disabled).toBe(false));
+  fireEvent.change(screen.getByRole('textbox',{name:'Message'}),{target:{value:'PRIVATE_DRAFT'}});view.unmount();
+  view=render(<ChatPanel api={api} space="a" qualified session={session}/>);
+  await waitFor(()=>expect((screen.getByRole('textbox',{name:'Message'}) as HTMLTextAreaElement).value).toBe('PRIVATE_DRAFT'));
+  expect(JSON.stringify(localStorage)).not.toContain('PRIVATE_DRAFT');expect(api.sendChat).not.toHaveBeenCalled();
+});
+it('allows editing during generation without silently queueing the draft',async()=>{
+  const api=client();api.chat.mockResolvedValue({turns:[{id:'running',status:'running',user_text:'Question'}]});await ready(api);
+  const input=screen.getByRole('textbox',{name:'Message'});fireEvent.change(input,{target:{value:'Follow up'}});fireEvent.keyDown(input,{key:'Enter'});
+  expect((input as HTMLTextAreaElement).value).toBe('Follow up');expect(api.sendChat).not.toHaveBeenCalled();
+});
+it('shows a failed history read instead of a false empty welcome',async()=>{
+  const api=client();api.chat.mockRejectedValue(new Error('History unavailable'));render(<ChatPanel api={api} space="a" qualified/>);
+  await screen.findByText(/Conversation history could not be loaded/);expect(screen.queryByText('What would you like to work on?')).toBeNull();
+  expect((screen.getByRole('textbox',{name:'Message'}) as HTMLTextAreaElement).disabled).toBe(true);
+});
+it('keeps an accepted send distinct from a failed recent-title refresh',async()=>{
+  const api=client();await ready(api);api.chats.mockRejectedValue(new Error('List unavailable'));
+  fireEvent.change(screen.getByRole('textbox',{name:'Message'}),{target:{value:'Synthetic question'}});fireEvent.click(screen.getByRole('button',{name:'Send message'}));
+  await screen.findByRole('heading',{name:'Synthetic answer'});await screen.findByText(/Message accepted/);expect(api.sendChat).toHaveBeenCalledTimes(1);
+});
+
+it('creates the first conversation when explicitly sending from an empty space',async()=>{
+  const api=client();api.chats.mockResolvedValue([]);await ready(api);
+  fireEvent.change(screen.getByRole('textbox',{name:'Message'}),{target:{value:'First question'}});fireEvent.click(screen.getByRole('button',{name:'Send message'}));
+  await screen.findByRole('heading',{name:'Synthetic answer'});expect(api.newChat).toHaveBeenCalledTimes(1);expect(api.sendChat.mock.calls[0][1]).toBe('new');
+});
+it('preserves a newer draft typed while an earlier send awaits acknowledgement',async()=>{
+  const api=client();let finish!:(value:any)=>void;api.sendChat.mockImplementation(()=>new Promise(resolve=>{finish=resolve;}));await ready(api);
+  const input=screen.getByRole('textbox',{name:'Message'});fireEvent.change(input,{target:{value:'First question'}});fireEvent.click(screen.getByRole('button',{name:'Send message'}));
+  await waitFor(()=>expect(api.sendChat).toHaveBeenCalledTimes(1));expect((input as HTMLTextAreaElement).disabled).toBe(false);fireEvent.change(input,{target:{value:'Newer draft'}});
+  await act(async()=>finish(completed));expect((input as HTMLTextAreaElement).value).toBe('Newer draft');expect(api.sendChat).toHaveBeenCalledTimes(1);
 });
