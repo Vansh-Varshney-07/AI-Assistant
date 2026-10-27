@@ -5,3 +5,4 @@
 *.png binary
 *.jpg binary
 *.jpeg binary
+desktop-app/resources/licenses/javascript/* -text whitespace=-blank-at-eof

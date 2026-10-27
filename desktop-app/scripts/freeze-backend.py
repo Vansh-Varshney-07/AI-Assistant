@@ -15,12 +15,15 @@ for package in ['memory','wayfinder']:
         if p.is_file() and p.suffix in {'.py','.json','.yaml','.yml','.toml'} and not any(part in {'__pycache__','_index'} for part in p.parts):
             dest=source/p.relative_to(root);dest.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(p,dest)
 # Dereference ONLY public model-cache files within this one approved model.
-cached=Path(os.environ['TEMP'])/'fastembed_cache/models--qdrant--bge-small-en-v1.5-onnx-q'
+cached=Path(os.environ.get('WAYFINDER_BUILD_MODEL_CACHE',str(Path(os.environ['TEMP'])/'fastembed_cache/models--qdrant--bge-small-en-v1.5-onnx-q')))
 assert cached.is_dir()
-for p in cached.rglob('*'):
-    if p.is_file():
-        resolved=p.resolve();assert resolved.is_relative_to(cached.resolve())
-        dest=bundle/'models'/cached.name/p.relative_to(cached);dest.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(resolved,dest)
+assert cached.name=='models--qdrant--bge-small-en-v1.5-onnx-q'
+model_files=[p for p in cached.rglob('*') if p.is_file()]
+# An existing but empty cache must never silently produce an incomplete EXE.
+assert len(model_files)>=5 and any(p.suffix=='.onnx' for p in model_files), 'Complete public embedding model cache required'
+for p in model_files:
+    resolved=p.resolve();assert resolved.is_relative_to(cached.resolve())
+    dest=bundle/'models'/cached.name/p.relative_to(cached);dest.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(resolved,dest)
 args=[str(app/'backend/host.py'),'--name','WayfinderBackend','--onedir','--console','--noconfirm','--distpath',str(bundle/'frozen'),'--workpath',str(app/'.cache/freeze-work'),'--specpath',str(app/'.cache'),'--paths',str(root),'--add-data',str(app/'FEATURES.json')+';.', '--add-data',str(source/'memory')+';memory','--add-data',str(source/'wayfinder')+';wayfinder']
 # This installed Python's ssl.py explicitly loads this public trust-policy file.
 # Retain the installed verification policy instead of disabling TLS verification.

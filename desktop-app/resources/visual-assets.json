@@ -1,0 +1,33 @@
+{
+  "schema": "wayfinder.visual-assets/1",
+  "runtime_remote_requests": false,
+  "optional_stock_artwork": "Not selected for this checkpoint; original local artwork serves onboarding without a network dependency.",
+  "assets": [
+    {
+      "id": "onboarding-path",
+      "source_file": "src/renderer/Onboarding.tsx",
+      "selector": ".setup-map",
+      "kind": "original inline decorative SVG",
+      "content_sha256": "c9eed156a6eec930ac1183e9d8c1c347be5caa52044439f84b68dcc48868db2e",
+      "origin": "Original Wayfinder artwork",
+      "license": "Project-owned; no external asset dependency",
+      "security_review": "Fixed paths and circles only; no script, events, foreignObject, external image or URL."
+    },
+    {
+      "id": "icons",
+      "package": "lucide-react",
+      "version": "1.61.0",
+      "origin": "https://github.com/lucide-icons/lucide",
+      "notice": "resources/licenses/javascript/lucide-react-LICENSE.txt"
+    },
+    {
+      "id": "local-fonts",
+      "manifest": "resources/licenses/font-sources.json",
+      "notices": [
+        "resources/licenses/geist-OFL.txt",
+        "resources/licenses/spacegrotesk-OFL.txt",
+        "resources/licenses/jetbrainsmono-OFL.txt"
+      ]
+    }
+  ]
+}

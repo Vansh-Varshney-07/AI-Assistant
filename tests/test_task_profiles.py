@@ -1,5 +1,6 @@
 """Task-profile contract/failure tier; fixture model and disposable actual storage."""
 from concurrent.futures import ThreadPoolExecutor
+import json
 import time
 import pytest
 from tests.test_platform_integration import platform
@@ -44,6 +45,21 @@ def test_duplicate_request_observes_and_changed_payload_is_rejected(platform):
     assert rows[0]['id']==rows[1]['id']
     assert len(platform['worker'].payloads)==1
     with pytest.raises(ValueError,match='immutable'):start(platform,goal='Changed after acceptance')
+
+def test_platform_envelope_is_issued_after_scoped_read_and_legacy_records_stay_readable(platform):
+    row=start(platform);result=settle(platform,row['id'])
+    envelope=result['envelope'];outcome=result['outcome']
+    assert envelope['run_id']==row['id'] and envelope['worker_role']=='W35'
+    assert envelope['scope']['task']==platform['args']['task']
+    assert envelope['artifacts'][0]['sha256']==result['result']['sources'][0]['sha256']
+    assert outcome['status']=='completed' and outcome['execution_ref']==row['job']
+    with platform['app'].db() as db:
+        saved=json.loads(db.execute('SELECT body FROM task_profile_runs WHERE id=?',(row['id'],)).fetchone()[0])
+        saved.pop('platform_envelope')
+        db.execute('UPDATE task_profile_runs SET body=? WHERE id=?',(json.dumps(saved),row['id']))
+    historical=call(platform,'platform_profile_result',id=row['id'])
+    assert historical['result']==result['result'] and historical['envelope'] is None and historical['outcome'] is None
+    assert len(platform['worker'].payloads)==1
 
 def test_direct_baseline_and_profile_use_the_same_worker_payload_without_extra_reasoning(platform):
     goal=request(platform)['goal']

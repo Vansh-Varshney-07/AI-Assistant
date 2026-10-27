@@ -1,0 +1,473 @@
+{
+  "schema": "wayfinder.agent-readiness/v1",
+  "date": "2026-10-27",
+  "baseline_commit": "47f0dca32befd29ffe52e29fd511894c72341179",
+  "audit_kind": "read-only source and catalogue audit; no test/model/provider/UI calls",
+  "counts": {
+    "w_responsibilities": 47,
+    "dedicated_definitions_with_offline_contracts": 16,
+    "desktop_file_implementations": 4,
+    "deterministic_platform_responsibilities": 9,
+    "partial_data_effect_integrations": 3,
+    "registry_only": 5,
+    "missing_explicit_definition_or_reuse": 10,
+    "main_assistant": 1,
+    "task_profiles": 8,
+    "app_presets": 6,
+    "selected_file_executable_profile_variants": 3,
+    "atlas_registry_entries": 29
+  },
+  "runtime_admitted_roles": [
+    "W33",
+    "W35",
+    "W36",
+    "CHAT"
+  ],
+  "runtime_admitted_roles_limit": "CHAT has a separate canonical request path; native execution/discovery use separate handlers. W33/W36 client surfaces remain excluded.",
+  "profile_binding": {
+    "A01": "existing.W35:selected_file",
+    "A05": "existing.W35:selected_file",
+    "A06": "existing.W35:selected_file",
+    "A07": "existing_memory_view"
+  },
+  "provider_manual_reads": [
+    "Google Workspace: Calendar/Tasks/Gmail headers and snippets/Drive/Contacts/Docs metadata/Sheets metadata",
+    "Tavily bounded search through installed Hermes",
+    "Notion shared-page search and bounded page excerpt"
+  ],
+  "provider_manual_reads_are_agent_bindings": false,
+  "workers": [
+    {
+      "id": "W01",
+      "name": "Intent Analyst",
+      "current_evidence": "Dedicated definition and offline contracts.",
+      "gap": "Bind intent output to M00 routing; classify conversation/read/proposal without granting authority.",
+      "owner_and_gates": "Both; R1\u2013R2"
+    },
+    {
+      "id": "W02",
+      "name": "Context Retriever",
+      "current_evidence": "Scoped ContextGateway over existing Iron Web.",
+      "gap": "Extend verified evidence projections to selected tasks; preserve source freshness and provenance.",
+      "owner_and_gates": "Platform; R4/R7"
+    },
+    {
+      "id": "W03",
+      "name": "Task Planner",
+      "current_evidence": "Dedicated plan definition/contracts.",
+      "gap": "Adapt TaskPlan into executable validated dependencies; never execute model-specified arbitrary capabilities.",
+      "owner_and_gates": "Both; R1\u2013R3"
+    },
+    {
+      "id": "W04",
+      "name": "Capability Scout",
+      "current_evidence": "Atlas candidate retrieval; only W35 binding qualified by catalog.",
+      "gap": "Intersect actual installed tools, qualified adapters and resource grants for each added binding.",
+      "owner_and_gates": "Platform; R1\u2013R4"
+    },
+    {
+      "id": "W05",
+      "name": "Workflow Coordinator",
+      "current_evidence": "Fixed read-only recipe with deadlines/cancellation/persistence.",
+      "gap": "General dependency routing and bounded concurrency remain missing; extend integration over Hermes.",
+      "owner_and_gates": "Platform; R3"
+    },
+    {
+      "id": "W06",
+      "name": "Result Validator",
+      "current_evidence": "Dedicated offline contract; current controller has its own bounded validation.",
+      "gap": "Bind structured validation before synthesis/effects; expose failure without auto-looping.",
+      "owner_and_gates": "Both; R1\u2013R3"
+    },
+    {
+      "id": "W07",
+      "name": "Synthesis Worker",
+      "current_evidence": "Dedicated offline contract; current read workflow returns W35 result/provenance.",
+      "gap": "Integrate multi-source synthesis with source references and explicit uncertainty.",
+      "owner_and_gates": "Both; R2\u2013R4"
+    },
+    {
+      "id": "W08",
+      "name": "Web Researcher",
+      "current_evidence": "Dedicated definition; manual Tavily search handler exists.",
+      "gap": "Connect bounded search/extract evidence through trusted context. Manual search is not a live W08 run.",
+      "owner_and_gates": "Both; R2/R4"
+    },
+    {
+      "id": "W09",
+      "name": "Source Verifier",
+      "current_evidence": "Dedicated offline contract.",
+      "gap": "Bind supported/contradicted/unverified claims to authorized source evidence.",
+      "owner_and_gates": "Both; R2/R4"
+    },
+    {
+      "id": "W10",
+      "name": "Document Analyst",
+      "current_evidence": "Dedicated offline contract; existing W35 overlap.",
+      "gap": "Define a versioned explicit reuse/adapter mapping; do not silently alias identities.",
+      "owner_and_gates": "Both; R1\u2013R2"
+    },
+    {
+      "id": "W11",
+      "name": "Data Analyst",
+      "current_evidence": "Dedicated offline contracts/helper checks.",
+      "gap": "Bind selected bounded data and deterministic calculations; show missing/invalid input.",
+      "owner_and_gates": "Both; R2/R4"
+    },
+    {
+      "id": "W12",
+      "name": "Knowledge Synthesizer",
+      "current_evidence": "Dedicated offline contract.",
+      "gap": "Integrate source-grounded knowledge output through current evidence route.",
+      "owner_and_gates": "Both; R2\u2013R4"
+    },
+    {
+      "id": "W13",
+      "name": "Calendar Analyst",
+      "current_evidence": "Dedicated definition; scoped manual Google event reads.",
+      "gap": "Bind selected event observations to analysis; account check does not qualify schedule changes.",
+      "owner_and_gates": "Both; R2/R4"
+    },
+    {
+      "id": "W14",
+      "name": "Task Manager",
+      "current_evidence": "Dedicated definition; scoped manual Google task reads.",
+      "gap": "Integrate task observation first; controlled task writes remain separate.",
+      "owner_and_gates": "Both; R2/R4 then R5"
+    },
+    {
+      "id": "W15",
+      "name": "Schedule Optimizer",
+      "current_evidence": "Dedicated offline contract/helper rules.",
+      "gap": "Plan from calendar/tasks/preferences; review changes separately from recommendations.",
+      "owner_and_gates": "Both; R2\u2013R4/R7 then R5"
+    },
+    {
+      "id": "W16",
+      "name": "Commitment Tracker",
+      "current_evidence": "Dedicated offline contract.",
+      "gap": "Connect authorized selected message evidence; Gmail headers/snippets are not full-body ingestion.",
+      "owner_and_gates": "Both; R2/R4"
+    },
+    {
+      "id": "W17",
+      "name": "Reminder Manager",
+      "current_evidence": "No explicit role/reuse mapping.",
+      "gap": "Document Hermes scheduling reuse and qualify trusted occurrences; keep disabled until then.",
+      "owner_and_gates": "Both; R1/R8"
+    },
+    {
+      "id": "W18",
+      "name": "Meeting Preparation Worker",
+      "current_evidence": "Dedicated offline briefing contract.",
+      "gap": "Bounded read-only meeting brief from selected calendar/email/document/context inputs.",
+      "owner_and_gates": "Both; R2\u2013R4/R7"
+    },
+    {
+      "id": "W19",
+      "name": "Repository Analyst",
+      "current_evidence": "Dedicated offline contract.",
+      "gap": "Qualify scoped local/hosted repository reads; distinguish repository access from all files.",
+      "owner_and_gates": "Both; R2/R6"
+    },
+    {
+      "id": "W20",
+      "name": "Code Researcher",
+      "current_evidence": "No explicit role/reuse mapping.",
+      "gap": "Specialize/reuse W08/W09 with coding sources and an explicit contract.",
+      "owner_and_gates": "Worker; R1/R2/R4"
+    },
+    {
+      "id": "W21",
+      "name": "Implementation Planner",
+      "current_evidence": "No explicit role/reuse mapping.",
+      "gap": "Reuse W03 with scoped repository evidence and a reviewable implementation plan.",
+      "owner_and_gates": "Worker; R1/R2/R6"
+    },
+    {
+      "id": "W22",
+      "name": "Code Worker",
+      "current_evidence": "No explicit role/reuse mapping.",
+      "gap": "Add bounded editing adapter in managed workspace; no general host terminal grant.",
+      "owner_and_gates": "Both; R1/R2/R6"
+    },
+    {
+      "id": "W23",
+      "name": "Test Analyst",
+      "current_evidence": "No explicit role/reuse mapping; project test scripts exist.",
+      "gap": "Bind allowlisted relevant tests and parse actual exit/output; never infer success from text.",
+      "owner_and_gates": "Both; R1/R2/R6"
+    },
+    {
+      "id": "W24",
+      "name": "Code Reviewer",
+      "current_evidence": "Dedicated offline review contract.",
+      "gap": "Bind exact diff/revision and findings; reviewer remains advisory.",
+      "owner_and_gates": "Both; R2/R6"
+    },
+    {
+      "id": "W25",
+      "name": "Git Workflow Worker",
+      "current_evidence": "Qualified exact local `codex/` branch action.",
+      "gap": "Preserve current action; qualify commits/pushes/PRs individually rather than broad Git authority.",
+      "owner_and_gates": "Platform; R5/R6"
+    },
+    {
+      "id": "W26",
+      "name": "Activity Analyst",
+      "current_evidence": "Scoped canonical activity CSV service.",
+      "gap": "Bind local CSV reasoning separately; provider source remains deferred.",
+      "owner_and_gates": "Platform; R2/R10"
+    },
+    {
+      "id": "W27",
+      "name": "Progress Analyst",
+      "current_evidence": "No explicit role/reuse mapping.",
+      "gap": "Define trend/unknown-period contract using permitted historical data; fitness remains deferred.",
+      "owner_and_gates": "Worker; R1/R2/R10"
+    },
+    {
+      "id": "W28",
+      "name": "Routine Planner",
+      "current_evidence": "No explicit role/reuse mapping.",
+      "gap": "Define constraint-based routine proposal using allowed preferences/data; no health or calendar write authority.",
+      "owner_and_gates": "Worker; R1/R2/R7/R10"
+    },
+    {
+      "id": "W29",
+      "name": "Message Analyst",
+      "current_evidence": "Atlas role description only.",
+      "gap": "Define contract and selected-message input; bind only authorized reader output.",
+      "owner_and_gates": "Both; R1/R2/R4"
+    },
+    {
+      "id": "W30",
+      "name": "Response Drafter",
+      "current_evidence": "Atlas role description only.",
+      "gap": "Prepare an app-local draft first; drafting must not imply send or provider draft creation.",
+      "owner_and_gates": "Both; R1/R2/R4"
+    },
+    {
+      "id": "W31",
+      "name": "Communication Reviewer",
+      "current_evidence": "Atlas role description only.",
+      "gap": "Review immutable selected draft/recipient context; separate advisory judgment from approval.",
+      "owner_and_gates": "Both; R1/R2/R4"
+    },
+    {
+      "id": "W32",
+      "name": "Message Action Worker",
+      "current_evidence": "Atlas role description only; no enabled send handler.",
+      "gap": "Add one exact authorized message-send operation only after independent qualification.",
+      "owner_and_gates": "Both; R1/R5"
+    },
+    {
+      "id": "W33",
+      "name": "Desktop Context Analyst",
+      "current_evidence": "Explicit shared-image implementation/tests; current client surface excluded.",
+      "gap": "Keep file-selected image input distinct from screen capture; re-enable surface only with qualification.",
+      "owner_and_gates": "Both; R2/R9"
+    },
+    {
+      "id": "W34",
+      "name": "File Discovery Worker",
+      "current_evidence": "Deterministic scoped FileBroker; current app selection/search.",
+      "gap": "Reuse; qualify additional consumer bindings without handing out arbitrary filesystem paths.",
+      "owner_and_gates": "Platform adapter; R1/R4"
+    },
+    {
+      "id": "W35",
+      "name": "Local File Analyst",
+      "current_evidence": "Isolated Hermes implementation and selected-source evidence; current app exposure.",
+      "gap": "Reuse as first end-to-end binding; broaden formats/consumers only with actual extraction tests.",
+      "owner_and_gates": "Platform adapter; R2/R4"
+    },
+    {
+      "id": "W36",
+      "name": "Desktop Action Planner",
+      "current_evidence": "Schema-validated proposal/outline implementation; current client surface excluded.",
+      "gap": "Preserve advisory-only behavior and exact target requirements; no invented window identity or effects.",
+      "owner_and_gates": "Both; R2/R9"
+    },
+    {
+      "id": "W37",
+      "name": "Desktop Action Worker",
+      "current_evidence": "Approval boundary/fixture driver; no proven native completion.",
+      "gap": "Remain disconnected. Native reauthorization, real host driver and verified scoped completion required.",
+      "owner_and_gates": "Platform; R9"
+    },
+    {
+      "id": "W38",
+      "name": "Memory Query Worker",
+      "current_evidence": "ContextGateway/Iron Web integration, shared with W02.",
+      "gap": "Reuse the existing gateway; no duplicate memory engine or worker store credentials.",
+      "owner_and_gates": "Platform; R4/R7"
+    },
+    {
+      "id": "W39",
+      "name": "Preference Interpreter",
+      "current_evidence": "No explicit role/reuse mapping.",
+      "gap": "Translate scoped attributed preferences into planning constraints, with uncertainty and conflict handling.",
+      "owner_and_gates": "Both; R1/R2/R7"
+    },
+    {
+      "id": "W40",
+      "name": "Memory Update Proposer",
+      "current_evidence": "No explicit worker/reuse mapping; proposal service exists.",
+      "gap": "Identify proposed facts as advisory output; apply only through current reviewed event service.",
+      "owner_and_gates": "Both; R1/R2/R7"
+    },
+    {
+      "id": "W41",
+      "name": "Memory Conflict Analyst",
+      "current_evidence": "Existing conflicts/freshness exposed through memory services.",
+      "gap": "Integrate advisory conflict interpretation; never overwrite merely because an LLM prefers one claim.",
+      "owner_and_gates": "Platform; R2/R7"
+    },
+    {
+      "id": "W42",
+      "name": "Memory Maintenance Worker",
+      "current_evidence": "Scoped dry-run/correction/retraction infrastructure.",
+      "gap": "Qualify scoped recommendations and supported maintenance events; global forget/dedup not implied.",
+      "owner_and_gates": "Platform; R7"
+    },
+    {
+      "id": "W43",
+      "name": "Error Investigator",
+      "current_evidence": "Atlas description only.",
+      "gap": "Define diagnostic/evidence contract and bounded log adapter; keep secrets out and avoid automatic effect replay.",
+      "owner_and_gates": "Both; R1/R2/R3"
+    },
+    {
+      "id": "W44",
+      "name": "Workflow Recovery Worker",
+      "current_evidence": "Explicit read retry, interrupted state and read-only reconciliation paths.",
+      "gap": "Extend eligible recovery over the general workflow; effect uncertainty must reconcile before any retry.",
+      "owner_and_gates": "Platform; R3/R5"
+    },
+    {
+      "id": "W45",
+      "name": "Security Reviewer",
+      "current_evidence": "No explicit advisory role/reuse mapping; enforcement already exists.",
+      "gap": "Supply structured advisory findings using scoped evidence; cannot mint grants or override policy.",
+      "owner_and_gates": "Both; R1/R2"
+    },
+    {
+      "id": "W46",
+      "name": "Action Auditor",
+      "current_evidence": "Scoped persistent action/audit services for implemented operations.",
+      "gap": "Keep exact request/approval/receipt/outcome references as connectors expand.",
+      "owner_and_gates": "Platform; R3/R5"
+    },
+    {
+      "id": "W47",
+      "name": "Workflow Evaluator",
+      "current_evidence": "Artifact checks and latency/failure/dispatch metrics.",
+      "gap": "Add task-specific quality rubrics; keep literal checks distinct from semantic accuracy and unknown cost/tokens null.",
+      "owner_and_gates": "Platform; R3"
+    }
+  ],
+  "profiles_and_presets": [
+    {
+      "id": "M00",
+      "name": "Main Wayfinder Assistant",
+      "current_state": "Defined routing owner; independent tool-free CHAT route works. No qualified general intent\u2192tool orchestration.",
+      "activation_gate": "R1\u2013R4: one user request chooses the correct qualified lead, discloses selected context, records the run and returns cited output; simple chat need not fan out."
+    },
+    {
+      "id": "A01",
+      "name": "Research & Verification",
+      "current_state": "One selected UTF-8 file via W35; no live tool-using profile.",
+      "activation_gate": "R2/R4: bounded search plus independent source verification and synthesis, with source identity and injection refusal."
+    },
+    {
+      "id": "A02",
+      "name": "Planning & Productivity",
+      "current_state": "Definition only at profile execution layer; manual calendar/task reads exist.",
+      "activation_gate": "R2\u2013R4/R7: feasible read-only daily plan or meeting preparation using selected inputs; recommendations do not modify calendars."
+    },
+    {
+      "id": "A03",
+      "name": "Communications",
+      "current_state": "Definition only; Gmail headers/snippets manual reads.",
+      "activation_gate": "R1/R2/R4: selected authorized message evidence \u2192 local draft \u2192 review; R5 separately for send."
+    },
+    {
+      "id": "A04",
+      "name": "Software Development",
+      "current_state": "Definition only; separate local branch action exists.",
+      "activation_gate": "R2/R6: disposable repo investigation \u2192 plan \u2192 scoped edit \u2192 actual tests/review; GitHub effects need individual R5 qualification."
+    },
+    {
+      "id": "A05",
+      "name": "Knowledge & Learning",
+      "current_state": "One selected UTF-8 file via W35.",
+      "activation_gate": "R2/R4: multi-source study/report from authorized evidence with resolvable citations, retaining current selected-file fallback as an explicit variant."
+    },
+    {
+      "id": "A06",
+      "name": "Files & Desktop",
+      "current_state": "One selected UTF-8 file via W35; W34 selection/search separate.",
+      "activation_gate": "R2/R4: scoped discovery\u2192selection\u2192analysis first. Image/planning surfaces R9 separately; W37 remains blocked."
+    },
+    {
+      "id": "A07",
+      "name": "Memory & Personalization",
+      "current_state": "Links current scoped Memory UI, not a general reasoning-profile executor.",
+      "activation_gate": "R2/R7: attributed recall/preferences plus reviewed update proposal; no automatic capture or global erasure claim."
+    },
+    {
+      "id": "A08",
+      "name": "Fitness & Habits",
+      "current_state": "Deferred definition; no provider chosen.",
+      "activation_gate": "R10: retain honest unavailable state. Local canonical CSV, if selected, is a separately labelled supported input."
+    },
+    {
+      "id": "P01",
+      "name": "Google Workspace Assistant",
+      "current_state": "Defined but unavailable; no compound execution route.",
+      "activation_gate": "R2\u2013R4: supported read-only variants after per-service qualification. Missing Docs/Sheets content must not block a smaller valid calendar/task variant or be invented."
+    },
+    {
+      "id": "P02",
+      "name": "Gmail Assistant",
+      "current_state": "Defined but unavailable; manual headers/snippets reader is separate.",
+      "activation_gate": "R2/R4: choose exact message/label evidence; content-dependent requests remain blocked until a body reader is independently qualified. Sending requires R5."
+    },
+    {
+      "id": "P03",
+      "name": "Calendar & Tasks Assistant",
+      "current_state": "Defined but unavailable; manual reads separate.",
+      "activation_gate": "R2\u2013R4: selected-calendar/task-list planning and explicit proposals; reminders R8, writes R5."
+    },
+    {
+      "id": "P04",
+      "name": "Notion Workspace Assistant",
+      "current_state": "Defined but unavailable; shared-page search/bounded excerpt reads separate.",
+      "activation_gate": "R2/R4: explicitly selected shared page \u2192 scoped synthesis. Never broaden Notion access silently or write a page from model text alone."
+    },
+    {
+      "id": "P05",
+      "name": "GitHub Project Assistant",
+      "current_state": "Defined but unavailable; no qualified hosted connector binding.",
+      "activation_gate": "R2/R6: selected repository reads and revision-bound analysis first; each effect R5. Codex's GitHub connection is not Wayfinder product authorization."
+    },
+    {
+      "id": "P06",
+      "name": "Drive, Docs & Sheets Assistant",
+      "current_state": "Defined but unavailable; Drive list and Docs/Sheets metadata reads separate.",
+      "activation_gate": "R2/R4: honest metadata/selected-file variant first; full document/cell content needs bounded identity/size/pagination qualification before a content task runs."
+    }
+  ],
+  "source_fingerprints": {
+    "wayfinder/workers/hub.py": "99e27b87e26683b606fa773dcb7a4644c913ef8f8dd360a8ae4f6a94e4b46810",
+    "wayfinder/workers/hermes_runner.py": "45ee69f9b88f0abba1d5fcc0276b850698857190e2d264f547c336b232ea6262",
+    "wayfinder/platform/task_profiles.py": "e3cbce528f60fe359020590a15ad2ef8d6a8078719dfac111318574792533444",
+    "wayfinder/platform/task-profiles.json": "79b19c7772703175455189bf564185c5949c4989c577c74d652d22354d56597a",
+    "wayfinder/platform/catalog.py": "fc62caba7f578668f107bed916b779220fc39cec2747463fbd6d286fd421282b",
+    "wayfinder/platform/connections.py": "9775fee395de7513c584b250e026d8282504d1ec0db13dfe800b7c3b96832837",
+    "wayfinder/chat.py": "c89435892d1e89c13bfbd41e14154bc14f3c08271419bebdaa6159ffc816aa69",
+    "desktop-app/FEATURES.json": "6c479c45081a93caec4483f95f1f07bc1ba810f9031d4ddb9b23064a89e3fa98"
+  },
+  "application_code_changed": false
+}

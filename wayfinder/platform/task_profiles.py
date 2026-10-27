@@ -6,6 +6,7 @@ from threading import RLock
 import time
 import uuid
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
+from wayfinder.platform.contracts import ArtifactReference, TaskEnvelope, WorkerOutcome
 
 SCHEMAS = {
     'platform_profiles': set(), 'platform_profile_start': {'request'},
@@ -107,7 +108,13 @@ class TaskProfiles:
         # This reuses FileBroker identity/hash checks, and never transfers a grant to another task.
         source_ref=dict(reference=request.reference,name=source['name'],sha256=source['sha256'])
         rid=uuid.uuid4().hex
-        with self.app.db() as db:db.execute("INSERT INTO task_profile_runs VALUES (?,?,?,?,?,?,?,?,NULL,'reserved',?)",(rid,canonical(scope.worker_scope()),request.request_id,digest,canonical(body),request.profile_id,self.manifest_hash,canonical(source_ref),time.time()))
+        # Transport metadata is issued by the service after the scoped read. It
+        # does not alter the worker's definition or transfer the file grant.
+        envelope=TaskEnvelope(request_id=request.request_id,run_id=rid,worker_role='W35',scope=scope,
+            artifacts=(ArtifactReference(reference=request.reference,sha256=source['sha256'],media_type='text/plain'),),
+            deadline=float(time.time()+110),cancellation_id=rid)
+        stored_body=dict(body,platform_envelope=envelope.model_dump(mode='json'))
+        with self.app.db() as db:db.execute("INSERT INTO task_profile_runs VALUES (?,?,?,?,?,?,?,?,NULL,'reserved',?)",(rid,canonical(scope.worker_scope()),request.request_id,digest,canonical(stored_body),request.profile_id,self.manifest_hash,canonical(source_ref),time.time()))
         try:
             # One existing isolated worker is the entire qualified lead path. No nested model loop.
             job=self.app.workers.start(scope.worker_scope(),role='W35',question=request.goal,reference=request.reference)
@@ -135,4 +142,15 @@ class TaskProfiles:
             row=self.row(scope,rid)
         if row['status']=='completed' and job and job['status']=='completed':
             result=dict(text=job['result']['text'],sources=[dict(json.loads(row['source']),truncated=job['result'].get('evidence',{}).get('truncated',False))],historical_artifact=True)
-        return dict(id=row['id'],profile_id=row['profile'],profile_version='1',manifest_sha256=row['manifest'],status=row['status'],created=row['created'],goal=json.loads(row['body'])['goal'],job=row['job'],binding='existing.W35',result=result,warning=warning or ('Upstream abort/billing is unconfirmed; no automatic replay.' if row['status'] in {'cancelled','interrupted'} else None),metrics=dict(worker_invocations=1 if row['job'] else 0,delegations=0,tokens=None,cost=None),effects_executed=False)
+        saved=json.loads(row['body']);envelope=saved.get('platform_envelope');outcome=None
+        warning=warning or ('Upstream abort/billing is unconfirmed; no automatic replay.' if row['status'] in {'cancelled','interrupted'} else None)
+        if envelope:
+            # Round-trip the versioned wrapper. Legacy records remain readable
+            # without fabricating a deadline, cancellation ID or provenance.
+            checked=TaskEnvelope.model_validate_json(canonical(envelope))
+            if checked.run_id!=row['id'] or checked.scope!=scope:raise ValueError('Task envelope scope mismatch.')
+            if row['status'] in TERMINAL:
+                outcome=WorkerOutcome(run_id=row['id'],status=row['status'],output=result,
+                    evidence=checked.artifacts if result else (),warnings=(warning,) if warning else (),
+                    execution_ref=row['job'] or row['id'],error_ref=row['id'] if row['status']=='failed' else None).model_dump(mode='json')
+        return dict(id=row['id'],profile_id=row['profile'],profile_version='1',manifest_sha256=row['manifest'],status=row['status'],created=row['created'],goal=saved['goal'],envelope=envelope,outcome=outcome,job=row['job'],binding='existing.W35',result=result,warning=warning,metrics=dict(worker_invocations=1 if row['job'] else 0,delegations=0,tokens=None,cost=None),effects_executed=False)

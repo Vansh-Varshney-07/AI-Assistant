@@ -39,3 +39,6 @@ desktop-app/release/*
 !desktop-app/release/*-verification.json
 !desktop-app/release/*.sha256
 desktop-app/test-results/
+
+# Local external repository
+/rea/

@@ -24,7 +24,8 @@ class ChatService:
         except ValueError:self.approved_model=None
         with app.db() as db:
             db.executescript('''CREATE TABLE IF NOT EXISTS chat_headers(id TEXT PRIMARY KEY,owner TEXT,space TEXT,title TEXT,created REAL);
-            CREATE TABLE IF NOT EXISTS chat_turns(id TEXT PRIMARY KEY,conversation TEXT,request TEXT,digest TEXT,user_text TEXT,assistant_text TEXT,status TEXT,job TEXT,created REAL,history_count INTEGER,warning TEXT,UNIQUE(conversation,request));''')
+            CREATE TABLE IF NOT EXISTS chat_turns(id TEXT PRIMARY KEY,conversation TEXT,request TEXT,digest TEXT,user_text TEXT,assistant_text TEXT,status TEXT,job TEXT,created REAL,history_count INTEGER,warning TEXT,UNIQUE(conversation,request));
+            CREATE TABLE IF NOT EXISTS chat_execution_scopes(turn TEXT PRIMARY KEY,task TEXT NOT NULL);''')
             pending=db.execute("SELECT * FROM chat_turns WHERE status IN ('reserved','running')").fetchall()
         for row in pending:
             with app.db() as db:header=db.execute('SELECT * FROM chat_headers WHERE id=?',(row['conversation'],)).fetchone()
@@ -63,21 +64,29 @@ class ChatService:
                     row=db.execute('SELECT * FROM chat_turns WHERE id=? AND conversation=?',(tid,header['id'])).fetchone()
                     if not row:raise ValueError('Turn unavailable in this conversation.')
                     if row['status'] in ACTIVE:db.execute("UPDATE chat_turns SET status='cancelled',warning='Stopped locally. Upstream abort and billing are unconfirmed.' WHERE id=?",(tid,))
-                if row['status'] in ACTIVE and row['job']:self.app.workers.cancel(self.scope(header),row['job'])
+                if row['status'] in ACTIVE and row['job']:self.app.workers.cancel(self.scope(header,row['id']),row['job'])
                 return self.page(header)
             if operation=='chat_delete':
                 with self.app.db() as db:rows=db.execute('SELECT * FROM chat_turns WHERE conversation=?',(header['id'],)).fetchall()
                 if any(r['status'] in ACTIVE for r in rows):raise ValueError('Stop active turns before deleting this conversation.')
                 for row in rows:
                     if row['job']:
-                        try:self.app.workers.forget(self.scope(header),row['job'])
+                        try:self.app.workers.forget(self.scope(header,row['id']),row['job'])
                         except ValueError:raise ValueError('The underlying worker is still stopping; deletion has not completed.') from None
-                with self.app.db() as db:db.execute('DELETE FROM chat_turns WHERE conversation=?',(header['id'],));db.execute('DELETE FROM chat_headers WHERE id=?',(header['id'],))
+                with self.app.db() as db:
+                    db.execute('DELETE FROM chat_execution_scopes WHERE turn IN (SELECT id FROM chat_turns WHERE conversation=?)',(header['id'],))
+                    db.execute('DELETE FROM chat_turns WHERE conversation=?',(header['id'],));db.execute('DELETE FROM chat_headers WHERE id=?',(header['id'],))
                 return dict(deleted=True,memory_changed=False,backups_erased=False)
             return self.page(header,body.get('before'))
 
-    @staticmethod
-    def scope(header):return (header['owner'],header['space'],'chat:'+header['id'])
+    def scope(self,header,turn):
+        # The service issues a separate execution scope for every new turn.
+        # Existing conversations retain their original job scope for observation
+        # and cleanup; no resources or grants are copied into the new scope.
+        with self.app.db() as db:
+            row=db.execute('SELECT s.task FROM chat_turns t LEFT JOIN chat_execution_scopes s ON s.turn=t.id WHERE t.id=? AND t.conversation=?',(turn,header['id'])).fetchone()
+        if row is None:raise ValueError('Turn unavailable in this conversation.')
+        return (header['owner'],header['space'],row['task'] or 'chat:'+header['id'])
 
     def send(self,header,body):
         message=bounded(body.get('message'),4000);request=bounded(body.get('request_id'),100)
@@ -102,9 +111,10 @@ class ChatService:
         tid=uuid.uuid4().hex
         with self.app.db() as db:
             db.execute("INSERT INTO chat_turns VALUES (?,?,?,?,?,NULL,'reserved',NULL,?,?,NULL)",(tid,header['id'],request,digest,message,time.time(),len(history)))
+            db.execute('INSERT INTO chat_execution_scopes VALUES (?,?)',(tid,'chat-run:'+tid))
             db.execute("UPDATE chat_headers SET title=? WHERE id=? AND title='New conversation'",(message[:70],header['id']))
         try:
-            job=self.app.workers.start_chat(self.scope(header),message,history,self.approved_model)
+            job=self.app.workers.start_chat(self.scope(header,tid),message,history,self.approved_model)
             with self.app.db() as db:db.execute("UPDATE chat_turns SET status='running',job=? WHERE id=? AND status='reserved'",(job['id'],tid))
         except Exception:
             with self.app.db() as db:db.execute("UPDATE chat_turns SET status='failed',warning='The model could not start. No automatic retry was made.' WHERE id=?",(tid,))
@@ -112,7 +122,7 @@ class ChatService:
 
     def _advance(self,header,row):
         if row['status'] not in ACTIVE or not row['job']:return
-        try:job=self.app.workers.get(self.scope(header),row['job'])
+        try:job=self.app.workers.get(self.scope(header,row['id']),row['job'])
         except ValueError:job=dict(status='interrupted')
         status,answer,warning=None,None,None
         if job['status']=='completed':

@@ -77,3 +77,25 @@ def test_recovery_marks_reserved_without_replay(chat_app):
     restored=ChatService(app)
     with app.db() as db:assert db.execute("SELECT status FROM chat_turns WHERE id='orphan'").fetchone()[0]=='interrupted'
     assert not model.payloads
+
+
+def test_new_turns_have_distinct_service_issued_scopes_and_migrate_without_replay(chat_app):
+    from wayfinder.chat import ChatService
+    app,sid,cid,model=chat_app
+    send(app,sid,cid);terminal(app,sid,cid)
+    send(app,sid,cid,'second','Continue');terminal(app,sid,cid)
+    with app.db() as db:
+        header=dict(db.execute('SELECT * FROM chat_headers WHERE id=?',(cid,)).fetchone())
+        turns=[dict(row) for row in db.execute('SELECT * FROM chat_turns WHERE conversation=? ORDER BY created',(cid,)).fetchall()]
+    first=app.chat.scope(header,turns[0]['id']);second=app.chat.scope(header,turns[1]['id'])
+    assert first!=second and first[2].startswith('chat-run:')
+    with pytest.raises(ValueError):app.workers.get(first,turns[1]['job'])
+    # Simulate a pre-migration row: historical scope remains readable; it is not
+    # relabelled as a fresh grant or replayed when the service opens the store.
+    with app.db() as db:
+        db.execute('DELETE FROM chat_execution_scopes WHERE turn=?',(turns[0]['id'],))
+        db.execute('UPDATE worker_jobs SET scope=? WHERE id=?',(__import__('json').dumps((header['owner'],sid,'chat:'+cid)),turns[0]['job']))
+    restored=ChatService(app)
+    assert restored.scope(header,turns[0]['id'])[2]=='chat:'+cid
+    assert restored.page(header)['turns'][0]['assistant_text']=='Synthetic reply'
+    assert len(model.payloads)==2

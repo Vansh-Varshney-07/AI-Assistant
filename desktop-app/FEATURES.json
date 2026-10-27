@@ -1,5 +1,5 @@
 {
-  "build": "wayfinder-desktop/0.4.1",
+  "build": "wayfinder-desktop/0.5.0-preview.1",
   "scope": "read_only_connections_candidate",
   "connected": [
     {
@@ -138,7 +138,7 @@
         "platform_profile_cancel",
         "platform_profile_clear"
       ],
-      "scope": "M00 routing, A01-A08/P01-P06 metadata; A01/A05/A06 selected UTF-8 file adapter only; app providers and Fitness unavailable"
+      "scope": "M00 routing, A01-A08/P01-P06 metadata; A01/A05/A06 selected UTF-8 file adapter only; provider task presets and Fitness unavailable; manual read-only connections are separate"
     },
     {
       "feature": "general_chat",
@@ -173,7 +173,7 @@
       "reason": "No completed Wayfinder WorkItem/two-way synchronization service or qualified Hermes Kanban scope/approval adapter."
     },
     {
-      "feature": "workflow_builder_scheduler_quick_chat",
+      "feature": "workflow_builder_scheduler",
       "reason": "Only one fixed recipe is complete; arbitrary templates and trusted recurrence/background lifecycle unqualified."
     },
     {
@@ -211,7 +211,7 @@
   "native_testing_enabled": false,
   "schema": "wayfinder.desktop-inclusion/v1",
   "variant": "workspace-parity",
-  "version": "0.4.1",
+  "version": "0.5.0-preview.1",
   "navigation": [
     {
       "id": "home",

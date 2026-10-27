@@ -1,0 +1,310 @@
+{
+  "schema": "wayfinder.rebuild-research/v1",
+  "date": "2026-10-27",
+  "references": [
+    {
+      "schema": "wayfinder.rebuild-reference/v1",
+      "date": "2026-10-27",
+      "reference": "Open WebUI",
+      "acquisition": {
+        "project": "Open WebUI",
+        "version": "0.12.4",
+        "metadata_url": "https://pypi.org/pypi/open-webui/json",
+        "url": "https://files.pythonhosted.org/packages/d5/68/ba67840b98eb35636dbfb0685a6b4c3c02e26bd60e500f56d2e52216c13c/open_webui-0.12.4-py3-none-any.whl",
+        "filename": "open_webui-0.12.4-py3-none-any.whl",
+        "bytes": 106366595,
+        "sha256": "02e9caba96234db3fa17a92e56163b3f7f2b8ca8227fa886b85c178d696483f6",
+        "target_executed": false
+      },
+      "tool": {
+        "version": "6.8.0",
+        "node": "24.22.1",
+        "built_clone": true
+      },
+      "analysis": {
+        "evidence_id": "ev_784d231960606b4d0c7a0c225c69d459c2c1cbc946b1d6c4c7f98c0c10ec7757",
+        "execution": {
+          "exit_code": 1,
+          "elapsed_seconds": 142.812,
+          "target_executed": false
+        },
+        "error": {
+          "code": "provider_timeout",
+          "category": "timeout",
+          "message": "JavaScript source analysis reached its 60000ms per-source server/provider deadline (analysis_timeout_ms), not the MCP client deadline."
+        },
+        "artifact_sha256": "9f2a837e86deae7af6cd7a2ba1287b8c2e0a411c9c68a52bc02973b3286d2cc3",
+        "source_selection": {
+          "requested_paths": [
+            "_app/immutable/entry/app.D3BkLUgb.js",
+            "_app/immutable/nodes/53.1SYwzS3k.js",
+            "_app/immutable/chunks/DSkNELZd.js",
+            "_app/immutable/chunks/FM7wIn-x.js",
+            "_app/immutable/chunks/DPDFUJW0.js",
+            "_app/immutable/chunks/CNDyKy5F.js"
+          ],
+          "unselected_files": 831
+        },
+        "statistics": {
+          "relevant_files": 837,
+          "nested_asar_containers": 0,
+          "text_bytes_read": 1126035,
+          "invalid_utf8_files": 0,
+          "parsed_javascript_files": 5,
+          "skipped_javascript_files": 1,
+          "visited_ast_nodes": 19990,
+          "findings": 3675,
+          "modules": 0,
+          "parse_failures": 0
+        },
+        "raw": "analysis.json",
+        "raw_sha256": "6c714794b753a684e980fa8c09562b5bc4124bfd227c2ae63d153cf761ccadda"
+      },
+      "trace": {
+        "evidence_id": "ev_9641a19621bc2cbec940ba957ef6ed3c750fab1d9bcc54c4a73f59ba387bd90d",
+        "execution": {
+          "exit_code": 0,
+          "elapsed_seconds": 21.907
+        },
+        "summary": {
+          "total_seed_matches": 7,
+          "traversed_nodes": 7,
+          "traversed_relations": 0,
+          "traversed_functions": 6,
+          "traversed_modules": 1,
+          "relevant_unknowns": 8923
+        },
+        "coverage": {
+          "status": "partial"
+        },
+        "raw": "onboarding-trace.json",
+        "raw_sha256": "a3e39892bd9d9b749e47008f3761637ffbdf784c7571bf245652a952319d6541"
+      },
+      "report": "docs/research/wayfinder-rebuild/open-webui.md",
+      "target_executed": false,
+      "wayfinder_code_changed": false
+    },
+    {
+      "schema": "wayfinder.rea-reference/v1",
+      "date": "2026-10-27",
+      "reference": "n8n",
+      "artifact": {
+        "package": "n8n-editor-ui",
+        "version": "2.45.4",
+        "metadata_url": "https://registry.npmjs.org/n8n-editor-ui/2.45.4",
+        "url": "https://registry.npmjs.org/n8n-editor-ui/-/n8n-editor-ui-2.45.4.tgz",
+        "repository": {
+          "url": "git+https://github.com/n8n-io/n8n.git",
+          "type": "git"
+        },
+        "integrity": "sha512-T7BUICe9dF7cPdhnIOEODAqU5aM10Vy/RFDkzdPiJq0vvEuIcHJDQjPgxf4s1i3iFVcC3OhSI6olmNI4GCwkdQ==",
+        "sha256": "dc3e47f087550cea801d1ca94b9c39ca9e24d4691b9c95b042a19bc5e9ce514a",
+        "bytes": 12794063,
+        "members": 649,
+        "target_executed": false
+      },
+      "rea_version": "6.8.0",
+      "operations": [
+        {
+          "operation": "analyze_javascript_application",
+          "evidence_id": "ev_4ad6cf3ec5aac821fa16ea46996bd5f6dd8dd43fdf5bed4bd6d07c7ac2a3661e",
+          "exit_code": 0,
+          "elapsed_seconds": 96.625,
+          "statistics": {
+            "relevant_files": 374,
+            "nested_asar_containers": 0,
+            "text_bytes_read": 253592,
+            "invalid_utf8_files": 0,
+            "parsed_javascript_files": 7,
+            "skipped_javascript_files": 0,
+            "visited_ast_nodes": 72862,
+            "findings": 749,
+            "modules": 0,
+            "parse_failures": 0
+          },
+          "summary": {
+            "browser_windows": 0,
+            "explicit_web_preferences": 0,
+            "preload_entrypoints": 0,
+            "context_bridge_apis": 0,
+            "exposed_api_members": 0,
+            "ipc": {
+              "operations": 0,
+              "literal_channels": 0,
+              "dynamic_channel_operations": 0,
+              "renderer_transmissions": 0,
+              "renderer_listeners": 0,
+              "main_handlers": 0,
+              "paired_renderer_transmissions": 0,
+              "ambiguous_renderer_transmissions": 0,
+              "unpaired_literal_renderer_transmissions": 0
+            },
+            "sender_validation_observations": 0,
+            "utility_processes": 0,
+            "resolved_utility_entrypoints": 0,
+            "native_addon_bindings": 0,
+            "resolved_native_addon_bindings": 0
+          },
+          "source_selection": {
+            "requested_paths": [
+              "package.json",
+              "dist/index.html",
+              "dist/assets/WorkflowExecutionsView-nUuQUNvZ.js",
+              "dist/assets/WorkflowExecutionsPreview-CdG_bR30.js",
+              "dist/assets/WorkflowHistory-DG7DeVrq.js",
+              "dist/assets/RunDataTable--Ocgrfbw.js",
+              "dist/assets/RunDataJson-sAVZnzNO.js",
+              "dist/assets/TestRunDetailView-BN9YpkdE.js",
+              "dist/assets/NodeView-DHFAd9m2.js"
+            ],
+            "unselected_files": 365
+          },
+          "coverage": {
+            "status": "partial",
+            "truncated": true,
+            "omitted_nodes": null,
+            "omitted_relations": null,
+            "limits": [
+              {
+                "name": "max_semantic_nodes",
+                "value": 18000,
+                "unit": "items"
+              },
+              {
+                "name": "max_semantic_nodes_per_file",
+                "value": 4000,
+                "unit": "items"
+              },
+              {
+                "name": "semantic_graph_file_node_ceiling",
+                "value": 4000,
+                "unit": "items"
+              },
+              {
+                "name": "semantic_graph_node_ceiling",
+                "value": 18000,
+                "unit": "items"
+              }
+            ]
+          },
+          "source_evidence_id": null,
+          "raw_path": ".local\\rea-research\\expansion\\n8n\\analysis.json",
+          "raw_sha256": "f1cfc4e940d988ee1c1990140fa5f3fcda3580fb6f107874142b34c7bde515d9"
+        },
+        {
+          "operation": "trace_javascript_semantics",
+          "evidence_id": "ev_688905eb6435fe5099432c9e41f2a29f38c48959819defc4a51e93ca787a2119",
+          "exit_code": 0,
+          "elapsed_seconds": 35.985,
+          "statistics": null,
+          "summary": {
+            "total_seed_matches": 1,
+            "traversed_nodes": 1,
+            "traversed_relations": 0,
+            "traversed_functions": 1,
+            "traversed_modules": 1,
+            "relevant_unknowns": 362
+          },
+          "source_selection": null,
+          "coverage": {
+            "status": "partial"
+          },
+          "source_evidence_id": "ev_4ad6cf3ec5aac821fa16ea46996bd5f6dd8dd43fdf5bed4bd6d07c7ac2a3661e",
+          "raw_path": ".local\\rea-research\\expansion\\n8n\\retry-trace.json",
+          "raw_sha256": "83167c16848965e7c7409f5469331356d04a3e67d8126c0b9471687861d644d9"
+        },
+        {
+          "operation": "analyze_javascript_application",
+          "evidence_id": "ev_e0d0458137b71d51af89e49a2e949a65438b6416b770af976c69b3577d80f827",
+          "exit_code": 0,
+          "elapsed_seconds": 29.171,
+          "statistics": {
+            "relevant_files": 374,
+            "nested_asar_containers": 0,
+            "text_bytes_read": 22255,
+            "invalid_utf8_files": 0,
+            "parsed_javascript_files": 1,
+            "skipped_javascript_files": 0,
+            "visited_ast_nodes": 6432,
+            "findings": 104,
+            "modules": 0,
+            "parse_failures": 0
+          },
+          "summary": {
+            "browser_windows": 0,
+            "explicit_web_preferences": 0,
+            "preload_entrypoints": 0,
+            "context_bridge_apis": 0,
+            "exposed_api_members": 0,
+            "ipc": {
+              "operations": 0,
+              "literal_channels": 0,
+              "dynamic_channel_operations": 0,
+              "renderer_transmissions": 0,
+              "renderer_listeners": 0,
+              "main_handlers": 0,
+              "paired_renderer_transmissions": 0,
+              "ambiguous_renderer_transmissions": 0,
+              "unpaired_literal_renderer_transmissions": 0
+            },
+            "sender_validation_observations": 0,
+            "utility_processes": 0,
+            "resolved_utility_entrypoints": 0,
+            "native_addon_bindings": 0,
+            "resolved_native_addon_bindings": 0
+          },
+          "source_selection": {
+            "requested_paths": [
+              "package.json",
+              "dist/assets/WorkflowExecutionsPreview-CdG_bR30.js"
+            ],
+            "unselected_files": 372
+          },
+          "coverage": {
+            "status": "partial",
+            "truncated": false,
+            "omitted_nodes": null,
+            "omitted_relations": null,
+            "limits": []
+          },
+          "source_evidence_id": null,
+          "raw_path": ".local\\rea-research\\expansion\\n8n\\focused-analysis.json",
+          "raw_sha256": "7a2bfa773ac05fece03ef57b01d0635323a026374c05481c4d80f0a55c617996"
+        },
+        {
+          "operation": "trace_javascript_semantics",
+          "evidence_id": "ev_aed626d5e1e165482112e949ad1ee537582d6ed71858ea5633f40008a5fcd58b",
+          "exit_code": 0,
+          "elapsed_seconds": 11.078,
+          "statistics": null,
+          "summary": {
+            "total_seed_matches": 1,
+            "traversed_nodes": 1,
+            "traversed_relations": 0,
+            "traversed_functions": 1,
+            "traversed_modules": 1,
+            "relevant_unknowns": 1
+          },
+          "source_selection": null,
+          "coverage": {
+            "status": "partial"
+          },
+          "source_evidence_id": "ev_e0d0458137b71d51af89e49a2e949a65438b6416b770af976c69b3577d80f827",
+          "raw_path": ".local\\rea-research\\expansion\\n8n\\focused-trace.json",
+          "raw_sha256": "907238cb97ebc81af65bb2a34f7c9d2d40ae03fdfe9c748939164222e1b36552"
+        }
+      ],
+      "report": "docs/research/wayfinder-rebuild/n8n.md",
+      "target_executed": false,
+      "wayfinder_code_changed": false,
+      "limits": [
+        "Selected shipped frontend only. No backend or live workflow verification.",
+        "Both caller traces found their exact seed but no resolved caller edge; zero edges is not proof of no caller.",
+        "Broad graph retention/source coverage partial; focused graph not retention-truncated but still contains dynamic unknowns."
+      ]
+    }
+  ],
+  "earlier_six_reference_index": "../desktop-reference-rea/execution-index.json",
+  "agent_readiness": "agent-readiness.json",
+  "app_code_changed": false
+}

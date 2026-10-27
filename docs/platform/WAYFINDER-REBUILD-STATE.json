@@ -1,0 +1,97 @@
+{
+  "schema": "wayfinder.implementation-plan/v1",
+  "date": "2026-10-27",
+  "baseline_commit": "47f0dca32befd29ffe52e29fd511894c72341179",
+  "baseline_desktop_version": "0.4.1",
+  "scope": "Planning ledger only; not a runtime registry or authorization source.",
+  "research_status": "completed_with_explicit_evidence_limits",
+  "implementation_status": "checkpoint_1_ready_full_rebuild_in_progress",
+  "application_code_changed": true,
+  "application_tests_run_this_turn": true,
+  "new_executable_built_this_turn": true,
+  "next_task": "P01.01",
+  "task_count": 95,
+  "primary_phase_task_count": 91,
+  "conditional_extension_task_count": 4,
+  "primary_phases": [
+    "P01",
+    "P02",
+    "P03",
+    "P04",
+    "P05",
+    "P06",
+    "P07",
+    "P08",
+    "P09",
+    "P10",
+    "P11",
+    "P12",
+    "P13",
+    "P14"
+  ],
+  "conditional_phases": [
+    "X01"
+  ],
+  "conditional_primary_tasks": [
+    "P11.05"
+  ],
+  "documents": {
+    "master": "WAYFINDER-REBUILD-PLAN.md",
+    "tasks": "WAYFINDER-REBUILD-TASKS.csv",
+    "tests": "WAYFINDER-REBUILD-TESTS.md",
+    "research": "../research/wayfinder-rebuild/README.md",
+    "research_execution_index": "../research/wayfinder-rebuild/execution-index.json",
+    "role_audit": "../research/wayfinder-rebuild/agent-readiness.json",
+    "checkpoint": "REBUILD-CHECKPOINT-01.md"
+  },
+  "required_reuse": [
+    "Hermes",
+    "OpenShell/NemoClaw",
+    "Wayfinder Atlas",
+    "Iron Web",
+    "existing trusted application services",
+    "existing Electron and packaging pipeline"
+  ],
+  "constraints": {
+    "no_replacement_agent_loop_or_memory_engine_or_scheduler": true,
+    "worker_metadata_is_not_runtime_qualification": true,
+    "manual_provider_reads_are_not_agent_workflows": true,
+    "model_credentials_stay_out_of_workers_and_renderer": true,
+    "test_after_each_task_and_phase": true,
+    "preserve_dirty_work_and_private_data": true,
+    "w37_requires_explicit_reenable_and_real_driver_qualification": true,
+    "fitness_deferred": true,
+    "final_human_checkpoint": "Exact versioned EXE and SHA-256 walkthrough",
+    "non_disruptive_wayfinder_ui_testing_and_screenshots_authorized": true,
+    "unrelated_desktop_capture_and_clipboard_inspection_disabled": true
+  },
+  "gates": {
+    "H-READ": "Only missing provider/repository access or additional scopes; reuse valid connections first.",
+    "H-WRITE": "Exact approved live disposable effect after fixture/contract qualification.",
+    "H-DESKTOP": "Wayfinder app manual testing/screenshots authorized; avoid taking focus from the user. W37 host effects require exact scope and a qualified driver.",
+    "H-FITNESS": "Selected supported provider and consent; deferred.",
+    "H-EXE": "User directly checks the exact release candidate."
+  },
+  "checkpoint": {
+    "version": "0.5.0-preview.1",
+    "scope": "Conversation/first-run foundation preview; full rebuild remains open",
+    "completed_tasks": 16,
+    "partial_tasks": 13,
+    "remaining_unstarted_tasks": 66,
+    "hermes_version": "0.21.3",
+    "frontend_tests_passed": 64,
+    "backend_regression": {
+      "passed": 321,
+      "skipped": 1,
+      "deselected": 1
+    },
+    "final_contract_checks_passed": 29,
+    "contract_suite_overlaps_regression": true,
+    "packaged_acceptance": "18 real checks passed on delivered archive",
+    "report": "REBUILD-CHECKPOINT-01.md",
+    "headless_ui_scenarios_passed": 9,
+    "portable_acceptance": "11 checks passed; all 3007 staged resources verified",
+    "portable_sha256": "f0e9f3643ab8ab7b7be98e80f766d3b08bedf754ee4b18b15e91565fec280b00",
+    "preview_executable": "../../desktop-app/release/Wayfinder-0.5.0-preview.1-Windows-x64.exe"
+  }
+}

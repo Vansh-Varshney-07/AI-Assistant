@@ -25,10 +25,38 @@ await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
 const origin = `http://127.0.0.1:${server.address().port}`;
 const browser = await chromium.launch({ executablePath: process.env.WAYFINDER_CHROME, headless: true });
 const results = [], blocked = [], faults = [];
+function contrast(a,b){
+  const luminance=hex=>{const c=hex.trim().replace('#','').match(/../g).map(value=>parseInt(value,16)/255).map(value=>value<=.04045?value/12.92:((value+.055)/1.055)**2.4);return .2126*c[0]+.7152*c[1]+.0722*c[2];};
+  const values=[luminance(a),luminance(b)].sort((x,y)=>y-x);return (values[0]+.05)/(values[1]+.05);
+}
+async function checkColors(page){
+  const tokens=await page.locator('.app').evaluate(node=>Object.fromEntries(['--text','--muted','--primary','--knowledge','--agent','--success','--attention','--surface','--panel','--accent-solid'].map(name=>[name,getComputedStyle(node).getPropertyValue(name)])));
+  for(const name of ['--text','--muted','--primary','--knowledge','--agent','--success','--attention'])assert(contrast(tokens[name],tokens['--surface'])>=4.5,`Insufficient text contrast: ${name}`);
+  assert(contrast('#ffffff',tokens['--accent-solid'])>=4.5,'Primary button contrast');
+  const unnamed=await page.getByRole('button').evaluateAll(nodes=>nodes.filter(node=>!node.textContent.trim()&&!node.getAttribute('aria-label')).length);
+  assert.equal(unnamed,0,'Unlabelled icon button');
+}
+async function capture(page,options){await page.evaluate(()=>window.scrollTo(0,0));await page.screenshot(options);}
 async function fixture(manifest) {
   const ready = { state: 'ready', capabilities: { memory: true, documents: false }, runtime: 'Synthetic UI fixture — not a live runtime' };
+  let messages=[],setupComplete=location.search!=='?setup';
+  let setupState={databaseReady:false,memoryReady:false,modelReady:false,storage:'Isolated synthetic workspace — no real files'};
   const api = {
-    connect: async () => ready, status: async () => ready,
+    connect: async () => setupComplete?ready:{state:'setup'}, status: async () => setupComplete?ready:{state:'setup'},
+    setupStatus:async()=>setupState,
+    setupDatabase:async()=>{setupState={...setupState,databaseReady:true};return setupState;},
+    setupMemory:async()=>{setupState={...setupState,memoryReady:true};return setupState;},
+    setupModel:async()=>{setupState={...setupState,modelReady:true,modelExpiresAt:Date.now()+300000,model:{model:'nvidia/nemotron-3.5-lightning-30b-a3b',provider:'custom',endpoint:'integrate.api.nvidia.com'}};return setupState;},
+    setupFinish:async()=>{setupComplete=true;return ready;},
+    chats: async () => [{id:'synthetic-conversation',title:'A clearer plan'}],
+    chat: async () => ({turns:messages}),
+    newChat: async () => ({id:'synthetic-conversation',title:'New conversation'}),
+    sendChat: async (_space,_conversation,_request,text) => { messages=[{id:'synthetic-turn',user_text:text,status:'completed',assistant_text:'## A manageable next step\n\nStart with one outcome and two concrete actions.\n\n| Step | Purpose |\n| --- | --- |\n| Gather context | Understand the task |\n| Choose an action | Make progress |\n\n```text\nContext → decision → next step\n```\n\n![Untrusted image](https://example.com/pixel)'}];return {turns:messages}; },
+    connectionsStatus: async () => ({configured:{google:true,tavily:true,notion:true},checks:{}}),
+    checkConnection: async () => ({configured:{google:true,tavily:true,notion:true},checks:{google:{passed:true,expires:Date.now()/1000+300,label:'Synthetic read check'}}}),
+    googleGrant: async () => ({id:'synthetic-grant'}),
+    googleRead: async () => ({records:[{id:'synthetic-event',summary:'Synthetic planning session',start:{dateTime:'2026-10-27T10:00:00Z'},end:{dateTime:'2026-10-27T10:30:00Z'}}]}),
+    googleRevoke: async () => ({revoked:true}),
     profiles: async () => ({...manifest,profiles:manifest.profiles.map(p=>({...p,execution:{included:['A01','A05','A06'].includes(p.id),available:false,status:p.id==='A08'?'deferred':'inspection_required',note:p.limitation}})),presets:manifest.presets.map(p=>({...p,available:false}))}),
     profileTasks: async () => [],
     listSpaces: async () => [{ id: 'synthetic-a', name: 'Synthetic UI fixture' }],
@@ -41,27 +69,30 @@ async function fixture(manifest) {
     recall: async (...args) => { window.__calls.push(['recall', ...args]); return { packet: { answer_status: 'supported', evidence: [{ value: 30, predicate: 'retention_days', accepted_for_current_use: true, memory_id: 'synthetic-source' }] } }; },
     googleStatus: async () => ({ credential_file_present: false, live_qualified: false, setup: 'Synthetic setup response. No account access.' }),
   };
+  try{localStorage.setItem('wayfinder-theme','dark');}catch{/* Initial about:blank has an opaque origin. */}
   window.__calls = [];
   window.wayfinder = new Proxy(api, { get(target, key) { return key in target ? target[key] : async () => { window.__calls.push(['unsupported', key]); throw new Error(`Fixture does not implement ${String(key)}`); }; } });
 }
 try {
-  for (const [width, height, scale] of [[1440,1000,1],[1280,800,1],[600,920,1],[1920,1080,1],[1280,800,1.25],[1280,800,1.5]]) {
+  for (const [width, height, scale] of [[1440,1000,1],[1280,800,1],[900,1000,1],[600,920,1],[1920,1080,1],[1280,800,1.25],[1280,800,1.5]]) {
     const context = await browser.newContext({ viewport: { width, height }, deviceScaleFactor: scale, reducedMotion: 'reduce' });
     await context.addInitScript(fixture,JSON.parse(await fs.readFile(path.join(root,'../wayfinder/platform/task-profiles.json'),'utf8')));
     const page = await context.newPage();
     page.on('pageerror', error => faults.push(error.message));
     await page.route('**/*', route => { if (new URL(route.request().url()).origin !== origin) { blocked.push(route.request().url()); return route.abort(); } return route.continue(); });
     await page.goto(origin);
-    await page.getByRole('heading', { name: 'Good day, Operator.' }).waitFor();
+    await page.getByRole('heading', { name: 'A little clarity for your day.' }).waitFor();
     await page.getByRole('option', { name: 'Synthetic UI fixture', exact: true }).waitFor({ state: 'attached' });
     await page.evaluate(() => document.fonts.ready);
-    assert.equal(await page.locator('textarea').isDisabled(), true);
+    await checkColors(page);
+    assert.equal(await page.getByRole('button',{name:'Open chat'}).isEnabled(), true);
     assert.equal(await page.evaluate(() => document.fonts.check('14px Geist')), true);
     assert.equal(await page.evaluate(() => document.fonts.check('14px "Space Grotesk"')), true);
-    await page.screenshot({ path: path.join(output, `home-${width}-${scale}.png`), fullPage: true });
+    await capture(page,{ path: path.join(output, `home-${width}-${scale}.png`), fullPage: true });
     await page.getByRole('button', { name: 'Use light theme' }).click();
     assert.equal(await page.locator('.app').getAttribute('data-theme'), 'light');
-    await page.screenshot({ path: path.join(output, `light-${width}-${scale}.png`), fullPage: true });
+    await checkColors(page);
+    await capture(page,{ path: path.join(output, `light-${width}-${scale}.png`), fullPage: true });
     await page.getByRole('button', { name: 'Open command palette' }).click();
     const palette = page.getByRole('dialog', { name: 'Command palette' });
     await palette.getByRole('textbox', { name: 'Search destinations' }).fill('Memory');
@@ -74,7 +105,7 @@ try {
     await page.getByRole('heading', { name: 'Source record', exact: true }).waitFor();
     assert.equal(await page.locator('.source-copy').evaluate(element => getComputedStyle(element).fontSize), '14px');
     assert.equal(await page.locator('img').count(), 0);
-    await page.screenshot({ path: path.join(output, `memory-${width}-${scale}.png`), fullPage: true });
+    await capture(page,{ path: path.join(output, `memory-${width}-${scale}.png`), fullPage: true });
     await page.keyboard.press('Control+k');
     await palette.waitFor();
     await page.keyboard.press('Escape');
@@ -104,9 +135,20 @@ try {
     await page.keyboard.press('Control+k');
     await palette.getByRole('textbox', { name: 'Search destinations' }).fill('Connections');
     await palette.getByRole('button', { name: 'Connections' }).click();
-    await page.getByRole('button', { name: /Check setup/ }).click();
-    await page.getByText(/Account setup required/).waitFor();
-    await page.screenshot({ path: path.join(output, `connections-${width}-${scale}.png`), fullPage: true });
+    await page.getByRole('button', { name: 'Check Google connection' }).click();
+    await page.getByText('Live check passed',{exact:true}).waitFor();
+    await page.getByRole('button', {name:'Read selected Google source'}).click();
+    await page.getByText('Synthetic planning session',{exact:true}).waitFor();
+    await capture(page,{ path: path.join(output, `connections-${width}-${scale}.png`), fullPage: true });
+    await page.keyboard.press('Control+k');
+    await palette.getByRole('textbox',{name:'Search destinations'}).fill('Chat');
+    await palette.getByRole('button',{name:/^Chat/}).click();
+    const message=page.getByRole('textbox',{name:'Message'});
+    await message.fill('Help me make a manageable plan.');await message.press('Enter');
+    await page.getByRole('heading',{name:'A manageable next step'}).waitFor();
+    assert.equal(await page.locator('img').count(),0);
+    assert.equal(await page.locator('.markdown table').count(),1);
+    await capture(page,{path:path.join(output,`chat-${width}-${scale}.png`),fullPage:true});
     await page.getByRole('button', { name: 'Open settings' }).click();
     await page.getByLabel('Reading size').selectOption('20');
     await page.keyboard.press('Control+k');
@@ -126,8 +168,34 @@ try {
     await page.getByRole('button',{name:'Select A08 Fitness & Habits'}).click();
     assert.equal(await page.getByRole('button',{name:'Run selected-file task'}).count(),0);
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),true);
-    await page.screenshot({path:path.join(output,`agents-${width}-${scale}.png`),fullPage:true});
-    results.push({ width, height, scale, tier: 'rendered-synthetic-fixture', passed: true, checks: ['local fonts','disabled unimplemented chat','theme','palette','scoped recall','long inert source','reading size applied','no overflow','setup state',...(width<=900?['drawer focus trap','Escape focus restoration','single modal','resize recovery']:[])] });
+    await capture(page,{path:path.join(output,`agents-${width}-${scale}.png`),fullPage:true});
+    results.push({ width, height, scale, tier: 'rendered-synthetic-fixture', passed: true, checks: ['local fonts','semantic text contrast >=4.5:1','named icon controls','chat entry and explicit synthetic send','safe Markdown/code/table','remote model image blocked','theme','palette','scoped recall','long inert source','reading size applied','no overflow','setup state',...(width<=900?['drawer focus trap','Escape focus restoration','single modal','resize recovery']:[])] });
+    await context.close();
+  }
+  for(const width of [1440,600]){
+    const context=await browser.newContext({viewport:{width,height:1000},reducedMotion:'reduce'});
+    await context.addInitScript(fixture,JSON.parse(await fs.readFile(path.join(root,'../wayfinder/platform/task-profiles.json'),'utf8')));
+    const page=await context.newPage();page.on('pageerror',error=>faults.push(error.message));
+    await page.route('**/*',route=>new URL(route.request().url()).origin===origin?route.continue():(blocked.push(route.request().url()),route.abort()));
+    await page.goto(origin+'?setup');
+    await page.getByRole('heading',{name:'Start with a private foundation.'}).waitFor();
+    assert.equal(await page.getByRole('button',{name:'Continue',exact:true}).isDisabled(),true);
+    await capture(page,{path:path.join(output,`onboarding-local-${width}.png`),fullPage:true});
+    await page.getByRole('button',{name:'Check / prepare database'}).click();
+    await page.getByRole('button',{name:'Verify bundled memory model'}).click();
+    await page.getByRole('button',{name:'Continue',exact:true}).click();
+    await page.getByRole('button',{name:'Check Hermes connection'}).click();
+    await page.getByText('Verified · valid for five minutes',{exact:true}).waitFor();
+    await capture(page,{path:path.join(output,`onboarding-model-${width}.png`),fullPage:true});
+    await page.getByRole('button',{name:'Continue',exact:true}).click();
+    const finish=page.getByRole('button',{name:/Create workspace and open Wayfinder/});
+    assert.equal(await finish.isDisabled(),true);
+    await page.getByRole('checkbox',{name:/I agree to send/}).check();
+    assert.equal(await finish.isEnabled(),true);
+    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),true);
+    await capture(page,{path:path.join(output,`onboarding-review-${width}.png`),fullPage:true});
+    await finish.click();await page.getByRole('heading',{name:'A little clarity for your day.'}).waitFor();
+    results.push({width,tier:'rendered-synthetic-onboarding',passed:true,checks:['required checks','exact model consent','explicit finish','optional connections skipped','no horizontal overflow']});
     await context.close();
   }
   assert.deepEqual(blocked, [], 'Renderer attempted a nonlocal request');

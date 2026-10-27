@@ -1,0 +1,668 @@
+{
+  "schema": "wayfinder.rea-investigation/v1",
+  "date": "2026-10-27",
+  "tool": {
+    "repository": "https://github.com/morluto/rea",
+    "commit": "570abe95f2a35b5c580a5ec2fca90c33d4114bdc",
+    "version": "6.8.0",
+    "cli": "rea/scripts/rea.mjs",
+    "built_from_clone": true,
+    "node_version": "24.22.1",
+    "native_controls_source": "Integrity-verified matching rea-agents@6.8.0 npm package, per native/windows/README.md",
+    "codex_mcp_configuration_changed": false
+  },
+  "method": "Static public-distribution analysis, selected packaged code and explicit evidence tracing. No target code execution. Native-only and derived code-distribution scopes remain separate.",
+  "products": {
+    "khoj": {
+      "acquisition": {
+        "repository": "khoj-ai/khoj",
+        "version": "1.33.1",
+        "url": "https://download.todesktop.com/230828upu3vonlt/Khoj%20Setup%201.33.1%20-%20Build%20250106w0zjckvm3-x64.exe",
+        "sha256": "d395ac9790a58dc9ad1b615a1ef9ee254457e0c99a49303fac7f4e4403dc4eb3",
+        "bytes": 77929256,
+        "manifest": "https://github.com/microsoft/winget-pkgs/blob/master/manifests/k/Khoj/Khoj/1.33.1/Khoj.Khoj.installer.yaml",
+        "historical": true,
+        "executed": false
+      },
+      "operations": [
+        {
+          "operation": "analyze_javascript_application",
+          "evidence_id": "ev_4dbe24524e395ed3b38fb9002d1f6eec0bba535ea8e4eaad509a605b3f99b57a",
+          "cli_exit_code": 0,
+          "elapsed_seconds": 28.578,
+          "error_category": null,
+          "error_code": null,
+          "partial_evidence_from_failure": false,
+          "subject_sha256": "3e6d74499738a75f260d80febfaa1887abc4a2e2e09b8182ace0e08ce55ee0e9",
+          "source_selection": {
+            "requested_paths": [
+              "package.json",
+              "main.js",
+              "preload.js",
+              "renderer.js",
+              "chatutils.js",
+              "settings.html"
+            ],
+            "unselected_files": 1080
+          },
+          "statistics": {
+            "relevant_files": 1086,
+            "nested_asar_containers": 0,
+            "text_bytes_read": 69447,
+            "invalid_utf8_files": 0,
+            "parsed_javascript_files": 4,
+            "skipped_javascript_files": 0,
+            "visited_ast_nodes": 7473,
+            "findings": 127,
+            "modules": 0,
+            "parse_failures": 0
+          },
+          "coverage": null,
+          "raw_result": ".local/rea-research/results/khoj/analysis.json",
+          "raw_result_sha256": "20b4a1ccdba90f4f4f7cb0d7b533545f99dd3d7532a7117ee39d40fa6d3bdea6",
+          "raw_result_bytes": 26914690
+        },
+        {
+          "operation": "inspect_analysis_view",
+          "evidence_id": "ev_889e61e545b2caadada6bd21d7a1153a4a152edbc4f90b3125201050876f3849",
+          "cli_exit_code": 0,
+          "elapsed_seconds": null,
+          "error_category": null,
+          "error_code": null,
+          "partial_evidence_from_failure": false,
+          "subject_sha256": "3e6d74499738a75f260d80febfaa1887abc4a2e2e09b8182ace0e08ce55ee0e9",
+          "source_selection": null,
+          "statistics": null,
+          "coverage": {
+            "status": "complete-within-view",
+            "examined": 776,
+            "total": 776,
+            "next_offset": null,
+            "exhausted": true
+          },
+          "raw_result": ".local/rea-research/results/khoj/view.json",
+          "raw_result_sha256": "ef9ff579f0a238652090a742d7cc2747c98fb31c45880717837969e7efccd142",
+          "raw_result_bytes": 13995
+        },
+        {
+          "operation": "trace_application_feature",
+          "evidence_id": "ev_19b785d9a15eb5f731aa0b43af7645ab87b513b873535e3052edf8fb32ba878c",
+          "cli_exit_code": 0,
+          "elapsed_seconds": 19.469,
+          "error_category": null,
+          "error_code": null,
+          "partial_evidence_from_failure": false,
+          "subject_sha256": null,
+          "source_selection": null,
+          "statistics": null,
+          "coverage": {
+            "status": "partial",
+            "source_graph_status": "partial",
+            "total_seed_matches": 2
+          },
+          "raw_result": ".local/rea-research/results/khoj/file-picker-trace.json",
+          "raw_result_sha256": "f7c5f4d0befaeb26ed1bf83f5c3eb92d8c709afe3dca7a2639deb6933feeb5b4",
+          "raw_result_bytes": 11422585
+        },
+        {
+          "operation": "trace_application_feature",
+          "evidence_id": "ev_0a259f6a11941dc291c825c8e09941ca3771e544f1197afac0852ab2f7e05118",
+          "cli_exit_code": 0,
+          "elapsed_seconds": 17.765,
+          "error_category": null,
+          "error_code": null,
+          "partial_evidence_from_failure": false,
+          "subject_sha256": null,
+          "source_selection": null,
+          "statistics": null,
+          "coverage": {
+            "status": "partial",
+            "source_graph_status": "partial",
+            "total_seed_matches": 2
+          },
+          "raw_result": ".local/rea-research/results/khoj/continue-chat-trace.json",
+          "raw_result_sha256": "fc9160ca922c0a19340c5e35109cf328666068cf01edf5bcb85d97aef9e03893",
+          "raw_result_bytes": 11422629
+        }
+      ],
+      "report": "khoj.md",
+      "target_executed": false
+    },
+    "anything-llm": {
+      "acquisition": {
+        "repository": "Mintplex-Labs/anything-llm",
+        "tag": "v1.19.0",
+        "release_url": "https://github.com/Mintplex-Labs/anything-llm/releases/tag/v1.19.0",
+        "asset": "AnythingLLMDesktop.exe",
+        "url": "https://github.com/Mintplex-Labs/anything-llm/releases/download/v1.19.0/AnythingLLMDesktop.exe",
+        "sha256": "743d10ddf920087b46cd614cafd2e0e31550089405436f00cbd827c43ca4c90a",
+        "bytes": 403299096,
+        "executed": false
+      },
+      "operations": [
+        {
+          "operation": "analyze_javascript_application",
+          "evidence_id": "ev_0fcf819f82b41d75a3385c819b88cbff8e2c3fb5279cb2aa4ad277fe6c35fa86",
+          "cli_exit_code": 1,
+          "elapsed_seconds": 160.391,
+          "error_category": "timeout",
+          "error_code": "provider_timeout",
+          "partial_evidence_from_failure": true,
+          "subject_sha256": "6f336dfd08c06a42f1ed2633d3d11aa2d116b6accb2dfe1b3ac2a788a9dfea28",
+          "source_selection": {
+            "requested_paths": [
+              "package.json",
+              "dist-electron/main/index.js",
+              "dist-electron/preload/index.js",
+              "dist/assistant.html",
+              "dist/assets/assistant-ca9cac1f.js"
+            ],
+            "unselected_files": 1981
+          },
+          "statistics": {
+            "relevant_files": 2013,
+            "nested_asar_containers": 0,
+            "text_bytes_read": 1729654,
+            "invalid_utf8_files": 0,
+            "parsed_javascript_files": 1,
+            "skipped_javascript_files": 2,
+            "visited_ast_nodes": 377440,
+            "findings": 381,
+            "modules": 0,
+            "parse_failures": 0
+          },
+          "coverage": null,
+          "raw_result": ".local/rea-research/results/anything-llm/analysis.json",
+          "raw_result_sha256": "0e51c388f48bf673806c68c71b28f3910e875b6091a9a032dbf51a4fdf65ddc1",
+          "raw_result_bytes": 32917239
+        },
+        {
+          "operation": "analyze_javascript_application",
+          "evidence_id": "ev_e243e2b9c261bb7f60063af2951e2c5a9fecdd05e5bb7ea45c08e2dad5415f30",
+          "cli_exit_code": 0,
+          "elapsed_seconds": 44.953,
+          "error_category": null,
+          "error_code": null,
+          "partial_evidence_from_failure": false,
+          "subject_sha256": "6f336dfd08c06a42f1ed2633d3d11aa2d116b6accb2dfe1b3ac2a788a9dfea28",
+          "source_selection": {
+            "requested_paths": [
+              "package.json",
+              "dist-electron/preload/index.js",
+              "dist/assistant.html",
+              "dist/assets/assistant-ca9cac1f.js"
+            ],
+            "unselected_files": 1982
+          },
+          "statistics": {
+            "relevant_files": 2013,
+            "nested_asar_containers": 0,
+            "text_bytes_read": 124103,
+            "invalid_utf8_files": 0,
+            "parsed_javascript_files": 2,
+            "skipped_javascript_files": 0,
+            "visited_ast_nodes": 26308,
+            "findings": 447,
+            "modules": 0,
+            "parse_failures": 0
+          },
+          "coverage": null,
+          "raw_result": ".local/rea-research/results/anything-llm/remaining-analysis.json",
+          "raw_result_sha256": "aa25c448a06f63b30dbbe5d809c18254cc00f64c9fd2fda1755c79752a6735a7",
+          "raw_result_bytes": 43009881
+        },
+        {
+          "operation": "trace_application_feature",
+          "evidence_id": "ev_e1f92026f9b8045436ce31b9db8522b0f4db5eb0a97eb8cddb58a341ea52e6d7",
+          "cli_exit_code": 0,
+          "elapsed_seconds": 18.438,
+          "error_category": null,
+          "error_code": null,
+          "partial_evidence_from_failure": false,
+          "subject_sha256": null,
+          "source_selection": null,
+          "statistics": null,
+          "coverage": {
+            "status": "partial",
+            "source_graph_status": "partial",
+            "total_seed_matches": 1
+          },
+          "raw_result": ".local/rea-research/results/anything-llm/preferences-trace.json",
+          "raw_result_sha256": "4778e51e05c0b1816bbde702a08902bcd7572aff9cf9c989dee9c7635cc149ef",
+          "raw_result_bytes": 21679381
+        },
+        {
+          "operation": "trace_application_feature",
+          "evidence_id": "ev_f7bd21f6927ca94b86ea9ec93ddd7000654713e5b931569a2103a2a6222654fe",
+          "cli_exit_code": 0,
+          "elapsed_seconds": 19.812,
+          "error_category": null,
+          "error_code": null,
+          "partial_evidence_from_failure": false,
+          "subject_sha256": null,
+          "source_selection": null,
+          "statistics": null,
+          "coverage": {
+            "status": "partial",
+            "source_graph_status": "partial",
+            "total_seed_matches": 2
+          },
+          "raw_result": ".local/rea-research/results/anything-llm/assistant-trace.json",
+          "raw_result_sha256": "6b225a644d0ce700ee489e7dad0f29f845f625e88d97ed008c781ee27db1e2a7",
+          "raw_result_bytes": 20667239
+        }
+      ],
+      "report": "anythingllm.md",
+      "target_executed": false
+    },
+    "handrail": {
+      "acquisition": {
+        "repository": "M19K/handrail",
+        "tag": "v0.1.9",
+        "release_url": "https://github.com/M19K/handrail/releases/tag/v0.1.9",
+        "asset": "Handrail.0.1.9.exe",
+        "url": "https://github.com/M19K/handrail/releases/download/v0.1.9/Handrail.0.1.9.exe",
+        "sha256": "07e1efd9aaeef0efc811b225ac03ed7d61e7eec2c0c0262d253cd630436500c5",
+        "bytes": 99584005,
+        "executed": false
+      },
+      "asar_sha256": "a0c87f060da1febac7d2bbb227c74d0bd02120abbad877d9d4e479d65fe99a0a",
+      "operations": [
+        {
+          "operation": "analyze_javascript_application",
+          "evidence_id": "ev_1e31f87ecd84f84bdc0cc32a8887f3979a7c7855209a4bf8c3b7760e700273a9",
+          "cli_exit_code": 0,
+          "elapsed_seconds": 25.028,
+          "error_category": null,
+          "error_code": null,
+          "partial_evidence_from_failure": false,
+          "subject_sha256": "a0c87f060da1febac7d2bbb227c74d0bd02120abbad877d9d4e479d65fe99a0a",
+          "source_selection": {
+            "requested_paths": [
+              "package.json",
+              "main.js",
+              "preload.js",
+              "src/main/ipc.js",
+              "src/main/store.js",
+              "src/main/windows.js",
+              "src/main/turn.js",
+              "renderer/overlay.js",
+              "renderer/overlay.html",
+              "renderer/onboarding.js"
+            ],
+            "unselected_files": 15
+          },
+          "statistics": {
+            "relevant_files": 25,
+            "nested_asar_containers": 0,
+            "text_bytes_read": 176154,
+            "invalid_utf8_files": 0,
+            "parsed_javascript_files": 8,
+            "skipped_javascript_files": 0,
+            "visited_ast_nodes": 15396,
+            "findings": 143,
+            "modules": 0,
+            "parse_failures": 0
+          },
+          "coverage": null,
+          "raw_result": ".local/rea-research/results/handrail/analysis.json",
+          "raw_result_sha256": "883e02b79ee16e9809aed4ca2db77b45e835ad09e7b1aabbe1b6ea8f0b509ea2",
+          "raw_result_bytes": 18389587
+        },
+        {
+          "operation": "trace_application_feature",
+          "evidence_id": "ev_63154a263d3cd37f980100ba9ec55b434993fc8307aabebbae5cb83057d50824",
+          "cli_exit_code": 0,
+          "elapsed_seconds": null,
+          "error_category": null,
+          "error_code": null,
+          "partial_evidence_from_failure": false,
+          "subject_sha256": null,
+          "source_selection": null,
+          "statistics": null,
+          "coverage": {
+            "status": "partial",
+            "source_graph_status": "partial",
+            "total_seed_matches": 2
+          },
+          "raw_result": ".local/rea-research/results/handrail/trace-channel.json",
+          "raw_result_sha256": "b52e321599b6ef92aa43f85baa90ab0f3b027609ed0fbd04147f538baa80cb58",
+          "raw_result_bytes": 1265678
+        }
+      ],
+      "report": "handrail.md",
+      "target_executed": false,
+      "corrected_invalid_trace_query": 1
+    },
+    "keel": {
+      "acquisition": {
+        "repository": "Keel-Labs/keel",
+        "tag": "v0.5.1",
+        "release_url": "https://github.com/Keel-Labs/keel/releases/tag/v0.5.1",
+        "asset": "Keel-0.5.1-win-x64.zip",
+        "url": "https://github.com/Keel-Labs/keel/releases/download/v0.5.1/Keel-0.5.1-win-x64.zip",
+        "sha256": "f0b4b69e59e2a1aa0bfcda98f77f403f55f4e6300a571fc2c8c157a3d7eed671",
+        "bytes": 244647723,
+        "executed": false
+      },
+      "asar_sha256": "ae23392d2344a82ec1734925aaf993d931788c6ddbe9c0ff2ec622e118cb986f",
+      "operations": [
+        {
+          "operation": "analyze_javascript_application",
+          "evidence_id": "ev_300dd77996145228d1c688ecc8254fc987cd82ece7f88a9e1b4bc91b6295ffb0",
+          "cli_exit_code": 1,
+          "elapsed_seconds": 213.859,
+          "error_category": "timeout",
+          "error_code": "provider_timeout",
+          "partial_evidence_from_failure": true,
+          "subject_sha256": "ae23392d2344a82ec1734925aaf993d931788c6ddbe9c0ff2ec622e118cb986f",
+          "source_selection": {
+            "requested_paths": [
+              "package.json",
+              "dist/electron/electron/main.js",
+              "dist/electron/electron/preload.js",
+              "dist/electron/src/core/fileManager.js",
+              "dist/electron/src/core/settings.js",
+              "dist/electron/src/core/contextAssembler.js",
+              "dist/electron/src/core/tools/exportGuard.js",
+              "dist/renderer/index.html",
+              "dist/renderer/assets/index-BHnFAmg6.js"
+            ],
+            "unselected_files": 5919
+          },
+          "statistics": {
+            "relevant_files": 6014,
+            "nested_asar_containers": 0,
+            "text_bytes_read": 776562,
+            "invalid_utf8_files": 0,
+            "parsed_javascript_files": 6,
+            "skipped_javascript_files": 1,
+            "visited_ast_nodes": 23846,
+            "findings": 435,
+            "modules": 0,
+            "parse_failures": 0
+          },
+          "coverage": null,
+          "raw_result": ".local/rea-research/results/keel/analysis.json",
+          "raw_result_sha256": "fdc0b15c79d16a043335b737d99dd7f4e4644437ccf9b41f994dda171a897750",
+          "raw_result_bytes": 150287505
+        }
+      ],
+      "report": "keel.md",
+      "target_executed": false,
+      "corrected_invalid_trace_query": null
+    },
+    "clai": {
+      "acquisition": {
+        "repository": "clairun/clai",
+        "tag": "v26.10.23",
+        "release_url": "https://github.com/clairun/clai/releases/tag/v26.10.23",
+        "asset": "clai_26.10.23_x64-setup.exe",
+        "url": "https://github.com/clairun/clai/releases/download/v26.10.23/clai_26.10.23_x64-setup.exe",
+        "sha256": "3105083921aa7405a101b9e1dea3fa77b07e3497ae173c6d88f07a3448618d68",
+        "bytes": 12175851,
+        "executed": false
+      },
+      "operations": [
+        {
+          "operation": "inspect_pe_certificates",
+          "evidence_id": "ev_d762d599fbb534422eae045866921903f2aacccbca67b529e042a3690a1060f8",
+          "cli_exit_code": 0,
+          "elapsed_seconds": null,
+          "error_category": null,
+          "error_code": null,
+          "partial_evidence_from_failure": false,
+          "subject_sha256": "ea63b255bc7731db33b65c1aedb9c3c3299dea460e5524b5285038325c50c87f",
+          "source_selection": null,
+          "statistics": null,
+          "coverage": {
+            "status": "complete",
+            "examined_entries": 0,
+            "certificates": 0
+          },
+          "raw_result": ".local/rea-research/results/clai/certificates.json",
+          "raw_result_sha256": "75c83ff257a09d736aa40c3bd67256a5031735c4f84b468f2228e66f750951dc",
+          "raw_result_bytes": 1791
+        },
+        {
+          "operation": "inspect_desktop_application",
+          "evidence_id": "ev_3e16dc1384224fbc3b8cbad35ddb3edf6374ae9b5db69cfaf59c32e423d5d5ab",
+          "cli_exit_code": 0,
+          "elapsed_seconds": null,
+          "error_category": null,
+          "error_code": null,
+          "partial_evidence_from_failure": false,
+          "subject_sha256": "5fcbe430f93e01ade90583e625d502f9fc9599d9b8b67ac42e09b023336da22a",
+          "source_selection": null,
+          "statistics": null,
+          "coverage": {
+            "status": "complete-within-scan",
+            "entries_examined": 1,
+            "files_probed": 1,
+            "bytes_read": 340,
+            "symlinks_not_followed": 0,
+            "special_entries_omitted": 0,
+            "limits": {
+              "max_entries": 20000,
+              "max_probe_bytes": 8388608
+            }
+          },
+          "raw_result": ".local/rea-research/results/clai/desktop.json",
+          "raw_result_sha256": "98cd62cb212b9b78f817f686c40fc7d226a2a1319e00138cc4b0797a54e1a3e0",
+          "raw_result_bytes": 4259
+        },
+        {
+          "operation": "inspect_pe_imports",
+          "evidence_id": "ev_40229c315f92f718d7e34704b51e7ff469057556a89551d59a0c3f6e02887bdb",
+          "cli_exit_code": 0,
+          "elapsed_seconds": null,
+          "error_category": null,
+          "error_code": null,
+          "partial_evidence_from_failure": false,
+          "subject_sha256": "ea63b255bc7731db33b65c1aedb9c3c3299dea460e5524b5285038325c50c87f",
+          "source_selection": null,
+          "statistics": null,
+          "coverage": {
+            "status": "complete",
+            "reason": null,
+            "examined_dlls": 32,
+            "imports": 489,
+            "delay_imports": 0
+          },
+          "raw_result": ".local/rea-research/results/clai/imports.json",
+          "raw_result_sha256": "b96350b66e1091f2b371e2618a715482270395608317051b2d40e634ec7e95cd",
+          "raw_result_bytes": 63697
+        },
+        {
+          "operation": "inspect_pe_resources",
+          "evidence_id": "ev_db422917cd2a9b690edddb3b54f37de4c6c21f4404ea18eb8064f8462770ac6e",
+          "cli_exit_code": 0,
+          "elapsed_seconds": null,
+          "error_category": null,
+          "error_code": null,
+          "partial_evidence_from_failure": false,
+          "subject_sha256": "ea63b255bc7731db33b65c1aedb9c3c3299dea460e5524b5285038325c50c87f",
+          "source_selection": null,
+          "statistics": null,
+          "coverage": {
+            "status": "complete",
+            "examined_entries": 26,
+            "resources": 11
+          },
+          "raw_result": ".local/rea-research/results/clai/resources.json",
+          "raw_result_sha256": "33975448cb5f6f142555c301de840e076919cfef37f7158aa51a542b20c785af",
+          "raw_result_bytes": 13157
+        },
+        {
+          "operation": "inspect_rust_binary",
+          "evidence_id": "ev_39a385c9e715b4b2d7573ec6aefa8f803b4c20f53c355d2bba49d5f730b31ab7",
+          "cli_exit_code": 0,
+          "elapsed_seconds": null,
+          "error_category": null,
+          "error_code": null,
+          "partial_evidence_from_failure": false,
+          "subject_sha256": "ea63b255bc7731db33b65c1aedb9c3c3299dea460e5524b5285038325c50c87f",
+          "source_selection": null,
+          "statistics": null,
+          "coverage": null,
+          "raw_result": ".local/rea-research/results/clai/rust.json",
+          "raw_result_sha256": "5b70ac5d89e595166801b9803525b0566253e9a7968c4855105d43c9ee4cac65",
+          "raw_result_bytes": 3076
+        },
+        {
+          "operation": "inspect_with_objdump",
+          "evidence_id": "ev_3569eaedf6423b5607cd3f7f098197490cd8d03db5a9361ee3abf256c7322e42",
+          "cli_exit_code": 0,
+          "elapsed_seconds": null,
+          "error_category": null,
+          "error_code": null,
+          "partial_evidence_from_failure": false,
+          "subject_sha256": "ea63b255bc7731db33b65c1aedb9c3c3299dea460e5524b5285038325c50c87f",
+          "source_selection": null,
+          "statistics": null,
+          "coverage": null,
+          "raw_result": ".local/rea-research/results/clai/objdump-symbols.json",
+          "raw_result_sha256": "562d18026538f7b0b88c2cb1a07bebf21111e297046b96ed8ac206639af450f6",
+          "raw_result_bytes": 2229,
+          "provider_exit_code": 1
+        }
+      ],
+      "report": "clai.md",
+      "target_executed": false
+    },
+    "hearth": {
+      "acquisition": {
+        "repository": "0pen-Sourcer/Hearth",
+        "tag": "v0.7.5-preview",
+        "release_url": "https://github.com/0pen-Sourcer/Hearth/releases/tag/v0.7.5-preview",
+        "asset": "Hearth-Setup-Lite-v0.7.5-preview.exe",
+        "url": "https://github.com/0pen-Sourcer/Hearth/releases/download/v0.7.5-preview/Hearth-Setup-Lite-v0.7.5-preview.exe",
+        "sha256": "e89b9846f45d475a85b057bfed89120d53d333c89517efd272fc84110956c325",
+        "bytes": 665266475,
+        "executed": false
+      },
+      "operations": [
+        {
+          "operation": "inspect_desktop_application",
+          "evidence_id": "ev_59e0d3948ca17b5165d88da052df230ce1817420fa21e0e2056ddae3967e2987",
+          "cli_exit_code": 0,
+          "elapsed_seconds": null,
+          "error_category": null,
+          "error_code": null,
+          "partial_evidence_from_failure": false,
+          "subject_sha256": "406538a8bce2f894d610a0f1f7ab9fb109f400083b8cd7c3a4c8d112e056e2b2",
+          "source_selection": null,
+          "statistics": null,
+          "coverage": {
+            "status": "complete-within-scan",
+            "entries_examined": 4,
+            "files_probed": 1,
+            "bytes_read": 324,
+            "symlinks_not_followed": 0,
+            "special_entries_omitted": 0,
+            "limits": {
+              "max_entries": 20000,
+              "max_probe_bytes": 8388608
+            }
+          },
+          "raw_result": ".local/rea-research/results/hearth/desktop.json",
+          "raw_result_sha256": "6598157080344dc5c5c41e3120ff92befeb0042181bc64aeb93afbd6ee067a88",
+          "raw_result_bytes": 5746
+        },
+        {
+          "operation": "analyze_javascript_application",
+          "evidence_id": "ev_15eba3bfafe4783b92d557d0a68b7be5bf1d7c5a05baba2a5c406039f191e204",
+          "cli_exit_code": 0,
+          "elapsed_seconds": null,
+          "error_category": null,
+          "error_code": null,
+          "partial_evidence_from_failure": false,
+          "subject_sha256": "13a93224f563fa055f7d45381a999bc07b94e4f31a79af5b198f374cabd2d7e2",
+          "source_selection": {
+            "requested_paths": [
+              "inline-1.js"
+            ],
+            "unselected_files": 1
+          },
+          "statistics": {
+            "relevant_files": 2,
+            "nested_asar_containers": 0,
+            "text_bytes_read": 515951,
+            "invalid_utf8_files": 0,
+            "parsed_javascript_files": 1,
+            "skipped_javascript_files": 0,
+            "visited_ast_nodes": 58621,
+            "findings": 70,
+            "modules": 0,
+            "parse_failures": 0
+          },
+          "coverage": null,
+          "raw_result": ".local/rea-research/results/hearth/inline.json",
+          "raw_result_sha256": "95e54ee9a1ab234449c1a574746fcb05977ba42580f25e621d965c24c60245fa",
+          "raw_result_bytes": 23478577
+        },
+        {
+          "operation": "trace_javascript_semantics",
+          "evidence_id": "ev_ec2aa1ce9f892f32dc46350a43ce7bc68d7ff5dc72d3a458369c5b32d728f91a",
+          "cli_exit_code": 0,
+          "elapsed_seconds": null,
+          "error_category": null,
+          "error_code": null,
+          "partial_evidence_from_failure": false,
+          "subject_sha256": null,
+          "source_selection": null,
+          "statistics": null,
+          "coverage": {
+            "status": "partial"
+          },
+          "raw_result": ".local/rea-research/results/hearth/permission-trace.json",
+          "raw_result_sha256": "26f0b2baa5129afe748dfda28567d35f202e43ab05656cbcc35b93f9ac918832",
+          "raw_result_bytes": 22534
+        },
+        {
+          "operation": "analyze_javascript_application",
+          "evidence_id": "ev_27eb05b9aba0336d86c31efe39a520e3473047471cd8a46b8e4b4e0937cc20af",
+          "cli_exit_code": 0,
+          "elapsed_seconds": null,
+          "error_category": null,
+          "error_code": null,
+          "partial_evidence_from_failure": false,
+          "subject_sha256": "e29389d01f7de4cdbe96ae5a4c1b500f4ece4b99c48441572b2a9b936b6d4e54",
+          "source_selection": {
+            "requested_paths": [
+              "hearth/ui.html"
+            ],
+            "unselected_files": 1
+          },
+          "statistics": {
+            "relevant_files": 2,
+            "nested_asar_containers": 0,
+            "text_bytes_read": 722789,
+            "invalid_utf8_files": 0,
+            "parsed_javascript_files": 0,
+            "skipped_javascript_files": 0,
+            "visited_ast_nodes": 0,
+            "findings": 2,
+            "modules": 0,
+            "parse_failures": 0
+          },
+          "coverage": null,
+          "raw_result": ".local/rea-research/results/hearth/ui.json",
+          "raw_result_sha256": "db202fad0e2459a9ef45e9dc9bf3897e9ae702c65c42292f4701ff984be4d6d9",
+          "raw_result_bytes": 29395
+        }
+      ],
+      "report": "hearth.md",
+      "target_executed": false
+    }
+  },
+  "limits": [
+    "Per-source timeouts in Keel and AnythingLLM preserved as failures with partial Evidence.",
+    "One Handrail trace argument error was retained and corrected.",
+    "CLAI objdump CLI delivered Evidence but its provider exited 1; no symbols or disassembly were recovered.",
+    "Hearth published code ZIP is not proven identical to installed application bytes.",
+    "No application launch, desktop/clipboard access, account operation or runtime security certification."
+  ],
+  "evidence_operation_records": 21,
+  "application_code_changed": false
+}

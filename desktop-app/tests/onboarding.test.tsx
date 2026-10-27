@@ -1,11 +1,12 @@
 import React from 'react';
-import {it,expect,vi} from 'vitest';
-import {render,screen,fireEvent,waitFor} from '@testing-library/react';
+import {it,expect,vi,afterEach} from 'vitest';
+import {render,screen,fireEvent,waitFor,act} from '@testing-library/react';
 import {Onboarding} from '../src/renderer/Onboarding';
 import {localDocker,validModel,SetupManager,DATABASE_IMAGE_ID} from '../src/main/setup';
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
+afterEach(()=>vi.useRealTimers());
 it('accepts only local engines and exact public provider fields',()=>{
   expect(localDocker('npipe:////./pipe/dockerDesktopLinuxEngine')).toBe(true);
   for(const v of ['tcp://example.com:2375','ssh://server','npipe:////x/pipe/test'])expect(localDocker(v)).toBe(false);
@@ -38,7 +39,20 @@ it('explains disclosure and leaves finish disabled for a new user',async()=>{
   const api={setupStatus:vi.fn(async()=>({storage:'isolated workspace'}))} as any;
   render(<Onboarding api={api} done={vi.fn()}/>);
   await waitFor(()=>expect(api.setupStatus).toHaveBeenCalled());
-  expect((screen.getByRole('button',{name:'Create workspace and open Wayfinder'}) as HTMLButtonElement).disabled).toBe(true);
-  expect(screen.getByText(/existing Hermes\/OpenShell model connection/)).toBeTruthy();
+  expect((screen.getByRole('button',{name:'Continue'}) as HTMLButtonElement).disabled).toBe(true);
+  fireEvent.click(screen.getByRole('button',{name:/STEP 3/}));
+  expect((screen.getByRole('button',{name:/Create workspace and open Wayfinder/}) as HTMLButtonElement).disabled).toBe(true);
+
   expect(screen.getByLabelText(/I agree to send/)).toBeTruthy();
+});
+
+it('expires model consent while setup stays open and does not finish implicitly',async()=>{
+  vi.useFakeTimers();vi.setSystemTime(new Date('2026-10-27T00:00:00Z'));
+  const api={setupStatus:vi.fn(async()=>({databaseReady:true,memoryReady:true,modelReady:true,modelExpiresAt:Date.now()+5000,model:{model:'approved',provider:'custom',endpoint:'inference.local'}})),setupFinish:vi.fn()} as any;
+  await act(async()=>{render(<Onboarding api={api} done={vi.fn()}/>);});
+  const finish=screen.getByRole('button',{name:/Create workspace and open Wayfinder/}) as HTMLButtonElement;
+  fireEvent.click(screen.getByRole('checkbox',{name:/I agree to send/}));expect(finish.disabled).toBe(false);
+  await act(async()=>{vi.advanceTimersByTime(5001);});expect(finish.disabled).toBe(true);
+  expect((screen.getByRole('checkbox') as HTMLInputElement).checked).toBe(false);
+  expect(api.setupFinish).not.toHaveBeenCalled();
 });

@@ -23,6 +23,17 @@ class CapabilityCatalog:
                     score=candidate.score,
                     schema_version="wayfinder.api/v2" if supported else None,
                     metadata_status=candidate.status,
+                    discovered=True,
+                    configured=supported,
+                    qualified=supported and qualified,
+                    available=supported and qualified,
+                    reason=(
+                        'Existing W35 handler; current isolated runtime inspection passed. A fresh scoped grant and disclosure are still required.'
+                        if supported and qualified else
+                        'Inspect the installed isolated Hermes binding before analysis.'
+                        if supported else
+                        'Atlas metadata has no qualified application handler for this operation.'
+                    ),
                     availability="runtime_qualified"
                     if supported and qualified
                     else "unqualified",

@@ -20,5 +20,5 @@ it('deferred Fitness has no execution fallback and provider presets do not claim
   const {api}=setup();await screen.findByText('Fitness & Habits');
   await userEvent.click(screen.getByRole('button',{name:/A08 Fitness & Habits/}));
   expect(screen.queryByRole('button',{name:'Run selected-file task'})).toBeNull();
-  expect(api.startProfileTask).not.toHaveBeenCalled();expect(screen.getByText('Provider operations unqualified')).toBeTruthy();
+  expect(api.startProfileTask).not.toHaveBeenCalled();expect(screen.getByText('Agent workflow unqualified')).toBeTruthy();
 });

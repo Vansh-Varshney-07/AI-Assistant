@@ -1,7 +1,8 @@
 """Platform-owned v1 contracts. Existing worker task/result contracts are unchanged."""
 
-from typing import Literal
-from pydantic import BaseModel, ConfigDict, Field
+from typing import Annotated, Literal
+import json
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 VERSION = "wayfinder.platform/1"
 
@@ -17,6 +18,47 @@ class Scope(Contract):
 
     def worker_scope(self):
         return (self.owner, self.space, self.task)
+
+
+class ArtifactReference(Contract):
+    """Opaque, scoped broker reference. A path or model-supplied URL is not a grant."""
+    reference: str = Field(min_length=1, max_length=200)
+    sha256: str = Field(pattern=r'^[a-f0-9]{64}$')
+    media_type: str = Field(min_length=1, max_length=100)
+
+
+class TaskEnvelope(Contract):
+    """Platform transport wrapper; worker-owned output schemas remain unchanged."""
+    contract: Literal['wayfinder.task-envelope/1'] = 'wayfinder.task-envelope/1'
+    request_id: str = Field(min_length=1, max_length=100)
+    run_id: str = Field(pattern=r'^[a-f0-9]{32}$')
+    worker_role: str = Field(pattern=r'^(W(0[1-9]|[1-3][0-9]|4[0-7])|CHAT)$')
+    scope: Scope
+    artifacts: tuple[ArtifactReference, ...] = Field(default=(), max_length=8)
+    deadline: float = Field(gt=0, allow_inf_nan=False)
+    cancellation_id: str = Field(min_length=1, max_length=100)
+
+
+class WorkerOutcome(Contract):
+    contract: Literal['wayfinder.worker-outcome/1'] = 'wayfinder.worker-outcome/1'
+    run_id: str = Field(pattern=r'^[a-f0-9]{32}$')
+    status: Literal['completed','failed','cancelled','interrupted','stale','uncertain']
+    output: dict | None = None
+    evidence: tuple[ArtifactReference, ...] = Field(default=(), max_length=8)
+    warnings: tuple[Annotated[str, Field(max_length=2000)], ...] = Field(default=(), max_length=16)
+    execution_ref: str = Field(min_length=1, max_length=200)
+    error_ref: str | None = Field(default=None, max_length=200)
+
+    @model_validator(mode='after')
+    def completed_requires_output(self):
+        if self.status == 'completed' and self.output is None:
+            raise ValueError('A completed worker outcome requires structured output.')
+        try:
+            if len(json.dumps(self.output,allow_nan=False).encode('utf-8'))>32000:
+                raise ValueError('Worker output exceeds the bounded transport limit.')
+        except (TypeError,ValueError):
+            raise ValueError('Worker output must be bounded finite JSON.') from None
+        return self
 
 
 class ContextQuery(Contract):
