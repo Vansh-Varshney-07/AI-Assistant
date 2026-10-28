@@ -1,12 +1,30 @@
-"""Versioned task focus over existing handlers; no agent loop or tool delegation runtime."""
+﻿"""Versioned task focus over existing handlers; no agent loop or tool delegation runtime."""
 import hashlib
 import json
 from pathlib import Path
 from threading import RLock
 import time
 import uuid
+from typing import Literal
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
-from wayfinder.platform.contracts import ArtifactReference, TaskEnvelope, WorkerOutcome
+from wayfinder.platform.worker_bindings import activation_ledger
+from wayfinder.platform.contracts import ArtifactReference, TaskEnvelope, WorkerOutcome, Scope
+# M00 routing: intent -> plan -> capability selection -> dispatch -> validation -> synthesis
+# This represents the bounded source_task orchestration path for complex queries.
+M00_ROUTING = {
+    "intent": "W01",      # Understand intent from selected source
+    "plan": "W03",        # Task planning
+    "dispatch": "W35",    # Primary analysis worker (qualified via CapabilityCatalog)
+    "validation": "W06",  # Result validation
+    "synthesis": "W07",   # Output synthesis
+    "description": "Bounded M00 path: W01->W03->W35->W06->W07. Tools closed; no helpers. Source context only.",
+}
+
+
+def get_worker_activation() -> list[dict]:
+    from wayfinder.platform.worker_activation_ledger import get_ledger
+    return get_ledger()
+
 
 SCHEMAS = {
     'platform_profiles': set(), 'platform_profile_start': {'request'},
@@ -15,6 +33,7 @@ SCHEMAS = {
 }
 TERMINAL = {'completed','failed','stale','cancelled','interrupted'}
 FILE_BINDINGS = frozenset({'A01','A05','A06'})
+STRUCTURED_BINDINGS={'A01':'W09','A02':'W03','A03':'W16','A04':'W24','A05':'W12','A06':'W10'}
 def canonical(value): return json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False)
 
 class TaskRequest(BaseModel):
@@ -23,6 +42,8 @@ class TaskRequest(BaseModel):
     profile_id: str = Field(min_length=3,max_length=3)
     profile_version: str = '1'
     preset_id: str | None = None
+    variant: Literal['selected_file','source_contract'] = 'selected_file'
+    source_kind: Literal['file','google','external'] = 'file'
     reference: str = Field(min_length=1,max_length=200)
     goal: str = Field(min_length=1,max_length=1000)
 
@@ -33,6 +54,8 @@ class TaskProfiles:
         self.manifest=json.loads(raw)
         if self.manifest.get('contract')!='wayfinder.task-profiles/1':raise ValueError('Unsupported task-profile manifest.')
         self.manifest_hash=hashlib.sha256(raw).hexdigest()
+        self.source_checks={}
+        self.source_releases={}
         with self.app.db() as db:
             db.execute('''CREATE TABLE IF NOT EXISTS task_profile_runs(
                 id TEXT PRIMARY KEY,scope TEXT,request TEXT,digest TEXT,body TEXT,profile TEXT,
@@ -40,20 +63,43 @@ class TaskProfiles:
                 UNIQUE(scope,request))''')
             db.execute("UPDATE task_profile_runs SET status='interrupted' WHERE status IN ('reserved','running')")
 
+        self.unsubscribe=self.app.workers.subscribe_completion(self.on_completed)
+
+    def on_completed(self,worker_scope,jid):
+        with self.lock:
+            if self.platform.closed:return
+            scope=Scope(owner=worker_scope[0],space=worker_scope[1],task=worker_scope[2])
+            with self.app.db() as db:rows=db.execute("SELECT id FROM task_profile_runs WHERE scope=? AND job=? AND status='running'",(canonical(scope.worker_scope()),jid)).fetchall()
+            for row in rows:self.result(scope,row['id'])
+
+    def release_source(self,rid):
+        self.source_checks.pop(rid,None)
+        release=self.source_releases.pop(rid,None)
+        if release:release()
+
+    def close(self):
+        with self.lock:
+            self.unsubscribe()
+            for rid in list(self.source_releases):self.release_source(rid)
+
     def catalog(self):
         qualified=bool(self.platform.inspector.current().get('compatible'))
         profiles=[]
         for item in self.manifest['profiles']:
             file_binding=item['id'] in FILE_BINDINGS
+            structured_binding=STRUCTURED_BINDINGS.get(item['id'])
+            included=file_binding or bool(structured_binding)
             profiles.append(dict(item,execution=dict(
-                available=file_binding and qualified,
-                included=file_binding,
-                mode='selected_file' if file_binding else 'existing_memory_view' if item['id']=='A07' else None,
-                status='ready_for_selected_file' if file_binding and qualified else 'runtime_inspection_required' if file_binding else 'existing_memory_view' if item['id']=='A07' else 'deferred' if item['id']=='A08' else 'connection_or_adapter_unqualified',
-                binding='existing.W35' if file_binding else None,
-                note='Selected UTF-8 file only. No live retrieval, provider access, effects, or helpers.' if file_binding else item['limitation'])))
+                available=included and qualified,
+                included=included,
+                variants=[dict(id="selected_file",role="W35")]*(1 if file_binding else 0)+[dict(id="source_contract",role=structured_binding)]*(1 if structured_binding else 0),
+                default_variant="selected_file" if file_binding else "source_contract",
+                mode='selected_file' if included else 'existing_memory_view' if item['id']=='A07' else None,
+                status='ready_for_selected_file' if included and qualified else 'runtime_inspection_required' if included else 'existing_memory_view' if item['id']=='A07' else 'deferred' if item['id']=='A08' else 'connection_or_adapter_unqualified',
+                binding='existing.W35' if file_binding else 'hermes.definition/1:'+structured_binding if structured_binding else None,
+                note='Selected UTF-8 file only. No live retrieval, provider access, effects, or helpers.' if included else item['limitation'])))
         return dict(contract=self.manifest['contract'],version=self.manifest['version'],manifest_sha256=self.manifest_hash,
-                    main=self.manifest['main'],profiles=profiles,presets=[dict(p,available=False,status='provider_operations_unqualified') for p in self.manifest['presets']],
+                    worker_activation=activation_ledger(qualified),main=self.manifest['main'],profiles=profiles,presets=[dict(p,available=False,status='provider_operations_unqualified') for p in self.manifest['presets']],
                     limits=dict(max_active_existing_workers=2,max_worker_invocations=1,delegation_depth=0,deadline_seconds=110,cost=None,tokens=None))
 
     def call(self,who,scope,operation,body):
@@ -65,7 +111,7 @@ class TaskProfiles:
             if operation=='platform_profile_start':
                 try:request=TaskRequest.model_validate(body.get('request'))
                 except ValidationError:raise ValueError('Invalid task-profile request fields or limits.') from None
-                return self.start(scope,request)
+                return self.start(scope,request,who)
             if operation=='platform_profile_runs':
                 with self.app.db() as db:rows=db.execute('SELECT id FROM task_profile_runs WHERE scope=? ORDER BY created DESC LIMIT 8',(canonical(scope.worker_scope()),)).fetchall()
                 return [dict(self.result(scope,row['id']),result=None) for row in rows]
@@ -93,34 +139,66 @@ class TaskProfiles:
             if job is None:db.execute('UPDATE task_profile_runs SET status=? WHERE id=?',(status,rid))
             else:db.execute('UPDATE task_profile_runs SET status=?,job=? WHERE id=?',(status,job,rid))
 
-    def start(self,scope,request):
+    def provider_source(self,who,scope,request):
+        if who is None or request.variant!='source_contract':raise ValueError('Provider context requires a scoped structured task.')
+        adapter=self.platform.google if request.source_kind=='google' else self.platform.connections
+        with adapter.lock:
+            grant=adapter.grants.get(request.reference)
+            if not grant or grant['scope']!=scope:raise ValueError('Provider source grant belongs to another task or is unavailable.')
+        operation='platform_google_read' if request.source_kind=='google' else 'platform_external_read'
+        observed=adapter.call(who,scope,operation,dict(grant=request.reference))
+        text=json.dumps(observed,sort_keys=True,ensure_ascii=False,allow_nan=False)
+        if len(text.encode())>24000:raise ValueError('Selected provider observation exceeds the model context budget. Select fewer records.')
+        def revalidate():
+            adapter.live(grant)
+            if request.source_kind=='google':
+                session=adapter.session(grant['service'],grant['connection']);session.close()
+        revalidate()
+        digest=hashlib.sha256(text.encode()).hexdigest()
+        source=dict(reference='provider:'+uuid.uuid4().hex,name='Selected '+(grant.get('service') or grant['provider'])+' observation',sha256=digest,source_kind=request.source_kind,coverage='Only the explicit selected read projection; metadata/snippets/excerpts remain partial.',observed_at=observed['observed_at'])
+        def release():
+            with adapter.lock:
+                if adapter.grants.get(grant['id']) is grant:adapter.grants.pop(grant['id'],None)
+        return text,source,revalidate,release
+
+    def start(self,scope,request,who=None):
         body=request.model_dump();digest=hashlib.sha256(canonical(body).encode()).hexdigest()
         with self.app.db() as db:old=db.execute('SELECT id,digest FROM task_profile_runs WHERE scope=? AND request=?',(canonical(scope.worker_scope()),request.request_id)).fetchone()
         if old:
             if old['digest']!=digest:raise ValueError('Task request ID belongs to different immutable input.')
             return self.result(scope,old['id'])
         if request.preset_id is not None:raise ValueError('App presets are defined but provider operations are not qualified. No fallback task was dispatched.')
-        if request.profile_id not in FILE_BINDINGS or request.profile_version!='1':raise ValueError('This profile/version has no qualified execution adapter.')
+        role=STRUCTURED_BINDINGS.get(request.profile_id) if request.variant=='source_contract' else 'W35' if request.profile_id in FILE_BINDINGS else None
+        if role is None or request.profile_version!='1':raise ValueError('This profile/version has no qualified execution adapter.')
         if not request.goal.strip() or len(request.goal.encode('utf-8'))>1000:raise ValueError('Enter a nonblank goal within the bounded text limit (1,000 UTF-8 bytes).')
         self.platform.inspector.require()
-        source=self.app.workers.files.read(scope.worker_scope(),request.reference)
-        if source['extension'] not in {'.txt','.md','.csv','.json','.log'}:raise ValueError('Task profiles currently accept selected UTF-8 text files only.')
-        # This reuses FileBroker identity/hash checks, and never transfers a grant to another task.
-        source_ref=dict(reference=request.reference,name=source['name'],sha256=source['sha256'])
+        provided=None
+        if request.source_kind=='file':
+            source=self.app.workers.files.read(scope.worker_scope(),request.reference)
+            if source['extension'] not in {'.txt','.md','.csv','.json','.log'}:raise ValueError('Task profiles currently accept selected UTF-8 text files only.')
+            source_ref=dict(reference=request.reference,name=source['name'],sha256=source['sha256'])
+        else:
+            text,source_ref,revalidate,release=self.provider_source(who,scope,request)
+            provided=(text,source_ref,revalidate,release)
         rid=uuid.uuid4().hex
         # Transport metadata is issued by the service after the scoped read. It
         # does not alter the worker's definition or transfer the file grant.
-        envelope=TaskEnvelope(request_id=request.request_id,run_id=rid,worker_role='W35',scope=scope,
-            artifacts=(ArtifactReference(reference=request.reference,sha256=source['sha256'],media_type='text/plain'),),
+        envelope=TaskEnvelope(request_id=request.request_id,run_id=rid,worker_role=role,scope=scope,
+            artifacts=(ArtifactReference(reference=source_ref['reference'],sha256=source_ref['sha256'],media_type='text/plain'),),
             deadline=float(time.time()+110),cancellation_id=rid)
         stored_body=dict(body,platform_envelope=envelope.model_dump(mode='json'))
         with self.app.db() as db:db.execute("INSERT INTO task_profile_runs VALUES (?,?,?,?,?,?,?,?,NULL,'reserved',?)",(rid,canonical(scope.worker_scope()),request.request_id,digest,canonical(stored_body),request.profile_id,self.manifest_hash,canonical(source_ref),time.time()))
         try:
             # One existing isolated worker is the entire qualified lead path. No nested model loop.
-            job=self.app.workers.start(scope.worker_scope(),role='W35',question=request.goal,reference=request.reference)
+            if provided:
+                self.source_checks[rid]=provided[2]
+                self.source_releases[rid]=provided[3]
+                job=self.app.workers.start_context(scope.worker_scope(),role=role,question=request.goal,context=provided[0],evidence=provided[1],revalidate=provided[2])
+            else:job=self.app.workers.start(scope.worker_scope(),role=role,question=request.goal,reference=request.reference)
             self.update(rid,status='running',job=job['id'])
         except Exception:
             self.update(rid,status='failed')
+            self.release_source(rid)
             raise ValueError('The bounded selected-file task could not start. No automatic retry was made.') from None
         return self.result(scope,rid)
 
@@ -133,15 +211,21 @@ class TaskProfiles:
         if row['status']=='running' and job:
             if job['status']=='completed':
                 try:
-                    selected=self.app.workers.files.read(scope.worker_scope(),json.loads(row['body'])['reference'])
-                    expected=json.loads(row['source'])['sha256']
+                    saved_source=json.loads(row['source'])
+                    expected=saved_source['sha256']
+                    if saved_source.get('source_kind'):
+                        check=self.source_checks.get(rid)
+                        if not check:raise ValueError('Source qualification was not retained across restart.')
+                        check();selected=saved_source
+                    else:selected=self.app.workers.files.read(scope.worker_scope(),json.loads(row['body'])['reference'])
                     if selected['sha256']!=expected or job['result'].get('evidence',{}).get('sha256')!=expected:raise ValueError('Source changed')
                     self.update(rid,status='completed')
                 except ValueError:self.update(rid,status='stale')
             elif job['status'] in {'failed','stopped','interrupted'}:self.update(rid,status='cancelled' if job['status']=='stopped' else job['status'])
             row=self.row(scope,rid)
         if row['status']=='completed' and job and job['status']=='completed':
-            result=dict(text=job['result']['text'],sources=[dict(json.loads(row['source']),truncated=job['result'].get('evidence',{}).get('truncated',False))],historical_artifact=True)
+            result=dict(text=job['result']['text'] if not job['result'].get('structured') else 'Validated structured output from '+job['role'],structured=job['result'].get('structured'),sources=[dict(json.loads(row['source']),truncated=job['result'].get('evidence',{}).get('truncated',False))],historical_artifact=True)
+        if row['status'] in TERMINAL:self.release_source(rid)
         saved=json.loads(row['body']);envelope=saved.get('platform_envelope');outcome=None
         warning=warning or ('Upstream abort/billing is unconfirmed; no automatic replay.' if row['status'] in {'cancelled','interrupted'} else None)
         if envelope:
@@ -153,4 +237,4 @@ class TaskProfiles:
                 outcome=WorkerOutcome(run_id=row['id'],status=row['status'],output=result,
                     evidence=checked.artifacts if result else (),warnings=(warning,) if warning else (),
                     execution_ref=row['job'] or row['id'],error_ref=row['id'] if row['status']=='failed' else None).model_dump(mode='json')
-        return dict(id=row['id'],profile_id=row['profile'],profile_version='1',manifest_sha256=row['manifest'],status=row['status'],created=row['created'],goal=saved['goal'],envelope=envelope,outcome=outcome,job=row['job'],binding='existing.W35',result=result,warning=warning,metrics=dict(worker_invocations=1 if row['job'] else 0,delegations=0,tokens=None,cost=None),effects_executed=False)
+        return dict(id=row['id'],profile_id=row['profile'],profile_version='1',manifest_sha256=row['manifest'],status=row['status'],created=row['created'],goal=saved['goal'],envelope=envelope,outcome=outcome,job=row['job'],binding='existing.W35' if not envelope or envelope['worker_role']=='W35' else 'hermes.definition/1:'+envelope['worker_role'],result=result,warning=warning,metrics=dict(worker_invocations=1 if row['job'] else 0,delegations=0,tokens=None,cost=None),effects_executed=False)

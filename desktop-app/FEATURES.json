@@ -338,7 +338,12 @@
     "googleRevoke",
     "externalGrant",
     "externalRead",
-    "externalRevoke"
+    "externalRevoke",
+    "startWorkflow",
+    "workflow",
+    "workflows",
+    "cancelWorkflow",
+    "startSourceTask"
   ],
   "backend_operations": [
     "status",
@@ -407,7 +412,11 @@
     "platform_connections_check",
     "platform_external_grant",
     "platform_external_read",
-    "platform_external_revoke"
+    "platform_external_revoke",
+    "platform_workflow_start",
+    "platform_workflow_result",
+    "platform_workflow_runs",
+    "platform_workflow_cancel"
   ],
   "private_facades": [
     "boot",

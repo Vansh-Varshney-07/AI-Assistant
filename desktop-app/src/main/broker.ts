@@ -8,7 +8,7 @@ export interface NativeUI {
 }
 const TASK = 'general';
 function text(value: unknown, max = 200): string {
-  if (typeof value !== 'string' || !value.trim() || value.length > max || value.includes('\0')) throw new Error(`Enter text of 1–${max} characters.`);
+  if (typeof value !== 'string' || !value.trim() || value.length > max || value.includes('\0')) throw new Error(`Enter text of 1ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚¢ÃƒÆ’Ã‚¢Ãƒ¢Ã¢â€š¬Ã…¡Ãƒâ€šÃ‚¬ÃƒÆ’Ã‚¢Ãƒ¢Ã¢â‚¬Å¡Ã‚¬Ãƒâ€¦Ã¢â‚¬Å“${max} characters.`);
   return value.trim();
 }
 function object(value: unknown, allowed: string[]): Row {
@@ -45,7 +45,7 @@ export function createHandlers(transport: Transport, ui: NativeUI, lifecycle: { 
       if (proposal.status !== 'pending') return proposal;
       if (proposal.expires * 1000 <= Date.now()) throw new Error('Review expired. Create and inspect a fresh proposal.');
       const detail = visible({ space: sid, task: TASK, operation: type === 'memory' ? 'memory.apply_event' : 'git.create_branch', id: proposal.id, digest: proposal.digest, expires: new Date(proposal.expires * 1000).toISOString(), exact_plan: proposal.plan });
-      if (detail.length > 10000) throw new Error('Full proposal exceeds this build’s trusted review limit; no approval was issued.');
+      if (detail.length > 10000) throw new Error('Full proposal exceeds this buildÃƒÆ’Ã†â€™Ãƒâ€šÃ‚¢ÃƒÆ’Ã‚¢Ãƒ¢Ã¢â€š¬Ã…¡Ãƒâ€šÃ‚¬ÃƒÆ’Ã‚¢Ãƒ¢Ã¢â€š¬Ã…¾Ãƒâ€šÃ‚¢s trusted review limit; no approval was issued.');
       const approved = await ui.confirm(type === 'memory' ? 'Review exact memory change' : 'Review new local branch', detail);
       if (proposal.expires * 1000 <= Date.now()) throw new Error('Review expired while open. No approval was sent.');
       return request(`${prefix}_decide`, sid, { id: aid, digest: proposal.digest, approve: approved });
@@ -54,7 +54,7 @@ export function createHandlers(transport: Transport, ui: NativeUI, lifecycle: { 
   const handlers: { [K in Exclude<keyof DesktopAPI, `setup${string}` | 'importConnections' | 'disconnectConnection'>]: (...args: any[]) => Promise<any> } = {
     connectionsStatus:space=>request('platform_connections_status',space),
     checkConnection:(space,provider)=>request('platform_connections_check',space,{provider:kind(provider,['google','tavily','notion'])}),
-    googleGrant:(space,input)=>request('platform_google_grant',space,object(input,['service','resource','limit','time_min','time_max'])),
+    googleGrant:(space,input)=>request('platform_google_grant',space,object(input,['service','resource','limit','time_min','time_max','range'])),
     googleRead:(space,grant)=>request('platform_google_read',space,{grant:text(grant)}),
     googleRevoke:(space,grant)=>request('platform_google_revoke',space,{grant:text(grant)}),
     externalGrant:(space,input)=>request('platform_external_grant',space,object(input,['provider','intent','query','item'])),
@@ -67,11 +67,36 @@ export function createHandlers(transport: Transport, ui: NativeUI, lifecycle: { 
     cancelChat: (space,conversation,turn) => transport.call('chat_cancel',{space:text(space),conversation:text(conversation),turn:text(turn)}),
     lookupChat: (space,conversation,request) => transport.call('chat_lookup',{space:text(space),conversation:text(conversation),request_id:text(request,100)}),
     deleteChat: (space,conversation) => transport.call('chat_delete',{space:text(space),conversation:text(conversation)}),
+    startSourceTask:async(space,profile,sourceKind,source,goal)=>{
+      const pid=kind(profile,['A01','A02','A03','A04','A05','A06']),sourceType=kind(sourceKind,['google','external']);
+      const input=object(structuredClone(source),sourceType==='google'?['service','resource','limit','time_min','time_max','range']:['provider','intent','query','item']);
+      const question=text(goal,1000),review=visible({space:text(space),profile:pid,source_kind:sourceType,exact_source:input,goal:question,disclosure:'This explicit bounded read projection is sent to the managed Hermes model. Metadata, snippets and partial content remain partial. No tools, sends, external writes or automatic memory updates.'});
+      if(review.length>8000)throw new Error('Source review exceeds its display budget.');
+      if(!await ui.confirm('Review selected source and model disclosure',review))throw new Error('Source task cancelled. Nothing was read or dispatched.');
+      const grant=await request(sourceType==='google'?'platform_google_grant':'platform_external_grant',space,input);
+      try{return await request('platform_profile_start',space,{request:{request_id:randomUUID(),profile_id:pid,profile_version:'1',variant:'source_contract',source_kind:sourceType,reference:grant.id,goal:question}});}
+      catch(error){await request(sourceType==='google'?'platform_google_revoke':'platform_external_revoke',space,{grant:grant.id}).catch(()=>{});throw error;}
+    },
+    startWorkflow:async(space,input)=>{
+      const definition=object(structuredClone(input),['contract','version','title','nodes','concurrency','deadline_seconds']);
+      if(definition.contract!=='wayfinder.workflow/1'||definition.version!==1||!Array.isArray(definition.nodes)||definition.nodes.length<1||definition.nodes.length>8)throw new Error('Invalid finite workflow definition.');
+      const nodes=definition.nodes.map((value:unknown)=>{const n=object(value,['id','role','reference','question','dependencies']);
+        kind(n.role,['W35','W01','W03','W06','W07','W09','W10','W12','W13','W14','W15','W16','W18','W19','W24']);
+        const metadata=references.get(`${text(space)}:${text(n.reference)}`);if(!metadata)throw new Error('Select every workflow source again before disclosure.');
+        return {id:text(n.id,32),role:n.role,file:metadata.name,bytes:metadata.bytes,question:text(n.question,1000),dependencies:n.dependencies||[]};});
+      const preview=visible({space:text(space),definition:{...definition,nodes},effects:'No tools or external writes. Each node sends the selected source and bounded upstream output to the managed model.'});
+      if(preview.length>10000)throw new Error('Workflow exceeds the trusted review display limit.');
+      if(!await ui.confirm('Review this bounded workflow and model disclosure',preview))throw new Error('Workflow cancelled. Nothing was dispatched.');
+      return request('platform_workflow_start',space,{request:{request_id:randomUUID(),definition}});
+    },
+    workflow:(space,id)=>request('platform_workflow_result',space,{id:text(id)}),
+    workflows:space=>request('platform_workflow_runs',space),
+    cancelWorkflow:(space,id)=>request('platform_workflow_cancel',space,{id:text(id)}),
     profiles: space => request('platform_profiles', space),
-    startProfileTask: async (space, profile, reference, goal) => {
-      const pid=kind(profile,['A01','A05','A06']);
+    startProfileTask: async (space, profile, reference, goal, variant='selected_file') => {
+      const pid=kind(profile,variant==='source_contract'?['A01','A02','A03','A04','A05','A06']:['A01','A05','A06']);kind(variant,['selected_file','source_contract']);
       await disclose(space,reference,text(goal,1000));
-      return request('platform_profile_start',space,{request:{request_id:randomUUID(),profile_id:pid,profile_version:'1',reference:text(reference),goal:text(goal,1000)}});
+      return request('platform_profile_start',space,{request:{request_id:randomUUID(),profile_id:pid,profile_version:'1',variant,reference:text(reference),goal:text(goal,1000)}});
     },
     profileTask: (space,id) => request('platform_profile_result',space,{id:text(id)}),
     profileTasks: space => request('platform_profile_runs',space),

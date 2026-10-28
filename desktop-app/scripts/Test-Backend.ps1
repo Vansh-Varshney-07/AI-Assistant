@@ -31,11 +31,11 @@ try {
     }
     if (-not $ready) { throw 'Isolated database not ready.' }
     $files = @('desktop-app/backend/test_host.py', 'tests/test_wayfinder_app.py', 'tests/test_desktop_workers.py', 'tests/test_platform_integration.py', 'tests/test_platform_git.py', 'tests/test_platform_memory.py', 'tests/test_platform_sources.py', 'tests/test_google_setup.py', 'tests/test_approval_service.py', 'tests/test_atlas_helpers.py', 'tests/test_integration_action_safety.py', 'wayfinder/workers')
-    $files += @('tests/test_platform_contracts.py','tests/test_task_profiles.py','tests/test_chat.py','tests/test_connections.py','tests/test_connection_boundaries.py')
+    $files += @('tests/test_google_content.py','tests/test_bounded_workflows.py','tests/test_worker_bindings.py','tests/test_platform_contracts.py','tests/test_task_profiles.py','tests/test_chat.py','tests/test_connections.py','tests/test_connection_boundaries.py')
     $selection = @('-k', 'not desktop_worker_controls_and_space_switch')
     $reportName = 'backend.xml'
     if ($Chat) { $files = @('tests/test_chat.py'); $reportName = 'chat-contract.xml' }
-    if ($RebuildContracts) { $files = @('tests/test_platform_contracts.py','tests/test_task_profiles.py','tests/test_chat.py'); $reportName = 'rebuild-contracts.xml' }
+    if ($RebuildContracts) { $files = @('tests/test_google_content.py','tests/test_bounded_workflows.py','tests/test_worker_bindings.py','tests/test_platform_contracts.py','tests/test_task_profiles.py','tests/test_chat.py'); $reportName = 'rebuild-contracts.xml' }
     if ($ClientOnly) { $files = @('desktop-app/backend/test_host.py'); $reportName = 'client-adapter.xml' }
     if ($Live) { $env:WAYFINDER_PLATFORM_LIVE = '1'; $selection = @('-k', 'live_installed_hermes_read_workflow'); $reportName = 'live-hermes.xml' }
     if ($Packaged) {

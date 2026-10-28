@@ -34,7 +34,7 @@ def tavily_search(request):
 def main(request):
     global STAGE
     if request.get('role')=='TAVILY':return tavily_search(request)
-    if request.get("role") not in {"probe", "CHAT", "W33", "W35", "W36"}:
+    if request.get("role") not in {"probe", "CHAT", "W33", "W35", "W36", "W01", "W03", "W06", "W07", "W09", "W10", "W12", "W13", "W14", "W15", "W16", "W18", "W19", "W24"}:
         raise ValueError("Unsupported analysis role.")
     STAGE = "managed_provider"
     # Resolve only the configured provider in a separate process, so its config
@@ -130,7 +130,7 @@ print("WAYFINDER_ROUTE="+json.dumps({k:route.get(k) for k in ("base_url","api_ke
             max_tokens=2200,
             run_budget_seconds=75,
             request_overrides={"response_format": {"type": "json_object"}}
-            if request["role"] == "W36"
+            if request["role"] == "W36" or request.get("structured") is True
             else None,
         )
         try:

@@ -13,7 +13,7 @@ it('executes one explicit selected-file task and shows the actual attributed art
   const {api}=setup();await screen.findByText('Knowledge & Learning');
   await userEvent.click(screen.getByRole('button',{name:'Run selected-file task'}));
   await screen.findByText('Source-linked fixture guide');
-  expect(api.startProfileTask).toHaveBeenCalledWith('a','A05','r',expect.stringContaining('study guide'));
+  expect(api.startProfileTask).toHaveBeenCalledWith('a','A05','r',expect.stringContaining('study guide'),expect.any(String));
   expect(screen.getByText('test.md',{selector:'.observation strong'})).toBeTruthy();
 });
 it('deferred Fitness has no execution fallback and provider presets do not claim connection',async()=>{

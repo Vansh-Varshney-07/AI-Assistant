@@ -40,7 +40,7 @@ it('observes an uncertain send before allowing another explicit request',async()
 
 it('stops the known turn and requires a review before deletion',async()=>{
   const api=client();api.chat.mockResolvedValue({turns:[{id:'running',status:'running',user_text:'Question'}]});
-  render(<ChatPanel api={api} space="a" qualified/>);await screen.findByText('Generating a reply…');
+  render(<ChatPanel api={api} space="a" qualified/>);await screen.findByText('Generating a replyâ€¦');
   fireEvent.click(screen.getByRole('button',{name:'Stop generating'}));await waitFor(()=>expect(api.cancelChat).toHaveBeenCalledWith('a','a','running'));
   await waitFor(()=>expect((screen.getByRole('button',{name:'Delete conversation'}) as HTMLButtonElement).disabled).toBe(false));
   fireEvent.click(screen.getByRole('button',{name:'Delete conversation'}));expect(api.deleteChat).not.toHaveBeenCalled();
@@ -102,4 +102,9 @@ it('preserves a newer draft typed while an earlier send awaits acknowledgement',
   const input=screen.getByRole('textbox',{name:'Message'});fireEvent.change(input,{target:{value:'First question'}});fireEvent.click(screen.getByRole('button',{name:'Send message'}));
   await waitFor(()=>expect(api.sendChat).toHaveBeenCalledTimes(1));expect((input as HTMLTextAreaElement).disabled).toBe(false);fireEvent.change(input,{target:{value:'Newer draft'}});
   await act(async()=>finish(completed));expect((input as HTMLTextAreaElement).value).toBe('Newer draft');expect(api.sendChat).toHaveBeenCalledTimes(1);
+});
+
+it('source task mode opens a draft without sending or executing it',async()=>{
+ const api=client(),onTask=vi.fn();render(<ChatPanel api={api} space="a" qualified onTask={onTask}/>);await waitFor(()=>expect((screen.getByRole('textbox',{name:'Message'}) as HTMLTextAreaElement).disabled).toBe(false));
+ fireEvent.change(screen.getByRole('textbox',{name:'Message'}),{target:{value:'Plan from my source'}});fireEvent.click(screen.getByRole('button',{name:'Plan a source task'}));expect(onTask).toHaveBeenCalledWith('Plan from my source');expect(api.sendChat).not.toHaveBeenCalled();
 });

@@ -69,7 +69,7 @@ def test_direct_baseline_and_profile_use_the_same_worker_payload_without_extra_r
     assert platform['worker'].payloads[0]==platform['worker'].payloads[1]
     assert call(platform,'worker_result',id=direct['id'])['status']=='completed'
 
-@pytest.mark.parametrize('changes',[{'profile_id':'A08'},{'profile_id':'A03'},{'profile_version':'2'},{'preset_id':'P01'},{'tools':['terminal']},{'goal':' '},{'goal':'界'*400}])
+@pytest.mark.parametrize('changes',[{'profile_id':'A08'},{'profile_id':'A03'},{'profile_version':'2'},{'preset_id':'P01'},{'tools':['terminal']},{'goal':' '},{'goal':'ç•Œ'*400}])
 def test_unqualified_modes_versions_and_extra_authority_fail_before_dispatch(platform,changes):
     with pytest.raises(ValueError):start(platform,**changes)
     assert platform['worker'].payloads==[]
@@ -117,3 +117,21 @@ def test_clearing_task_clears_only_the_linked_worker_artifact(platform):
     assert receipt['cleared']
     with pytest.raises(ValueError):call(platform,'platform_profile_result',id=row['id'])
     with pytest.raises(ValueError):platform['app'].workers.get((platform['app'].owner,platform['args']['space'],platform['args']['task']),done['job'])
+
+
+def test_structured_profile_uses_existing_definition_and_rejects_invalid_output(platform):
+    from dataclasses import asdict
+    from wayfinder.workers.W01_intent_analyst.fixtures import SUCCESS_CLEAR_RESEARCH
+    # A02 is a planner contract; arbitrary intent-shaped output must fail validation.
+    platform['worker'].result['text']=json.dumps(asdict(SUCCESS_CLEAR_RESEARCH))
+    row=start(platform,profile_id='A02',variant='source_contract')
+    done=settle(platform,row['id']);assert done['status']=='failed' and done['result'] is None
+    assert platform['worker'].payloads[0]['role']=='W03' and platform['worker'].payloads[0]['structured']
+    assert 'Output schema:' in platform['worker'].payloads[0]['instructions']
+
+
+def test_structured_communications_profile_does_not_get_send_authority(platform):
+    platform['worker'].result['text']=json.dumps(dict(inventory_id='test',commitments=[],duplicates_suppressed_count=0,unresolved_ambiguities=['No message evidence supplied.']))
+    row=start(platform,profile_id='A03',variant='source_contract');done=settle(platform,row['id'])
+    assert done['status']=='completed' and done['envelope']['worker_role']=='W16' and not done['effects_executed']
+    assert done['result']['structured']['commitments']==[] and platform['worker'].payloads[0]['role']=='W16'

@@ -10,6 +10,7 @@ from threading import RLock, Timer
 import time
 import uuid
 
+from wayfinder.platform.workflows import Workflows,SCHEMAS as WORKFLOW_SCHEMAS
 from wayfinder.platform.catalog import CapabilityCatalog, FILE_ANALYST
 from wayfinder.platform.context import ContextGateway
 from wayfinder.platform.connectors import ConnectorService, SCHEMAS as CONNECTOR_SCHEMAS
@@ -85,6 +86,7 @@ class PlatformService:
 
         self.review = WorkflowReview(self)
         self.profiles = TaskProfiles(self)
+        self.workflows = Workflows(self)
 
     def _scope(self, who, body):
         self.app.authorize(who)
@@ -132,11 +134,14 @@ class PlatformService:
         )
         schemas.update({name:fields | {"space","task"} for name,fields in PROFILE_SCHEMAS.items()})
         schemas.update({name:fields|{'space','task'} for name,fields in CONNECTION_SCHEMAS.items()})
+        schemas.update({name:fields|{"space","task"} for name,fields in WORKFLOW_SCHEMAS.items()})
         if operation not in schemas or set(body) - schemas[operation]:
             raise ValueError("Unknown platform operation or fields.")
         scope = self._scope(who, body)
         if self.closed or self.app.closed:
             raise ValueError("Platform is stopped.")
+        if operation in WORKFLOW_SCHEMAS:
+            return self.workflows.call(who,scope,operation,body)
         if operation in PROFILE_SCHEMAS:
             return self.profiles.call(who,scope,operation,body)
         if operation in CONNECTOR_SCHEMAS:
@@ -551,6 +556,8 @@ class PlatformService:
                 timer.cancel()
             self.timers.clear()
             self.context.clear()
+        self.profiles.close()
+        self.workflows.close()
         self.connectors.close()
         self.memory.close()
         self.google.close()

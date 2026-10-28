@@ -3596,3 +3596,10 @@ nav button[aria-current=page] {
 }
 }
 .chat-history:has(.chat-welcome) .conversation-reading-column {height:100%;}
+
+.workflow-draft { display:grid; gap:16px; padding-left:24px; }
+.workflow-draft>li { padding:16px; border:1px solid var(--line); border-radius:12px; background:var(--panel-low); }
+.workflow-draft label { margin-bottom:12px; }
+.workflow-draft select,.workflow-draft textarea { width:100%; min-width:0; }
+.workspace-panel code { overflow-wrap:anywhere; }
+.workspace-panel>label { margin:16px 0; }

@@ -42,6 +42,7 @@ async function checkColors(page){
 async function capture(page,options){await page.evaluate(()=>window.scrollTo(0,0));await page.screenshot(options);}
 async function fixture(manifest) {
   const ready = { state: 'ready', capabilities: { memory: true, documents: false }, runtime: 'Synthetic UI fixture — not a live runtime' };
+  let workflowRuns=[];
   let messages=[],setupComplete=location.search!=='?setup';
   let setupState={databaseReady:false,memoryReady:false,modelReady:false,storage:'Isolated synthetic workspace — no real files'};
   const api = {
@@ -61,6 +62,11 @@ async function fixture(manifest) {
     googleRead: async () => ({records:[{id:'synthetic-event',summary:'Synthetic planning session',start:{dateTime:'2026-10-27T10:00:00Z'},end:{dateTime:'2026-10-27T10:30:00Z'}}]}),
     googleRevoke: async () => ({revoked:true}),
     profiles: async () => ({...manifest,profiles:manifest.profiles.map(p=>({...p,execution:{included:['A01','A05','A06'].includes(p.id),available:false,status:p.id==='A08'?'deferred':'inspection_required',note:p.limitation}})),presets:manifest.presets.map(p=>({...p,available:false}))}),
+    workflows:async()=>workflowRuns,
+    selectFiles:async()=>({grant:{id:'synthetic-grant'},files:[{id:'synthetic-file',name:'synthetic-note.md',bytes:128}]}),
+    startWorkflow:async(_space,definition)=>{const result={id:'synthetic-workflow',status:'completed',definition,digest:'a'.repeat(64),events:[{status:'completed',at:1}],metrics:{worker_invocations:definition.nodes.length},nodes:definition.nodes.map(n=>({id:n.id,status:'completed',output:{text:'## Synthetic step result\n\nOnly selected fixture evidence was used.',source:{name:'synthetic-note.md',sha256:'b'.repeat(64)}}}))};workflowRuns=[result];return result;},
+    workflow:async()=>workflowRuns[0],
+    cancelWorkflow:async()=>({...workflowRuns[0],status:'cancelled'}),
     profileTasks: async () => [],
     listSpaces: async () => [{ id: 'synthetic-a', name: 'Synthetic UI fixture' }],
     getSettings: async () => ({ font_size: 14, background: false }),
@@ -193,6 +199,13 @@ try {
     assert.equal(await page.getByRole('button',{name:'Run selected-file task'}).count(),0);
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),true);
     await capture(page,{path:path.join(output,`agents-${width}-${scale}.png`),fullPage:true});
+    await page.keyboard.press('Control+k');await palette.getByRole('textbox',{name:'Search destinations'}).fill('Runs');await palette.getByRole('button',{name:/^Runs & reviews/}).click();
+    await page.getByRole('button',{name:'Select workflow document'}).click();await page.getByRole('button',{name:'Add step'}).click();
+    await page.getByRole('button',{name:'Review and start workflow'}).click();
+    await page.getByRole('heading',{name:/Selected-source workflow.*completed/}).waitFor();
+    assert.equal(await page.getByRole('img',{name:'Workflow progress diagram'}).count(),1);
+    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),true,'Workflow has no horizontal overflow');
+    await capture(page,{path:path.join(output,`workflow-${width}-${scale}.png`),fullPage:true});
     results.push({ width, height, scale, tier: 'rendered-synthetic-fixture', passed: true, checks: ['local fonts','semantic text contrast >=4.5:1','named icon controls','chat entry and explicit synthetic send','safe Markdown/code/table','remote model image blocked','theme','palette','scoped recall','long inert source','reading size applied','no overflow','setup state',...(width<=900?['drawer focus trap','Escape focus restoration','single modal','resize recovery']:[])] });
     await context.close();
   }

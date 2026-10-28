@@ -56,3 +56,18 @@ it('expires model consent while setup stays open and does not finish implicitly'
   expect((screen.getByRole('checkbox') as HTMLInputElement).checked).toBe(false);
   expect(api.setupFinish).not.toHaveBeenCalled();
 });
+
+it('resumes public setup hints but never restores readiness or consent',async()=>{
+  const root=await fs.mkdtemp(path.join(os.tmpdir(),'wayfinder-setup-resume-'));
+  const model={model:'nvidia/nemotron-3.5-lightning-30b-a3b',provider:'custom',endpoint:'integrate.api.nvidia.com'};
+  await fs.writeFile(path.join(root,'setup-progress.json'),JSON.stringify({version:1,context:'desktop-linux',workspaceName:'Draft workspace',model}));
+  const setup=new SetupManager(root,path.join(root,'runtime'),'project','absent-backend','models',{} as any,vi.fn());await setup.load();
+  expect(setup.status()).toMatchObject({resuming:true,modelReady:false,databaseReady:false,memoryReady:false,workspaceName:'Draft workspace',model});
+  await expect(setup.finish('Draft workspace',true)).rejects.toThrow(/Complete/);
+});
+it('refuses readiness and secret fields injected into saved setup progress',async()=>{
+  const root=await fs.mkdtemp(path.join(os.tmpdir(),'wayfinder-setup-resume-invalid-'));
+  await fs.writeFile(path.join(root,'setup-progress.json'),JSON.stringify({version:1,modelReady:true,token:'SYNTHETIC_SECRET'}));
+  const setup=new SetupManager(root,path.join(root,'runtime'),'project','absent-backend','models',{} as any,vi.fn());await setup.load();
+  expect(setup.status().modelReady).toBe(false);expect(setup.status().resuming).toBe(false);expect(setup.status().error).toContain('Recheck');
+});

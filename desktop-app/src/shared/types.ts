@@ -47,8 +47,13 @@ export interface DesktopAPI {
   cancelChat(space: string, conversation: string, turn: string): Promise<Row>;
   lookupChat(space: string, conversation: string, request: string): Promise<Row>;
   deleteChat(space: string, conversation: string): Promise<Row>;
+  startSourceTask(space:string,profile:string,sourceKind:'google'|'external',source:Row,goal:string):Promise<ProfileRun>;
+  startWorkflow(space:string,definition:Row):Promise<Row>;
+  workflow(space:string,id:string):Promise<Row>;
+  workflows(space:string):Promise<Row[]>;
+  cancelWorkflow(space:string,id:string):Promise<Row>;
   profiles(space: string): Promise<Row>;
-  startProfileTask(space: string, profile: string, reference: string, goal: string): Promise<ProfileRun>;
+  startProfileTask(space: string, profile: string, reference: string, goal: string, variant?:'selected_file'|'source_contract'): Promise<ProfileRun>;
   profileTask(space: string, id: string): Promise<ProfileRun>;
   profileTasks(space: string): Promise<ProfileRun[]>;
   cancelProfileTask(space: string, id: string): Promise<Row>;
