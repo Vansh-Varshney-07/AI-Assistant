@@ -1,4 +1,4 @@
-/** Static 0.4 standalone inspection; actual app checks must match this archive. */
+/** Static standalone inspection; actual app checks must match this archive. */
 import fs from 'node:fs/promises';
 import {createReadStream} from 'node:fs';
 import path from 'node:path';
@@ -12,7 +12,7 @@ const files=listPackage(archive).map(p=>p.replaceAll('\\','/')),get=p=>extractFi
 const checks=[],check=(name,ok)=>{assert(ok,name);checks.push({name,passed:true});};
 const metadata=JSON.parse(get('package.json').toString()),release=JSON.parse(await fs.readFile(path.join(root,'FEATURES.json'),'utf8'));
 for(const name of ['main/index.js','preload/index.cjs','renderer/index.html'])check('included_'+name,files.includes('/dist/'+name));
-check('version_and_variant',metadata.version==='0.4.0'&&metadata.version===release.version&&release.variant==='workspace-parity');
+check('version_and_variant',metadata.version==='0.5.0-preview.2'&&metadata.version===release.version&&release.variant==='workspace-parity');
 const main=get('dist/main/index.js').toString(),html=get('dist/renderer/index.html').toString();
 check('isolated_renderer',main.includes('contextIsolation: true')&&main.includes('nodeIntegration: false')&&main.includes('sandbox: true'));
 check('no_renderer_network_or_inline_script',html.includes("connect-src 'none'")&&html.includes("script-src 'self'"));
@@ -21,13 +21,14 @@ check('private_bootstrap_not_in_renderer',!renderer.includes('WAYFINDER_HOST_SEC
 check('onboarding_and_chat_inclusion',release.preload_methods.includes('setupFinish')&&release.preload_methods.includes('sendChat')&&release.backend_operations.includes('chat_send'));
 check('no_generic_ipc_or_native_actions',!release.preload_methods.some(n=>['invoke','exec','call'].includes(n))&&!release.backend_operations.includes('worker_action_decide')&&release.native_testing_enabled===false);
 check('manifest_pairing',await hash(path.join(root,'FEATURES.json'))===await hash(path.join(resources,'backend/FEATURES.json'))&&JSON.stringify(JSON.parse(get('dist/release.json').toString()))===JSON.stringify(release));
+check('embedded_frozen_manifest_matches_app',await hash(path.join(root,'FEATURES.json'))===await hash(path.join(resources,'backend/_internal/FEATURES.json')));
 const staged=JSON.parse(await fs.readFile(path.join(root,'.cache/backend-manifest.json'),'utf8'));
 staged.files=Object.fromEntries(Object.entries(staged.files).map(([name,digest])=>[name.replaceAll('\\','/'),digest]));
 const backend=path.join(resources,'backend/WayfinderBackend.exe');
 check('bundled_python_executable_matches_stage',await hash(backend)===staged.files['backend/WayfinderBackend.exe']);
 check('python_interpreter_bundled',(await fs.stat(path.join(resources,'backend/_internal/python312.dll'))).isFile());
 check('installed_python_trust_policy_bundled',(await fs.stat(path.join(resources,'backend/_internal/codex-rejected-cas.pem'))).size===906);
-for(const file of ['wayfinder/chat.py','wayfinder/service.py','wayfinder/api.py','wayfinder/workers/hermes_runner.py','memory/engine.py'])check('source_identity_'+file,await hash(path.join(root,'..',file))===await hash(path.join(resources,'backend-project',file)));
+for(const file of ['wayfinder/chat.py','wayfinder/platform/contracts.py','wayfinder/platform/task_profiles.py','wayfinder/platform/runtime_probe.py','wayfinder/platform/catalog.py','wayfinder/service.py','wayfinder/api.py','wayfinder/workers/hermes_runner.py','memory/engine.py'])check('source_identity_'+file,await hash(path.join(root,'..',file))===await hash(path.join(resources,'backend-project',file)));
 const model=path.join(resources,'models/models--qdrant--bge-small-en-v1.5-onnx-q/blobs/51f1bd');
 // Compare every staged model file, including the dereferenced snapshot contents.
 let modelCount=0;for(const [name,digest] of Object.entries(staged.files))if(name.startsWith('models/')){assert(await hash(path.join(resources,name))===digest,'Model checksum '+name);modelCount++;}
@@ -39,6 +40,6 @@ for(const name of ['FlagEmbedding-LICENSE.txt','Python-LICENSE.txt','Qdrant-BGE-
 const actual=JSON.parse(await fs.readFile(path.join(root,'test-results/onboarding-packaged.json'),'utf8'));
 check('actual_fresh_profile_acceptance',actual.passed>=18&&actual.checks.every(c=>c.passed));
 check('acceptance_matches_current_archive',actual.asar_sha256===await hash(archive));
-const portable=path.join(root,'release/Wayfinder-0.4.0-Windows-x64.exe');const handle=await fs.open(portable),sig=Buffer.alloc(2);await handle.read(sig,0,2,0);await handle.close();check('portable_is_windows_executable',sig.toString()==='MZ');
+const portable=path.join(root,'release/Wayfinder-'+metadata.version+'-Windows-x64.exe');const handle=await fs.open(portable),sig=Buffer.alloc(2);await handle.read(sig,0,2,0);await handle.close();check('portable_is_windows_executable',sig.toString()==='MZ');
 const evidence={build:release.build,checks,passed:checks.length,asar_sha256:await hash(archive),backend_sha256:await hash(backend),portable_sha256:await hash(portable),native_desktop_automation:false,google_live:false,actual_packaged_checks:actual.passed};
 await fs.writeFile(path.join(root,'test-results/onboarding-build-evidence.json'),JSON.stringify(evidence,null,2)+'\n');console.log(JSON.stringify(evidence));

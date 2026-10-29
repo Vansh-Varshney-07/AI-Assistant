@@ -32,7 +32,7 @@ describe('New GitHub command workspace with real-state projections', () => {
   });
   it('separates imported Google credentials from a live check',async()=>{
     const connectionsStatus=vi.fn(async()=>({configured:{google:true},checks:{}}));
-    const checkConnection=vi.fn(async()=>({configured:{google:true},checks:{google:{passed:true,label:'Read checks verified'}}}));
+    const checkConnection=vi.fn(async()=>({configured:{google:true},checks:{google:{passed:true,label:'Read checks verified',expires:Date.now()/1000+300}}}));
     render(<ConnectionsPanel backend={backend} space="owned-space" api={{connectionsStatus,checkConnection} as unknown as DesktopAPI} busy={false} act={async()=>{}} go={vi.fn()}/>);
     expect(await screen.findByText('Imported \u00b7 check pending')).toBeTruthy();
     await userEvent.click(screen.getByRole('button',{name:'Check Google connection'}));

@@ -1,0 +1,145 @@
+{
+  "schema": "wayfinder.ui-research/v1",
+  "date": "2026-10-27",
+  "wayfinder_baseline": "47f0dca32befd29ffe52e29fd511894c72341179",
+  "method": "Initial official documentation/source review followed by actual locally built REA 6.8.0 CLI inspection of public distributions; see followup. No target applications were launched.",
+  "repositories": [
+    {
+      "repository": "Mintplex-Labs/anything-llm",
+      "commit": "9b1fcab141000eaba9f78ed131151de04904454b",
+      "files": [
+        {
+          "path": "frontend/src/components/WorkspaceChat/ChatContainer/ChatHistory/ToolApprovalRequest/index.jsx",
+          "url": "https://github.com/Mintplex-Labs/anything-llm/blob/9b1fcab141000eaba9f78ed131151de04904454b/frontend/src/components/WorkspaceChat/ChatContainer/ChatHistory/ToolApprovalRequest/index.jsx",
+          "blob_sha": "f3b97c5c0d2032ea712a33ede869419665c21548"
+        }
+      ],
+      "limits": "The reviewed approval component is web-client code; desktop overlay findings are documented product behavior."
+    },
+    {
+      "repository": "clairun/clai",
+      "commit": "a0b75e6f38288d3efdb0fc439a997a15dbfdda97",
+      "files": [
+        {
+          "path": "src/components/InlineApprovalCard.tsx",
+          "url": "https://github.com/clairun/clai/blob/a0b75e6f38288d3efdb0fc439a997a15dbfdda97/src/components/InlineApprovalCard.tsx",
+          "blob_sha": "b1bd56b74bd805c59f9d37d3291e0505a68c4f48"
+        },
+        {
+          "path": "src-tauri/src/assistant/sandbox/unsupported.rs",
+          "url": "https://github.com/clairun/clai/blob/a0b75e6f38288d3efdb0fc439a997a15dbfdda97/src-tauri/src/assistant/sandbox/unsupported.rs",
+          "blob_sha": "9bbac3fcfaf5e7923487a5b06a49dd2c42952ee8"
+        },
+        {
+          "path": "src/fleet/workspaceStatus.ts",
+          "url": "https://github.com/clairun/clai/blob/a0b75e6f38288d3efdb0fc439a997a15dbfdda97/src/fleet/workspaceStatus.ts",
+          "blob_sha": "5479488d7bc93056a90976e85aa1d2aac740c6cb"
+        }
+      ],
+      "limits": "Selected files establish specific patterns only; no complete audit or installed-version behavior test."
+    },
+    {
+      "repository": "Keel-Labs/keel",
+      "commit": "82c815bcc3563ce9e6b77ecbb98b63b338e1328b",
+      "files": [
+        {
+          "path": "src/app/components/KnowledgeBrowser.tsx",
+          "url": "https://github.com/Keel-Labs/keel/blob/82c815bcc3563ce9e6b77ecbb98b63b338e1328b/src/app/components/KnowledgeBrowser.tsx",
+          "blob_sha": "4ecec433b7cfdf9dd19fcd96cc6d428f86ecf04d"
+        },
+        {
+          "path": "src/app/components/wikiChatCitations.ts",
+          "url": "https://github.com/Keel-Labs/keel/blob/82c815bcc3563ce9e6b77ecbb98b63b338e1328b/src/app/components/wikiChatCitations.ts",
+          "blob_sha": "c6a6fe730d38ee5e92891d74e843940e9d24ba48"
+        },
+        {
+          "path": "src/app/components/SessionStatusIndicator.tsx",
+          "url": "https://github.com/Keel-Labs/keel/blob/82c815bcc3563ce9e6b77ecbb98b63b338e1328b/src/app/components/SessionStatusIndicator.tsx",
+          "blob_sha": "4be2c9ab2d8abff41ea0f3068488056523e1706b"
+        },
+        {
+          "path": "src/core/tools/exportGuard.ts",
+          "url": "https://github.com/Keel-Labs/keel/blob/82c815bcc3563ce9e6b77ecbb98b63b338e1328b/src/core/tools/exportGuard.ts",
+          "blob_sha": "00c0a19fe2fa5024142be0a03c7485cd3854a421"
+        }
+      ],
+      "limits": "Selected files establish specific patterns only; no complete audit or installed-version behavior test."
+    },
+    {
+      "repository": "khoj-ai/khoj",
+      "commit": "ae229ca894c0b80ad84664afcfdde523b5e87057",
+      "files": [
+        {
+          "path": "documentation/docs/get-started/privacy-security.md",
+          "url": "https://github.com/khoj-ai/khoj/blob/ae229ca894c0b80ad84664afcfdde523b5e87057/documentation/docs/get-started/privacy-security.md",
+          "blob_sha": "1070b975ed0e15da860abcac14aca8c1014609eb"
+        },
+        {
+          "path": "src/interface/web/app/components/referencePanel/referencePanel.tsx",
+          "url": "https://github.com/khoj-ai/khoj/blob/ae229ca894c0b80ad84664afcfdde523b5e87057/src/interface/web/app/components/referencePanel/referencePanel.tsx",
+          "blob_sha": "9aa7bd89ed5ef98c597cb2c94ebbf0544d877392"
+        }
+      ],
+      "limits": "Selected files establish specific patterns only; no complete audit or installed-version behavior test."
+    },
+    {
+      "repository": "M19K/handrail",
+      "commit": "9d4026071ec45920dd5e288047a5a02dcb1fb127",
+      "files": [
+        {
+          "path": "docs/IPC.md",
+          "url": "https://github.com/M19K/handrail/blob/9d4026071ec45920dd5e288047a5a02dcb1fb127/docs/IPC.md",
+          "blob_sha": "6a6e65b5a34daa6dda2485869e6707f25d70628c"
+        },
+        {
+          "path": "src/main/ipc.js",
+          "url": "https://github.com/M19K/handrail/blob/9d4026071ec45920dd5e288047a5a02dcb1fb127/src/main/ipc.js",
+          "blob_sha": "b20752ecd0276ad4263cc525d35b2c822bf2fdc9"
+        }
+      ],
+      "limits": "Selected files establish specific patterns only; no complete audit or installed-version behavior test."
+    },
+    {
+      "repository": "0pen-Sourcer/Hearth",
+      "commit": "4c3a7965e4e1ec173384e42e4de31597c7b1eee7",
+      "files": [
+        {
+          "path": "SECURITY.md",
+          "url": "https://github.com/0pen-Sourcer/Hearth/blob/4c3a7965e4e1ec173384e42e4de31597c7b1eee7/SECURITY.md",
+          "blob_sha": "277c5e611c7c75d3df691d3a48c89b1c92863e81"
+        }
+      ],
+      "limits": "Selected files establish specific patterns only; no complete audit or installed-version behavior test."
+    }
+  ],
+  "local_rea": {
+    "repository": "https://github.com/morluto/rea",
+    "commit_prefix": "570abe95f",
+    "files": [
+      "SECURITY.md",
+      "src/process/ProviderDeadline.ts",
+      "src/process/ProviderDiagnosticRedaction.ts"
+    ],
+    "executed": true,
+    "ignored_in_parent": true,
+    "commit": "570abe95f2a35b5c580a5ec2fca90c33d4114bdc"
+  },
+  "documentation": [
+    "https://docs.useanything.com/desktop-assistant/introduction",
+    "https://docs.useanything.com/desktop-assistant/features",
+    "https://clai.run/",
+    "https://keel.keel-labs.org/",
+    "https://github.com/khoj-ai/khoj",
+    "https://github.com/M19K/handrail",
+    "https://github.com/0pen-Sourcer/Hearth",
+    "https://www.electronjs.org/docs/latest/tutorial/security",
+    "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/"
+  ],
+  "initial_method": "Official documentation and selected source files inspected through the GitHub connector; local REA and Wayfinder static source inspection. No apps installed/launched, no screen/clipboard access, no REA setup or instrumentation, no runtime security certification.",
+  "followup": {
+    "report": "../research/desktop-reference-rea/README.md",
+    "execution_index": "../research/desktop-reference-rea/execution-index.json",
+    "reference_count": 6,
+    "raw_evidence_ignored": true
+  }
+}

@@ -25,12 +25,12 @@ class PlanOutline(BaseModel):
 PLAN_INSTRUCTIONS = """Return ONLY a JSON object with these fields:
 summary (string), app (string), window (positive integer), process (positive integer),
 state (observed target fingerprint string), observation ('selected_window'),
-completion (string), steps (1–12 objects).
+completion (string), steps (1Ã¢â‚¬â€œ12 objects).
 Each step is exactly one of {action:'type_text',text:string},
 {action:'press_key',key:'ENTER'|'TAB'|'ESC'|'CTRL+S'|'CTRL+A'},
 {action:'click',x:integer,y:integer}. Use JSON double quotes.
 If the source does not provide a real window/process/state identity, return ONLY
-a JSON object with summary (string), proposed_steps (1–12 short strings describing
+a JSON object with summary (string), proposed_steps (1Ã¢â‚¬â€œ12 short strings describing
 the proposed workflow), and needs_context (a specific explanation of which user
 selection, exact text, or destination is missing before executable planning).
 Never invent window IDs or state. Describe a useful proposed workflow even when
@@ -39,7 +39,7 @@ The result is a proposal; no approval or action has occurred."""
 
 OUTLINE_INSTRUCTIONS = """Return ONLY one JSON object, with exactly these three fields:
 "summary": a short string explaining the proposed workflow;
-"proposed_steps": an array of 1–12 short strings describing the proposed steps;
+"proposed_steps": an array of 1Ã¢â‚¬â€œ12 short strings describing the proposed steps;
 "needs_context": a specific string explaining which app/window selection, exact
 text, or destination is needed before execution could be reviewed.
 No window has been selected. Do not invent a target. No action has been approved
@@ -53,6 +53,7 @@ class WorkerHub:
         self.files = files or FileBroker()
         self.lock, self.stops, self.images = RLock(), {}, {}
         self.closed = False
+        self.completion_listeners = {}
         self.actions = ActionGate(db, driver)
         with db() as connection:
             connection.execute("""CREATE TABLE IF NOT EXISTS worker_jobs(
@@ -60,6 +61,14 @@ class WorkerHub:
             connection.execute(
                 "UPDATE worker_jobs SET status='interrupted' WHERE status IN ('queued','running','stopping')"
             )
+
+    def subscribe_completion(self,callback):
+        """Trusted in-process lifecycle hook; never exposed as a worker tool."""
+        key=uuid.uuid4().hex
+        with self.lock:self.completion_listeners[key]=callback
+        def unsubscribe():
+            with self.lock:self.completion_listeners.pop(key,None)
+        return unsubscribe
 
     def status(self):
         return dict(
@@ -151,19 +160,31 @@ class WorkerHub:
         if len(json.dumps(history,ensure_ascii=True).encode())>20000:raise ValueError('Chat history exceeds its context budget.')
         return self.start(scope,role='CHAT',question=message,_chat=(history,model_pin))
 
-    def start(self, scope, *, role, question, reference=None, image=None, context="", _chat=None):
-        if role not in {"W33", "W35", "W36"} and not (role=="CHAT" and _chat is not None):
+    def start_context(self,scope,*,role,question,context,evidence,revalidate):
+        if not isinstance(context,str) or len(context.encode())>24000 or not callable(revalidate):raise ValueError('Context exceeds the bounded worker adapter.')
+        return self.start(scope,role=role,question=question,_provided=(context,evidence,revalidate))
+
+    def start(self, scope, *, role, question, reference=None, image=None, context="", _chat=None,_provided=None):
+        from wayfinder.platform.worker_bindings import SOURCE_ROLES,instructions
+        if role not in ({"W33", "W35", "W36"}|SOURCE_ROLES) and not (role=="CHAT" and _chat is not None):
             raise ValueError(
                 "Choose an analysis/planning worker; discovery and approved actions have separate routes."
             )
         if not isinstance(question, str) or not 1 <= len(question.strip()) <= 4000:
-            raise ValueError("Enter a question of 1–4000 characters.")
+            raise ValueError("Enter a question of 1Ã¢â‚¬â€œ4000 characters.")
         if not isinstance(context, str) or len(context) > 12000:
             raise ValueError("Observation context exceeds its limit.")
         payload = dict(role=role, question=question, context=context)
         if role=="CHAT":payload.update(history=_chat[0],model_pin=_chat[1])
         evidence = None
-        if role == "W35":
+        if _provided is not None:
+            if role not in SOURCE_ROLES|{'W35'}:raise ValueError('No context adapter for this role.')
+            _provided[2]();payload['context']=_provided[0];evidence=_provided[1]
+        if role in SOURCE_ROLES:
+            if not reference and _provided is None:raise ValueError("Choose a scoped source for this worker.")
+            payload["instructions"]=instructions(role)
+            payload["structured"]=True
+        if (role == "W35" or role in SOURCE_ROLES) and _provided is None:
             selected = self.files.read(scope, reference)
             evidence = dict(source=selected["source"], sha256=selected["sha256"])
             if selected["extension"] in TEXT_TYPES:
@@ -214,15 +235,19 @@ class WorkerHub:
                 )
             Thread(
                 target=self._run,
-                args=(scope, jid, payload, cancelled, evidence, reference, image),
+                args=(scope, jid, payload, cancelled, evidence, reference, image,_provided[2] if _provided else None),
                 daemon=True,
             ).start()
         return self.get(scope, jid)
 
-    def _run(self, scope, jid, payload, cancelled, evidence, reference, image):
+    def _run(self, scope, jid, payload, cancelled, evidence, reference, image,revalidate=None):
         try:
             self._finish(jid, "running")
             result = self.bridge.run(payload, cancelled)
+            from wayfinder.platform.worker_bindings import SOURCE_ROLES,validate_output
+            if payload["role"] in SOURCE_ROLES:
+                result["structured"]=validate_output(payload["role"],result["text"])
+                result["definition_binding"]="hermes.definition/1"
             if payload["role"] == "W36":
                 answer = result["text"].strip()
                 if answer.startswith("```json\n") and answer.endswith("```"):
@@ -258,6 +283,7 @@ class WorkerHub:
             if evidence:
                 result["evidence"] = evidence
             with self.lock:
+                if revalidate:revalidate()
                 if reference:
                     self.files.check_reference(scope, reference)
                 if image:
@@ -281,6 +307,12 @@ class WorkerHub:
         finally:
             with self.lock:
                 self.stops.pop(jid, None)
+                listeners=list(self.completion_listeners.values())
+            # Notify after releasing the hub lock: coordinators may admit the
+            # next finite step through this same bounded worker lifecycle.
+            for callback in listeners:
+                try:callback(scope,jid)
+                except Exception:pass  # Persisted state remains observable; no replay.
 
     def _finish(self, jid, status, result=None):
         with self.db() as connection:
@@ -344,5 +376,6 @@ class WorkerHub:
             self.closed = True
             for event in self.stops.values():
                 event.set()
+            self.completion_listeners.clear()
             self.images.clear()
             self.files.clear()

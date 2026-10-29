@@ -1,5 +1,6 @@
 """Task-profile contract/failure tier; fixture model and disposable actual storage."""
 from concurrent.futures import ThreadPoolExecutor
+import json
 import time
 import pytest
 from tests.test_platform_integration import platform
@@ -45,6 +46,21 @@ def test_duplicate_request_observes_and_changed_payload_is_rejected(platform):
     assert len(platform['worker'].payloads)==1
     with pytest.raises(ValueError,match='immutable'):start(platform,goal='Changed after acceptance')
 
+def test_platform_envelope_is_issued_after_scoped_read_and_legacy_records_stay_readable(platform):
+    row=start(platform);result=settle(platform,row['id'])
+    envelope=result['envelope'];outcome=result['outcome']
+    assert envelope['run_id']==row['id'] and envelope['worker_role']=='W35'
+    assert envelope['scope']['task']==platform['args']['task']
+    assert envelope['artifacts'][0]['sha256']==result['result']['sources'][0]['sha256']
+    assert outcome['status']=='completed' and outcome['execution_ref']==row['job']
+    with platform['app'].db() as db:
+        saved=json.loads(db.execute('SELECT body FROM task_profile_runs WHERE id=?',(row['id'],)).fetchone()[0])
+        saved.pop('platform_envelope')
+        db.execute('UPDATE task_profile_runs SET body=? WHERE id=?',(json.dumps(saved),row['id']))
+    historical=call(platform,'platform_profile_result',id=row['id'])
+    assert historical['result']==result['result'] and historical['envelope'] is None and historical['outcome'] is None
+    assert len(platform['worker'].payloads)==1
+
 def test_direct_baseline_and_profile_use_the_same_worker_payload_without_extra_reasoning(platform):
     goal=request(platform)['goal']
     direct=call(platform,'worker_start',role='W35',reference=platform['request']['reference'],question=goal)
@@ -53,7 +69,7 @@ def test_direct_baseline_and_profile_use_the_same_worker_payload_without_extra_r
     assert platform['worker'].payloads[0]==platform['worker'].payloads[1]
     assert call(platform,'worker_result',id=direct['id'])['status']=='completed'
 
-@pytest.mark.parametrize('changes',[{'profile_id':'A08'},{'profile_id':'A03'},{'profile_version':'2'},{'preset_id':'P01'},{'tools':['terminal']},{'goal':' '},{'goal':'界'*400}])
+@pytest.mark.parametrize('changes',[{'profile_id':'A08'},{'profile_id':'A03'},{'profile_version':'2'},{'preset_id':'P01'},{'tools':['terminal']},{'goal':' '},{'goal':'ç•Œ'*400}])
 def test_unqualified_modes_versions_and_extra_authority_fail_before_dispatch(platform,changes):
     with pytest.raises(ValueError):start(platform,**changes)
     assert platform['worker'].payloads==[]
@@ -101,3 +117,21 @@ def test_clearing_task_clears_only_the_linked_worker_artifact(platform):
     assert receipt['cleared']
     with pytest.raises(ValueError):call(platform,'platform_profile_result',id=row['id'])
     with pytest.raises(ValueError):platform['app'].workers.get((platform['app'].owner,platform['args']['space'],platform['args']['task']),done['job'])
+
+
+def test_structured_profile_uses_existing_definition_and_rejects_invalid_output(platform):
+    from dataclasses import asdict
+    from wayfinder.workers.W01_intent_analyst.fixtures import SUCCESS_CLEAR_RESEARCH
+    # A02 is a planner contract; arbitrary intent-shaped output must fail validation.
+    platform['worker'].result['text']=json.dumps(asdict(SUCCESS_CLEAR_RESEARCH))
+    row=start(platform,profile_id='A02',variant='source_contract')
+    done=settle(platform,row['id']);assert done['status']=='failed' and done['result'] is None
+    assert platform['worker'].payloads[0]['role']=='W03' and platform['worker'].payloads[0]['structured']
+    assert 'Output schema:' in platform['worker'].payloads[0]['instructions']
+
+
+def test_structured_communications_profile_does_not_get_send_authority(platform):
+    platform['worker'].result['text']=json.dumps(dict(inventory_id='test',commitments=[],duplicates_suppressed_count=0,unresolved_ambiguities=['No message evidence supplied.']))
+    row=start(platform,profile_id='A03',variant='source_contract');done=settle(platform,row['id'])
+    assert done['status']=='completed' and done['envelope']['worker_role']=='W16' and not done['effects_executed']
+    assert done['result']['structured']['commitments']==[] and platform['worker'].payloads[0]['role']=='W16'

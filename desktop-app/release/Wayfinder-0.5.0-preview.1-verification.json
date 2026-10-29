@@ -1,0 +1,32 @@
+{
+  "build": "wayfinder-desktop/0.5.0-preview.1",
+  "checkpoint": "initial conversation and first-run foundation; full rebuild incomplete",
+  "date": "2026-10-27",
+  "portable_sha256": "f0e9f3643ab8ab7b7be98e80f766d3b08bedf754ee4b18b15e91565fec280b00",
+  "portable_bytes": 514765918,
+  "asar_sha256": "84675d7b4fcc29911b051a665b38bc3f62859d4a42b42a0ca0d50dae496eeba9",
+  "frontend_tests": {
+    "passed": 64,
+    "failed": 0
+  },
+  "backend_regression": {
+    "passed": 321,
+    "skipped": 1,
+    "deselected": 1
+  },
+  "final_contract_tests": {
+    "passed": 29,
+    "overlaps_backend_regression": true
+  },
+  "headless_ui_scenarios": 9,
+  "actual_packaged_checks": 18,
+  "actual_portable_checks": 11,
+  "extracted_resources_verified": 3007,
+  "window_mode": "hidden isolated profiles; app renderer screenshots only",
+  "os_input_automation": false,
+  "desktop_capture": false,
+  "live_private_provider_reads": false,
+  "w37_qualified": false,
+  "signing": "unsigned",
+  "remaining": "Broader runtime projections, partial onboarding persistence, worker routing, provider task variants and general workflow/effect phases remain open."
+}

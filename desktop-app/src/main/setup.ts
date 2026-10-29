@@ -20,12 +20,19 @@ export class SetupManager{
   private connectionSource?:()=>Promise<any>;
   setConnectionSource(source:()=>Promise<any>){this.connectionSource=source;}
   private saved?:Saved;private context?:string;private password?:string;private port?:string;
+  private resume?:{context?:string;workspaceName?:string;model?:ModelPin};
   private model?:ModelPin;private modelChecked=0;private memory=false;private busy=false;private error='';private phase='Welcome';private connecting?:Promise<BackendState>;
   constructor(readonly userData:string,readonly runtime:string,readonly project:string,readonly executable:string,readonly models:string,readonly bridge:BackendBridge,private run:Runner=command){
     this.id=createHash('sha256').update(path.resolve(runtime).toLowerCase()).digest('hex').slice(0,16);
     this.container='wayfinder-memory-'+this.id;this.volume='wayfinder-memory-data-'+this.id;this.configPath=path.join(userData,'onboarding.json');
   }
   async load(){
+    const progress=path.join(this.userData,'setup-progress.json');
+    if(existsSync(progress))try{
+      const raw=await fs.readFile(progress,'utf8');if(Buffer.byteLength(raw)>4096)throw new Error();const v=JSON.parse(raw);
+      if(v.version!==1||Object.keys(v).some(k=>!['version','context','workspaceName','model'].includes(k))||v.context!==undefined&&(typeof v.context!=='string'||!/^[-A-Za-z0-9_.]{1,100}$/.test(v.context))||v.workspaceName!==undefined&&(typeof v.workspaceName!=='string'||v.workspaceName.length>100)||v.model!==undefined&&!validModel(v.model))throw new Error();
+      this.resume=v;this.context=v.context;this.model=v.model;
+    }catch{this.error='Saved setup progress could not be read. Recheck prerequisites; existing workspace data was preserved.';}
     if(!existsSync(this.configPath))return;
     try{
       const raw=await fs.readFile(this.configPath,'utf8');if(Buffer.byteLength(raw)>8192)throw new Error();const v=JSON.parse(raw);
@@ -33,9 +40,15 @@ export class SetupManager{
       this.saved=v;this.context=v.context;
     }catch{this.error='Saved setup is invalid. Existing workspace data was preserved. Run the checks again to repair the connection.';}
   }
+  private async saveProgress(){
+    await fs.mkdir(this.userData,{recursive:true});
+    const value={version:1,...(this.context?{context:this.context}:{}),...(this.model?{model:this.model}:{}),...(this.saved?.workspaceName||this.resume?.workspaceName?{workspaceName:this.saved?.workspaceName||this.resume?.workspaceName}:{})};
+    const target=path.join(this.userData,'setup-progress.json'),temporary=target+'.'+randomBytes(8).toString('hex')+'.tmp';
+    await fs.writeFile(temporary,JSON.stringify(value),{flag:'wx',mode:0o600});await fs.rename(temporary,target);this.resume=value;
+  }
   private sameModel(a:any,b:any){return validModel(a)&&validModel(b)&&a.model===b.model&&a.provider===b.provider&&a.endpoint===b.endpoint;}
   ready(){return !!this.saved;}
-  status(){return {complete:!!this.saved,busy:this.busy,phase:this.phase,error:this.error,backendBundled:existsSync(this.executable),memoryReady:this.memory,databaseReady:!!this.port,modelReady:!!this.model&&Date.now()-this.modelChecked<300000,model:this.model||this.saved?.model,workspaceName:this.saved?.workspaceName,storage:this.runtime,requires:['Docker Desktop with Linux containers','Existing managed Hermes/OpenShell installation and configured provider'],integrations:'Import Google, Tavily and Notion credentials in Connections after setup. Hosted GitHub and Fitness remain unavailable.'};}
+  status(){return {complete:!!this.saved,busy:this.busy,phase:this.phase,error:this.error,backendBundled:existsSync(this.executable),memoryReady:this.memory,databaseReady:!!this.port,modelReady:!!this.model&&Date.now()-this.modelChecked<300000,modelExpiresAt:this.model?this.modelChecked+300000:null,model:this.model||this.saved?.model,workspaceName:this.saved?.workspaceName||this.resume?.workspaceName,resuming:!!this.resume,checksMustBeRevalidated:!!this.resume,storage:this.runtime,requires:['Docker Desktop with Linux containers','Existing managed Hermes/OpenShell installation and configured provider'],integrations:'Import Google, Tavily and Notion credentials in Connections after setup. Hosted GitHub and Fitness remain unavailable.'};}
   private async action<T>(phase:string,job:()=>Promise<T>):Promise<T>{
     if(this.busy)throw new Error('A setup check is already running.');this.busy=true;this.phase=phase;this.error='';
     try{return await job();}catch(e){this.error=e instanceof Error?e.message:'Setup could not confirm readiness.';throw new Error(this.error);}finally{this.busy=false;}
@@ -43,7 +56,7 @@ export class SetupManager{
   private async docker(args:string[],timeout?:number){if(!this.context)throw new Error('Check Docker first.');return this.run('docker',['--context',this.context,...args],{timeout});}
   private async dockerContext(){
     let name:string;
-    try{name=(this.saved?.context||await this.run('docker',['context','show'])).trim();if(!/^[-A-Za-z0-9_.]{1,100}$/.test(name))throw new Error();
+    try{name=(this.saved?.context||this.context||await this.run('docker',['context','show'])).trim();if(!/^[-A-Za-z0-9_.]{1,100}$/.test(name))throw new Error();
       const contexts=JSON.parse(await this.run('docker',['context','inspect',name]));if(!localDocker(contexts[0]?.Endpoints?.docker?.Host||''))throw new Error();
       this.context=name;const version=JSON.parse(await this.docker(['version','--format','{{json .Server}}']));if(version.Os!=='linux')throw new Error();
     }catch{throw new Error('Docker Desktop is unavailable or is not using a local Linux engine. Start it, then retry this check. Remote Docker connections are not used.');}
@@ -76,7 +89,7 @@ export class SetupManager{
       container=await this.inspect('container',this.container);
       const bindings=container?.NetworkSettings?.Ports?.['6379/tcp'];
       if(bindings?.length===1&&bindings[0].HostIp==='127.0.0.1'&&/^\d{1,5}$/.test(bindings[0].HostPort)){
-        try{if((await this.docker(['exec','-e','REDISCLI_AUTH='+this.password,this.container,'redis-cli','ping'])).trim()==='PONG'){this.port=bindings[0].HostPort;return this.status();}}catch{}
+        try{if((await this.docker(['exec','-e','REDISCLI_AUTH='+this.password,this.container,'redis-cli','ping'])).trim()==='PONG'){this.port=bindings[0].HostPort;await this.saveProgress();return this.status();}}catch{}
       }
       await new Promise(resolve=>setTimeout(resolve,250));
     }
@@ -87,8 +100,8 @@ export class SetupManager{
     let output:string;try{output=await this.run(this.executable,['--project',this.project,'--runtime',this.runtime,'--diagnose',kind],{timeout:125000,env:{...process.env,WAYFINDER_MODELS_ROOT:this.models,USE_GPU:'false',PYTHONDONTWRITEBYTECODE:'1',HF_HUB_OFFLINE:'1',TRANSFORMERS_OFFLINE:'1'}});}catch{throw new Error(kind==='memory'?'The bundled memory model could not run. Re-extract the complete app and retry.':'Hermes/OpenShell could not be verified. Start the existing managed environment and check its provider configuration, then retry.');}
     const lines=output.split(/\r?\n/).filter(line=>line.startsWith('WAYFINDER_DIAGNOSTIC='));if(lines.length!==1)throw new Error('The backend returned an invalid setup report.');return JSON.parse(lines[0].slice('WAYFINDER_DIAGNOSTIC='.length));
   }
-  async memoryCheck(){return this.action('Checking the bundled memory model',async()=>{const report=await this.diagnostic('memory');if(!report.ready||report.dimensions!==384)throw new Error('The memory model did not pass its real inference check.');this.memory=true;return this.status();});}
-  async modelCheck(){return this.action('Checking the existing Hermes model connection',async()=>{const report=await this.diagnostic('hermes');if(!report.ready||!validModel(report.model_info)||report.memory!==false||!Array.isArray(report.tools)||report.tools.length)throw new Error('Hermes history/tool isolation was not verified. Chat remains disabled.');this.model=report.model_info;this.modelChecked=Date.now();return this.status();});}
+  async memoryCheck(){return this.action('Checking the bundled memory model',async()=>{const report=await this.diagnostic('memory');if(!report.ready||report.dimensions!==384)throw new Error('The memory model did not pass its real inference check.');this.memory=true;await this.saveProgress();return this.status();});}
+  async modelCheck(){return this.action('Checking the existing Hermes model connection',async()=>{const report=await this.diagnostic('hermes');if(!report.ready||!validModel(report.model_info)||report.memory!==false||!Array.isArray(report.tools)||report.tools.length)throw new Error('Hermes history/tool isolation was not verified. Chat remains disabled.');this.model=report.model_info;this.modelChecked=Date.now();await this.saveProgress();return this.status();});}
   private environment(model:ModelPin){if(!this.port||!this.password)throw new Error('Check the private database first.');return {FALKORDB_HOST:'127.0.0.1',FALKORDB_PORT:this.port,FALKORDB_PASSWORD:this.password,FALKORDB_USERNAME:'default',FALKORDB_GRAPH_NAME:'wayfinder_'+this.id,WAYFINDER_MODELS_ROOT:this.models,WAYFINDER_CHAT_PROVIDER_PIN:JSON.stringify(model),USE_GPU:'false'};}
   private async boot(model:ModelPin){
     this.bridge.configure({executable:this.executable,environment:this.environment(model)});
@@ -102,7 +115,7 @@ export class SetupManager{
     const inspected=await this.bridge.call('platform_inspect',{space:workspace.id,task:'general'},120000);
     if(!this.sameModel(inspected.isolation?.model_info,this.model))throw new Error('The model connection changed during setup. Review and verify it again.');
     const saved:Saved={version:1,complete:true,context:this.context,model:this.model,workspace:workspace.id,workspaceName:name.trim()};
-    const temporary=this.configPath+'.'+randomBytes(8).toString('hex')+'.tmp';await fs.writeFile(temporary,JSON.stringify(saved),{flag:'wx',mode:0o600});await fs.rename(temporary,this.configPath);this.saved=saved;
+    const temporary=this.configPath+'.'+randomBytes(8).toString('hex')+'.tmp';await fs.writeFile(temporary,JSON.stringify(saved),{flag:'wx',mode:0o600});await fs.rename(temporary,this.configPath);this.saved=saved;await fs.rm(path.join(this.userData,'setup-progress.json'),{force:true});this.resume=undefined;
     return this.bridge.describe();
   });}
   async connect():Promise<BackendState>{

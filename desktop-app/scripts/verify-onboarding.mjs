@@ -27,15 +27,17 @@ async function completed(page,space,cid,count){
   check('model_turn_completed_'+checks.length,data.turns.length>=count&&data.turns.at(-1).status==='completed');return data;
 }
 try{
-  let page=await launch();await page.getByRole('heading',{name:'Make this your workspace.'}).waitFor();
+  let page=await launch();await page.getByRole('heading',{name:'Start with a private foundation.'}).waitFor();
   check('fresh_profile_shows_onboarding',true);
   check('window_stays_hidden',await application.evaluate(({BrowserWindow})=>BrowserWindow.getAllWindows().every(w=>!w.isVisible())));
   check('workspace_access_denied_before_setup',await page.evaluate(async()=>{try{await window.wayfinder.listSpaces();return false;}catch{return true;}}));
-  check('finish_requires_checks_and_consent',await page.getByRole('button',{name:'Create workspace and open Wayfinder'}).isDisabled());
-  await page.getByRole('button',{name:'Verify bundled memory model'}).click();await page.getByRole('button',{name:'✓ Memory model verified'}).waitFor();check('frozen_cpu_memory_inference',true);
-  await page.getByRole('button',{name:'Check / prepare database'}).click();await page.getByRole('button',{name:'✓ Database ready'}).waitFor();check('isolated_private_database_prepared',true);
-  await page.getByRole('button',{name:'Check Hermes connection'}).click();await page.getByRole('button',{name:'✓ Model connection verified'}).waitFor();check('installed_hermes_isolation_verified',true);
-  await page.getByLabel('Workspace name',{exact:true}).fill('New user acceptance');await page.getByLabel(/I agree to send/).check();await page.getByRole('button',{name:'Create workspace and open Wayfinder'}).click();
+  check('finish_requires_checks_and_consent',await page.getByRole('button',{name:'Continue',exact:true}).isDisabled());
+  await page.getByRole('button',{name:'Verify bundled memory model'}).click();await page.getByRole('button',{name:'Memory model verified'}).waitFor();check('frozen_cpu_memory_inference',true);
+  await page.getByRole('button',{name:'Check / prepare database'}).click();await page.getByRole('button',{name:'Database ready'}).waitFor();check('isolated_private_database_prepared',true);
+  await page.getByRole('button',{name:'Continue',exact:true}).click();
+  await page.getByRole('button',{name:'Check Hermes connection'}).click();await page.getByRole('button',{name:'Recheck model connection'}).waitFor();check('installed_hermes_isolation_verified',true);
+  await page.getByRole('button',{name:'Continue',exact:true}).click();
+  await page.getByLabel('Workspace name',{exact:true}).fill('New user acceptance');await page.getByLabel(/I agree to send/).check();await page.getByRole('button',{name:/Create workspace and open Wayfinder/}).click();
   await page.getByText('Backend connected',{exact:true}).waitFor();
   let state=await page.evaluate(()=>window.wayfinder.status());check('real_owned_backend_chat_ready',state.state==='ready'&&state.capabilities.general_chat&&state.release.variant==='workspace-parity');
   await page.waitForFunction(()=>document.querySelector('[aria-label="Memory space"]').value);
@@ -43,12 +45,13 @@ try{
   const config=JSON.parse(await fs.readFile(path.join(profile,'onboarding.json'),'utf8'));context=config.context;
   check('setup_stores_no_provider_secrets',Object.keys(config.model).sort().join(',')==='endpoint,model,provider'&&!JSON.stringify(config).includes('password'));
   await page.getByRole('button',{name:'Chat',exact:true}).first().click();await page.getByRole('button',{name:'New conversation',exact:true}).click();
-  await page.waitForFunction(()=>document.querySelector('[aria-label="Conversation"]').value);
-  const cid=await page.getByLabel('Conversation',{exact:true}).inputValue();const nonce='wayfinder-'+randomUUID().slice(0,8);
+  await page.waitForFunction(()=>document.querySelector('.conversation-workspace')?.dataset.conversationId);
+  const cid=await page.locator('.conversation-workspace').getAttribute('data-conversation-id');const nonce='wayfinder-'+randomUUID().slice(0,8);
   await page.getByLabel('Message',{exact:true}).fill('For this conversation, the synthetic test code is '+nonce+'. Reply with just that code.');await page.getByRole('button',{name:'Send message',exact:true}).click();
   const first=await completed(page,sid,cid,1);check('actual_model_reply_contains_new_nonce',first.turns.at(-1).assistant_text.includes(nonce));
   await page.getByLabel('Message',{exact:true}).fill('What is the synthetic test code I gave you in the previous message? Reply with just that code.');await page.getByRole('button',{name:'Send message',exact:true}).click();
   const second=await completed(page,sid,cid,2);check('actual_model_uses_canonical_history',second.turns.at(-1).assistant_text.includes(nonce)&&second.turns.at(-1).history_count===2);
+  await page.screenshot({path:path.join(root,'test-results/rendered/actual-packaged-chat.png'),fullPage:true});
   const inventory=await page.evaluate(s=>window.wayfinder.inventory(s),sid);check('chat_does_not_publish_automatic_memory',inventory.records.length===0);
 
   const generation=state.instance_generation;await application.close();application=undefined;

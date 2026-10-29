@@ -1,4 +1,18 @@
 export type Row = Record<string, any>;
+export interface PlatformScope { readonly owner:string; readonly space:string; readonly task:string }
+export interface ArtifactReference { readonly reference:string; readonly sha256:string; readonly media_type:string }
+export interface TaskEnvelope {
+  readonly contract:'wayfinder.task-envelope/1';readonly request_id:string;readonly run_id:string;
+  readonly worker_role:string;readonly scope:PlatformScope;readonly artifacts:readonly ArtifactReference[];
+  readonly deadline:number;readonly cancellation_id:string;
+}
+export interface WorkerOutcome {
+  readonly contract:'wayfinder.worker-outcome/1';readonly run_id:string;
+  readonly status:'completed'|'failed'|'cancelled'|'interrupted'|'stale'|'uncertain';
+  readonly output:Row|null;readonly evidence:readonly ArtifactReference[];readonly warnings:readonly string[];
+  readonly execution_ref:string;readonly error_ref:string|null;
+}
+export interface ProfileRun extends Row { id:string;status:string;envelope:TaskEnvelope|null;outcome:WorkerOutcome|null }
 export interface BackendState {
   state: 'starting' | 'ready' | 'offline' | 'setup';
   error?: string;
@@ -33,10 +47,15 @@ export interface DesktopAPI {
   cancelChat(space: string, conversation: string, turn: string): Promise<Row>;
   lookupChat(space: string, conversation: string, request: string): Promise<Row>;
   deleteChat(space: string, conversation: string): Promise<Row>;
+  startSourceTask(space:string,profile:string,sourceKind:'google'|'external',source:Row,goal:string):Promise<ProfileRun>;
+  startWorkflow(space:string,definition:Row):Promise<Row>;
+  workflow(space:string,id:string):Promise<Row>;
+  workflows(space:string):Promise<Row[]>;
+  cancelWorkflow(space:string,id:string):Promise<Row>;
   profiles(space: string): Promise<Row>;
-  startProfileTask(space: string, profile: string, reference: string, goal: string): Promise<Row>;
-  profileTask(space: string, id: string): Promise<Row>;
-  profileTasks(space: string): Promise<Row[]>;
+  startProfileTask(space: string, profile: string, reference: string, goal: string, variant?:'selected_file'|'source_contract'): Promise<ProfileRun>;
+  profileTask(space: string, id: string): Promise<ProfileRun>;
+  profileTasks(space: string): Promise<ProfileRun[]>;
   cancelProfileTask(space: string, id: string): Promise<Row>;
   clearProfileTask(space: string, id: string): Promise<Row>;
   status(): Promise<BackendState>;

@@ -17,13 +17,14 @@ from urllib.parse import quote
 
 from wayfinder.atlas.harness.base import TaskItem
 from dataclasses import asdict
+from wayfinder.platform.google_content import project,cell_range
 from wayfinder.platform.contracts import VERSION
 from wayfinder.workers.files import open_checked, version
 
 
 SCHEMAS = {
     "platform_google_status": set(),
-    "platform_google_grant": {"service", "resource", "limit", "time_min", "time_max"},
+    "platform_google_grant": {"service", "resource", "limit", "time_min", "time_max", "range"},
     "platform_google_revoke": {"grant"},
     "platform_google_read": {"grant"},
 }
@@ -36,6 +37,9 @@ SCOPES = {
     "docs": "https://www.googleapis.com/auth/documents.readonly",
     "sheets": "https://www.googleapis.com/auth/spreadsheets.readonly",
     "contacts": "https://www.googleapis.com/auth/contacts.readonly",
+    "gmail_message":"https://www.googleapis.com/auth/gmail.readonly",
+    "docs_text":"https://www.googleapis.com/auth/documents.readonly",
+    "sheets_values":"https://www.googleapis.com/auth/spreadsheets.readonly",
 }
 
 
@@ -178,8 +182,18 @@ class GoogleRead:
             )
         if type(limit) is not int or not 1 <= limit <= 50:
             raise ValueError("Google read limit must be 1–50.")
+        if 'range' in body and service!='sheets_values':raise ValueError('Cell ranges apply only to selected Sheets values.')
         params = dict(maxResults=limit)
-        if service == "calendar":
+        if service in {'gmail_message','docs_text','sheets_values'}:
+            if limit!=1 or 'time_min' in body or 'time_max' in body:raise ValueError('Exact content reads require limit 1 and no time window.')
+            if service=='gmail_message':
+                if not re.fullmatch(r'[a-fA-F0-9]{1,64}',resource):raise ValueError('Select one message ID from Gmail references.')
+                url='https://gmail.googleapis.com/gmail/v1/users/me/messages/'+quote(resource,safe='');params={'format':'raw','fields':'id,threadId,raw'}
+            elif service=='docs_text':
+                url='https://docs.googleapis.com/v1/documents/'+quote(resource,safe='');params={'includeTabsContent':'false','suggestionsViewMode':'PREVIEW_WITHOUT_SUGGESTIONS','fields':'documentId,title,body(content(paragraph(elements(textRun(content)))))'}
+            else:
+                cell_range(body.get('range'));url='https://sheets.googleapis.com/v4/spreadsheets/'+quote(resource,safe='')+'/values/'+quote(body['range'],safe='');params={'majorDimension':'ROWS','valueRenderOption':'FORMATTED_VALUE'}
+        elif service == "calendar":
             try:
                 start, end = (
                     datetime.fromisoformat(body[k]) for k in ("time_min", "time_max")
@@ -259,6 +273,7 @@ class GoogleRead:
             params=params,
             expires=expires,
             connection=connection,
+            selected_range=body.get("range"),
         )
         return dict(
             contract=VERSION,
@@ -289,6 +304,12 @@ class GoogleRead:
             self.live(grant)
             data=self.fetch(session,grant['url'],grant['params'],grant,deadline)
             service=grant['service']
+            if service in {'gmail_message','docs_text','sheets_values'}:
+                records=project(service,data,grant['resource'],grant.get('selected_range'))
+                self.live(grant)
+                verification=self.session(service,grant['connection']);verification.close()
+                if len(json.dumps(records,allow_nan=False).encode())>20000:raise ReadRefusal('Selected content exceeds its result budget.')
+                return dict(contract=VERSION,service=service,resource=grant['resource'],records=records,possibly_truncated=any(r.get('possibly_truncated') for r in records),pages_read=1,observed_at=self.clock(),external_writes=False,provider_live=self.session_factory is None,warning='Explicit selected content projection only; excluded variants remain unavailable.')
             if service=='docs':rows=[{'id':data.get('documentId'),'title':data.get('title',''),'metadata_only':True}]
             elif service=='sheets':rows=[{'id':data.get('spreadsheetId'),'title':data.get('properties',{}).get('title',''),'sheets':data.get('sheets',[]),'metadata_only':True}]
             elif service=='contacts':rows=[{'id':r.get('resourceName'),'name':(r.get('names') or [{}])[0].get('displayName',''),'email':(r.get('emailAddresses') or [{}])[0].get('value','')} for r in data.get('connections',[])]
@@ -347,6 +368,7 @@ class GoogleRead:
                         raise ReadRefusal("Google record exceeds its field budget.")
                     result.append(clean)
             self.live(grant)
+            verification=self.session(service,grant["connection"]);verification.close()
             return dict(
                 contract=VERSION,
                 service=grant["service"],

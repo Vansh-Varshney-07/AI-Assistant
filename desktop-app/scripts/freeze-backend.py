@@ -15,12 +15,15 @@ for package in ['memory','wayfinder']:
         if p.is_file() and p.suffix in {'.py','.json','.yaml','.yml','.toml'} and not any(part in {'__pycache__','_index'} for part in p.parts):
             dest=source/p.relative_to(root);dest.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(p,dest)
 # Dereference ONLY public model-cache files within this one approved model.
-cached=Path(os.environ['TEMP'])/'fastembed_cache/models--qdrant--bge-small-en-v1.5-onnx-q'
+cached=Path(os.environ.get('WAYFINDER_BUILD_MODEL_CACHE',str(Path(os.environ['TEMP'])/'fastembed_cache/models--qdrant--bge-small-en-v1.5-onnx-q')))
 assert cached.is_dir()
-for p in cached.rglob('*'):
-    if p.is_file():
-        resolved=p.resolve();assert resolved.is_relative_to(cached.resolve())
-        dest=bundle/'models'/cached.name/p.relative_to(cached);dest.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(resolved,dest)
+assert cached.name=='models--qdrant--bge-small-en-v1.5-onnx-q'
+model_files=[p for p in cached.rglob('*') if p.is_file()]
+# An existing but empty cache must never silently produce an incomplete EXE.
+assert len(model_files)>=5 and any(p.suffix=='.onnx' for p in model_files), 'Complete public embedding model cache required'
+for p in model_files:
+    resolved=p.resolve();assert resolved.is_relative_to(cached.resolve())
+    dest=bundle/'models'/cached.name/p.relative_to(cached);dest.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(resolved,dest)
 args=[str(app/'backend/host.py'),'--name','WayfinderBackend','--onedir','--console','--noconfirm','--distpath',str(bundle/'frozen'),'--workpath',str(app/'.cache/freeze-work'),'--specpath',str(app/'.cache'),'--paths',str(root),'--add-data',str(app/'FEATURES.json')+';.', '--add-data',str(source/'memory')+';memory','--add-data',str(source/'wayfinder')+';wayfinder']
 # This installed Python's ssl.py explicitly loads this public trust-policy file.
 # Retain the installed verification policy instead of disabling TLS verification.
@@ -30,7 +33,10 @@ for package in ['memory','wayfinder','fastembed','qdrant_client','onnxruntime','
     args+=['--collect-all',package]
 for package in ['torch','tensorflow','transformers','sentence_transformers','pandas','scipy','matplotlib','pytest','IPython','jupyter','onnx','setuptools']:
     args+=['--exclude-module',package]
-if '--stage-only' not in sys.argv:run(args)
+if '--stage-only' in sys.argv:
+    embedded=bundle/'frozen/WayfinderBackend/_internal/FEATURES.json'
+    assert embedded.is_file() and embedded.read_bytes()==(app/'FEATURES.json').read_bytes(), 'Frozen backend manifest differs; run a full freeze before staging'
+else:run(args)
 target=bundle/'backend';target.mkdir(exist_ok=True)
 shutil.copytree(bundle/'frozen/WayfinderBackend',target,dirs_exist_ok=True,ignore=shutil.ignore_patterns('__pycache__','*.pyc','*.debug-original'))
 if trust_file.exists():shutil.copyfile(trust_file,target/'_internal'/trust_file.name)

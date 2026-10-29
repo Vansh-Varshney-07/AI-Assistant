@@ -77,3 +77,18 @@ describe('Privileged broker boundaries', () => {
     expect(call.mock.calls.some(([operation]) => operation === 'platform_read_retry')).toBe(false);
   });
 });
+
+it('workflow disclosure cannot use another space reference or forged authority',async()=>{
+ const {handlers,call,ui}=setup(false);await handlers.selectFiles('space','document');call.mockClear();
+ const definition={contract:'wayfinder.workflow/1',version:1,title:'Read',nodes:[{id:'read',role:'W35',reference:'ref',question:'Read',dependencies:[]}],concurrency:1,deadline_seconds:30};
+ await expect(handlers.startWorkflow('other',definition)).rejects.toThrow(/Select every/);expect(ui.confirm).not.toHaveBeenCalled();
+ await expect(handlers.startWorkflow('space',{...definition,approved:true})).rejects.toThrow(/Unsupported/);
+ await expect(handlers.startWorkflow('space',definition)).rejects.toThrow(/cancelled/);expect(call).not.toHaveBeenCalled();
+});
+
+it('freezes the reviewed workflow before awaiting the trusted confirmation',async()=>{
+ const {handlers,call,ui}=setup(true);await handlers.selectFiles('space','document');let finish!:(value:boolean)=>void;ui.confirm.mockImplementation(()=>new Promise(resolve=>{finish=resolve;}));
+ const definition={contract:'wayfinder.workflow/1',version:1,title:'Original',nodes:[{id:'read',role:'W35',reference:'ref',question:'Original question',dependencies:[]}],concurrency:1,deadline_seconds:30};
+ const pending=handlers.startWorkflow('space',definition);await vi.waitFor(()=>expect(ui.confirm).toHaveBeenCalled());definition.nodes[0].question='CHANGED_AFTER_REVIEW';finish(true);await pending;
+ expect(call).toHaveBeenLastCalledWith('platform_workflow_start',expect.objectContaining({request:expect.objectContaining({definition:expect.objectContaining({nodes:[expect.objectContaining({question:'Original question'})]})})}));
+});

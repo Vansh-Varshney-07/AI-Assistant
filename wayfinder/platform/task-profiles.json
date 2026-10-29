@@ -4,7 +4,7 @@
   "main": {
     "id": "M00",
     "name": "Main Wayfinder Assistant",
-    "role": "One task-routing owner; no separate autonomous runtime or qualified general chat service.",
+    "role": "One task-routing owner over shared workers and trusted services. General conversation uses the existing isolated Chat service.",
     "permissions": "Trusted services retain authority; profile choice does not grant tools."
   },
   "profiles": [
